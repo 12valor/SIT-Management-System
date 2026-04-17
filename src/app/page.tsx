@@ -23,7 +23,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <Link 
               href="/login" 
-              className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
+              className="px-5 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
             >
               Sign In
             </Link>
@@ -40,7 +40,7 @@ export default function Home() {
           </div>
 
           <div className="container mx-auto px-6 text-center animate-in-fade">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-6">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -58,14 +58,14 @@ export default function Home() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                className="group w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 hover:shadow-primary/30"
+                className="group w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 hover:shadow-primary/30"
                 href="/login"
               >
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                className="w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-full border border-border bg-background px-8 text-sm font-semibold hover:bg-muted transition-all"
+                className="w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-xl border border-border bg-background px-8 text-sm font-semibold hover:bg-muted transition-all"
                 href="#features"
               >
                 Explore Features
@@ -79,7 +79,7 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {/* Student Card */}
-              <div className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+              <div className="group p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <GraduationCap className="h-6 w-6 text-primary" />
                 </div>
@@ -101,7 +101,7 @@ export default function Home() {
               </div>
 
               {/* Company Card */}
-              <div className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
+              <div className="group p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Briefcase className="h-6 w-6 text-primary" />
                 </div>

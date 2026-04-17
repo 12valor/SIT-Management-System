@@ -84,7 +84,7 @@ export default function EmployerPostingsPage() {
         </div>
         <button 
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95"
         >
           <Plus className="h-5 w-5" />
           Create New Role
@@ -93,21 +93,21 @@ export default function EmployerPostingsPage() {
 
       {/* Metrics Mini-Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-         <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
+         <div className="p-4 rounded-lg bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Total Active</p>
             <p className="text-xl font-black">{postings.length}</p>
          </div>
-         <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
+         <div className="p-4 rounded-lg bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Applications</p>
             <p className="text-xl font-black text-blue-600">
                {applications.filter(a => a.status === 'Pending').length} Pending
             </p>
          </div>
-         <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
+         <div className="p-4 rounded-lg bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Avg. Views</p>
             <p className="text-xl font-black">0</p>
          </div>
-         <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
+         <div className="p-4 rounded-lg bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Status</p>
             <p className="text-xl font-black text-green-600">Active</p>
          </div>
@@ -122,16 +122,16 @@ export default function EmployerPostingsPage() {
             placeholder="Search through your postings..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 h-12 rounded-2xl border border-border bg-card shadow-sm outline-none focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 transition-all text-sm font-medium"
+            className="w-full pl-12 pr-4 h-12 rounded-lg border border-border bg-card shadow-sm outline-none focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 transition-all text-sm font-medium"
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4">
           {filteredPostings.length > 0 ? (
             filteredPostings.reverse().map((posting) => (
-              <div key={posting.id} className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-2xl bg-card border border-border hover:border-blue-600/50 transition-all hover:shadow-xl hover:shadow-blue-600/5">
+              <div key={posting.id} className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-xl bg-card border border-border hover:border-blue-600/50 transition-all hover:shadow-xl hover:shadow-blue-600/5">
                 <div className="flex items-center gap-5">
-                   <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 transition-colors">
+                   <div className="w-14 h-14 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 transition-colors">
                       <Target className="h-6 w-6 text-blue-600 group-hover:text-white transition-colors" />
                    </div>
                    <div>
@@ -156,17 +156,17 @@ export default function EmployerPostingsPage() {
                         {applications.filter(a => a.postingId === posting.id).length} Applied
                       </p>
                    </div>
-                   <button className="flex-1 md:flex-none px-4 py-2 rounded-xl bg-muted font-bold text-xs hover:bg-muted/80 transition-colors">
+                   <button className="flex-1 md:flex-none px-4 py-2 rounded-lg bg-muted font-bold text-xs hover:bg-muted/80 transition-colors">
                       Manage Role
                    </button>
-                   <button className="h-10 w-10 rounded-xl border border-border flex items-center justify-center hover:bg-muted transition-colors">
+                   <button className="h-10 w-10 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors">
                       <MoreVertical className="h-4 w-4" />
                    </button>
                 </div>
               </div>
             ))
           ) : (
-            <div className="py-20 text-center border-2 border-dashed border-border rounded-3xl">
+            <div className="py-20 text-center border-2 border-dashed border-border rounded-xl">
               <p className="font-bold text-muted-foreground">No postings match your search</p>
             </div>
           )}
@@ -177,7 +177,7 @@ export default function EmployerPostingsPage() {
       {isAdding && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={() => setIsAdding(false)} />
-          <div className="relative w-full max-w-2xl bg-card border border-border rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-2xl bg-card border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             <div className="p-8 border-b border-border/50 flex justify-between items-center bg-muted/30">
               <div>
                 <h3 className="text-2xl font-black tracking-tight">Post Opportunity</h3>
@@ -199,7 +199,7 @@ export default function EmployerPostingsPage() {
                     placeholder="e.g. Backend Engineer Trainee"
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
-                    className="w-full px-4 h-12 rounded-xl border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 outline-none transition-all font-medium"
+                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 outline-none transition-all font-medium"
                     required
                   />
                 </div>
@@ -210,7 +210,7 @@ export default function EmployerPostingsPage() {
                     placeholder="e.g. Bacolod City"
                     value={formData.location}
                     onChange={(e) => setFormData({...formData, location: e.target.value})}
-                    className="w-full px-4 h-12 rounded-xl border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 outline-none transition-all font-medium"
+                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 outline-none transition-all font-medium"
                     required
                   />
                 </div>
@@ -222,7 +222,7 @@ export default function EmployerPostingsPage() {
                   <select 
                     value={formData.type}
                     onChange={(e) => setFormData({...formData, type: e.target.value as any})}
-                    className="w-full px-4 h-12 rounded-xl border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium appearance-none cursor-pointer"
+                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium appearance-none cursor-pointer"
                   >
                     <option value="On-site">On-site</option>
                     <option value="Remote">Remote</option>
@@ -235,7 +235,7 @@ export default function EmployerPostingsPage() {
                     type="number" 
                     value={formData.requiredHours}
                     onChange={(e) => setFormData({...formData, requiredHours: parseInt(e.target.value)})}
-                    className="w-full px-4 h-12 rounded-xl border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium"
+                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium"
                     required
                   />
                 </div>
@@ -247,16 +247,16 @@ export default function EmployerPostingsPage() {
                   placeholder="What will the intern do? What are your expectations?"
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
-                  className="w-full p-4 h-32 rounded-xl border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium resize-none"
+                  className="w-full p-4 h-32 rounded-lg border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium resize-none"
                   required
                 />
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Target Skills (Tags)</label>
-                <div className="min-h-[50px] p-2 rounded-xl border border-border bg-muted/20 flex flex-wrap gap-2">
+                <div className="min-h-[50px] p-2 rounded-lg border border-border bg-muted/20 flex flex-wrap gap-2">
                   {formData.tags.map(tag => (
-                    <span key={tag} className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-600 text-white text-[11px] font-bold">
+                    <span key={tag} className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-600 text-white text-[11px] font-bold">
                       {tag}
                       <X className="h-3 w-3 cursor-pointer hover:bg-white/20 rounded" onClick={() => removeTag(tag)} />
                     </span>
@@ -276,7 +276,7 @@ export default function EmployerPostingsPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex h-14 items-center justify-center rounded-2xl bg-blue-600 px-4 text-base font-black text-white shadow-xl shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-[0.98] disabled:opacity-70"
+                  className="w-full flex h-14 items-center justify-center rounded-lg bg-blue-600 px-4 text-base font-black text-white shadow-xl shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-[0.98] disabled:opacity-70"
                 >
                   {isLoading ? (
                     <Loader2 className="h-6 w-6 animate-spin" />

@@ -45,10 +45,10 @@ export default function ApplicantsPage() {
             <input 
               type="text" 
               placeholder="Search applicants..." 
-              className="pl-9 pr-4 h-11 w-full md:w-64 rounded-xl border border-border bg-card shadow-sm outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 text-sm"
+              className="pl-9 pr-4 h-11 w-full md:w-64 rounded-lg border border-border bg-card shadow-sm outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 text-sm"
             />
           </div>
-          <button className="h-11 px-4 rounded-xl border border-border bg-card flex items-center gap-2 font-bold text-xs hover:bg-muted transition-colors">
+          <button className="h-11 px-4 rounded-lg border border-border bg-card flex items-center gap-2 font-bold text-xs hover:bg-muted transition-colors">
             <Filter className="h-4 w-4" />
             Filter
           </button>
@@ -69,7 +69,7 @@ export default function ApplicantsPage() {
                 </div>
               </div>
               
-              <div className="flex flex-col gap-4 min-h-[500px] p-2 rounded-2xl bg-muted/30 border border-dashed border-border/50">
+              <div className="flex flex-col gap-4 min-h-[500px] p-2 rounded-xl bg-muted/30 border border-dashed border-border/50">
                 {colApps.map((app) => (
                   <div 
                     key={app.id} 
@@ -79,7 +79,7 @@ export default function ApplicantsPage() {
                       <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white font-bold text-sm">
                         {app.studentName?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
                       </div>
-                      <button className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button className="h-8 w-8 rounded-md hover:bg-muted flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <MoreVertical className="h-4 w-4 text-muted-foreground" />
                       </button>
                     </div>

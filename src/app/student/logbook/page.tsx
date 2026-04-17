@@ -61,7 +61,7 @@ export default function LogbookPage() {
         </div>
         <button 
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95"
         >
           <PlusCircle className="h-5 w-5" />
           New Daily Entry
@@ -69,7 +69,7 @@ export default function LogbookPage() {
       </div>
 
       {/* Progress Overview */}
-      <div className="p-8 rounded-3xl bg-card border border-border shadow-sm flex flex-col md:flex-row gap-8 items-center bg-gradient-to-br from-card to-muted/30">
+      <div className="p-8 rounded-xl bg-card border border-border shadow-sm flex flex-col md:flex-row gap-8 items-center bg-gradient-to-br from-card to-muted/30">
         <div className="relative w-32 h-32 flex items-center justify-center">
           <svg className="w-full h-full transform -rotate-90">
             <circle
@@ -133,12 +133,12 @@ export default function LogbookPage() {
              <input 
               type="text" 
               placeholder="Filter by task..." 
-              className="pl-9 pr-4 py-2 rounded-xl border border-border bg-card text-xs font-medium focus:ring-2 focus:ring-primary/20 outline-none w-48 transition-all"
+              className="pl-9 pr-4 py-2 rounded-lg border border-border bg-card text-xs font-medium focus:ring-2 focus:ring-primary/20 outline-none w-48 transition-all"
              />
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead className="bg-muted/50 border-b border-border">
@@ -206,7 +206,7 @@ export default function LogbookPage() {
       {isAdding && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAdding(false)} />
-          <div className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-lg bg-card border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-border/50 flex justify-between items-center">
               <h3 className="text-xl font-bold flex items-center gap-2">
                 <FileText className="h-5 w-5 text-primary" />
@@ -230,7 +230,7 @@ export default function LogbookPage() {
                         type="date" 
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full pl-10 pr-4 h-11 rounded-xl border border-border bg-muted/30 focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all"
+                        className="w-full pl-10 pr-4 h-11 rounded-lg border border-border bg-muted/30 focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all"
                         required
                       />
                     </div>
@@ -245,7 +245,7 @@ export default function LogbookPage() {
                         placeholder="e.g. 8"
                         value={hours}
                         onChange={(e) => setHours(e.target.value)}
-                        className="w-full pl-10 pr-4 h-11 rounded-xl border border-border bg-muted/30 focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all"
+                        className="w-full pl-10 pr-4 h-11 rounded-lg border border-border bg-muted/30 focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all"
                         required
                       />
                     </div>
@@ -257,7 +257,7 @@ export default function LogbookPage() {
                     placeholder="Describe your tasks and accomplishments today..."
                     value={tasks}
                     onChange={(e) => setTasks(e.target.value)}
-                    className="w-full p-4 h-32 rounded-xl border border-border bg-muted/30 focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all resize-none"
+                    className="w-full p-4 h-32 rounded-lg border border-border bg-muted/30 focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-sm transition-all resize-none"
                     required
                   />
                 </div>
@@ -266,7 +266,7 @@ export default function LogbookPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 active:scale-95"
+                  className="w-full flex h-11 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 active:scale-95"
                 >
                   {isLoading ? (
                     <Clock className="h-5 w-5 animate-spin" />

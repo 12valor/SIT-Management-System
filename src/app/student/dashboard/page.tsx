@@ -69,7 +69,7 @@ export default function StudentDashboard() {
           <h1 className="text-3xl font-extrabold tracking-tight">How's your day, {user?.name?.split(' ')[0] || 'Student'}?</h1>
           <p className="text-muted-foreground font-medium">Keep track of your training progress and applications.</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-card border border-border shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border shadow-sm">
           <Calendar className="h-4 w-4 text-primary" />
           <span className="text-sm font-semibold">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
         </div>
@@ -78,8 +78,8 @@ export default function StudentDashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <div key={stat.label} className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5">
-            <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110", stat.bg)}>
+          <div key={stat.label} className="group p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5">
+            <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-transform group-hover:scale-110", stat.bg)}>
               <stat.icon className={cn("h-6 w-6", stat.color)} />
             </div>
             <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-1">{stat.label}</p>
@@ -105,7 +105,7 @@ export default function StudentDashboard() {
               studentApplications.slice(0, 5).map((app) => {
                 const posting = postings.find(p => p.id === app.postingId);
                 return (
-                  <div key={app.id} className="flex items-center justify-between p-4 rounded-xl bg-card border border-border hover:bg-muted/30 transition-colors">
+                  <div key={app.id} className="flex items-center justify-between p-4 rounded-lg bg-card border border-border hover:bg-muted/30 transition-colors">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center font-bold text-lg">
                         {posting?.company[0]}
@@ -133,7 +133,7 @@ export default function StudentDashboard() {
                 );
               })
             ) : (
-              <div className="p-12 text-center rounded-2xl border border-dashed border-border bg-card/50">
+              <div className="p-12 text-center rounded-xl border border-dashed border-border bg-card/50">
                 <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
                 <p className="font-bold">No applications yet</p>
                 <p className="text-sm text-muted-foreground">Start applying for SIT positions to see them here.</p>
@@ -148,7 +148,7 @@ export default function StudentDashboard() {
               <Building2 className="h-5 w-5 text-primary" />
               Quick Logbook
             </h3>
-            <div className="p-6 rounded-2xl bg-primary text-primary-foreground shadow-xl shadow-primary/20 space-y-4 relative overflow-hidden group">
+            <div className="p-6 rounded-xl bg-primary text-primary-foreground shadow-xl shadow-primary/20 space-y-4 relative overflow-hidden group">
                <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-white/10 blur-[50px] rounded-full group-hover:scale-110 transition-transform" />
                <div className="relative z-10">
                  <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-80 mb-1">Today's Progress</p>
@@ -163,7 +163,7 @@ export default function StudentDashboard() {
                     <p className="text-xs font-medium opacity-90">
                       You have completed {totalHours}/300 hours of your SIT required module.
                     </p>
-                    <button className="w-full py-2.5 rounded-xl bg-white text-primary text-sm font-bold shadow-sm hover:scale-[1.02] active:scale-95 transition-all">
+                    <button className="w-full py-2.5 rounded-lg bg-white text-primary text-sm font-bold shadow-sm hover:scale-[1.02] active:scale-95 transition-all">
                        Submit Daily Entry
                     </button>
                  </div>

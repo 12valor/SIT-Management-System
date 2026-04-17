@@ -90,7 +90,7 @@ export default function EmployerLayout({
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all group",
+                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all group",
                     isActive 
                       ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -110,7 +110,7 @@ export default function EmployerLayout({
         <div className="border-t border-border/50 p-4 space-y-2">
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 transition-all group"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 transition-all group"
           >
             <LogOut className="h-[18px] w-[18px] group-hover:-translate-x-1 transition-transform" />
             Sign Out
@@ -136,7 +136,7 @@ export default function EmployerLayout({
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="relative h-9 w-9 rounded-xl border border-border bg-card flex items-center justify-center transition-colors hover:bg-muted">
+            <button className="relative h-9 w-9 rounded-lg border border-border bg-card flex items-center justify-center transition-colors hover:bg-muted">
               <Bell className="h-[18px] w-[18px] text-muted-foreground" />
               <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-blue-600" />
             </button>
@@ -147,7 +147,7 @@ export default function EmployerLayout({
                   <p className="text-sm font-bold leading-none">{user.name}</p>
                   <p className="text-[11px] text-muted-foreground mt-1 capitalize font-medium">{user.role}</p>
                </div>
-               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-blue-600/20">
+               <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-blue-600/20">
                 {user.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
               </div>
             </div>

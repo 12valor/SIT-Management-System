@@ -37,7 +37,7 @@ export default function LoginPage() {
   return (
     <div className="space-y-8 animate-in-fade">
       <div className="space-y-2 text-center">
-        <div className="mx-auto w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+        <div className="mx-auto w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
           <ShieldCheck className="h-6 w-6 text-primary" />
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-gradient">Welcome Back</h1>
@@ -48,7 +48,7 @@ export default function LoginPage() {
 
       <form onSubmit={handleLogin} className="space-y-5">
         {error && (
-          <div className="p-4 text-sm font-medium text-destructive bg-destructive/10 rounded-xl border border-destructive/20 text-center">
+          <div className="p-4 text-sm font-medium text-destructive bg-destructive/10 rounded-lg border border-destructive/20 text-center">
             {error}
           </div>
         )}
@@ -62,7 +62,7 @@ export default function LoginPage() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex h-11 w-full rounded-xl border border-input bg-background pl-10 pr-3 py-2 text-sm transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+              className="flex h-11 w-full rounded-lg border border-input bg-background pl-10 pr-3 py-2 text-sm transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
               placeholder="name@tupv.edu.ph"
               type="email"
               required
@@ -82,7 +82,7 @@ export default function LoginPage() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="flex h-11 w-full rounded-xl border border-input bg-background pl-10 pr-3 py-2 text-sm transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+              className="flex h-11 w-full rounded-lg border border-input bg-background pl-10 pr-3 py-2 text-sm transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
               type="password"
               placeholder="••••••••"
               required
@@ -92,7 +92,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="group relative flex h-11 w-full items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 disabled:opacity-70 active:scale-95"
+          className="group relative flex h-11 w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 disabled:opacity-70 active:scale-95"
         >
           {isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -117,7 +117,7 @@ export default function LoginPage() {
       <div className="grid grid-cols-1 gap-3">
         <button 
           onClick={() => { setEmail("student@tupv.edu.ph"); setPassword("TUPV-0909"); }}
-          className="flex flex-col items-start p-3 rounded-xl border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
+          className="flex flex-col items-start p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
         >
           <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Student Access</span>
           <span className="text-sm font-medium">student@tupv.edu.ph</span>
@@ -125,7 +125,7 @@ export default function LoginPage() {
         </button>
         <button 
           onClick={() => { setEmail("employer@company.com"); setPassword("admin123"); }}
-          className="flex flex-col items-start p-3 rounded-xl border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
+          className="flex flex-col items-start p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
         >
           <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Employer Access</span>
           <span className="text-sm font-medium">employer@company.com</span>

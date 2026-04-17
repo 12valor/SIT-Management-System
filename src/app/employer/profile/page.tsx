@@ -2,8 +2,8 @@ import { Construction, Sparkles } from "lucide-react";
 
 export default function PlaceholderPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 bg-card border border-dashed border-border rounded-3xl animate-in-fade">
-      <div className="w-16 h-16 bg-blue-600/10 rounded-2xl flex items-center justify-center mb-6 text-blue-600">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 bg-card border border-dashed border-border rounded-xl animate-in-fade">
+      <div className="w-16 h-16 bg-blue-600/10 rounded-xl flex items-center justify-center mb-6 text-blue-600">
          <Construction className="h-8 w-8" />
       </div>
       <h2 className="text-3xl font-black tracking-tight mb-2 flex items-center gap-3">

@@ -60,14 +60,14 @@ export default function OpportunitiesPage() {
               placeholder="Search companies or roles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 h-11 w-full md:w-[300px] rounded-xl border border-border bg-card shadow-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className="pl-10 pr-4 h-11 w-full md:w-[300px] rounded-lg border border-border bg-card shadow-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
           </div>
           <div className="relative">
             <select 
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="appearance-none pl-4 pr-10 h-11 rounded-xl border border-border bg-card shadow-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer font-medium text-sm"
+              className="appearance-none pl-4 pr-10 h-11 rounded-lg border border-border bg-card shadow-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer font-medium text-sm"
             >
               <option value="All">All Types</option>
               <option value="On-site">On-site</option>
@@ -84,11 +84,11 @@ export default function OpportunitiesPage() {
         {filteredPostings.map((posting) => {
           const applied = hasApplied(posting.id);
           return (
-            <div key={posting.id} className="group relative p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 overflow-hidden">
+            <div key={posting.id} className="group relative p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 overflow-hidden">
                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
               
               <div className="flex justify-between items-start mb-4">
-                <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center font-black text-xl text-primary">
+                <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center font-black text-xl text-primary">
                    {posting.company[0]}
                 </div>
                 <span className={cn(
@@ -121,7 +121,7 @@ export default function OpportunitiesPage() {
                 onClick={() => setApplyingTo(posting)}
                 disabled={applied}
                 className={cn(
-                  "w-full h-11 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all active:scale-95",
+                  "w-full h-11 rounded-lg flex items-center justify-center gap-2 text-sm font-bold transition-all active:scale-95",
                   applied 
                   ? "bg-muted text-muted-foreground cursor-not-allowed" 
                   : "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/30"
@@ -142,7 +142,7 @@ export default function OpportunitiesPage() {
       {applyingTo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !isSuccess && setApplyingTo(null)} />
-          <div className="relative w-full max-w-lg bg-card border border-border rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-lg bg-card border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             {isSuccess ? (
               <div className="p-12 text-center animate-in fade-in zoom-in duration-500">
                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 scale-110">
@@ -166,7 +166,7 @@ export default function OpportunitiesPage() {
                   </button>
                 </div>
                 <div className="p-8 space-y-6">
-                   <div className="p-4 rounded-xl bg-primary/5 border border-primary/10 flex items-start gap-3">
+                   <div className="p-4 rounded-lg bg-primary/5 border border-primary/10 flex items-start gap-3">
                       <Sparkles className="h-5 w-5 text-primary mt-0.5" />
                       <p className="text-sm font-medium leading-relaxed">
                         By applying, your SIT progress and contact details will be shared with the employer for review.
@@ -184,7 +184,7 @@ export default function OpportunitiesPage() {
                    </div>
                    <button
                     onClick={() => handleApply(applyingTo)}
-                    className="w-full flex h-14 items-center justify-center rounded-2xl bg-primary px-4 text-base font-black text-primary-foreground shadow-xl shadow-primary/20 transition-all hover:bg-primary/90 active:scale-[0.98]"
+                    className="w-full flex h-14 items-center justify-center rounded-xl bg-primary px-4 text-base font-black text-primary-foreground shadow-xl shadow-primary/20 transition-all hover:bg-primary/90 active:scale-[0.98]"
                    >
                     Submit Application <Send className="ml-2 h-5 w-5" />
                    </button>
