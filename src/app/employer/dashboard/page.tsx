@@ -30,7 +30,7 @@ export default function EmployerDashboard() {
       icon: ClipboardList, 
       color: "text-blue-600",
       bg: "bg-blue-600/10",
-      trend: "+2 this month" 
+      trend: "Currently active" 
     },
     { 
       label: "Total Applicants", 
@@ -38,7 +38,7 @@ export default function EmployerDashboard() {
       icon: Users, 
       color: "text-indigo-600",
       bg: "bg-indigo-600/10",
-      trend: "+12% vs last month" 
+      trend: "Total interest" 
     },
     { 
       label: "Pending Review", 
@@ -46,7 +46,7 @@ export default function EmployerDashboard() {
       icon: Clock, 
       color: "text-amber-600",
       bg: "bg-amber-600/10",
-      trend: "High attention needed" 
+      trend: "Awaiting action" 
     },
     { 
       label: "Success Hire", 
@@ -54,7 +54,7 @@ export default function EmployerDashboard() {
       icon: CheckCircle2, 
       color: "text-green-600",
       bg: "bg-green-600/10",
-      trend: "+5 from last batch" 
+      trend: "Hired candidates" 
     },
   ];
 

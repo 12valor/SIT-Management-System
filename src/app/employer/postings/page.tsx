@@ -27,7 +27,7 @@ export default function EmployerPostingsPage() {
 
   const [formData, setFormData] = useState({
     title: "",
-    company: "Tech Solutions Inc.", // Mock company for the session
+    company: "Your Company Name", // Generic placeholder for new users
     description: "",
     requiredHours: 300,
     location: "",
@@ -60,7 +60,7 @@ export default function EmployerPostingsPage() {
     setIsAdding(false);
     setFormData({
       title: "",
-      company: "Tech Solutions Inc.",
+      company: "Your Company Name",
       description: "",
       requiredHours: 300,
       location: "",
@@ -99,15 +99,17 @@ export default function EmployerPostingsPage() {
          </div>
          <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Applications</p>
-            <p className="text-xl font-black text-blue-600">24 Pending</p>
+            <p className="text-xl font-black text-blue-600">
+               {applications.filter(a => a.status === 'Pending').length} Pending
+            </p>
          </div>
          <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Avg. Views</p>
-            <p className="text-xl font-black">1.2k</p>
+            <p className="text-xl font-black">0</p>
          </div>
          <div className="p-4 rounded-xl bg-card border border-border shadow-sm">
-            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Growth</p>
-            <p className="text-xl font-black text-green-600">+12%</p>
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Status</p>
+            <p className="text-xl font-black text-green-600">Active</p>
          </div>
       </div>
 
@@ -150,7 +152,9 @@ export default function EmployerPostingsPage() {
                 <div className="flex items-center gap-3 mt-4 md:mt-0 w-full md:w-auto">
                    <div className="text-right hidden sm:block mr-4">
                       <p className="text-[10px] font-black text-muted-foreground uppercase">Candidates</p>
-                      <p className="text-sm font-bold">12 Applied</p>
+                      <p className="text-sm font-bold">
+                        {applications.filter(a => a.postingId === posting.id).length} Applied
+                      </p>
                    </div>
                    <button className="flex-1 md:flex-none px-4 py-2 rounded-xl bg-muted font-bold text-xs hover:bg-muted/80 transition-colors">
                       Manage Role

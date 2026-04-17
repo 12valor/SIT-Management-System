@@ -58,32 +58,7 @@ export const useMockStore = create<MockStore>()(
   persist(
     (set) => ({
       user: null,
-      postings: [
-        {
-          id: '1',
-          title: 'Frontend Developer Trainee',
-          company: 'Tech Solutions Inc.',
-          description: 'Help build modern web applications using React and Next.js. You will work closely with our senior developers to implement UI components.',
-          requiredHours: 300,
-          status: 'Open',
-          location: 'Talisay, Negros Occidental',
-          type: 'On-site',
-          tags: ['React', 'Next.js', 'Tailwind CSS'],
-          postedAt: new Date().toISOString(),
-        },
-        {
-          id: '2',
-          title: 'UI/UX Design Intern',
-          company: 'Creative Studio',
-          description: 'Assist in creating user-centered designs for mobile and web applications. Proficiency in Figma is required.',
-          requiredHours: 250,
-          status: 'Open',
-          location: 'Remote',
-          type: 'Remote',
-          tags: ['Figma', 'UI Design', 'UX Research'],
-          postedAt: new Date().toISOString(),
-        }
-      ],
+      postings: [],
       applications: [],
       logbookEntries: [],
       login: (email, role, name) => set({ user: { email, role, name } }),

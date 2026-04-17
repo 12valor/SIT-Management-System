@@ -155,9 +155,14 @@ export default function StudentDashboard() {
                  <h4 className="text-xl font-black mb-4">Update your logbook</h4>
                  <div className="space-y-4">
                     <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden">
-                       <div className="h-full bg-white w-2/3" />
+                       <div 
+                         className="h-full bg-white transition-all duration-500" 
+                         style={{ width: `${Math.min((totalHours / 300) * 100, 100)}%` }} 
+                       />
                     </div>
-                    <p className="text-xs font-medium opacity-90">You have completed 200/300 hours of your SIT required module.</p>
+                    <p className="text-xs font-medium opacity-90">
+                      You have completed {totalHours}/300 hours of your SIT required module.
+                    </p>
                     <button className="w-full py-2.5 rounded-xl bg-white text-primary text-sm font-bold shadow-sm hover:scale-[1.02] active:scale-95 transition-all">
                        Submit Daily Entry
                     </button>
