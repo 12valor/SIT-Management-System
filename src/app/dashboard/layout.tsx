@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function DashboardLayout({
   children,
@@ -53,6 +54,7 @@ export default function DashboardLayout({
             <h1 className="text-xl font-semibold tracking-tight">Dashboard Overview</h1>
           </div>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             {/* User profile dropdown could go here */}
             <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium">
               JD
