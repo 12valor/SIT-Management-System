@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function EmployerPostingsPage() {
-  const { postings, createPosting } = useMockStore();
+  const { postings, createPosting, applications } = useMockStore();
   const [isAdding, setIsAdding] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
