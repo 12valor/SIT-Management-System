@@ -66,7 +66,7 @@ export default function StudentDashboard() {
       {/* Welcome Message */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-extrabold tracking-tight">How's your day, {user?.name.split(' ')[0]}?</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">How's your day, {user?.name?.split(' ')[0] || 'Student'}?</h1>
           <p className="text-muted-foreground font-medium">Keep track of your training progress and applications.</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-card border border-border shadow-sm">

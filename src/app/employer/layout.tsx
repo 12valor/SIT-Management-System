@@ -148,7 +148,7 @@ export default function EmployerLayout({
                   <p className="text-[11px] text-muted-foreground mt-1 capitalize font-medium">{user.role}</p>
                </div>
                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-blue-600/20">
-                {user.name.split(' ').map(n => n[0]).join('')}
+                {user.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
               </div>
             </div>
           </div>

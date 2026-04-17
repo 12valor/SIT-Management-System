@@ -148,7 +148,7 @@ export default function DashboardLayout({
                   <p className="text-[11px] text-muted-foreground mt-1 capitalize font-medium">{user.role}</p>
                </div>
                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground text-sm font-bold shadow-lg shadow-primary/20">
-                {user.name.split(' ').map(n => n[0]).join('')}
+                {user.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
               </div>
             </div>
           </div>

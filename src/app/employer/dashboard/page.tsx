@@ -109,10 +109,10 @@ export default function EmployerDashboard() {
                 <div key={app.id} className="p-5 flex items-center justify-between hover:bg-muted/30 transition-colors">
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white text-xs font-bold leading-none">
-                      {app.studentName.split(' ').map(n => n[0]).join('')}
+                      {app.studentName?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
                     </div>
                     <div>
-                      <p className="font-bold text-sm">{app.studentName}</p>
+                      <p className="font-bold text-sm">{app.studentName || 'Unknown Student'}</p>
                       <p className="text-[11px] font-medium text-muted-foreground">{postings.find(p => p.id === app.postingId)?.title || "Unknown Role"}</p>
                     </div>
                   </div>

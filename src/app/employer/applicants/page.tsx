@@ -77,7 +77,7 @@ export default function ApplicantsPage() {
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white font-bold text-sm">
-                        {app.studentName.split(' ').map(n => n[0]).join('')}
+                        {app.studentName?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
                       </div>
                       <button className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <MoreVertical className="h-4 w-4 text-muted-foreground" />
@@ -85,7 +85,7 @@ export default function ApplicantsPage() {
                     </div>
 
                     <div className="space-y-1 mb-4">
-                      <h4 className="font-bold text-base leading-tight">{app.studentName}</h4>
+                      <h4 className="font-bold text-base leading-tight">{app.studentName || 'Unknown Student'}</h4>
                       <p className="text-xs font-bold text-blue-600">Apply for: {getPostingTitle(app.postingId)}</p>
                       <div className="flex items-center text-[11px] text-muted-foreground mt-2">
                         <Clock className="h-3 w-3 mr-1" />
