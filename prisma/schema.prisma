@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  EMPLOYER
+  COORDINATOR
+}
+
+enum PostingStatus {
+  OPEN
+  CLOSED
+}
+
+enum PlacementType {
+  ON_SITE
+  REMOTE
+  HYBRID
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum LogbookStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      UserRole @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  applications     Application[]
+  logbookEntries   LogbookEntry[]
+  createdPostings  SITPosting[]   @relation("EmployerPostings")
+}
+
+model SITPosting {
+  id            String        @id @default(cuid())
+  title         String
+  company       String
+  description   String        @db.Text
+  requiredHours Int           @default(300)
+  status        PostingStatus @default(OPEN)
+  location      String
+  type          PlacementType @default(ON_SITE)
+  tags          String[]      @default([])
+  postedAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  employer      User          @relation("EmployerPostings", fields: [employerId], references: [id])
+  employerId    String
+  applications  Application[]
+}
+
+model Application {
+  id           String            @id @default(cuid())
+  status       ApplicationStatus @default(PENDING)
+  appliedAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  notes        String?           @db.Text
+
+  // Relations
+  posting      SITPosting        @relation(fields: [postingId], references: [id])
+  postingId    String
+  student      User              @relation(fields: [studentId], references: [id])
+  studentId    String
+
+  @@unique([postingId, studentId]) // Prevent duplicate applications
+}
+
+model LogbookEntry {
+  id           String        @id @default(cuid())
+  date         DateTime
+  hours        Float
+  tasks        String        @db.Text
+  status       LogbookStatus @default(PENDING)
+  feedback     String?       @db.Text
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relations
+  student      User          @relation(fields: [studentId], references: [id])
+  studentId    String
+}
