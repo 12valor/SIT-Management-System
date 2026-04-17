@@ -18,19 +18,25 @@ export default function DashboardLayout({
         </div>
         <nav className="flex-1 overflow-auto py-4 px-3 space-y-1">
           <Link
-            href="/dashboard"
+            href="/student/dashboard"
             className="flex items-center gap-3 rounded-md bg-muted px-3 py-2 text-sm font-medium text-foreground transition-all hover:bg-muted"
           >
             Dashboard
           </Link>
           <Link
-            href="/logbook"
+            href="/student/opportunities"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+          >
+            Opportunities
+          </Link>
+          <Link
+            href="/student/logbook"
             className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
             Logbook
           </Link>
           <Link
-            href="/documents"
+            href="/student/documents"
             className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
             Documents
@@ -38,7 +44,7 @@ export default function DashboardLayout({
         </nav>
         <div className="border-t border-border p-4">
           <Link
-            href="/profile"
+            href="/student/profile"
             className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
             Profile

@@ -13,7 +13,9 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (email === "evangelista.agdiaz@tupv.edu.ph" && password === "TUPV-0909") {
-      router.push("/dashboard");
+      router.push("/student/dashboard");
+    } else if (email === "employer@company.com" && password === "admin123") {
+      router.push("/employer/dashboard");
     } else {
       setError("Invalid email or password");
     }
@@ -24,8 +26,12 @@ export default function LoginPage() {
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-primary">TUP-V SIT</h1>
         <p className="text-sm text-muted-foreground">
-          Enter your credentials to access the logbook system
+          Enter credentials to access the system
         </p>
+        <div className="text-xs text-muted-foreground p-3 border border-border rounded-md bg-muted/30 flex flex-col gap-1 text-left mt-4">
+          <p><strong>Student:</strong> evangelista.agdiaz@tupv.edu.ph / TUPV-0909</p>
+          <p><strong>Employer:</strong> employer@company.com / admin123</p>
+        </div>
       </div>
       <form onSubmit={handleLogin} className="space-y-4">
         {error && (
