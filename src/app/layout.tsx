@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "A premium platform for managing Supervised Industrial Training (SIT) at TUP-V. Connecting students and industry partners.",
 };
 
+import { AuthProvider } from "@/components/providers/session-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,14 +32,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

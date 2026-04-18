@@ -1,15 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  // NOTE: For Vercel Postgres, use environment variables provided by Vercel
   url      = env("DATABASE_URL")
 }
 
@@ -42,24 +40,89 @@ enum LogbookStatus {
   REJECTED
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  role      UserRole @default(STUDENT)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// --- Auth.js Models (NextAuth) ---
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// --- Core Application Models ---
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // For Credentials login
+  role          UserRole  @default(STUDENT)
+  course        String?   // For Students
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Connections
+  accounts      Account[]
+  sessions      Session[]
+  
+  // SIT Specific Relations
+  company       Company?  @relation(fields: [companyId], references: [id])
+  companyId     String?
+  
+  applications  Application[]
+  logbookEntries LogbookEntry[]
+  createdPostings SITPosting[]  @relation("EmployerPostings")
+  evaluations    SITEvaluation[] @relation("StudentEvaluations")
+  documents     SITDocument[]
+}
+
+model Company {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  industry     String
+  isVerified   Boolean   @default(false)
+  joinedAt     DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
   // Relations
-  applications     Application[]
-  logbookEntries   LogbookEntry[]
-  createdPostings  SITPosting[]   @relation("EmployerPostings")
+  employers    User[]
+  postings     SITPosting[]
 }
 
 model SITPosting {
   id            String        @id @default(cuid())
   title         String
-  company       String
   description   String        @db.Text
   requiredHours Int           @default(300)
   status        PostingStatus @default(OPEN)
@@ -72,15 +135,17 @@ model SITPosting {
   // Relations
   employer      User          @relation("EmployerPostings", fields: [employerId], references: [id])
   employerId    String
+  company       Company       @relation(fields: [companyId], references: [id])
+  companyId     String
   applications  Application[]
 }
 
 model Application {
   id           String            @id @default(cuid())
   status       ApplicationStatus @default(PENDING)
+  notes        String?           @db.Text
   appliedAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
-  notes        String?           @db.Text
 
   // Relations
   posting      SITPosting        @relation(fields: [postingId], references: [id])
@@ -88,7 +153,7 @@ model Application {
   student      User              @relation(fields: [studentId], references: [id])
   studentId    String
 
-  @@unique([postingId, studentId]) // Prevent duplicate applications
+  @@unique([postingId, studentId])
 }
 
 model LogbookEntry {
@@ -104,4 +169,34 @@ model LogbookEntry {
   // Relations
   student      User          @relation(fields: [studentId], references: [id])
   studentId    String
+}
+
+model SITEvaluation {
+  id               String   @id @default(cuid())
+  supervisorName   String
+  companyName      String
+  technicalSkills  Int
+  professionalism  Int
+  punctuality      Int
+  qualityOfWork    Int
+  overallGrade     Float
+  comments         String   @db.Text
+  recommendForHire Boolean  @default(true)
+  submittedAt      DateTime @default(now())
+
+  // Relations
+  student          User     @relation("StudentEvaluations", fields: [studentId], references: [id])
+  studentId        String
+}
+
+model SITDocument {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  url         String?  // If using external storage like Vercel Blob
+  uploadedAt  DateTime @default(now())
+
+  // Relations
+  student     User     @relation(fields: [studentId], references: [id])
+  studentId   String
 }

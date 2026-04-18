@@ -136,7 +136,7 @@ export default function EmployerEvaluationsPage() {
                       <CheckCircle2 className="h-8 w-8 text-green-600" />
                    </div>
                    <h3 className="text-2xl font-black text-green-600 tracking-tight">Evaluation Submitted!</h3>
-                   <p className="text-slate-500 font-medium">Your feedback has been recorded and the trainee's SIT record is being updated.</p>
+                   <p className="text-slate-500 font-medium">Your feedback has been recorded and the trainee&apos;s SIT record is being updated.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-10">
@@ -170,7 +170,7 @@ export default function EmployerEvaluationsPage() {
                       </label>
                       <textarea
                         required
-                        placeholder="Provide detailed feedback on the trainee's industrial performance..."
+                        placeholder="Provide detailed feedback on the trainee&apos;s industrial performance..."
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
                         className="w-full h-32 p-4 rounded-2xl bg-muted/30 border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none text-sm font-medium leading-relaxed"
