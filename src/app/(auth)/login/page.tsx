@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useMockStore } from "@/store/mock-store";
+import { signIn } from "next-auth/react";
 import { LogIn, Loader2, ShieldCheck, Mail, Lock } from "lucide-react";
 
 export default function LoginPage() {
@@ -19,20 +20,36 @@ export default function LoginPage() {
     setIsLoading(true);
     setError("");
 
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
 
-    if (email === "student@tupv.edu.ph" && password === "TUPV-0909") {
-      login(email, 'student', "John Doe Diaz");
-      router.push("/student/dashboard");
-    } else if (email === "employer@company.com" && password === "admin123") {
-      login(email, 'employer', "HR Manager");
-      router.push("/employer/dashboard");
-    } else if (email === "coordinator@tupv.edu.ph" && password === "admin-sit") {
-      login(email, 'coordinator', "SIT Office Admin");
-      router.push("/coordinator/dashboard");
-    } else {
-      setError("Invalid email or password. Please use the credentials provided below.");
+      if (result?.error) {
+        setError("Invalid email or password. Please use the credentials provided below.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Fetch session to get user role for selective redirection
+      const response = await fetch("/api/auth/session");
+      const session = await response.json();
+      const role = (session?.user as any)?.role;
+
+      if (role) {
+        // Update mock store user for backward compatibility with existing components
+        login(email, role.toLowerCase() as any, session.user.name);
+        
+        // Premium transition delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        router.push(`/${role.toLowerCase()}/dashboard`);
+      } else {
+        router.push("/");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
       setIsLoading(false);
     }
   };

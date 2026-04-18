@@ -7,8 +7,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // NOTE: For Vercel Postgres, use environment variables provided by Vercel
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum UserRole {
