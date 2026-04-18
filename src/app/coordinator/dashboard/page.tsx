@@ -17,14 +17,22 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function CoordinatorDashboard() {
-  const { applications, logbookEntries, companies, postings } = useMockStore();
+  const { applications, logbookEntries, companies, postings, evaluations } = useMockStore();
 
   // Aggregate stats from mock data
-  const totalStudents = new Set(applications.map(a => a.studentEmail)).size || 124; // Mock 124 if store is empty for demo
+  const totalStudents = new Set(applications.map(a => a.studentEmail)).size || 124;
   const hiredStudents = applications.filter(a => a.status === 'Accepted').length || 45;
-  const pendingLogs = logbookEntries.filter(e => e.status === 'Pending').length || 28;
   const totalPartnerCompanies = companies.length || 12;
   const verifiedCompanies = companies.filter(c => c.isVerified).length || 8;
+
+  // New Graduation Logic
+  const graduationReady = Array.from(new Set(applications.map(a => a.studentEmail))).filter(email => {
+    const hours = logbookEntries
+      .filter(e => e.studentEmail === email && e.status === 'Approved')
+      .reduce((acc, curr) => acc + curr.hours, 0);
+    const hasEval = evaluations.some(ev => ev.studentEmail === email);
+    return hours >= 300 && hasEval;
+  }).length;
 
   const stats = [
     { 
@@ -46,13 +54,13 @@ export default function CoordinatorDashboard() {
       description: "Positions finalized" 
     },
     { 
-      label: "Pending Reviews", 
-      value: pendingLogs.toString(), 
-      icon: Clock, 
+      label: "Graduation Ready", 
+      value: graduationReady.toString(), 
+      icon: Award, 
       color: "text-amber-600",
       bg: "bg-amber-600/10",
-      trend: "Critical action needed",
-      description: "Awaiting logbook audit" 
+      trend: "MOU Requirements Met",
+      description: "Hours & Assessment Complete" 
     },
     { 
       label: "Industry Partners", 

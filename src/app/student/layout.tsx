@@ -14,7 +14,8 @@ import {
   LogOut,
   Menu,
   X,
-  Bell
+  Bell,
+  Award
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +43,7 @@ export default function DashboardLayout({
     { name: "Opportunities", href: "/student/opportunities", icon: Briefcase },
     { name: "Logbook", href: "/student/logbook", icon: BookOpen },
     { name: "Documents", href: "/student/documents", icon: FileText },
+    { name: "SIT Completion", href: "/student/completion", icon: Award },
     { name: "Profile", href: "/student/profile", icon: UserIcon },
   ];
 

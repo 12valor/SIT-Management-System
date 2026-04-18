@@ -51,6 +51,21 @@ export interface Company {
   joinedAt: string;
 }
 
+export interface SITEvaluation {
+  id: string;
+  studentEmail: string;
+  supervisorName: string;
+  companyName: string;
+  technicalSkills: number; // 1-5
+  professionalism: number; // 1-5
+  punctuality: number; // 1-5
+  qualityOfWork: number; // 1-5
+  overallGrade: number; // calculated
+  comments: string;
+  recommendForHire: boolean;
+  submittedAt: string;
+}
+
 export interface User {
   email: string;
   name: string;
@@ -66,6 +81,7 @@ interface MockStore {
   applications: Application[];
   logbookEntries: LogbookEntry[];
   documents: SITDocument[];
+  evaluations: SITEvaluation[];
   login: (email: string, role: User['role'], name: string) => void;
   logout: () => void;
   updateProfile: (data: Partial<User>) => void;
@@ -77,6 +93,7 @@ interface MockStore {
   updateLogbookStatus: (entryId: string, status: LogbookEntry['status'], feedback?: string) => void;
   uploadDocument: (doc: Omit<SITDocument, 'id' | 'uploadedAt'>) => void;
   deleteDocument: (id: string) => void;
+  submitEvaluation: (evaluation: Omit<SITEvaluation, 'id' | 'submittedAt' | 'overallGrade'>) => void;
 }
 
 export const useMockStore = create<MockStore>()(
@@ -92,6 +109,7 @@ export const useMockStore = create<MockStore>()(
       applications: [],
       logbookEntries: [],
       documents: [],
+      evaluations: [],
       login: (email, role, name) => set({ user: { email, role, name } }),
       logout: () => set({ user: null }),
       updateProfile: (data) => set((state) => ({ 
@@ -170,6 +188,27 @@ export const useMockStore = create<MockStore>()(
         set((state) => ({
           documents: state.documents.filter(d => d.id !== id)
         })),
+      submitEvaluation: (evalData) =>
+        set((state) => {
+          const overallGrade = (
+            evalData.technicalSkills + 
+            evalData.professionalism + 
+            evalData.punctuality + 
+            evalData.qualityOfWork
+          ) / 4;
+          
+          return {
+            evaluations: [
+              ...state.evaluations,
+              {
+                ...evalData,
+                id: Math.random().toString(36).substr(2, 9),
+                overallGrade,
+                submittedAt: new Date().toISOString(),
+              }
+            ]
+          };
+        }),
     }),
     {
       name: 'sit-mock-storage',
