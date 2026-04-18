@@ -14,7 +14,8 @@ import {
   Menu,
   X,
   Bell,
-  Settings
+  Settings,
+  ClipboardCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -41,6 +42,7 @@ export default function EmployerLayout({
     { name: "Analytics", href: "/employer/dashboard", icon: BarChart3 },
     { name: "My Postings", href: "/employer/postings", icon: ClipboardList },
     { name: "Applicants", href: "/employer/applicants", icon: Users },
+    { name: "Logbook Reviews", href: "/employer/logbooks", icon: ClipboardCheck },
     { name: "Company Profile", href: "/employer/profile", icon: Building2 },
     { name: "Settings", href: "/employer/settings", icon: Settings },
   ];

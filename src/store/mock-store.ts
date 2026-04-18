@@ -34,10 +34,20 @@ export interface LogbookEntry {
   feedback?: string;
 }
 
+export interface SITDocument {
+  id: string;
+  name: string;
+  type: string;
+  uploadedAt: string;
+  studentEmail: string;
+}
+
 export interface User {
   email: string;
   name: string;
   role: 'student' | 'employer';
+  course?: string;
+  company?: string;
 }
 
 interface MockStore {
@@ -45,13 +55,17 @@ interface MockStore {
   postings: SITPosting[];
   applications: Application[];
   logbookEntries: LogbookEntry[];
+  documents: SITDocument[];
   login: (email: string, role: User['role'], name: string) => void;
   logout: () => void;
+  updateProfile: (data: Partial<User>) => void;
   createPosting: (posting: Omit<SITPosting, 'id' | 'status' | 'postedAt'>) => void;
   applyForSIT: (postingId: string, studentEmail: string, studentName: string) => void;
   updateApplicationStatus: (applicationId: string, status: Application['status']) => void;
   addLogbookEntry: (entry: Omit<LogbookEntry, 'id' | 'status'>) => void;
   updateLogbookStatus: (entryId: string, status: LogbookEntry['status'], feedback?: string) => void;
+  uploadDocument: (doc: Omit<SITDocument, 'id' | 'uploadedAt'>) => void;
+  deleteDocument: (id: string) => void;
 }
 
 export const useMockStore = create<MockStore>()(
@@ -61,8 +75,12 @@ export const useMockStore = create<MockStore>()(
       postings: [],
       applications: [],
       logbookEntries: [],
+      documents: [],
       login: (email, role, name) => set({ user: { email, role, name } }),
       logout: () => set({ user: null }),
+      updateProfile: (data) => set((state) => ({ 
+        user: state.user ? { ...state.user, ...data } : null 
+      })),
       createPosting: (postingData) =>
         set((state) => ({
           postings: [
@@ -116,6 +134,21 @@ export const useMockStore = create<MockStore>()(
           logbookEntries: state.logbookEntries.map((entry) =>
             entry.id === entryId ? { ...entry, status, feedback } : entry
           ),
+        })),
+      uploadDocument: (docData) => 
+        set((state) => ({
+          documents: [
+            ...state.documents,
+            {
+              ...docData,
+              id: Math.random().toString(36).substr(2, 9),
+              uploadedAt: new Date().toISOString(),
+            }
+          ]
+        })),
+      deleteDocument: (id) => 
+        set((state) => ({
+          documents: state.documents.filter(d => d.id !== id)
         })),
     }),
     {

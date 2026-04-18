@@ -20,7 +20,8 @@ export default function StudentDashboard() {
 
   const studentApplications = applications.filter(a => a.studentEmail === user?.email);
   const pendingApps = studentApplications.filter(a => a.status === 'Pending').length;
-  const acceptedApps = studentApplications.filter(a => a.status === 'Accepted').length;
+  const acceptedApp = studentApplications.find(a => a.status === 'Accepted');
+  const hiredPosting = acceptedApp ? postings.find(p => p.id === acceptedApp.postingId) : null;
   
   const totalHours = logbookEntries
     .filter(e => e.studentEmail === user?.email && e.status === 'Approved')
@@ -45,19 +46,19 @@ export default function StudentDashboard() {
     },
     { 
       label: "Approved Logs", 
-      value: logbookEntries.filter(e => e.status === 'Approved').length.toString(), 
+      value: logbookEntries.filter(e => e.studentEmail === user?.email && e.status === 'Approved').length.toString(), 
       icon: CheckCircle2, 
       color: "text-green-600",
       bg: "bg-green-600/10",
       description: "Validated SIT entries" 
     },
     { 
-      label: "Recent Activity", 
-      value: "Daily", 
-      icon: TrendingUp, 
+      label: "Placement", 
+      value: hiredPosting ? "Hired" : "Seeking", 
+      icon: Building2, 
       color: "text-amber-600",
       bg: "bg-amber-600/10",
-      description: "Active SIT participation" 
+      description: hiredPosting ? hiredPosting.company : "Active searching" 
     },
   ];
 
@@ -74,6 +75,26 @@ export default function StudentDashboard() {
           <span className="text-sm font-semibold">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
         </div>
       </div>
+
+      {hiredPosting && (
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-2xl relative overflow-hidden animate-in-fade">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full" />
+           <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
+              <div className="w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center text-2xl font-black border border-white/20">
+                {hiredPosting.company[0]}
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-1">Current Placement</p>
+                 <h3 className="text-xl font-bold">{hiredPosting.title}</h3>
+                 <p className="text-sm font-medium opacity-70">Working at {hiredPosting.company} • {hiredPosting.location}</p>
+              </div>
+              <div className="flex gap-3">
+                 <button className="px-5 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-bold transition-all">View Role</button>
+                 <button className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-bold transition-all shadow-lg shadow-primary/40">Contact HR</button>
+              </div>
+           </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -94,8 +115,8 @@ export default function StudentDashboard() {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-xl font-bold flex items-center gap-2">
-              <FileText className="h-5 w-5 text-primary" />
-              Recent Applications
+              <Activity className="h-5 w-5 text-primary" />
+              Recent Activity
             </h3>
             <button className="text-sm font-bold text-primary hover:underline">View all</button>
           </div>
@@ -145,8 +166,8 @@ export default function StudentDashboard() {
         {/* Quick Logbook View */}
         <div className="space-y-4">
            <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
-              <Building2 className="h-5 w-5 text-primary" />
-              Quick Logbook
+              <Clock className="h-5 w-5 text-primary" />
+              SIT Progress
             </h3>
             <div className="p-6 rounded-xl bg-primary text-primary-foreground shadow-xl shadow-primary/20 space-y-4 relative overflow-hidden group">
                <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-white/10 blur-[50px] rounded-full group-hover:scale-110 transition-transform" />
