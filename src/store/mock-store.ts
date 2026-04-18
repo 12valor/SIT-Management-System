@@ -42,10 +42,19 @@ export interface SITDocument {
   studentEmail: string;
 }
 
+export interface Company {
+  id: string;
+  name: string;
+  email: string;
+  industry: string;
+  isVerified: boolean;
+  joinedAt: string;
+}
+
 export interface User {
   email: string;
   name: string;
-  role: 'student' | 'employer';
+  role: 'student' | 'employer' | 'coordinator';
   course?: string;
   company?: string;
 }
@@ -53,6 +62,7 @@ export interface User {
 interface MockStore {
   user: User | null;
   postings: SITPosting[];
+  companies: Company[];
   applications: Application[];
   logbookEntries: LogbookEntry[];
   documents: SITDocument[];
@@ -60,6 +70,7 @@ interface MockStore {
   logout: () => void;
   updateProfile: (data: Partial<User>) => void;
   createPosting: (posting: Omit<SITPosting, 'id' | 'status' | 'postedAt'>) => void;
+  verifyCompany: (companyId: string, isVerified: boolean) => void;
   applyForSIT: (postingId: string, studentEmail: string, studentName: string) => void;
   updateApplicationStatus: (applicationId: string, status: Application['status']) => void;
   addLogbookEntry: (entry: Omit<LogbookEntry, 'id' | 'status'>) => void;
@@ -73,6 +84,11 @@ export const useMockStore = create<MockStore>()(
     (set) => ({
       user: null,
       postings: [],
+      companies: [
+        { id: 'c1', name: 'Tech Solutions Inc.', email: 'hr@techsol.com', industry: 'Software Dev', isVerified: true, joinedAt: '2026-01-15' },
+        { id: 'c2', name: 'BuildRight Construction', email: 'admin@buildright.com', industry: 'Civil Engineering', isVerified: false, joinedAt: '2026-03-10' },
+        { id: 'c3', name: 'DataStream Logistics', email: 'ops@datastream.com', industry: 'Logistics/IT', isVerified: true, joinedAt: '2026-02-20' },
+      ],
       applications: [],
       logbookEntries: [],
       documents: [],
@@ -81,6 +97,10 @@ export const useMockStore = create<MockStore>()(
       updateProfile: (data) => set((state) => ({ 
         user: state.user ? { ...state.user, ...data } : null 
       })),
+      verifyCompany: (companyId, isVerified) => 
+        set((state) => ({
+          companies: state.companies.map(c => c.id === companyId ? { ...c, isVerified } : c)
+        })),
       createPosting: (postingData) =>
         set((state) => ({
           postings: [

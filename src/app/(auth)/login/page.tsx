@@ -28,6 +28,9 @@ export default function LoginPage() {
     } else if (email === "employer@company.com" && password === "admin123") {
       login(email, 'employer', "HR Manager");
       router.push("/employer/dashboard");
+    } else if (email === "coordinator@tupv.edu.ph" && password === "admin-sit") {
+      login(email, 'coordinator', "SIT Office Admin");
+      router.push("/coordinator/dashboard");
     } else {
       setError("Invalid email or password. Please use the credentials provided below.");
       setIsLoading(false);
@@ -130,6 +133,14 @@ export default function LoginPage() {
           <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Employer Access</span>
           <span className="text-sm font-medium">employer@company.com</span>
           <span className="text-xs text-muted-foreground">Password: admin123</span>
+        </button>
+        <button 
+          onClick={() => { setEmail("coordinator@tupv.edu.ph"); setPassword("admin-sit"); }}
+          className="flex flex-col items-start p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
+        >
+          <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Coordinator Access</span>
+          <span className="text-sm font-medium">coordinator@tupv.edu.ph</span>
+          <span className="text-xs text-muted-foreground">Password: admin-sit</span>
         </button>
       </div>
 
