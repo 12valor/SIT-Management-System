@@ -26,7 +26,7 @@ export async function approveUser(userId: string) {
     });
     revalidatePath("/coordinator/registrations");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Failed to approve user." };
   }
 }
@@ -38,7 +38,7 @@ export async function rejectUser(userId: string) {
     });
     revalidatePath("/coordinator/registrations");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Failed to reject user." };
   }
 }
@@ -51,7 +51,7 @@ export async function verifyCompany(companyId: string) {
     });
     revalidatePath("/coordinator/registrations");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Failed to verify company." };
   }
 }

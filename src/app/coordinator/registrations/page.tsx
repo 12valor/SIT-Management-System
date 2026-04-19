@@ -9,16 +9,17 @@ import {
   Calendar, 
   Loader2, 
   CheckCircle2, 
-  XCircle,
   ShieldAlert,
   GraduationCap,
   Briefcase
 } from "lucide-react";
 import { getPendingRegistrations, approveUser, rejectUser, verifyCompany } from "./actions";
 import { cn } from "@/lib/utils";
+import { RegistrationData, PendingUser } from "./types";
+import { Company } from "@prisma/client";
 
 export default function CoordinatorRegistrationsPage() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<RegistrationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [actionId, setActionId] = useState<string | null>(null);
 
@@ -95,7 +96,7 @@ export default function CoordinatorRegistrationsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pendingUsers.length > 0 ? pendingUsers.map((user: any) => (
+            {pendingUsers.length > 0 ? pendingUsers.map((user: PendingUser) => (
               <div key={user.id} className="group p-6 rounded-[2.5rem] bg-card border border-border/60 hover:border-primary/30 transition-all relative overflow-hidden flex flex-col h-full shadow-sm hover:shadow-2xl hover:shadow-primary/5">
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex items-center gap-3">
@@ -176,7 +177,7 @@ export default function CoordinatorRegistrationsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pendingCompanies.length > 0 ? pendingCompanies.map((company: any) => (
+            {pendingCompanies.length > 0 ? pendingCompanies.map((company: Company) => (
               <div key={company.id} className="p-8 rounded-[2.5rem] bg-card border border-border/60 relative overflow-hidden flex flex-col shadow-sm">
                  <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
