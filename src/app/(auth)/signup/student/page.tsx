@@ -52,9 +52,9 @@ export default function StudentSignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen overflow-hidden bg-white">
+    <div className="flex h-screen overflow-hidden bg-white">
       {/* Left side - Institutional Branding */}
-      <div className="relative hidden lg:flex lg:w-2/5 xl:w-[45%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 min-w-0">
+      <div className="relative hidden lg:flex lg:w-2/5 xl:w-[45%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 min-w-0 h-full">
         <div className="absolute inset-0 pointer-events-none select-none">
           <Image 
             src="/images/auth/student.png" 

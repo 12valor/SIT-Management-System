@@ -39,9 +39,9 @@ export default function StudentLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen overflow-hidden bg-white">
+    <div className="flex h-screen overflow-hidden bg-white">
       {/* Left side - Visual Experience (Light Edition) */}
-      <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
+      <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 h-full">
         <div className="absolute inset-0 pointer-events-none">
           <Image 
             src="/images/auth/student.png" 
