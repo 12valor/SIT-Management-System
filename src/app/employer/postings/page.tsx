@@ -80,7 +80,7 @@ export default function EmployerPostingsPage() {
         </div>
         <button 
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95"
         >
           <Plus className="h-5 w-5" />
           Create New Role
@@ -95,7 +95,7 @@ export default function EmployerPostingsPage() {
          </div>
          <div className="p-4 rounded-lg bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Applications</p>
-            <p className="text-xl font-black text-blue-600">
+            <p className="text-xl font-black text-primary">
                {applications.filter(a => a.status === 'Pending').length} Pending
             </p>
          </div>
@@ -105,33 +105,33 @@ export default function EmployerPostingsPage() {
          </div>
          <div className="p-4 rounded-lg bg-card border border-border shadow-sm">
             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider mb-1">Status</p>
-            <p className="text-xl font-black text-green-600">Active</p>
+            <p className="text-xl font-black text-primary">Active</p>
          </div>
       </div>
 
       {/* Search & List */}
       <div className="space-y-4">
         <div className="relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-blue-600 transition-colors" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
           <input
             type="text"
             placeholder="Search through your postings..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 h-12 rounded-lg border border-border bg-card shadow-sm outline-none focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 transition-all text-sm font-medium"
+            className="w-full pl-12 pr-4 h-12 rounded-lg border border-border bg-card shadow-sm outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-sm font-medium"
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4">
           {filteredPostings.length > 0 ? (
             filteredPostings.reverse().map((posting) => (
-              <div key={posting.id} className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-xl bg-card border border-border hover:border-blue-600/50 transition-all hover:shadow-xl hover:shadow-blue-600/5">
+              <div key={posting.id} className="group flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5">
                 <div className="flex items-center gap-5">
-                   <div className="w-14 h-14 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 transition-colors">
-                      <Target className="h-6 w-6 text-blue-600 group-hover:text-white transition-colors" />
+                   <div className="w-14 h-14 rounded-lg bg-primary/5 flex items-center justify-center border border-primary/10 group-hover:bg-primary transition-colors">
+                      <Target className="h-6 w-6 text-primary group-hover:text-white transition-colors" />
                    </div>
                    <div>
-                      <h3 className="text-lg font-bold group-hover:text-blue-600 transition-colors">{posting.title}</h3>
+                      <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{posting.title}</h3>
                       <div className="flex items-center gap-4 mt-1">
                         <span className="flex items-center text-xs font-semibold text-muted-foreground">
                           <MapPin className="h-3 w-3 mr-1" /> {posting.location}
@@ -172,7 +172,7 @@ export default function EmployerPostingsPage() {
       {/* Creation Modal */}
       {isAdding && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={() => setIsAdding(false)} />
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-md" onClick={() => setIsAdding(false)} />
           <div className="relative w-full max-w-2xl bg-card border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             <div className="p-8 border-b border-border/50 flex justify-between items-center bg-muted/30">
               <div>
@@ -195,7 +195,7 @@ export default function EmployerPostingsPage() {
                     placeholder="e.g. Backend Engineer Trainee"
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
-                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 outline-none transition-all font-medium"
+                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none transition-all font-medium"
                     required
                   />
                 </div>
@@ -206,12 +206,13 @@ export default function EmployerPostingsPage() {
                     placeholder="e.g. Bacolod City"
                     value={formData.location}
                     onChange={(e) => setFormData({...formData, location: e.target.value})}
-                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 outline-none transition-all font-medium"
+                    className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none transition-all font-medium"
                     required
                   />
                 </div>
               </div>
 
+              {/* ... existing fields unchanged ... */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Placement Type</label>
@@ -252,7 +253,7 @@ export default function EmployerPostingsPage() {
                 <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Target Skills (Tags)</label>
                 <div className="min-h-[50px] p-2 rounded-lg border border-border bg-muted/20 flex flex-wrap gap-2">
                   {formData.tags.map(tag => (
-                    <span key={tag} className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-600 text-white text-[11px] font-bold">
+                    <span key={tag} className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary text-primary-foreground text-[11px] font-bold">
                       {tag}
                       <X className="h-3 w-3 cursor-pointer hover:bg-white/20 rounded" onClick={() => removeTag(tag)} />
                     </span>
@@ -272,7 +273,7 @@ export default function EmployerPostingsPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex h-14 items-center justify-center rounded-lg bg-blue-600 px-4 text-base font-black text-white shadow-xl shadow-blue-600/20 transition-all hover:bg-blue-700 active:scale-[0.98] disabled:opacity-70"
+                  className="w-full flex h-14 items-center justify-center rounded-lg bg-primary px-4 text-base font-black text-primary-foreground shadow-xl shadow-primary/20 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:opacity-70"
                 >
                   {isLoading ? (
                     <Loader2 className="h-6 w-6 animate-spin" />

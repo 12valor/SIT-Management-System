@@ -45,29 +45,29 @@ export default function StudentProfilePage() {
   return (
     <div className="max-w-4xl mx-auto space-y-10 pb-20">
       {/* Profile Header Card */}
-      <div className="relative overflow-hidden p-8 md:p-12 rounded-2xl bg-slate-900 text-white shadow-2xl flex flex-col md:flex-row items-center gap-8">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/10 blur-[60px] rounded-full" />
+      <div className="relative overflow-hidden p-8 md:p-12 rounded-2xl bg-primary text-primary-foreground shadow-2xl flex flex-col md:flex-row items-center gap-8">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[100px] rounded-full" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 blur-[60px] rounded-full" />
         
         <div className="relative z-10">
-          <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-4xl font-black shadow-2xl shadow-primary/40 border-4 border-white/10">
+          <div className="w-32 h-32 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl font-black shadow-2xl border-4 border-white/20">
             {user.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
           </div>
-          <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-green-500 border-4 border-slate-900 flex items-center justify-center">
-            <ShieldCheck className="h-5 w-5 text-white" />
+          <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-white text-primary border-4 border-primary flex items-center justify-center">
+            <ShieldCheck className="h-5 w-5" />
           </div>
         </div>
 
         <div className="relative z-10 text-center md:text-left space-y-2">
-          <p className="text-primary font-black uppercase tracking-widest text-[10px]">Student Identity</p>
+          <p className="text-white/70 font-black uppercase tracking-widest text-[10px]">Student Identity</p>
           <h2 className="text-3xl md:text-4xl font-black tracking-tight">{user.name}</h2>
           <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
              <div className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-bold flex items-center gap-2">
-                <BookOpen className="h-3.5 w-3.5 text-primary" />
+                <BookOpen className="h-3.5 w-3.5" />
                 {formData.course}
              </div>
              <div className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-bold flex items-center gap-2">
-                <Calendar className="h-3.5 w-3.5 text-primary" />
+                <Calendar className="h-3.5 w-3.5" />
                 S.Y. 2024-2025
              </div>
           </div>
@@ -130,7 +130,7 @@ export default function StudentProfilePage() {
 
                 <div className="pt-4 flex items-center justify-between">
                    {success ? (
-                     <p className="text-green-600 text-sm font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                     <p className="text-primary text-sm font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
                         <CheckCircle2 className="h-4 w-4" /> Profile updated successfully
                      </p>
                    ) : <div />}
@@ -155,7 +155,7 @@ export default function StudentProfilePage() {
               <div className="space-y-4">
                  <div className="flex justify-between items-center text-sm">
                     <span className="text-muted-foreground font-medium">SIT Status</span>
-                    <span className="px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 text-[10px] font-black uppercase">In Progress</span>
+                    <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-black uppercase">In Progress</span>
                  </div>
                  <div className="flex justify-between items-center text-sm">
                     <span className="text-muted-foreground font-medium">Placement</span>
@@ -167,7 +167,7 @@ export default function StudentProfilePage() {
               </div>
            </div>
 
-           <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-white shadow-xl">
+           <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-xl">
               <h4 className="font-black text-sm mb-2 uppercase tracking-tight">Need Help?</h4>
               <p className="text-xs font-medium opacity-80 mb-6 leading-relaxed">
                 If you need to change your school ID or role, please contact the TUP-V SIT Coordinator.

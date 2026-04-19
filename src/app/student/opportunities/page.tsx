@@ -65,8 +65,8 @@ export default function OpportunitiesPage() {
   if (isLoading && postings.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-indigo-600 animate-spin" />
-        <p className="text-slate-500 font-black uppercase tracking-widest text-xs">Scanning Global Opportunities...</p>
+        <Loader2 className="h-10 w-10 text-primary animate-spin" />
+        <p className="text-muted-foreground font-black uppercase tracking-widest text-xs">Scanning Global Opportunities...</p>
       </div>
     );
   }
@@ -76,25 +76,25 @@ export default function OpportunitiesPage() {
       {/* Header & Search */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border pb-10">
         <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
              <Briefcase className="h-4 w-4" />
              <span className="text-[10px] font-black uppercase tracking-widest">Industry Stream</span>
           </div>
-          <h2 className="text-6xl font-black tracking-tighter leading-none italic uppercase">Career <span className="text-indigo-600">Postings</span></h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Acquire elite industrial placements within the TUP-V ecosystem.</p>
+          <h2 className="text-6xl font-black tracking-tighter leading-none italic uppercase">Career <span className="text-primary">Postings</span></h2>
+          <p className="text-muted-foreground font-medium text-lg">Acquire elite industrial placements within the TUP-V ecosystem.</p>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
           <div className="relative group w-full sm:w-80">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <input
               type="text"
               placeholder="Filter industrial partners..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-14 pr-6 h-16 w-full rounded-[1.5rem] border border-border bg-card shadow-sm outline-none focus:ring-4 focus:ring-indigo-600/10 focus:border-indigo-600 text-xs font-black uppercase tracking-widest transition-all"
+              className="pl-14 pr-6 h-16 w-full rounded-[1.5rem] border border-border bg-card shadow-sm outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary text-xs font-black uppercase tracking-widest transition-all"
             />
           </div>
-          <button className="h-16 w-16 rounded-[1.5rem] bg-indigo-600 text-white flex items-center justify-center shadow-2xl shadow-indigo-600/20 hover:scale-105 active:scale-95 transition-all">
+          <button className="h-16 w-16 rounded-[1.5rem] bg-primary text-primary-foreground flex items-center justify-center shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
              <Filter className="h-6 w-6" />
           </button>
         </div>
@@ -105,42 +105,42 @@ export default function OpportunitiesPage() {
         {filteredPostings.map((posting) => {
           const applied = posting.applications.length > 0;
           return (
-            <div key={posting.id} className="group p-10 rounded-[3rem] bg-card border border-border/60 hover:border-indigo-500/30 transition-all hover:shadow-4xl hover:shadow-indigo-500/5 relative overflow-hidden flex flex-col">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-[80px] rounded-full" />
+            <div key={posting.id} className="group p-10 rounded-[3rem] bg-card border border-border/60 hover:border-primary/30 transition-all hover:shadow-4xl hover:shadow-primary/5 relative overflow-hidden flex flex-col">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[80px] rounded-full" />
               
                <div className="flex justify-between items-start mb-10 relative z-10">
-                  <div className="w-16 h-16 rounded-[1.5rem] bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-2xl font-black text-slate-300 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:scale-110 shadow-sm border border-border/40">
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-muted flex items-center justify-center text-2xl font-black text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all transform group-hover:scale-110 shadow-sm border border-border/40">
                      {posting.company.name[0]}
                   </div>
                   <div className="flex flex-col items-end gap-2">
                      <span className={cn(
                        "px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border shadow-sm",
-                       posting.location.toLowerCase().includes('remote') ? "bg-amber-50 text-amber-600 border-amber-200" : "bg-indigo-50 text-indigo-600 border-indigo-200"
+                       posting.location.toLowerCase().includes('remote') ? "bg-primary/5 text-primary border-primary/20" : "bg-primary/10 text-primary border-primary/20"
                      )}>
                        {posting.location}
                      </span>
-                     <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 dark:bg-slate-800 rounded-lg border border-border/40">
-                        <Zap className="h-3 w-3 text-amber-500 fill-amber-500" />
-                        <span className="text-[10px] font-black tracking-tighter text-slate-500 uppercase">{posting.type}</span>
+                     <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted rounded-lg border border-border/40">
+                        <Zap className="h-3 w-3 text-primary fill-primary" />
+                        <span className="text-[10px] font-black tracking-tighter text-muted-foreground uppercase">{posting.type}</span>
                      </div>
                   </div>
                </div>
 
                <div className="space-y-2 mb-10 relative z-10 flex-1">
-                  <h3 className="text-2xl font-black tracking-tight leading-tight group-hover:text-indigo-600 transition-colors uppercase italic">{posting.title}</h3>
-                  <p className="text-sm font-black text-slate-400 uppercase tracking-widest leading-none flex items-center gap-2">
+                  <h3 className="text-2xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors uppercase italic">{posting.title}</h3>
+                  <p className="text-sm font-black text-muted-foreground uppercase tracking-widest leading-none flex items-center gap-2">
                      <Building2 className="h-4 w-4" /> {posting.company.name}
                   </p>
                </div>
 
                <div className="flex items-center gap-10 border-y border-border/40 py-8 mb-10 relative z-10">
                   <div className="space-y-1">
-                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Term Required</p>
-                     <p className="text-lg font-black tracking-tighter">{posting.requiredHours} <span className="text-[10px] text-slate-400 font-bold">HRS</span></p>
+                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Term Required</p>
+                     <p className="text-lg font-black tracking-tighter">{posting.requiredHours} <span className="text-[10px] text-muted-foreground font-bold">HRS</span></p>
                   </div>
                   <div className="space-y-1">
-                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Open Slots</p>
-                     <p className="text-lg font-black tracking-tighter">05 <span className="text-[10px] text-slate-400 font-bold">INT</span></p>
+                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Open Slots</p>
+                     <p className="text-lg font-black tracking-tighter">05 <span className="text-[10px] text-muted-foreground font-bold">INT</span></p>
                   </div>
                </div>
 
@@ -150,8 +150,8 @@ export default function OpportunitiesPage() {
                 className={cn(
                   "w-full py-5 rounded-[1.5rem] flex items-center justify-center gap-4 text-xs font-black uppercase tracking-[0.2em] transition-all relative z-10",
                   applied 
-                  ? "bg-emerald-50 text-emerald-600 border border-emerald-200 opacity-60 cursor-not-allowed" 
-                  : "bg-slate-950 dark:bg-indigo-600 text-white shadow-3xl shadow-indigo-600/20 hover:scale-[1.03] active:scale-95 hover:shadow-indigo-600/40"
+                  ? "bg-primary/10 text-primary border border-primary/20 opacity-60 cursor-not-allowed" 
+                  : "bg-primary text-primary-foreground shadow-3xl shadow-primary/20 hover:scale-[1.03] active:scale-95 hover:shadow-primary/40"
                 )}
                >
                 {applied ? (
@@ -165,12 +165,12 @@ export default function OpportunitiesPage() {
         })}
 
         {filteredPostings.length === 0 && (
-           <div className="col-span-full py-48 text-center rounded-[4rem] border-2 border-dashed border-border/40 bg-slate-50/40 opacity-40">
-                <div className="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-8">
-                  <Activity className="h-10 w-10 text-slate-300" />
+           <div className="col-span-full py-48 text-center rounded-[4rem] border-2 border-dashed border-border/40 bg-muted/40 opacity-40">
+                <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mx-auto mb-8">
+                  <Activity className="h-10 w-10 text-muted-foreground" />
                 </div>
                 <h3 className="text-3xl font-black mb-3 tracking-tight">Zero Results Manifested</h3>
-                <p className="text-base font-medium max-w-sm mx-auto text-slate-500 leading-relaxed italic italic">Your search criteria did not match any active industrial opportunities. Try expanding your parameters.</p>
+                <p className="text-base font-medium max-w-sm mx-auto text-muted-foreground leading-relaxed italic italic">Your search criteria did not match any active industrial opportunities. Try expanding your parameters.</p>
             </div>
         )}
       </div>
@@ -178,35 +178,35 @@ export default function OpportunitiesPage() {
       {/* Application Modal */}
       {applyingTo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12">
-          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xl animate-in-fade" onClick={() => !isSuccess && setApplyingTo(null)} />
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-xl animate-in-fade" onClick={() => !isSuccess && setApplyingTo(null)} />
           <div className="relative w-full max-w-[42rem] bg-card border border-border/60 rounded-[3.5rem] shadow-4xl overflow-hidden animate-in-bounce">
             {isSuccess ? (
               <div className="p-20 text-center animate-in-fade">
-                <div className="w-32 h-32 bg-emerald-500/10 text-emerald-600 rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-emerald-500/20 ring-8 ring-emerald-500/5">
+                <div className="w-32 h-32 bg-primary/10 text-primary rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-primary/20 ring-8 ring-primary/5">
                   <CheckCircle2 className="h-16 w-16" />
                 </div>
                 <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic">Success.</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium italic">Your industrial candidacy has been transmitted to {applyingTo.company.name}. Access your dashboard for status updates.</p>
+                <p className="text-muted-foreground text-lg font-medium italic">Your industrial candidacy has been transmitted to {applyingTo.company.name}. Access your dashboard for status updates.</p>
               </div>
             ) : (
               <div className="relative z-10">
-                <div className="p-10 md:p-14 border-b border-border/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+                <div className="p-10 md:p-14 border-b border-border/50 flex justify-between items-center bg-muted/30">
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                       <Zap className="h-5 w-5 text-indigo-600" />
-                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600">Transmission Request</span>
+                       <Zap className="h-5 w-5 text-primary" />
+                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Transmission Request</span>
                     </div>
-                    <h3 className="text-3xl font-black tracking-tighter italic uppercase">Confirm <span className="text-indigo-600">Application</span></h3>
+                    <h3 className="text-3xl font-black tracking-tighter italic uppercase">Confirm <span className="text-primary">Application</span></h3>
                   </div>
                   <button 
                     onClick={() => setApplyingTo(null)}
-                    className="h-14 w-14 rounded-2xl bg-white dark:bg-slate-800 border border-border/60 hover:bg-rose-500 hover:text-white flex items-center justify-center transition-all group"
+                    className="h-14 w-14 rounded-2xl bg-background border border-border/60 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all group"
                   >
                     <X className="h-6 w-6 group-hover:rotate-90 transition-transform" />
                   </button>
                 </div>
                 <div className="p-10 md:p-14 space-y-10">
-                   <div className="p-8 rounded-[2.5rem] bg-indigo-600 text-white shadow-3xl shadow-indigo-600/20 relative overflow-hidden group/alert">
+                   <div className="p-8 rounded-[2.5rem] bg-primary text-primary-foreground shadow-3xl shadow-primary/20 relative overflow-hidden group/alert">
                       <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-[60px] rounded-full group-hover/alert:scale-150 transition-transform duration-1000" />
                       <div className="relative z-10 flex items-start gap-6">
                          <div className="p-4 bg-white/10 rounded-2xl">
@@ -214,7 +214,7 @@ export default function OpportunitiesPage() {
                          </div>
                          <div className="space-y-2">
                            <p className="text-xl font-black tracking-tight leading-none">Security clearance granted.</p>
-                           <p className="text-sm font-medium text-indigo-50 leading-relaxed italic opacity-80">
+                           <p className="text-sm font-medium text-white leading-relaxed italic opacity-80">
                              By finalizing this transmission, your verified SIT manifest, academic records, and professional details will be securely shared with {applyingTo.company.name} for executive review.
                            </p>
                          </div>
@@ -223,19 +223,19 @@ export default function OpportunitiesPage() {
 
                    <div className="grid grid-cols-2 gap-10 border-b border-border/40 pb-10">
                       <div className="space-y-2">
-                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Position Matrix</p>
-                         <p className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">{applyingTo.title}</p>
+                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Position Matrix</p>
+                         <p className="text-2xl font-black tracking-tighter uppercase italic text-foreground">{applyingTo.title}</p>
                       </div>
                       <div className="space-y-2">
-                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Module Requirement</p>
-                         <p className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">{applyingTo.requiredHours} Industrial Hours</p>
+                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Module Requirement</p>
+                         <p className="text-2xl font-black tracking-tighter uppercase italic text-foreground">{applyingTo.requiredHours} Industrial Hours</p>
                       </div>
                    </div>
 
                    <button
                     onClick={() => handleApply(applyingTo.id)}
                     disabled={isSubmitting}
-                    className="w-full flex h-20 items-center justify-center rounded-[2rem] bg-slate-950 dark:bg-indigo-600 px-8 text-sm font-black text-white uppercase tracking-[0.3em] shadow-3xl shadow-indigo-600/20 hover:scale-[1.01] active:scale-95 transition-all group disabled:opacity-30"
+                    className="w-full flex h-20 items-center justify-center rounded-[2rem] bg-primary px-8 text-sm font-black text-primary-foreground uppercase tracking-[0.3em] shadow-3xl shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all group disabled:opacity-30"
                    >
                      {isSubmitting ? <Loader2 className="h-6 w-6 animate-spin" /> : <>Finalize Transmission <Send className="ml-4 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>}
                    </button>

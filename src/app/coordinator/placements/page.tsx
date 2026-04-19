@@ -10,8 +10,8 @@ export default function CoordinatorPlacementsPage() {
   return (
     <div className="space-y-8 animate-in-fade">
       <div className="flex items-center justify-between">
-         <h1 className="text-3xl font-black text-slate-900 dark:text-white">Active Placements</h1>
-         <div className="px-4 py-2 rounded-xl bg-indigo-600/10 text-indigo-600 text-xs font-black uppercase tracking-widest">
+         <h1 className="text-3xl font-black text-foreground">Active Placements</h1>
+         <div className="px-4 py-2 rounded-xl bg-primary/10 text-primary text-xs font-black uppercase tracking-widest">
             {hired.length} Students Hired
          </div>
       </div>
@@ -20,23 +20,23 @@ export default function CoordinatorPlacementsPage() {
         {hired.map((app) => {
           const posting = postings.find(p => p.id === app.postingId);
           return (
-            <div key={app.id} className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div key={app.id} className="p-6 rounded-3xl bg-card border border-border shadow-sm space-y-4">
                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-black text-indigo-600">
+                  <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center font-black text-primary">
                     {app.studentName[0]}
                   </div>
                   <div>
-                    <h4 className="font-black text-slate-900 dark:text-white">{app.studentName}</h4>
-                    <p className="text-[10px] font-bold text-slate-400">{app.studentEmail}</p>
+                    <h4 className="font-black text-foreground">{app.studentName}</h4>
+                    <p className="text-[10px] font-bold text-muted-foreground">{app.studentEmail}</p>
                   </div>
                </div>
-               <div className="space-y-3 pt-4 border-t border-slate-50 dark:border-slate-800">
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-400">
-                     <Building2 className="h-4 w-4 text-indigo-500" />
+               <div className="space-y-3 pt-4 border-t border-border">
+                  <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
+                     <Building2 className="h-4 w-4 text-primary" />
                      {posting?.company || "Partner Company"}
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-400">
-                     <MapPin className="h-4 w-4 text-indigo-500" />
+                  <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
+                     <MapPin className="h-4 w-4 text-primary" />
                      {posting?.location || "On-site"}
                   </div>
                </div>
