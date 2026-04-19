@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   ShieldCheck,
+  ShieldAlert,
   ChevronRight,
   Zap,
   Command
