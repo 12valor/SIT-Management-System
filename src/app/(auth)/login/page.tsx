@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useMockStore } from "@/store/mock-store";
+
 import { signIn } from "next-auth/react";
 import { LogIn, Loader2, ShieldCheck, Mail, Lock } from "lucide-react";
 
@@ -13,7 +13,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const login = useMockStore((state) => state.login);
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,11 +39,6 @@ export default function LoginPage() {
       const role = session?.user?.role;
 
       if (role) {
-        // Update mock store user for backward compatibility with existing components
-        login(email, role.toLowerCase() as "student" | "employer" | "coordinator", session.user.name);
-        
-        // Premium transition delay
-        await new Promise(resolve => setTimeout(resolve, 500));
         router.push(`/${role.toLowerCase()}/dashboard`);
       } else {
         router.push("/");

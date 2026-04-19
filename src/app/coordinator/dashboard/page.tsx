@@ -1,263 +1,175 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { 
-  Users, 
-  Building2, 
-  CheckCircle2, 
-  TrendingUp, 
-  Briefcase, 
-  ArrowUpRight, 
-  MoreHorizontal, 
-  Award, 
-  Loader2 
+import {
+  Users, Building2, CheckCircle2, Award, Briefcase, Loader2, Clock, AlertCircle,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { getCoordinatorStats } from "./actions";
 import { CoordinatorStats, RecentPlacement } from "./types";
 
+
 export default function CoordinatorDashboard() {
-  const [stats, setStats] = useState<CoordinatorStats | null>(null);
+  const [stats, setStats]       = useState<CoordinatorStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function loadStats() {
-      const result = await getCoordinatorStats();
-      if (result.success && result.data) {
-        setStats(result.data);
-      }
+    getCoordinatorStats().then((res) => {
+      if (res.success && res.data) setStats(res.data);
       setIsLoading(false);
-    }
-    loadStats();
+    });
   }, []);
 
   if (isLoading || !stats) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-primary animate-spin" />
-        <p className="text-muted-foreground font-bold animate-pulse uppercase tracking-widest text-xs">
-          {isLoading ? "Synchronizing Ecosystem Data..." : "Industrial Data Unavailable"}
-        </p>
+      <div className="flex items-center justify-center h-64 gap-3">
+        <Loader2 className="h-5 w-5 text-primary animate-spin" />
+        <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Loading...</span>
       </div>
     );
   }
 
+  const placementRate = stats.totalStudents > 0
+    ? Math.round((stats.hiredStudents / stats.totalStudents) * 100)
+    : 0;
+
   const statCards = [
-    { 
-      label: "Active Students", 
-      value: stats.totalStudents.toString(), 
-      icon: Users, 
-      color: "text-primary",
-      bg: "bg-primary/10",
-      trend: "+12% vs last sem",
-      description: "Enrolled in SIT module" 
-    },
-    { 
-      label: "Hired Trainees", 
-      value: stats.hiredStudents.toString(), 
-      icon: CheckCircle2, 
-      color: "text-primary",
-      bg: "bg-primary/10",
-      trend: `${Math.round((stats.hiredStudents / stats.totalStudents) * 100) || 0}% Placement`,
-      description: "Positions finalized" 
-    },
-    { 
-      label: "Graduation Ready", 
-      value: stats.graduationReady.toString(), 
-      icon: Award, 
-      color: "text-primary",
-      bg: "bg-primary/10",
-      trend: "MOU Requirements Met",
-      description: "Hours & Assessment Complete" 
-    },
-    { 
-      label: "Industry Partners", 
-      value: stats.totalCompanies.toString(), 
-      icon: Building2, 
-      color: "text-primary",
-      bg: "bg-primary/10",
-      trend: `${stats.verifiedCompanies} Verified`,
-      description: "Active MOU companies" 
-    },
+    { label: "Enrolled Students", value: stats.totalStudents,      icon: Users },
+    { label: "Active Placements",  value: stats.hiredStudents,      icon: Briefcase },
+    { label: "Hours Complete",     value: stats.graduationReady,    icon: Award },
+    { label: "Industry Partners",  value: stats.totalCompanies,     icon: Building2 },
   ];
 
   return (
-    <div className="space-y-12 pb-20 animate-in-fade">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+    <div className="space-y-8 pb-12">
+      {/* Page header */}
+      <div className="flex items-center justify-between border-b border-border pb-5">
         <div>
-           <div className="flex items-center gap-2 mb-2">
-              <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">
-                System Administrator
-              </span>
-           </div>
-           <h1 className="text-5xl font-black tracking-tighter text-foreground leading-tight">
-             Ecosystem <span className="text-primary">Analytics</span>
-           </h1>
-           <p className="text-muted-foreground font-medium mt-2 max-w-xl leading-relaxed">
-             Real-time overview of the TUP-V Supervised Industrial Training program, monitoring student progress and partner engagement.
-           </p>
+          <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">
+            TUP-V SIT Coordinator Portal
+          </p>
+          <h1 className="text-2xl font-black tracking-tight text-foreground">Program Overview</h1>
         </div>
-        <div className="flex items-center gap-4">
-           <div className="hidden lg:flex -space-x-3 overflow-hidden p-1">
-              {[1,2,3,4].map(i => (
-                <div key={i} className="h-12 w-12 rounded-2xl border-2 border-background bg-muted flex items-center justify-center text-xs font-black text-muted-foreground shadow-sm">
-                   {String.fromCharCode(64+i)}
-                </div>
-              ))}
-              <div className="h-12 w-12 rounded-2xl border-2 border-background bg-primary flex items-center justify-center text-xs font-black text-primary-foreground shadow-xl shadow-primary/20">
-                 +Stats
-              </div>
-           </div>
-           <button className="h-14 px-8 rounded-2xl bg-primary text-primary-foreground font-black text-sm shadow-2xl shadow-primary/10 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-3">
-              Generate Audit Report <ArrowUpRight className="h-5 w-5" />
-           </button>
+        <div className="text-right">
+          <p className="text-[10px] font-mono text-muted-foreground">Placement Rate</p>
+          <p className="text-2xl font-black font-mono tabular-nums text-primary">{placementRate}%</p>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {statCards.map((stat) => (
-          <div key={stat.label} className="group p-8 rounded-[2.5rem] bg-card border border-border/50 hover:border-primary/30 transition-all hover:shadow-3xl hover:shadow-primary/5 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-3xl rounded-full" />
-            <div className={cn("w-16 h-16 rounded-3xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110 shadow-lg border border-border/10", stat.bg)}>
-              <stat.icon className={cn("h-8 w-8", stat.color)} />
+      {/* KPI strip */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {statCards.map((s) => (
+          <div key={s.label} className="p-5 rounded-lg bg-card border border-border space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{s.label}</span>
+              <s.icon className="h-4 w-4 text-muted-foreground/40" />
             </div>
-            <div className="space-y-2">
-               <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{stat.label}</p>
-               <div className="text-4xl font-black text-foreground tracking-tight">{stat.value}</div>
-               <div className="flex items-center gap-2 pt-4">
-                  <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-primary/10 text-primary">
-                    <TrendingUp className="h-3 w-3" />
-                    <span className="text-[10px] font-black uppercase">{stat.trend}</span>
-                  </div>
-               </div>
-            </div>
+            <p className="text-3xl font-black font-mono tabular-nums text-foreground">{s.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-10">
-        {/* Placement Activity Feed */}
-        <div className="lg:col-span-2 space-y-8">
-           <div className="flex items-center justify-between border-b border-border pb-6">
-              <h3 className="text-2xl font-black flex items-center gap-3 text-foreground tracking-tight">
-                <div className="p-2 rounded-xl bg-primary">
-                  <Briefcase className="h-6 w-6 text-primary-foreground" />
-                </div>
-                Industrial Placements
-              </h3>
-              <button className="text-[10px] font-black text-primary hover:text-primary/80 uppercase tracking-widest flex items-center gap-1 group">
-                Full Database <ArrowUpRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-           </div>
-           
-           <div className="bg-card border border-border rounded-[3rem] overflow-hidden shadow-sm">
-              <div className="divide-y divide-border">
-                {stats.recentPlacements.map((app: RecentPlacement) => (
-                  <div key={app.id} className="p-8 flex items-center justify-between hover:bg-muted/50 transition-all group">
-                     <div className="flex items-center gap-6">
-                        <div className="w-16 h-16 rounded-[1.5rem] bg-muted flex items-center justify-center text-2xl font-black text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all shadow-sm">
-                           {app.studentName?.[0] || 'U'}
-                        </div>
-                        <div>
-                          <p className="text-lg font-black text-foreground tracking-tight">{app.studentName || 'Unknown Student'}</p>
-                          <div className="flex flex-wrap items-center gap-3 mt-1.5">
-                             <span className="text-xs font-bold text-muted-foreground">Interning as</span>
-                             <span className="text-[10px] font-black text-primary bg-primary/10 px-2 py-0.5 rounded-lg uppercase tracking-widest">{app.postingTitle}</span>
-                             <span className="text-xs font-bold text-muted-foreground">at</span>
-                             <span className="text-[10px] font-black text-primary bg-primary/10 px-2 py-0.5 rounded-lg uppercase tracking-widest">{app.companyName}</span>
-                          </div>
-                        </div>
-                     </div>
-                     <div className="flex items-center gap-4">
-                        <button className="h-10 w-10 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-background transition-all border border-transparent hover:border-border">
-                           <MoreHorizontal className="h-5 w-5" />
-                        </button>
-                     </div>
-                  </div>
-                ))}
-
-                {stats.recentPlacements.length === 0 && (
-                   <div className="p-24 text-center">
-                      <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-6">
-                        <Loader2 className="h-10 w-10 text-muted-foreground" />
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Placements feed */}
+        <div className="lg:col-span-2 rounded-lg border border-border bg-card overflow-hidden">
+          <div className="px-5 py-4 border-b border-border bg-muted/30 flex items-center justify-between">
+            <h2 className="text-xs font-black uppercase tracking-widest text-foreground">Recent Placements</h2>
+            <span className="text-[10px] font-mono text-muted-foreground">{stats.recentPlacements.length} records</span>
+          </div>
+          <div className="divide-y divide-border">
+            {stats.recentPlacements.length === 0 ? (
+              <div className="py-16 flex flex-col items-center gap-2 text-center">
+                <AlertCircle className="h-8 w-8 text-muted-foreground/30" />
+                <p className="text-xs font-mono text-muted-foreground">No placements confirmed yet.</p>
+              </div>
+            ) : (
+              stats.recentPlacements.map((p: RecentPlacement) => (
+                <div key={p.id} className="px-5 py-3.5 flex items-center justify-between hover:bg-muted/30 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-black text-primary">
+                      {p.studentName?.[0] ?? "?"}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-foreground leading-tight">{p.studentName}</p>
+                      <div className="flex items-center gap-1 mt-0.5 text-[10px] font-mono text-muted-foreground">
+                        <span>{p.postingTitle}</span>
+                        <span className="opacity-40">—</span>
+                        <span>{p.companyName}</span>
                       </div>
-                      <p className="font-black text-muted-foreground uppercase tracking-widest text-sm">No active placements registered</p>
-                      <p className="text-xs text-muted-foreground mt-2">Hiring records will appear here once finalized.</p>
-                   </div>
-                )}
-              </div>
-              <div className="p-6 bg-muted/30 border-t border-border text-center">
-                 <button className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground hover:text-primary transition-all">
-                   Sync Audit Log Records
-                 </button>
-              </div>
-           </div>
+                    </div>
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">
+                    Active
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
-        {/* Company Verification Queue */}
-        <div className="space-y-8">
-           <h3 className="text-2xl font-black flex items-center gap-3 text-foreground tracking-tight">
-              <div className="p-2 rounded-xl bg-primary">
-                <Building2 className="h-6 w-6 text-primary-foreground" />
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Company verification queue */}
+          <div className="rounded-lg border border-border bg-card overflow-hidden">
+            <div className="px-5 py-4 border-b border-border bg-muted/30">
+              <h2 className="text-xs font-black uppercase tracking-widest text-foreground">MOU Pending</h2>
+            </div>
+            <div className="divide-y divide-border">
+              {stats.pendingCompanies.length === 0 ? (
+                <div className="py-10 flex flex-col items-center gap-2 text-center">
+                  <CheckCircle2 className="h-7 w-7 text-primary/30" />
+                  <p className="text-[10px] font-mono text-muted-foreground">All partners verified.</p>
+                </div>
+              ) : (
+                stats.pendingCompanies.map((c) => (
+                  <div key={c.id} className="px-5 py-3.5">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-bold text-foreground leading-tight">{c.name}</p>
+                        <p className="text-[10px] font-mono text-muted-foreground mt-0.5">{c.industry}</p>
+                      </div>
+                      <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+            {stats.pendingCompanies.length > 0 && (
+              <div className="px-5 py-3 border-t border-border bg-muted/20">
+                <a href="/coordinator/companies" className="text-[10px] font-mono text-primary hover:underline underline-offset-2 uppercase tracking-widest">
+                  Manage Partners →
+                </a>
               </div>
-              Partner Queue
-           </h3>
-           <div className="space-y-6">
-              {stats.pendingCompanies.map((company) => (
-                <div key={company.id} className="p-8 rounded-[2.5rem] bg-card border border-border shadow-xl relative overflow-hidden group hover:border-primary/50 transition-all">
-                   <div className="absolute top-0 right-0 w-3 h-full bg-primary" />
-                   <div className="flex items-start justify-between mb-6">
-                      <div className="space-y-1.5">
-                        <div className="flex items-center gap-2">
-                           <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                           <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] leading-none">MOU Pending</p>
-                        </div>
-                        <h4 className="font-black text-xl text-foreground tracking-tight">{company.name}</h4>
-                        <p className="text-xs font-bold text-muted-foreground flex items-center gap-1.5 italic">
-                          Sector: <span className="text-foreground not-italic font-black text-[10px] uppercase tracking-widest">{company.industry}</span>
-                        </p>
-                      </div>
-                      <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center text-xl font-black text-muted-foreground border border-border/50">
-                        {company.name[0]}
-                      </div>
-                   </div>
-                   <div className="grid grid-cols-2 gap-3">
-                      <button className="h-11 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/30 hover:bg-primary/90 hover:scale-[1.02] active:scale-95 transition-all">Verify MOU</button>
-                      <button className="h-11 rounded-2xl bg-muted text-muted-foreground text-[10px] font-black uppercase tracking-widest hover:bg-muted/80 transition-all">Defer</button>
-                   </div>
+            )}
+          </div>
+
+          {/* Program status */}
+          <div className="p-5 rounded-lg bg-primary text-primary-foreground border border-primary/80 space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-[10px] font-mono uppercase tracking-widest opacity-70">Program Status</p>
+              <Clock className="h-4 w-4 opacity-40" />
+            </div>
+            <div className="space-y-3">
+              {[
+                { label: "Verified Companies",   value: stats.verifiedCompanies, total: stats.totalCompanies },
+                { label: "Placed Students",       value: stats.hiredStudents,     total: stats.totalStudents },
+              ].map((row) => (
+                <div key={row.label} className="space-y-1">
+                  <div className="flex items-center justify-between text-[10px] font-mono opacity-80">
+                    <span>{row.label}</span>
+                    <span className="tabular-nums">{row.value}/{row.total}</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-white rounded-full transition-all"
+                      style={{ width: `${row.total > 0 ? Math.round((row.value / row.total) * 100) : 0}%` }}
+                    />
+                  </div>
                 </div>
               ))}
-
-              {stats.pendingCompanies.length === 0 && (
-                <div className="p-20 rounded-[3rem] border-2 border-dashed border-border flex flex-col items-center justify-center text-center opacity-50 bg-muted/20">
-                   <CheckCircle2 className="h-12 w-12 text-primary mb-4" />
-                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">All Partners Verified</p>
-                </div>
-              )}
-           </div>
-
-           {/* Quick Stats Mini-Card */}
-           <div className="p-10 rounded-[3rem] bg-primary text-primary-foreground shadow-3xl shadow-primary/40 space-y-6 relative overflow-hidden group">
-              <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-white/10 blur-[80px] rounded-full group-hover:scale-125 transition-transform duration-1000" />
-              <div className="relative z-10">
-                 <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-white/10 rounded-xl backdrop-blur-md">
-                      <TrendingUp className="h-6 w-6" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">Operational KPI</span>
-                 </div>
-                 <h4 className="text-5xl font-black mb-2 tracking-tighter">94.2%</h4>
-                 <p className="text-xs font-bold opacity-80 leading-relaxed max-w-[220px]">
-                    Average industrial logbook validation speed across all partner departments.
-                 </p>
-              </div>
-           </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-

@@ -1,183 +1,181 @@
 "use client";
 
-import { useState } from "react";
-import { useMockStore } from "@/store/mock-store";
-import { 
-  User as UserIcon, 
-  Mail, 
-  BookOpen, 
-  GraduationCap, 
-  Save, 
-  CheckCircle2,
-  Calendar,
-  ShieldCheck,
-  Briefcase
-} from "lucide-react";
+import { useState, useEffect, useTransition } from "react";
+import { User as UserIcon, Mail, GraduationCap, Save, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { getStudentProfile, updateStudentProfile } from "./actions";
+import { cn } from "@/lib/utils";
 
+type Profile = {
+  id: string;
+  name: string | null;
+  email: string | null;
+  course: string | null;
+  createdAt: Date;
+  isApproved: boolean;
+  applications: { status: string }[];
+  logbookEntries: { hours: number }[];
+};
 
 export default function StudentProfilePage() {
-  const { user, updateProfile } = useMockStore();
-  const [isSaving, setIsSaving] = useState(false);
+  const { data: session } = useSession();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);
-  
-  const [formData, setFormData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    course: user?.course || "BS in Information Technology",
-  });
+  const [error, setError] = useState("");
 
-  const handleSave = async (e: React.FormEvent) => {
+  useEffect(() => {
+    getStudentProfile().then((res) => {
+      setProfile(res as Profile | null);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const totalHours = profile?.logbookEntries.reduce((a, e) => a + e.hours, 0) ?? 0;
+  const appCount = profile?.applications.length ?? 0;
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSaving(true);
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    updateProfile(formData);
-    
-    setIsSaving(false);
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 3000);
+    setError("");
+    setSuccess(false);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const res = await updateStudentProfile(fd);
+      if (res.success) {
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+        const updated = await getStudentProfile();
+        setProfile(updated as Profile | null);
+      } else {
+        setError(res.error || "Update failed.");
+      }
+    });
   };
 
-  if (!user) return null;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64 gap-3">
+        <Loader2 className="h-5 w-5 text-primary animate-spin" />
+      </div>
+    );
+  }
+
+  if (!profile) return null;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10 pb-20">
-      {/* Profile Header Card */}
-      <div className="relative overflow-hidden p-8 md:p-12 rounded-2xl bg-primary text-primary-foreground shadow-2xl flex flex-col md:flex-row items-center gap-8">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[100px] rounded-full" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 blur-[60px] rounded-full" />
-        
-        <div className="relative z-10">
-          <div className="w-32 h-32 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl font-black shadow-2xl border-4 border-white/20">
-            {user.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
-          </div>
-          <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-white text-primary border-4 border-primary flex items-center justify-center">
-            <ShieldCheck className="h-5 w-5" />
-          </div>
-        </div>
+    <div className="max-w-3xl space-y-6 pb-12">
+      {/* Header */}
+      <div className="border-b border-border pb-5">
+        <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">Account</p>
+        <h1 className="text-2xl font-black tracking-tight text-foreground">Profile</h1>
+      </div>
 
-        <div className="relative z-10 text-center md:text-left space-y-2">
-          <p className="text-white/70 font-black uppercase tracking-widest text-[10px]">Student Identity</p>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight">{user.name}</h2>
-          <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
-             <div className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-bold flex items-center gap-2">
-                <BookOpen className="h-3.5 w-3.5" />
-                {formData.course}
-             </div>
-             <div className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-bold flex items-center gap-2">
-                <Calendar className="h-3.5 w-3.5" />
-                S.Y. 2024-2025
-             </div>
-          </div>
+      {/* Identity strip */}
+      <div className="p-5 rounded-lg bg-primary border border-primary/80 text-primary-foreground flex items-center gap-5">
+        <div className="w-14 h-14 rounded-md bg-white/20 flex items-center justify-center text-xl font-black shrink-0">
+          {profile.name?.charAt(0).toUpperCase() ?? "?"}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-black text-lg leading-tight truncate">{profile.name}</p>
+          <p className="text-[11px] font-mono opacity-70">{profile.email}</p>
+        </div>
+        <div className="shrink-0 flex items-center gap-1.5 bg-white/20 border border-white/20 px-3 py-1.5 rounded text-[10px] font-black uppercase tracking-widest">
+          <ShieldCheck className="h-3.5 w-3.5" />
+          {profile.isApproved ? "Approved" : "Pending"}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Settings */}
-        <div className="lg:col-span-2 space-y-8">
-          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
-             <div className="p-6 border-b border-border bg-muted/30">
-                <h3 className="font-bold text-lg">Personal Information</h3>
-                <p className="text-xs text-muted-foreground font-medium">Update your profile details and preferences.</p>
-             </div>
-             
-             <form onSubmit={handleSave} className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</label>
-                      <div className="relative">
-                        <UserIcon className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
-                        <input 
-                          type="text" 
-                          value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          className="w-full pl-10 pr-4 h-11 rounded-xl border border-border bg-muted/10 focus:bg-background focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none text-sm font-medium transition-all"
-                        />
-                      </div>
-                   </div>
-                   <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
-                        <input 
-                          type="email" 
-                          value={formData.email}
-                          disabled
-                          className="w-full pl-10 pr-4 h-11 rounded-xl border border-border bg-muted/5 text-muted-foreground cursor-not-allowed outline-none text-sm font-medium"
-                        />
-                      </div>
-                   </div>
-                </div>
-
-                <div className="space-y-2">
-                   <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Current Course / Specialization</label>
-                   <div className="relative">
-                    <GraduationCap className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
-                    <select 
-                      value={formData.course}
-                      onChange={(e) => setFormData({...formData, course: e.target.value})}
-                      className="w-full pl-10 pr-4 h-11 rounded-xl border border-border bg-muted/10 focus:bg-background focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none text-sm font-medium transition-all appearance-none"
-                    >
-                      <option>BS in Information Technology</option>
-                      <option>BS in Computer Science</option>
-                      <option>BS in Civil Engineering</option>
-                      <option>BS in Electronics Engineering</option>
-                    </select>
-                   </div>
-                </div>
-
-                <div className="pt-4 flex items-center justify-between">
-                   {success ? (
-                     <p className="text-primary text-sm font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
-                        <CheckCircle2 className="h-4 w-4" /> Profile updated successfully
-                     </p>
-                   ) : <div />}
-                   
-                   <button 
-                    type="submit"
-                    disabled={isSaving}
-                    className="flex items-center gap-2 px-8 h-11 rounded-xl bg-primary text-primary-foreground font-black text-xs shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95 disabled:opacity-70"
-                   >
-                    {isSaving ? <Save className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                    Save Changes
-                   </button>
-                </div>
-             </form>
+      {/* Quick stats */}
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { label: "Logbook Hours",   value: `${totalHours.toFixed(0)}/300` },
+          { label: "Applications",    value: appCount },
+          { label: "Member Since",    value: new Date(profile.createdAt).getFullYear() },
+        ].map((s) => (
+          <div key={s.label} className="p-4 rounded-lg bg-card border border-border">
+            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{s.label}</p>
+            <p className="text-xl font-black font-mono tabular-nums text-foreground mt-1">{s.value}</p>
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Sidebar Cards */}
-        <div className="space-y-6">
-           <div className="p-6 rounded-2xl border border-border bg-card shadow-sm">
-              <h4 className="font-bold text-sm mb-4">Account Status</h4>
-              <div className="space-y-4">
-                 <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground font-medium">SIT Status</span>
-                    <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-black uppercase">In Progress</span>
-                 </div>
-                 <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground font-medium">Placement</span>
-                    <span className="text-xs font-bold flex items-center gap-1">
-                      <Briefcase className="h-3 w-3 text-muted-foreground" />
-                      Pending Hired
-                    </span>
-                 </div>
+      {/* Edit form */}
+      <div className="rounded-lg border border-border bg-card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border bg-muted/30">
+          <h2 className="text-xs font-black uppercase tracking-widest text-foreground">Edit Personal Information</h2>
+        </div>
+        <form onSubmit={handleSubmit} className="p-5 space-y-5">
+          {error && (
+            <p className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded px-3 py-2 font-bold">
+              {error}
+            </p>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
+              <div className="relative">
+                <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  name="name"
+                  required
+                  defaultValue={profile.name ?? ""}
+                  className="w-full pl-9 pr-3 h-9 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                />
               </div>
-           </div>
-
-           <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-xl">
-              <h4 className="font-black text-sm mb-2 uppercase tracking-tight">Need Help?</h4>
-              <p className="text-xs font-medium opacity-80 mb-6 leading-relaxed">
-                If you need to change your school ID or role, please contact the TUP-V SIT Coordinator.
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Email (read-only)</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  value={profile.email ?? ""}
+                  disabled
+                  className="w-full pl-9 pr-3 h-9 rounded-md border border-border bg-muted/30 text-muted-foreground text-sm cursor-not-allowed"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Course / Specialization</label>
+            <div className="relative">
+              <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <select
+                name="course"
+                defaultValue={profile.course ?? ""}
+                className="w-full pl-9 pr-3 h-9 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary appearance-none cursor-pointer"
+              >
+                <option value="">Select course...</option>
+                <option value="BS in Information Technology">BS in Information Technology</option>
+                <option value="BS in Computer Science">BS in Computer Science</option>
+                <option value="BS in Civil Engineering">BS in Civil Engineering</option>
+                <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
+                <option value="BS in Electrical Engineering">BS in Electrical Engineering</option>
+                <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
+              </select>
+            </div>
+          </div>
+          <div className={cn("flex items-center", success ? "justify-between" : "justify-end")}>
+            {success && (
+              <p className="text-xs text-primary font-bold flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4" /> Profile updated successfully.
               </p>
-              <button className="w-full py-3 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md text-[10px] font-black uppercase tracking-widest transition-all">
-                 Contact Coordinator
-              </button>
-           </div>
-        </div>
+            )}
+            <button
+              type="submit"
+              disabled={isPending}
+              className="flex items-center gap-2 h-9 px-5 rounded-md bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors disabled:opacity-60"
+            >
+              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              Save Changes
+            </button>
+          </div>
+        </form>
       </div>
+
+      {/* Help note */}
+      <p className="text-[11px] text-muted-foreground font-mono border border-border rounded-md px-4 py-3 bg-muted/20">
+        To change your school ID, student number, or role, contact the TUP-V SIT Coordinator.
+      </p>
     </div>
   );
 }
