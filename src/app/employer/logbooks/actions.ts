@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { pushNotification } from "@/lib/actions/notifications";
 
 export async function getEmployerStudentsLogs() {
   const session = await auth();
@@ -59,10 +60,27 @@ export async function updateLogStatus(entryId: string, status: 'APPROVED' | 'REJ
   if (!session?.user?.id) return { success: false, error: "Unauthorized" };
 
   try {
-    await prisma.logbookEntry.update({
+    const entry = await prisma.logbookEntry.update({
       where: { id: entryId },
-      data: { status, feedback }
+      data: { status, feedback },
+      include: { student: true }
     });
+
+    // Notify Student
+    if (entry.studentId) {
+      const title = status === 'APPROVED' ? "Logbook Entry Approved" : "Logbook Entry Rejected";
+      const message = status === 'APPROVED' 
+        ? `Your logbook entry for ${entry.date.toLocaleDateString()} has been verified.` 
+        : `Your entry for ${entry.date.toLocaleDateString()} requires revision. Feedback: ${feedback || 'No feedback provided.'}`;
+
+      await pushNotification({
+        userId: entry.studentId,
+        title,
+        message,
+        type: 'LOGBOOK',
+        link: '/student/logbook'
+      });
+    }
 
     revalidatePath("/employer/logbooks");
     revalidatePath("/student/logbook");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMockStore } from "@/store/mock-store";
+import { useState, useEffect } from "react";
 import { 
   Users, 
   Search, 
@@ -9,23 +9,69 @@ import {
   XCircle,
   Clock,
   Filter,
-  ArrowRight
+  ArrowRight,
+  Loader2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getEmployerApplicants, updateApplicationStatus } from "./actions";
+
+type Application = {
+  id: string;
+  status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
+  appliedAt: Date;
+  student: {
+    id: string;
+    name: string | null;
+    email: string | null;
+  };
+  posting: {
+    id: string;
+    title: string;
+  };
+};
 
 export default function ApplicantsPage() {
-  const { applications, postings, updateApplicationStatus } = useMockStore();
+  const [applications, setApplications] = useState<Application[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // In a real app, we'd filter applications for postings belonging to this employer
-  const allApplicants = applications;
+  useEffect(() => {
+    async function loadData() {
+      const result = await getEmployerApplicants();
+      if (result.success && result.data) {
+        setApplications(result.data as Application[]);
+      }
+      setIsLoading(false);
+    }
+    loadData();
+  }, []);
 
-  const getPostingTitle = (id: string) => postings.find(p => p.id === id)?.title || "Unknown Position";
+  const handleUpdateStatus = async (id: string, status: 'ACCEPTED' | 'REJECTED') => {
+    const result = await updateApplicationStatus(id, status);
+    if (result.success) {
+      setApplications(prev => prev.map(app => app.id === id ? { ...app, status } : app));
+    }
+  };
+
+  const filteredApps = applications.filter(app => 
+    app.student.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    app.posting.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const columns = [
-    { id: 'Pending', label: 'New Applied', color: 'text-amber-600', bg: 'bg-amber-100', dot: 'bg-amber-500' },
-    { id: 'Accepted', label: 'Shortlisted', color: 'text-green-600', bg: 'bg-green-100', dot: 'bg-green-500' },
-    { id: 'Rejected', label: 'Not Suitable', color: 'text-red-600', bg: 'bg-red-100', dot: 'bg-red-500' },
+    { id: 'PENDING', label: 'New Applied', color: 'text-amber-600', bg: 'bg-amber-100', dot: 'bg-amber-500' },
+    { id: 'ACCEPTED', label: 'Shortlisted', color: 'text-emerald-600', bg: 'bg-emerald-100', dot: 'bg-emerald-500' },
+    { id: 'REJECTED', label: 'Not Suitable', color: 'text-rose-600', bg: 'bg-rose-100', dot: 'bg-rose-500' },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+        <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
+        <p className="text-slate-500 font-bold animate-pulse uppercase tracking-widest text-xs">Scanning Applicant Matrix...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto pb-20">
@@ -54,7 +100,7 @@ export default function ApplicantsPage() {
       {/* Kanban Board */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {columns.map((col) => {
-          const colApps = allApplicants.filter(a => a.status === col.id);
+          const colApps = filteredApps.filter(a => a.status === col.id);
           return (
             <div key={col.id} className="flex flex-col gap-4">
               <div className="flex items-center justify-between px-2">
@@ -73,7 +119,7 @@ export default function ApplicantsPage() {
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white font-bold text-sm">
-                        {app.studentName?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
+                        {app.student.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
                       </div>
                       <button className="h-8 w-8 rounded-md hover:bg-muted flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <MoreVertical className="h-4 w-4 text-muted-foreground" />
@@ -81,8 +127,8 @@ export default function ApplicantsPage() {
                     </div>
 
                     <div className="space-y-1 mb-4">
-                      <h4 className="font-bold text-base leading-tight">{app.studentName || 'Unknown Student'}</h4>
-                      <p className="text-xs font-bold text-blue-600">Apply for: {getPostingTitle(app.postingId)}</p>
+                      <h4 className="font-bold text-base leading-tight">{app.student.name || 'Unknown Student'}</h4>
+                      <p className="text-xs font-bold text-blue-600">Apply for: {app.posting.title}</p>
                       <div className="flex items-center text-[11px] text-muted-foreground mt-2">
                         <Clock className="h-3 w-3 mr-1" />
                         Applied {new Date(app.appliedAt).toLocaleDateString()}
@@ -90,23 +136,23 @@ export default function ApplicantsPage() {
                     </div>
 
                     <div className="flex items-center gap-2 pt-4 border-t border-border/50">
-                      {app.status === 'Pending' && (
+                      {app.status === 'PENDING' && (
                         <>
                           <button 
-                            onClick={() => updateApplicationStatus(app.id, 'Accepted')}
-                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-green-500/10 text-green-600 text-[11px] font-black uppercase tracking-wider hover:bg-green-500 hover:text-white transition-all"
+                            onClick={() => handleUpdateStatus(app.id, 'ACCEPTED')}
+                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-emerald-500/10 text-emerald-600 text-[11px] font-black uppercase tracking-wider hover:bg-emerald-500 hover:text-white transition-all outline-none"
                           >
                             <CheckCircle2 className="h-3.5 w-3.5" /> Shortlist
                           </button>
                           <button 
-                            onClick={() => updateApplicationStatus(app.id, 'Rejected')}
-                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-red-500/10 text-red-600 text-[11px] font-black uppercase tracking-wider hover:bg-red-500 hover:text-white transition-all"
+                            onClick={() => handleUpdateStatus(app.id, 'REJECTED')}
+                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-rose-500/10 text-rose-600 text-[11px] font-black uppercase tracking-wider hover:bg-rose-500 hover:text-white transition-all outline-none"
                           >
                             <XCircle className="h-3.5 w-3.5" /> Reject
                           </button>
                         </>
                       )}
-                      {app.status !== 'Pending' && (
+                      {app.status !== 'PENDING' && (
                         <button className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-muted text-muted-foreground text-[11px] font-black uppercase tracking-wider hover:bg-muted/80 transition-colors">
                           View Profile <ArrowRight className="h-3.5 w-3.5" />
                         </button>

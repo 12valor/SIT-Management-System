@@ -14,13 +14,13 @@ import {
   LogOut,
   Menu,
   X,
-  Bell,
   Award,
   ChevronRight,
   ShieldCheck,
   Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { NotificationCenter } from "@/components/NotificationCenter";
 
 export default function StudentLayout({
   children,
@@ -167,10 +167,7 @@ export default function StudentLayout({
           </div>
 
           <div className="flex items-center gap-5">
-            <button className="relative h-12 w-12 rounded-[1.25rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center transition-all hover:bg-slate-50 dark:hover:bg-slate-800 hover:scale-110 active:scale-95 shadow-sm group">
-              <Bell className="h-5 w-5 text-slate-400 group-hover:text-indigo-600 transition-colors" />
-              <span className="absolute top-3.5 right-3.5 h-2.5 w-2.5 rounded-full bg-rose-500 border-2 border-white dark:border-slate-900 shadow-lg shadow-rose-500/20" />
-            </button>
+            <NotificationCenter />
             <ThemeToggle />
             <div className="h-10 w-px bg-slate-200 dark:bg-slate-800 mx-1" />
             <div className="flex items-center gap-4 pl-1">

@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { pushNotification } from "@/lib/actions/notifications";
 
 export async function getEmployerTrainees() {
   const session = await auth();
@@ -72,7 +73,7 @@ export async function submitTraineeEvaluation(data: {
 
     const overallGrade = (data.technicalSkills + data.professionalism + data.punctuality + data.qualityOfWork) / 4;
 
-    await prisma.sITEvaluation.create({
+    const evaluation = await prisma.sITEvaluation.create({
       data: {
         studentId: data.studentId,
         supervisorName: session.user.name || "Supervisor",
@@ -87,7 +88,17 @@ export async function submitTraineeEvaluation(data: {
       }
     });
 
+    // Notify Student
+    await pushNotification({
+      userId: data.studentId,
+      title: "Performance Evaluation Submitted",
+      message: `${evaluation.companyName} has submitted your final SIT assessment. You can now view your grade.`,
+      type: 'EVALUATION',
+      link: '/student/completion'
+    });
+
     revalidatePath("/employer/evaluations");
+    revalidatePath("/student/completion");
     revalidatePath("/coordinator/dashboard");
     
     return { success: true };
