@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NotificationCenter } from "@/components/NotificationCenter";
+import { DashboardFooter } from "@/components/DashboardFooter";
 
 export default function CoordinatorLayout({
   children,
@@ -177,7 +178,7 @@ export default function CoordinatorLayout({
                   <p className="text-sm font-black text-foreground leading-none tracking-tight">{session?.user?.name}</p>
                   <p className="text-[10px] text-primary mt-2 uppercase font-black tracking-widest leading-none">Office Registrar</p>
                </div>
-               <div className="h-14 w-14 rounded-[1.5rem] bg-primary flex items-center justify-center text-primary-foreground text-lg font-black shadow-2xl shadow-primary/20 ring-4 ring-background transition-all hover:scale-105">
+                <div className="h-14 w-14 rounded-[1.5rem] bg-primary flex items-center justify-center text-primary-foreground text-lg font-black shadow-2xl shadow-primary/20 ring-4 ring-background transition-all hover:scale-105">
                 {session?.user?.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || 'C'}
               </div>
             </div>
@@ -185,8 +186,11 @@ export default function CoordinatorLayout({
         </header>
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">
-          <div className="max-w-7xl mx-auto">
-            {children}
+          <div className="max-w-7xl mx-auto flex flex-col min-h-[calc(100vh-14rem)]">
+            <div className="flex-1">
+              {children}
+            </div>
+            <DashboardFooter />
           </div>
         </main>
       </div>

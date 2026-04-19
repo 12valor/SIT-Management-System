@@ -128,20 +128,81 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-12 border-t border-border">
+      <footer className="pt-24 pb-12 bg-slate-50 border-t border-slate-100">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-4">
-              <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-auto grayscale hover:grayscale-0 transition-all cursor-pointer" />
-              <div className="h-6 w-px bg-slate-200 ml-2" />
-              <span className="font-bold tracking-tight text-slate-900 font-heading">TUP-V SIT</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            {/* Column 1: Branding */}
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-4">
+                <img 
+                  src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                  alt="TUP Seal" 
+                  className="h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" 
+                />
+                <div className="flex flex-col">
+                  <span className="font-bold text-xl tracking-tight text-slate-900 font-heading">TUP-V SIT</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] font-sans">Institutional Link</span>
+                </div>
+              </div>
+              <p className="text-sm text-slate-500 leading-relaxed font-sans max-w-xs">
+                The official landing for Supervised Industrial Training at Technological University of the Philippines - Visayas. Connecting emerging talent with industry leadership.
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-primary transition-colors cursor-pointer">
+                  <span className="text-xs font-bold text-slate-400 hover:text-primary transition-colors">FB</span>
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-primary transition-colors cursor-pointer">
+                  <span className="text-xs font-bold text-slate-400 hover:text-primary transition-colors">LN</span>
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-primary transition-colors cursor-pointer">
+                   <span className="text-xs font-bold text-slate-400 hover:text-primary transition-colors">TW</span>
+                </div>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              © 2026 Technological University of the Philippines - Visayas. All rights reserved.
+
+            {/* Column 2: Portals */}
+            <div>
+              <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Access Portals</h4>
+              <ul className="space-y-4">
+                <li><Link href="/login/student" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Student Portal</Link></li>
+                <li><Link href="/login/employer" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Employer Portal</Link></li>
+                <li><Link href="/login/coordinator" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Coordinator Terminal</Link></li>
+                <li><Link href="/signup/student" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">New Student Registration</Link></li>
+              </ul>
+            </div>
+
+            {/* Column 3: Resources */}
+            <div>
+              <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Resources</h4>
+              <ul className="space-y-4">
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">SIT Guidelines</Link></li>
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Partner Companies</Link></li>
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Digital Logbook Guide</Link></li>
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Training Modules</Link></li>
+              </ul>
+            </div>
+
+            {/* Column 4: Institutional */}
+            <div>
+              <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Institutional</h4>
+              <ul className="space-y-4">
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">About TUP-Visayas</Link></li>
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">UIPEN Strategic Office</Link></li>
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Contact Registry</Link></li>
+                <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Technical Support</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="pt-12 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] font-sans">
+              © 2026 Technological University of the Philippines - Visayas. <br className="md:hidden" /> ALL RIGHTS RESERVED.
             </p>
-            <div className="flex gap-6">
-              <Link className="text-sm text-muted-foreground hover:text-primary" href="#">Terms</Link>
-              <Link className="text-sm text-muted-foreground hover:text-primary" href="#">Privacy</Link>
+            <div className="flex items-center gap-8">
+              <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-[0.2em] font-sans transition-colors">Privacy Protocol</Link>
+              <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-[0.2em] font-sans transition-colors">Terms of Service</Link>
+              <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-[0.2em] font-sans transition-colors">Security</Link>
             </div>
           </div>
         </div>

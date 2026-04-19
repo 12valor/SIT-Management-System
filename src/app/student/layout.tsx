@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NotificationCenter } from "@/components/NotificationCenter";
+import { DashboardFooter } from "@/components/DashboardFooter";
 
 export default function StudentLayout({
   children,
@@ -186,8 +187,11 @@ export default function StudentLayout({
         </header>
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">
-          <div className="max-w-7xl mx-auto">
-            {children}
+          <div className="max-w-7xl mx-auto flex flex-col min-h-[calc(100vh-14rem)]">
+            <div className="flex-1">
+              {children}
+            </div>
+            <DashboardFooter />
           </div>
         </main>
       </div>
