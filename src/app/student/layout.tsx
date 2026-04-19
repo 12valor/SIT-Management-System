@@ -79,12 +79,10 @@ export default function StudentLayout({
         <div className="absolute bottom-[-10%] right-[-10%] w-40 h-40 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
 
         <div className="flex h-24 items-center border-b border-border px-8 gap-4 relative z-10">
-          <div className="w-11 h-11 bg-primary rounded-[1.25rem] flex items-center justify-center shadow-xl shadow-primary/20 rotate-[-5deg]">
-            <Zap className="text-primary-foreground h-6 w-6 fill-primary-foreground" />
-          </div>
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-12 object-contain" />
           <div className="flex flex-col">
-            <span className="font-black text-xl tracking-tighter leading-none text-foreground uppercase">SIT.OS</span>
-            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] mt-1.5">Industrial Tier</span>
+            <span className="font-bold text-lg tracking-tight leading-none text-foreground uppercase">SIT.Platform</span>
+            <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-1.5">TUP-V Student</span>
           </div>
           <button 
             className="ml-auto lg:hidden p-2 rounded-xl bg-muted" 

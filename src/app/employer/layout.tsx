@@ -76,12 +76,10 @@ export default function EmployerLayout({
         <div className="absolute top-0 left-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none" />
         
         <div className="flex h-24 items-center border-b border-border px-8 gap-4 relative z-10">
-          <div className="w-11 h-11 bg-primary rounded-2xl flex items-center justify-center shadow-2xl shadow-primary/20">
-            <Building2 className="text-primary-foreground h-6 w-6" />
-          </div>
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-12 object-contain" />
           <div className="flex flex-col">
-            <span className="font-black text-xl tracking-tighter leading-none text-foreground uppercase">PARTNER.HUB</span>
-            <span className="text-[9px] font-black text-primary uppercase tracking-[0.3em] mt-2">Industrial Portal</span>
+            <span className="font-bold text-lg tracking-tight leading-none text-foreground uppercase">SIT.Platform</span>
+            <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-2">TUP-V Employer</span>
           </div>
           <button 
             className="ml-auto lg:hidden p-2 rounded-xl bg-muted" 

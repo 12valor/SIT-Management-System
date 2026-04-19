@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { ShieldCheck, Mail, Lock, Loader2, ArrowLeft } from "lucide-react";
+import { ShieldAlert, Mail, Lock, Loader2, ArrowLeft, Command } from "lucide-react";
+import Image from "next/image";
 
 export default function CoordinatorLoginPage() {
   const [email, setEmail]       = useState("");
@@ -20,21 +21,17 @@ export default function CoordinatorLoginPage() {
 
     try {
       const result = await signIn("credentials", { email, password, redirect: false });
-
       if (result?.error) {
-        setError("Incorrect credentials. This portal is restricted to authorized TUP-V coordinators only.");
+        setError("Invalid administrative credentials.");
         setIsLoading(false);
         return;
       }
-
       const res = await fetch("/api/auth/session");
       const session = await res.json();
       const role = session?.user?.role;
-
-      if (role === "COORDINATOR") {
-        router.push("/coordinator/dashboard");
-      } else {
-        setError("Access denied. This portal is for coordinators only.");
+      if (role === "COORDINATOR") router.push("/coordinator/dashboard");
+      else {
+        setError("Restricted Access: Coordinator privilege required.");
         setIsLoading(false);
       }
     } catch {
@@ -44,86 +41,114 @@ export default function CoordinatorLoginPage() {
   };
 
   return (
-    <div className="w-full max-w-md bg-card border border-border rounded-lg shadow-sm overflow-hidden">
-      {/* Role header strip — amber/slate for coordinator */}
-      <div className="bg-amber-700 px-6 py-5 flex items-center gap-4">
-        <div className="w-10 h-10 rounded-md bg-white/20 flex items-center justify-center shrink-0">
-          <ShieldCheck className="h-5 w-5 text-white" />
+    <div className="flex min-h-screen overflow-hidden bg-white">
+      {/* Left side - Visual Experience (Light Edition) */}
+      <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
+        <div className="absolute inset-0">
+          <Image 
+            src="/images/auth/coordinator.png" 
+            alt="Administrative Office" 
+            fill
+            className="object-cover opacity-10 grayscale"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-transparent" />
         </div>
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-white/60">Restricted Access</p>
-          <h1 className="text-base font-black text-white leading-tight">Coordinator Sign In</h1>
-        </div>
-        <Link href="/login" className="ml-auto text-white/60 hover:text-white transition-colors">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-      </div>
 
-      <div className="px-6 py-7 space-y-5">
-        {/* Security notice */}
-        <div className="p-3 rounded-md border border-amber-500/30 bg-amber-500/5 flex items-start gap-2.5">
-          <ShieldCheck className="h-4 w-4 text-amber-600 mt-0.5 shrink-0" />
-          <p className="text-[11px] font-mono text-amber-700 dark:text-amber-500 leading-relaxed">
-            Restricted to authorized TUP-Visayas SIT coordinators. Unauthorized access attempts are logged.
+        <div className="relative z-10 flex items-center gap-4">
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-12 object-contain" />
+          <div className="h-8 w-px bg-slate-300" />
+          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto object-contain" />
+        </div>
+
+        <div className="relative z-10 max-w-2xl mt-12">
+          <p className="text-xs font-bold text-amber-600 uppercase tracking-[0.3em] mb-4 font-heading">Security Terminal</p>
+          <h1 className="text-7xl font-bold text-slate-900 tracking-tight leading-[1] mb-8 font-heading">
+             Strategic <br /><span className="text-amber-600">Institutional</span> <br />Control Hub.
+          </h1>
+          <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-lg font-sans">
+             Administrative command center for TUP-V industrial training. Monitor registries, validate institutional links, and overlook academic compliance.
           </p>
         </div>
 
-        {error && (
-          <div className="p-3 text-xs font-bold text-destructive bg-destructive/10 rounded-md border border-destructive/20">
-            {error}
-          </div>
-        )}
+        <div className="relative z-10">
+           <div className="inline-flex items-center gap-4 px-5 py-3 rounded-xl bg-white border border-slate-200 shadow-sm">
+              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-heading">Restricted Access Node</p>
+           </div>
+        </div>
+      </div>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div className="space-y-1.5">
-            <label htmlFor="email" className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-              Official Email
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                id="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="coordinator@tupv.edu.ph"
-                className="w-full h-10 pl-9 pr-3 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
-              />
+      {/* Right side - Login Form */}
+      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-24 bg-white relative z-20">
+        <div className="max-w-md mx-auto w-full lg:mx-0">
+          <div className="mb-10">
+            <Link href="/login" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-amber-600 transition-colors mb-10 font-heading">
+              <ArrowLeft className="h-3 w-3" /> Back to role selection
+            </Link>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-900 mb-3 font-heading uppercase">Admin Login</h2>
+            <div className="p-4 bg-amber-50 border-l-4 border-amber-500 rounded-lg">
+              <p className="text-xs text-amber-800 font-medium leading-relaxed font-sans">
+                Security Notice: All administrative logins are strictly audited. Unauthorized access attempts will be logged and reported.
+              </p>
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="password" className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                id="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full h-10 pl-9 pr-3 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
-              />
+          <form onSubmit={handleLogin} className="space-y-6">
+            {error && (
+              <div className="p-4 text-xs font-bold text-red-600 bg-red-50 border border-red-100 rounded-xl uppercase tracking-wider font-heading">
+                {error}
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading">Admin Email</label>
+              <div className="relative group">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-amber-600 transition-colors" />
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@tupv.edu.ph"
+                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-amber-600 focus:ring-4 focus:ring-amber-600/5 transition-all text-slate-900"
+                />
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full h-10 rounded-md bg-amber-700 text-white text-xs font-black uppercase tracking-widest shadow-lg shadow-amber-700/20 hover:bg-amber-800 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-          >
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Access Portal"}
-          </button>
-        </form>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label htmlFor="password" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading">Access Key</label>
+              </div>
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-amber-600 transition-colors" />
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-amber-600 focus:ring-4 focus:ring-amber-600/5 transition-all text-slate-900"
+                />
+              </div>
+            </div>
 
-        <div className="pt-2 text-right">
-          <Link href="/login" className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors">
-            Other roles
-          </Link>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-14 bg-amber-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-600/20 transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading"
+            >
+              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Authorize & Sign In"}
+            </button>
+          </form>
+
+          <footer className="mt-12 pt-8 border-t border-border">
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] leading-relaxed">
+              TUP-V SIT Management Office <br /> Technical University of the Philippines Visayas
+            </p>
+          </footer>
         </div>
       </div>
     </div>

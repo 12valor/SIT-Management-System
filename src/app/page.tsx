@@ -3,14 +3,17 @@ import { ArrowRight, Briefcase, GraduationCap, CheckCircle } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-background selection:bg-primary/30">
-      <header className="fixed top-0 w-full z-50 glass border-b border-border/40 backdrop-blur-xl">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold">T</span>
+    <div className="flex flex-col min-h-screen bg-[#fafafa]">
+      <header className="fixed top-0 w-full z-50 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-10 object-contain" />
+             <div className="h-6 w-px bg-slate-200" />
+             <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-8 w-auto object-contain" />
+            <div className="hidden sm:block ml-2">
+              <span className="font-bold text-lg tracking-tight block leading-none">SIT Platform</span>
+              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none mt-1">TUP-Visayas</span>
             </div>
-            <span className="font-bold text-xl tracking-tight text-gradient">SIT Platform</span>
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <Link className="text-sm font-medium hover:text-primary transition-colors" href="/login">
@@ -129,11 +132,10 @@ export default function Home() {
       <footer className="py-12 border-t border-border">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                <span className="text-primary-foreground text-[10px] font-bold">T</span>
-              </div>
-              <span className="font-bold tracking-tight">TUP-V SIT Platform</span>
+            <div className="flex items-center gap-4">
+              <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-8 w-auto opacity-80 grayscale hover:grayscale-0 transition-all cursor-pointer" />
+              <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-8 w-8 opacity-80 grayscale hover:grayscale-0 transition-all cursor-pointer" />
+              <span className="font-bold tracking-tight text-sm">TUP-V SIT</span>
             </div>
             <p className="text-sm text-muted-foreground">
               © 2026 Technological University of the Philippines - Visayas. All rights reserved.
