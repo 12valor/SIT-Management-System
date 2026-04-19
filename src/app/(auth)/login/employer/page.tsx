@@ -53,10 +53,8 @@ export default function EmployerLoginPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-transparent" />
         </div>
 
-        <div className="relative z-10 flex items-center gap-4">
-          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-12 object-contain" />
-          <div className="h-8 w-px bg-slate-300" />
-          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto object-contain" />
+        <div className="relative z-10 flex items-center">
+          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-12 w-auto object-contain" />
         </div>
 
         <div className="relative z-10 max-w-2xl mt-12">

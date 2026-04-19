@@ -3,32 +3,31 @@ import { ArrowRight, Briefcase, GraduationCap, CheckCircle } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#fafafa]">
-      <header className="fixed top-0 w-full z-50 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+    <div className="flex flex-col min-h-screen bg-white">
+      <header className="fixed top-0 w-full z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
-             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-10 object-contain" />
+             <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto object-contain" />
              <div className="h-6 w-px bg-slate-200" />
-             <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-8 w-auto object-contain" />
-            <div className="hidden sm:block ml-2">
-              <span className="font-bold text-lg tracking-tight block leading-none">SIT Platform</span>
-              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest leading-none mt-1">TUP-Visayas</span>
-            </div>
+             <div className="flex flex-col">
+              <span className="font-bold text-lg tracking-tight text-slate-900 leading-none font-heading">SIT Platform</span>
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest leading-none mt-1 font-sans">TUP-Visayas</span>
+             </div>
           </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link className="text-sm font-medium hover:text-primary transition-colors" href="/login">
+          <nav className="hidden md:flex items-center gap-10">
+            <Link className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors font-heading uppercase tracking-wider" href="/login">
               Opportunities
             </Link>
-            <Link className="text-sm font-medium hover:text-primary transition-colors" href="/login">
+            <Link className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors font-heading uppercase tracking-wider" href="/login">
               Companies
             </Link>
           </nav>
           <div className="flex items-center gap-4">
             <Link 
               href="/login" 
-              className="px-5 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
+              className="px-6 py-2.5 rounded-xl bg-primary text-white text-xs font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5 font-heading"
             >
-              Sign In
+              Portal Login
             </Link>
           </div>
         </div>
@@ -133,9 +132,9 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-4">
-              <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-8 w-auto opacity-80 grayscale hover:grayscale-0 transition-all cursor-pointer" />
-              <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-8 w-8 opacity-80 grayscale hover:grayscale-0 transition-all cursor-pointer" />
-              <span className="font-bold tracking-tight text-sm">TUP-V SIT</span>
+              <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto grayscale hover:grayscale-0 transition-all cursor-pointer" />
+              <div className="h-6 w-px bg-slate-200 ml-2" />
+              <span className="font-bold tracking-tight text-slate-900 font-heading">TUP-V SIT</span>
             </div>
             <p className="text-sm text-muted-foreground">
               © 2026 Technological University of the Philippines - Visayas. All rights reserved.

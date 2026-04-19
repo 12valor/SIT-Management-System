@@ -79,10 +79,11 @@ export default function CoordinatorLayout({
         <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
         
         <div className="flex h-24 items-center border-b border-border px-8 gap-4 relative z-10">
-          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-12 object-contain" />
+          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto object-contain" />
+          <div className="h-6 w-px bg-slate-200" />
           <div className="flex flex-col">
-            <span className="font-bold text-lg tracking-tight leading-none text-foreground uppercase">SIT.Platform</span>
-            <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-2">TUP-V Admin</span>
+            <span className="font-bold text-lg tracking-tight leading-none text-foreground uppercase font-heading">SIT Platform</span>
+            <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-1 font-sans">TUP-V Admin</span>
           </div>
           <button 
             className="ml-auto lg:hidden p-2 rounded-xl bg-muted" 
