@@ -79,7 +79,7 @@ export default function StudentLayout({
         <div className="absolute bottom-[-10%] right-[-10%] w-40 h-40 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
 
         <div className="flex h-24 items-center border-b border-border px-8 gap-4 relative z-10">
-          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto object-contain" />
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-auto object-contain" />
           <div className="h-6 w-px bg-slate-200" />
           <div className="flex flex-col">
             <span className="font-bold text-lg tracking-tight leading-none text-foreground uppercase font-heading">SIT Platform</span>

@@ -7,7 +7,7 @@ export default function Home() {
       <header className="fixed top-0 w-full z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
-             <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto object-contain" />
+             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-auto object-contain" />
              <div className="h-6 w-px bg-slate-200" />
              <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight text-slate-900 leading-none font-heading">SIT Platform</span>
@@ -132,7 +132,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-4">
-              <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-10 w-auto grayscale hover:grayscale-0 transition-all cursor-pointer" />
+              <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-auto grayscale hover:grayscale-0 transition-all cursor-pointer" />
               <div className="h-6 w-px bg-slate-200 ml-2" />
               <span className="font-bold tracking-tight text-slate-900 font-heading">TUP-V SIT</span>
             </div>

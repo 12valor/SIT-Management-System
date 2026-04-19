@@ -67,20 +67,21 @@ export default function EmployerSignupPage() {
   return (
     <div className="flex min-h-screen overflow-hidden bg-white">
       {/* Left side - Institutional Branding */}
-      <div className="relative hidden lg:flex lg:w-2/5 xl:w-[45%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
-        <div className="absolute inset-0">
+      <div className="relative hidden lg:flex lg:w-2/5 xl:w-[45%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 min-w-0">
+        <div className="absolute inset-0 pointer-events-none select-none">
           <Image 
             src="/images/auth/employer.png" 
             alt="Corporate Environment" 
             fill
-            className="object-cover opacity-[0.03] grayscale"
+            className="object-cover transition-opacity duration-1000"
+            style={{ opacity: 0.1, filter: 'grayscale(100%)' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/60 to-transparent" />
         </div>
 
         <div className="relative z-10 flex items-center">
-          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-12 w-auto object-contain" />
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
         <div className="relative z-10 max-w-lg mt-12">

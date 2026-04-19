@@ -54,7 +54,7 @@ export default function EmployerLoginPage() {
         </div>
 
         <div className="relative z-10 flex items-center">
-          <img src="/des_UIPEN.png" alt="UIPEN Logo" className="h-12 w-auto object-contain" />
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
         <div className="relative z-10 max-w-2xl mt-12">
