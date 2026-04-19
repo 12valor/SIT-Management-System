@@ -28,7 +28,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Invalid email or password. Please use the credentials provided below.");
+        setError("Invalid email or password. If you just registered, your account might still be pending coordinator approval.");
         setIsLoading(false);
         return;
       }
@@ -125,44 +125,34 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <div className="relative my-8">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
+      <div className="text-center space-y-4">
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-border" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground font-medium">New to the platform?</span>
+          </div>
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground font-medium">Test Credentials</span>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <Link 
+            href="/signup/student"
+            className="flex flex-col items-center justify-center p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all group"
+          >
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Students</span>
+            <span className="text-xs font-bold text-foreground group-hover:text-primary">Register Here</span>
+          </Link>
+          <Link 
+            href="/signup/employer"
+            className="flex flex-col items-center justify-center p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all group"
+          >
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Employers</span>
+            <span className="text-xs font-bold text-foreground group-hover:text-primary">Join as Partner</span>
+          </Link>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 gap-3">
-        <button 
-          onClick={() => { setEmail("student@tupv.edu.ph"); setPassword("TUPV-0909"); }}
-          className="flex flex-col items-start p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
-        >
-          <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Student Access</span>
-          <span className="text-sm font-medium">student@tupv.edu.ph</span>
-          <span className="text-xs text-muted-foreground">Password: TUPV-0909</span>
-        </button>
-        <button 
-          onClick={() => { setEmail("employer@company.com"); setPassword("admin123"); }}
-          className="flex flex-col items-start p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
-        >
-          <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Employer Access</span>
-          <span className="text-sm font-medium">employer@company.com</span>
-          <span className="text-xs text-muted-foreground">Password: admin123</span>
-        </button>
-        <button 
-          onClick={() => { setEmail("coordinator@tupv.edu.ph"); setPassword("admin-sit"); }}
-          className="flex flex-col items-start p-3 rounded-lg border border-border bg-muted/30 hover:bg-muted transition-colors text-left"
-        >
-          <span className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Coordinator Access</span>
-          <span className="text-sm font-medium">coordinator@tupv.edu.ph</span>
-          <span className="text-xs text-muted-foreground">Password: admin-sit</span>
-        </button>
-      </div>
-
-      <div className="text-center">
-        <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1">
+        <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 pt-4">
           ← Back to home
         </Link>
       </div>

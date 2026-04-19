@@ -4,61 +4,30 @@ import * as bcrypt from "bcryptjs";
 
 export async function GET() {
   try {
-    const password = await bcrypt.hash("admin123", 12);
-    const studentPassword = await bcrypt.hash("TUPV-0909", 12);
-    const adminPassword = await bcrypt.hash("admin-sit", 12);
+    const coordinatorPassword = await bcrypt.hash("tupvisayascoor", 12);
 
-    // 1. Create a Company
-    const company = await prisma.company.upsert({
-      where: { email: "contact@techcorp.com" },
-      update: {},
-      create: {
-        name: "TechCorp Industries",
-        email: "contact@techcorp.com",
-        industry: "Software Engineering",
-        isVerified: true,
-      },
-    });
-
-    // 2. Create Student
+    // 1. Create Official Coordinator
     await prisma.user.upsert({
-      where: { email: "student@tupv.edu.ph" },
-      update: {},
-      create: {
-        email: "student@tupv.edu.ph",
-        name: "John Doe Diaz",
-        password: studentPassword,
-        role: "STUDENT",
-        course: "BS in Computer Science",
-      },
-    });
-
-    // 3. Create Employer
-    await prisma.user.upsert({
-      where: { email: "employer@company.com" },
-      update: {},
-      create: {
-        email: "employer@company.com",
-        name: "HR Manager",
-        password: password,
-        role: "EMPLOYER",
-        companyId: company.id,
-      },
-    });
-
-    // 4. Create Admin
-    await prisma.user.upsert({
-      where: { email: "coordinator@tupv.edu.ph" },
-      update: {},
-      create: {
-        email: "coordinator@tupv.edu.ph",
-        name: "SIT Office Admin",
-        password: adminPassword,
+      where: { email: "tupvsitcoor2k26@tupv.edu.ph" },
+      update: {
+        password: coordinatorPassword,
+        name: "SIT Coordinator",
         role: "COORDINATOR",
+        isApproved: true,
+      },
+      create: {
+        email: "tupvsitcoor2k26@tupv.edu.ph",
+        name: "SIT Coordinator",
+        password: coordinatorPassword,
+        role: "COORDINATOR",
+        isApproved: true,
       },
     });
 
-    return NextResponse.json({ success: true, message: "Database seeded successfully!" });
+    return NextResponse.json({ 
+      success: true, 
+      message: "Database initialized with Official Coordinator account." 
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Internal Server Error";
     return NextResponse.json({ success: false, error: message }, { status: 500 });

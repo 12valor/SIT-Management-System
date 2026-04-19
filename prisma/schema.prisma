@@ -87,6 +87,7 @@ model User {
   image         String?
   password      String?   // For Credentials login
   role          UserRole  @default(STUDENT)
+  isApproved    Boolean   @default(false)
   course        String?   // For Students
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

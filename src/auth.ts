@@ -30,6 +30,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (!isPasswordCorrect) return null;
 
+        // Approval check for Students and Employers
+        if (user.role !== "COORDINATOR" && !user.isApproved) {
+          return null; // For now return null, can refine later to show "Pending Approval" message
+        }
+
         return {
           id: user.id,
           name: user.name,
