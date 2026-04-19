@@ -77,7 +77,7 @@ export async function registerEmployer(formData: FormData) {
     return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors[0].message };
+      return { success: false, error: error.issues[0].message };
     }
     console.error("Employer Registration Error:", error);
     return { success: false, error: "Registration failed. Please check company details." };

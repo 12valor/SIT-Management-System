@@ -1,4 +1,4 @@
-import { User, Company, UserRole } from "@prisma/client";
+import { User, Company } from "@prisma/client";
 
 export interface PendingUser extends User {
   company: Company | null;
