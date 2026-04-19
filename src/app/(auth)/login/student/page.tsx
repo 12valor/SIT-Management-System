@@ -42,28 +42,31 @@ export default function StudentLoginPage() {
     <div className="flex min-h-screen overflow-hidden bg-white">
       {/* Left side - Visual Experience (Light Edition) */}
       <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <Image 
             src="/images/auth/student.png" 
             alt="Student Workspace" 
             fill
-            className="object-cover opacity-10 grayscale"
+            className="object-cover transition-opacity duration-700"
+            style={{ opacity: 0.4, filter: 'grayscale(100%) brightness(0.9)' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
         </div>
 
         <div className="relative z-10 flex items-center">
           <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
-        <div className="relative z-10 max-w-2xl mt-12">
-          <p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-4 font-heading">Academic Portal</p>
-          <h1 className="text-7xl font-bold text-slate-900 tracking-tight leading-[1] mb-8 font-heading">
-             Build Your <br /><span className="text-primary">Professional</span> <br />Future Hub.
+        <div className="relative z-10 max-w-2xl mt-12 px-2">
+          <p className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-6 font-heading">Student Manifest</p>
+          <h1 className="text-7xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
+            Forge Your <br />
+            Next <br /> 
+            <span className="text-primary">Chapter.</span>
           </h1>
-          <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-lg font-sans">
-             Manage your industrial training journey, track your logbook progress, and connect with premier partner companies.
+          <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-md font-sans">
+            Streamline your industrial training, manage logbooks, and securely bridge the gap between academic theory and industry practice.
           </p>
         </div>
 

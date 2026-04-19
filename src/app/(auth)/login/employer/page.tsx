@@ -42,28 +42,31 @@ export default function EmployerLoginPage() {
     <div className="flex min-h-screen overflow-hidden bg-white">
       {/* Left side - Visual Experience (Light Edition) */}
       <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <Image 
             src="/images/auth/employer.png" 
             alt="Corporate Environment" 
             fill
-            className="object-cover opacity-10 grayscale"
+            className="object-cover transition-opacity duration-700"
+            style={{ opacity: 0.4, filter: 'grayscale(100%) brightness(0.95)' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
         </div>
 
         <div className="relative z-10 flex items-center">
           <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
-        <div className="relative z-10 max-w-2xl mt-12">
-          <p className="text-xs font-bold text-blue-600 uppercase tracking-[0.3em] mb-4 font-heading">Partner Portal</p>
-          <h1 className="text-7xl font-bold text-slate-900 tracking-tight leading-[1] mb-8 font-heading">
-             Partner <br /><span className="text-blue-600">&</span> Industry <br />Engagement.
+        <div className="relative z-10 max-w-2xl mt-12 px-2">
+          <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.5em] mb-6 font-heading">Corporate Gateway</p>
+          <h1 className="text-7xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
+            Strategic <br />
+            Industry <br /> 
+            <span className="text-blue-600">Allies.</span>
           </h1>
-          <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-lg font-sans">
-             Manage your industrial trainees, review progress reports, and verify SIT requirements within the official university linkage ecosystem.
+          <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-md font-sans">
+            Streamline trainee management and optimize institutional linkage. Access the SIT verification portal and manage your industrial pipeline.
           </p>
         </div>
 

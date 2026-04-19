@@ -44,28 +44,31 @@ export default function CoordinatorLoginPage() {
     <div className="flex min-h-screen overflow-hidden bg-white">
       {/* Left side - Visual Experience (Light Edition) */}
       <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <Image 
             src="/images/auth/coordinator.png" 
             alt="Administrative Office" 
             fill
-            className="object-cover opacity-10 grayscale"
+            className="object-cover transition-opacity duration-700"
+            style={{ opacity: 0.45, filter: 'grayscale(100%) brightness(0.95)' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
         </div>
 
         <div className="relative z-10 flex items-center">
           <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
-        <div className="relative z-10 max-w-2xl mt-12">
-          <p className="text-xs font-bold text-amber-600 uppercase tracking-[0.3em] mb-4 font-heading">Security Terminal</p>
-          <h1 className="text-7xl font-bold text-slate-900 tracking-tight leading-[1] mb-8 font-heading">
-             Strategic <br /><span className="text-amber-600">Institutional</span> <br />Control Hub.
+        <div className="relative z-10 max-w-2xl mt-12 px-2">
+          <p className="text-[10px] font-black text-amber-600 uppercase tracking-[0.5em] mb-6 font-heading">Authority Terminal</p>
+          <h1 className="text-7xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
+            Institutional <br />
+            Control <br /> 
+            <span className="text-amber-600 italic">Command.</span>
           </h1>
-          <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-lg font-sans">
-             Administrative command center for TUP-V industrial training. Monitor registries, validate institutional links, and overlook academic compliance.
+          <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-md font-sans">
+            Centralized administrative hub for TUP-Visayas. Monitor institutional compliance, manage registries, and secure academic integrity.
           </p>
         </div>
 

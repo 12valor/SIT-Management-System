@@ -41,15 +41,16 @@ export default function LoginGatePage() {
       {/* Left side - Visual Experience (Light Edition) */}
       <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200">
         {/* Subtle Background Pattern or Faded Image */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <Image 
             src="/images/auth/gate.png" 
             alt="University Campus" 
             fill
-            className="object-cover opacity-10 grayscale"
+            className="object-cover transition-opacity duration-700"
+            style={{ opacity: 0.35, filter: 'grayscale(100%)' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
         </div>
 
         {/* Branding Overlay */}
@@ -57,13 +58,15 @@ export default function LoginGatePage() {
           <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
-        <div className="relative z-10 max-w-2xl mt-12">
-          <p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-4 font-heading">Institutional Portal</p>
-          <h1 className="text-7xl font-bold text-slate-900 tracking-tight leading-[1] mb-8 font-heading">
-            Academic <br /><span className="text-primary">&</span> Industry <br />Excellence.
+        <div className="relative z-10 max-w-2xl mt-12 px-2">
+          <p className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-6 font-heading">Institutional Core</p>
+          <h1 className="text-7xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
+            TUP-V <br />
+            NextGen <br /> 
+            <span className="text-primary italic">SIT System</span>
           </h1>
-          <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-lg font-sans">
-            Connecting TUP-V students with premier industrial partners through a unified digital management ecosystem.
+          <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-md font-sans">
+            Secure access gateway for TUP-Visayas Supervised Industrial Training. Connect with partners, track excellence, build careers.
           </p>
         </div>
 

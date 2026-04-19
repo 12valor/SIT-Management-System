@@ -74,23 +74,24 @@ export default function EmployerSignupPage() {
             alt="Corporate Environment" 
             fill
             className="object-cover transition-opacity duration-1000"
-            style={{ opacity: 0.1, filter: 'grayscale(100%)' }}
+            style={{ opacity: 0.4, filter: 'grayscale(100%) brightness(0.95)' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
         </div>
 
         <div className="relative z-10 flex items-center">
           <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
         </div>
 
-        <div className="relative z-10 max-w-lg mt-12">
-          <p className="text-xs font-bold text-primary uppercase tracking-[0.4em] mb-4 font-heading">Partner Portal</p>
-          <h1 className="text-6xl font-bold text-slate-900 tracking-tight leading-[1] mb-8 font-heading">
-            Connect With <br /><span className="text-primary">Emerging</span> <br />Talent.
+        <div className="relative z-10 max-w-lg mt-12 px-2">
+          <p className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-6 font-heading">Partner Intake</p>
+          <h1 className="text-6xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
+            Secure <br />Future <br /> 
+            <span className="text-primary italic">Talent.</span>
           </h1>
           <p className="text-lg text-slate-500 font-medium leading-relaxed font-sans">
-            Onboard your organization to the Supervised Industrial Training network and discover the next generation of engineers.
+            Onboard your organization to the TUP-Visayas Supervised Industrial Training network and discover the next generation of engineering professionals.
           </p>
         </div>
 
