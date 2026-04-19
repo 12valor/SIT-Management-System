@@ -1,31 +1,32 @@
 import Link from "next/link";
 import { ArrowRight, Briefcase, GraduationCap, CheckCircle } from "lucide-react";
+import { HeroCarousel } from "@/components/HeroCarousel";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <header className="fixed top-0 w-full z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
-        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+      <header className="fixed top-0 w-full z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl shadow-sm">
+        <div className="container mx-auto px-10 h-24 flex items-center justify-between">
           <div className="flex items-center gap-4">
-             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-10 w-auto object-contain" />
-             <div className="h-6 w-px bg-slate-200" />
+             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
+             <div className="h-8 w-px bg-slate-200" />
              <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight text-slate-900 leading-none font-heading">SIT Platform</span>
               <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest leading-none mt-1 font-sans">TUP-Visayas</span>
              </div>
           </div>
-          <nav className="hidden md:flex items-center gap-10">
-            <Link className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors font-heading uppercase tracking-wider" href="/login">
+          <nav className="hidden md:flex items-center gap-12">
+            <Link className="text-[11px] font-black text-slate-900 hover:text-primary transition-colors font-heading uppercase tracking-[0.2em]" href="/login">
               Opportunities
             </Link>
-            <Link className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors font-heading uppercase tracking-wider" href="/login">
+            <Link className="text-[11px] font-black text-slate-900 hover:text-primary transition-colors font-heading uppercase tracking-[0.2em]" href="/login">
               Companies
             </Link>
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <Link 
               href="/login" 
-              className="px-6 py-2.5 rounded-xl bg-primary text-white text-xs font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5 font-heading"
+              className="px-8 py-3.5 rounded-xl bg-primary text-white text-[10px] font-black uppercase tracking-[0.2em] hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5 font-heading"
             >
               Portal Login
             </Link>
@@ -33,48 +34,10 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 pt-16">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden py-24 md:py-32 lg:py-48">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 overflow-hidden">
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[30%] h-[30%] bg-primary/10 blur-[100px] rounded-full" />
-          </div>
+      <main className="flex-1">
+        <HeroCarousel />
 
-          <div className="container mx-auto px-6 text-center animate-in-fade">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              Empowering TUP-V Future Professionals
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-              The Ultimate Link Between <br />
-              <span className="text-gradient">Talent and Industry</span>
-            </h1>
-            <p className="mx-auto max-w-[800px] text-muted-foreground text-lg md:text-xl mb-10 leading-relaxed">
-              Streamlining the Supervised Industrial Training (SIT) experience for students and companies. 
-              Manage logbooks, discover opportunities, and track applications in one unified platform.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                className="group w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 hover:shadow-primary/30"
-                href="/login"
-              >
-                Get Started
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                className="w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-xl border border-border bg-background px-8 text-sm font-semibold hover:bg-muted transition-all"
-                href="#features"
-              >
-                Explore Features
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* Entry Points Section */}
 
         {/* Entry Points Section */}
         <section className="py-20 bg-muted/30 border-y border-border/50">
