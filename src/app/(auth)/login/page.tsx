@@ -9,9 +9,9 @@ const roles = [
     sub: "Track your SIT hours and logbook",
     icon: GraduationCap,
     href: "/login/student",
-    accent: "text-primary",
-    border: "hover:border-primary/60",
-    bg: "hover:bg-primary/5",
+    accent: "text-slate-900",
+    border: "hover:border-slate-900/10",
+    bg: "hover:bg-slate-50",
   },
   {
     key: "employer",
@@ -19,9 +19,9 @@ const roles = [
     sub: "Post roles and manage trainees",
     icon: Building2,
     href: "/login/employer",
-    accent: "text-blue-600",
-    border: "hover:border-blue-500/60",
-    bg: "hover:bg-blue-500/5",
+    accent: "text-slate-900",
+    border: "hover:border-slate-900/10",
+    bg: "hover:bg-slate-50",
   },
   {
     key: "coordinator",
@@ -29,9 +29,9 @@ const roles = [
     sub: "Manage students and companies",
     icon: ShieldCheck,
     href: "/login/coordinator",
-    accent: "text-amber-600",
-    border: "hover:border-amber-500/60",
-    bg: "hover:bg-amber-500/5",
+    accent: "text-slate-900",
+    border: "hover:border-slate-900/10",
+    bg: "hover:bg-slate-50",
   },
 ];
 

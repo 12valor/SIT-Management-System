@@ -81,9 +81,9 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {/* Student Card */}
-              <div className="group p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <GraduationCap className="h-6 w-6 text-primary" />
+              <div className="group p-8 rounded-xl bg-card border border-border hover:border-slate-300 transition-all hover:shadow-2xl hover:shadow-slate-100">
+                <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <GraduationCap className="h-6 w-6 text-slate-900" />
                 </div>
                 <h3 className="text-2xl font-bold mb-3">For Students</h3>
                 <p className="text-muted-foreground mb-6">
@@ -103,9 +103,9 @@ export default function Home() {
               </div>
 
               {/* Company Card */}
-              <div className="group p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-2xl hover:shadow-primary/5">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Briefcase className="h-6 w-6 text-primary" />
+              <div className="group p-8 rounded-xl bg-card border border-border hover:border-slate-300 transition-all hover:shadow-2xl hover:shadow-slate-100">
+                <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Briefcase className="h-6 w-6 text-slate-900" />
                 </div>
                 <h3 className="text-2xl font-bold mb-3">For Companies</h3>
                 <p className="text-muted-foreground mb-6">
@@ -119,7 +119,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/login" className="w-full inline-flex h-10 items-center justify-center rounded-lg bg-primary/10 text-primary font-semibold hover:bg-primary hover:text-primary-foreground transition-all">
+                <Link href="/login" className="w-full inline-flex h-10 items-center justify-center rounded-lg bg-slate-900 text-white font-semibold hover:bg-black transition-all">
                   Partner with Us
                 </Link>
               </div>
