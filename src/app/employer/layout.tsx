@@ -34,8 +34,8 @@ export default function EmployerLayout({
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
-    } else if (session?.user?.role && session.user.role !== 'employer') {
-      router.push(`/${session.user.role}/dashboard`);
+    } else if (session?.user?.role && session.user.role.toLowerCase() !== 'employer') {
+      router.push(`/${session.user.role.toLowerCase()}/dashboard`);
     }
   }, [session, status, router]);
 

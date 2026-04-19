@@ -36,8 +36,8 @@ export default function CoordinatorLayout({
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
-    } else if (session?.user?.role && session.user.role !== 'coordinator') {
-      router.push(`/${session.user.role}/dashboard`);
+    } else if (session?.user?.role && session.user.role.toLowerCase() !== 'coordinator') {
+      router.push(`/${session.user.role.toLowerCase()}/dashboard`);
     }
   }, [session, status, router]);
 

@@ -35,9 +35,9 @@ export default function StudentLayout({
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
-    } else if (session?.user?.role && session.user.role !== 'student') {
+    } else if (session?.user?.role && session.user.role.toLowerCase() !== 'student') {
       // Basic client-side fallback, though middleware handles this
-      router.push(`/${session.user.role}/dashboard`);
+      router.push(`/${session.user.role.toLowerCase()}/dashboard`);
     }
   }, [session, status, router]);
 
