@@ -9,7 +9,6 @@ import {
   FileText, 
   Briefcase, 
   Monitor, 
-  X,
   Loader2,
   Inbox
 } from "lucide-react";

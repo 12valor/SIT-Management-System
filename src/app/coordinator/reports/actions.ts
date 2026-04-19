@@ -16,7 +16,7 @@ export async function getReportsData() {
       select: {
         name: true,
         course: true,
-        logbooks: {
+        logbookEntries: {
           where: { status: 'APPROVED' },
           select: { hours: true }
         }
@@ -24,7 +24,7 @@ export async function getReportsData() {
     });
 
     const participationData = trainees.map(t => {
-      const totalHours = t.logbooks.reduce((sum, l) => sum + l.hours, 0);
+      const totalHours = t.logbookEntries.reduce((sum, l) => sum + l.hours, 0);
       return [t.name || "N/A", t.course || "N/A", `${totalHours} hrs`, totalHours >= 300 ? "COMPLETED" : "ACTIVE"];
     });
 
@@ -48,7 +48,7 @@ export async function getReportsData() {
     // 3. Completion Status Data
     const completionData = trainees
       .map(t => {
-        const totalHours = t.logbooks.reduce((sum, l) => sum + l.hours, 0);
+        const totalHours = t.logbookEntries.reduce((sum, l) => sum + l.hours, 0);
         return { name: t.name, hours: totalHours, course: t.course };
       })
       .filter(t => t.hours >= 250) // Nearing completion

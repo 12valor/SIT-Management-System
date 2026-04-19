@@ -16,7 +16,7 @@ export default function CoordinatorReportsPage() {
   useEffect(() => {
     async function loadData() {
       const result = await getReportsData();
-      if (result.success) {
+      if (result.success && result.data) {
         setReportsData(result.data);
       }
       setIsLoading(false);
