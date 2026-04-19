@@ -83,8 +83,8 @@ export default function LoginGatePage() {
       </div>
 
       {/* Right side - Interaction Logic */}
-      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-24 bg-white relative z-20">
-        <div className="max-w-md mx-auto w-full lg:mx-0">
+      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-20 bg-white relative z-20">
+        <div className="max-w-md w-full lg:ml-12 xl:ml-20">
           <div className="mb-12 text-left">
             <h2 className="text-4xl font-bold tracking-tight text-slate-900 mb-3 font-heading uppercase">Sign In</h2>
             <p className="text-base text-slate-500 font-medium font-sans">Select your designated portal to continue.</p>

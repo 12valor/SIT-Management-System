@@ -111,8 +111,8 @@ export default function EmployerSignupPage() {
       </div>
 
       {/* Right side - Registration Form */}
-      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-24 bg-white relative z-20 overflow-y-auto">
-        <div className="max-w-md mx-auto w-full lg:mx-0">
+      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-20 bg-white relative z-20 overflow-y-auto">
+        <div className="max-w-md w-full lg:ml-12 xl:ml-20">
           <div className="mb-8 text-left">
             <Link href="/login/employer" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors mb-10 font-heading group">
               <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Back to Login
