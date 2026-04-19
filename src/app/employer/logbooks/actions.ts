@@ -48,8 +48,9 @@ export async function getEmployerStudentsLogs() {
     );
 
     return { success: true, data: trainees };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+    return { success: false, error: message };
   }
 }
 
@@ -68,7 +69,8 @@ export async function updateLogStatus(entryId: string, status: 'APPROVED' | 'REJ
     revalidatePath("/student/dashboard");
     
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to update logbook status";
+    return { success: false, error: message };
   }
 }

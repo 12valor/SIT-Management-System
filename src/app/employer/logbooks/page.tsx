@@ -5,12 +5,9 @@ import {
   CheckCircle2, 
   XCircle, 
   Clock, 
-  Search, 
   User as UserIcon, 
-  ChevronRight,
   MessageSquare,
   ClipboardCheck,
-  Calendar,
   MoreVertical,
   Filter,
   Loader2,
@@ -20,9 +17,11 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getEmployerStudentsLogs, updateLogStatus } from "./actions";
+import { TraineeWithLogs } from "./types";
+import { LogbookEntry } from "../../student/logbook/types";
 
 export default function EmployerLogbookReviewPage() {
-  const [trainees, setTrainees] = useState<any[]>([]);
+  const [trainees, setTrainees] = useState<TraineeWithLogs[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -89,8 +88,8 @@ export default function EmployerLogbookReviewPage() {
            </div>
            
            <div className="space-y-3">
-              {trainees.map((trainee) => {
-                const pendingCount = trainee.logs.filter((l: any) => l.status === 'PENDING').length;
+              {trainees.map((trainee: TraineeWithLogs) => {
+                const pendingCount = trainee.logs.filter((l: LogbookEntry) => l.status === 'PENDING').length;
                 return (
                   <button
                     key={trainee.id}
@@ -106,7 +105,7 @@ export default function EmployerLogbookReviewPage() {
                       "w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm ring-4 ring-white/5 shadow-2xl transition-transform group-hover:rotate-3",
                       selectedStudentId === trainee.studentId ? "bg-white/10" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                     )}>
-                      {trainee.studentName[0]}
+                      {trainee.studentName?.[0] || "?"}
                     </div>
                     <div className="flex-1 overflow-hidden">
                       <p className="font-black text-sm tracking-tight truncate uppercase italic">{trainee.studentName}</p>
@@ -156,8 +155,8 @@ export default function EmployerLogbookReviewPage() {
                 </div>
 
                 <div className="space-y-6">
-                   {selectedStudent?.logs.length > 0 ? (
-                     selectedStudent.logs.map((entry: any) => (
+                   {selectedStudent && selectedStudent.logs.length > 0 ? (
+                     selectedStudent.logs.map((entry: LogbookEntry) => (
                         <div key={entry.id} className="bg-card border border-border/60 rounded-[2.5rem] p-8 lg:p-10 shadow-3xl hover:shadow-4xl transition-all group overflow-hidden relative">
                            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[80px] rounded-full" />
                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-10 relative z-10">
@@ -188,7 +187,7 @@ export default function EmployerLogbookReviewPage() {
                                     </div>
                                     <div className="p-6 rounded-[1.5rem] bg-slate-50/50 dark:bg-slate-800/30 border-l-4 border-blue-600 shadow-inner">
                                        <p className="text-base text-slate-700 dark:text-slate-300 font-medium leading-relaxed italic">
-                                          "{entry.tasks}"
+                                          &quot;{entry.tasks}&quot;
                                        </p>
                                     </div>
                                  </div>

@@ -36,11 +36,11 @@ export default function LoginPage() {
       // Fetch session to get user role for selective redirection
       const response = await fetch("/api/auth/session");
       const session = await response.json();
-      const role = (session?.user as any)?.role;
+      const role = session?.user?.role;
 
       if (role) {
         // Update mock store user for backward compatibility with existing components
-        login(email, role.toLowerCase() as any, session.user.name);
+        login(email, role.toLowerCase() as "student" | "employer" | "coordinator", session.user.name);
         
         // Premium transition delay
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -48,7 +48,7 @@ export default function LoginPage() {
       } else {
         router.push("/");
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred. Please try again.");
       setIsLoading(false);
     }

@@ -2,14 +2,12 @@
 
 import { useMockStore } from "@/store/mock-store";
 import { 
-  BarChart3, 
   Users, 
   ClipboardList, 
   TrendingUp, 
   ArrowUpRight, 
   Calendar,
   MessageSquare,
-  Search,
   CheckCircle2,
   Clock,
   Plus
@@ -17,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function EmployerDashboard() {
-  const { postings, applications, user } = useMockStore();
+  const { postings, applications } = useMockStore();
 
   const totalPostings = postings.length;
   const totalApplicants = applications.length;
@@ -66,7 +64,7 @@ export default function EmployerDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-extrabold tracking-tight">Overview & Analytics</h1>
-          <p className="text-muted-foreground font-medium">Monitoring your company's SIT engagement and talent pipeline.</p>
+          <p className="text-muted-foreground font-medium">Monitoring your company&apos;s SIT engagement and talent pipeline.</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border">
           <Calendar className="h-4 w-4 text-blue-600" />
@@ -156,7 +154,7 @@ export default function EmployerDashboard() {
                      <span className="text-[10px] font-black uppercase bg-blue-600 px-2 py-0.5 rounded-full">Pro Tip</span>
                   </div>
                   <p className="text-sm font-medium leading-relaxed opacity-90">
-                    Students are looking for "Remote" opportunities more than ever. Consider offering hybrid options to attract the best talent.
+                    Students are looking for &quot;Remote&quot; opportunities more than ever. Consider offering hybrid options to attract the best talent.
                   </p>
                   <button className="w-full py-3 rounded-lg bg-blue-600 text-sm font-bold shadow-lg shadow-blue-600/40 hover:bg-blue-700 transition-all flex items-center justify-center gap-2">
                     Optimize Postings <ArrowUpRight className="h-4 w-4" />

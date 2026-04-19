@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useMockStore, SITDocument } from "@/store/mock-store";
+import { useMockStore } from "@/store/mock-store";
 import { 
   FileText, 
   Upload, 
@@ -10,7 +10,6 @@ import {
   Clock, 
   AlertCircle,
   FileUp,
-  X,
   Plus
 } from "lucide-react";
 import { cn } from "@/lib/utils";

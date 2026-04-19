@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Construction } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -11,7 +11,7 @@ export default function NotFound() {
       </div>
       <h1 className="text-3xl font-black tracking-tight mb-2">Page Not Found</h1>
       <p className="text-muted-foreground font-medium text-center max-w-[400px] mb-8 leading-relaxed">
-        Oops! It looks like the page you're searching for has been moved or doesn't exist in our training module.
+        Oops! It looks like the page you&apos;re searching for has been moved or doesn&apos;t exist in our training module.
       </p>
       <Link 
         href="/" 

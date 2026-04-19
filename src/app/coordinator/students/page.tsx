@@ -3,14 +3,12 @@
 import { useState } from "react";
 import { useMockStore } from "@/store/mock-store";
 import { 
-  Users, 
   Search, 
   Filter, 
   Download, 
   ExternalLink, 
   Clock, 
   CheckCircle2, 
-  ChevronRight,
   User as UserIcon,
   Circle
 } from "lucide-react";

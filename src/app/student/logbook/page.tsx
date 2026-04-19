@@ -2,17 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { 
-  Plus, 
+  PlusCircle, 
   Clock, 
   Calendar as CalendarIcon, 
-  CheckCircle2, 
   Timer, 
-  AlertCircle,
   FileText,
   Search,
   MoreVertical,
   X,
-  PlusCircle,
   Loader2,
   TrendingUp,
   Zap,
@@ -21,9 +18,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStudentLogbook, submitLogbookEntry } from "./actions";
+import { LogbookData, LogbookEntry } from "./types";
 
 export default function LogbookPage() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<LogbookData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,7 +38,7 @@ export default function LogbookPage() {
   async function loadData() {
     setIsLoading(true);
     const result = await getStudentLogbook();
-    if (result.success) {
+    if (result.success && result.data) {
       setData(result.data);
     }
     setIsLoading(false);
@@ -67,11 +65,13 @@ export default function LogbookPage() {
     setIsSubmitting(false);
   };
 
-  if (isLoading && !data) {
+  if (isLoading || !data) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
         <Loader2 className="h-10 w-10 text-indigo-600 animate-spin" />
-        <p className="text-slate-500 font-black uppercase tracking-widest text-xs">Synchronizing Archive Records...</p>
+        <p className="text-slate-500 font-black uppercase tracking-widest text-xs animate-pulse">
+          {isLoading ? "Synchronizing Archive Records..." : "Logbook Data Unavailable"}
+        </p>
       </div>
     );
   }
@@ -168,7 +168,7 @@ export default function LogbookPage() {
 
         <div className="grid grid-cols-1 gap-6">
           {data.entries.length > 0 ? (
-            data.entries.map((entry: any) => (
+            data.entries.map((entry: LogbookEntry) => (
               <div key={entry.id} className="group flex flex-col md:flex-row md:items-center justify-between p-8 rounded-[2.5rem] bg-card border border-border/60 hover:bg-slate-50 dark:hover:bg-indigo-500/5 transition-all relative overflow-hidden">
                 <div className="flex items-center gap-8 relative z-10">
                    <div className="flex flex-col items-center justify-center w-20 h-20 rounded-[1.5rem] bg-slate-100 dark:bg-slate-800 border border-border/40 group-hover:bg-indigo-600 transition-all group-hover:border-indigo-500 group-hover:scale-105">

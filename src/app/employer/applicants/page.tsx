@@ -1,19 +1,15 @@
 "use client";
 
-import { useMockStore, Application } from "@/store/mock-store";
+import { useMockStore } from "@/store/mock-store";
 import { 
   Users, 
   Search, 
   MoreVertical, 
-  Mail, 
-  Phone, 
-  Download,
   CheckCircle2,
   XCircle,
   Clock,
   Filter,
-  ArrowRight,
-  ExternalLink
+  ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

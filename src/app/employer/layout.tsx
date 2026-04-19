@@ -17,7 +17,6 @@ import {
   Settings,
   ClipboardCheck,
   Star,
-  ChevronRight,
   Briefcase
 } from "lucide-react";
 import { cn } from "@/lib/utils";

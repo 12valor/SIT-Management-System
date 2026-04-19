@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { 
   Star, 
   CheckCircle2, 
-  User as UserIcon, 
   ArrowLeft,
   Trophy,
   Activity,
@@ -18,9 +17,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getEmployerTrainees, submitTraineeEvaluation } from "./actions";
+import { Trainee } from "./types";
 
 export default function EmployerEvaluationsPage() {
-  const [trainees, setTrainees] = useState<any[]>([]);
+  const [trainees, setTrainees] = useState<Trainee[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -268,7 +268,7 @@ export default function EmployerEvaluationsPage() {
 
                <div className="mb-8 relative">
                   <div className="w-28 h-28 rounded-[2rem] bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-4xl font-black text-slate-300 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-3 shadow-sm border border-border/40">
-                    {trainee.studentName[0]}
+                    {trainee.studentName?.[0] || 'U'}
                   </div>
                   {evaluation && (
                     <div className="absolute -bottom-3 -right-3 w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-xl border-[4px] border-card">
@@ -340,7 +340,7 @@ export default function EmployerEvaluationsPage() {
         {trainees.length === 0 && (
            <div className="col-span-full py-48 flex flex-col items-center justify-center text-center bg-card border-2 border-dashed border-border/40 rounded-[4rem] opacity-40">
               <div className="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-8">
-                <UserIcon className="h-10 w-10 text-slate-400" />
+                <Star className="h-10 w-10 text-slate-400" />
               </div>
               <h3 className="text-3xl font-black mb-3 tracking-tight">No Active Trainee Roster</h3>
               <p className="text-base font-medium max-w-sm text-slate-500 leading-relaxed">Industrial assessment manifests after successfully onboarding and coordinating with TUP-V students.</p>

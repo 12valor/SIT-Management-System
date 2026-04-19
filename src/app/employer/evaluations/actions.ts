@@ -46,8 +46,9 @@ export async function getEmployerTrainees() {
         companyName: employer.company?.name
       }))
     };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+    return { success: false, error: message };
   }
 }
 
@@ -90,7 +91,8 @@ export async function submitTraineeEvaluation(data: {
     revalidatePath("/coordinator/dashboard");
     
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to submit evaluation";
+    return { success: false, error: message };
   }
 }

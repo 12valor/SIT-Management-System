@@ -1,6 +1,6 @@
 "use client";
 
-import { useMockStore, Company } from "@/store/mock-store";
+import { useMockStore } from "@/store/mock-store";
 import { 
   Building2, 
   Search, 
@@ -8,10 +8,7 @@ import {
   ShieldAlert, 
   Clock, 
   Mail, 
-  ExternalLink,
   Plus,
-  CheckCircle2,
-  XCircle,
   MoreVertical,
   Globe
 } from "lucide-react";

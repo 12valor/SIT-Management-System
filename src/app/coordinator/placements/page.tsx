@@ -1,7 +1,7 @@
 "use client";
 
 import { useMockStore } from "@/store/mock-store";
-import { MapPin, Building2, User as UserIcon, AlertCircle } from "lucide-react";
+import { MapPin, Building2, AlertCircle } from "lucide-react";
 
 export default function CoordinatorPlacementsPage() {
   const { applications, postings } = useMockStore();

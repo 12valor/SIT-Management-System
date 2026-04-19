@@ -13,7 +13,7 @@ import {
   ShieldCheck,
   Briefcase
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 
 export default function StudentProfilePage() {
   const { user, updateProfile } = useMockStore();

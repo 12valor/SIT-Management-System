@@ -7,17 +7,13 @@ import {
   Search, 
   MapPin, 
   Clock, 
-  Briefcase, 
-  Filter, 
-  MoreVertical,
-  ChevronRight,
-  TrendingUp,
   X,
   Target,
   Send,
-  Loader2
+  Loader2,
+  MoreVertical
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 
 export default function EmployerPostingsPage() {
   const { postings, createPosting, applications } = useMockStore();
@@ -221,7 +217,7 @@ export default function EmployerPostingsPage() {
                   <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Placement Type</label>
                   <select 
                     value={formData.type}
-                    onChange={(e) => setFormData({...formData, type: e.target.value as any})}
+                    onChange={(e) => setFormData({...formData, type: e.target.value as SITPosting['type']})}
                     className="w-full px-4 h-12 rounded-lg border border-border bg-muted/20 focus:bg-background outline-none transition-all font-medium appearance-none cursor-pointer"
                   >
                     <option value="On-site">On-site</option>

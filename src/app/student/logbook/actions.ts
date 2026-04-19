@@ -25,8 +25,9 @@ export async function getStudentLogbook() {
         totalApprovedHours
       }
     };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+    return { success: false, error: message };
   }
 }
 
@@ -54,7 +55,8 @@ export async function submitLogbookEntry(data: {
     revalidatePath("/employer/logbooks");
     
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+    return { success: false, error: message };
   }
 }

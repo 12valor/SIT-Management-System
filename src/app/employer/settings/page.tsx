@@ -10,7 +10,7 @@ export default function PlaceholderPage() {
         Settings Under Construction <Sparkles className="h-6 w-6 text-blue-500 fill-blue-500" />
       </h2>
       <p className="text-muted-foreground font-medium max-w-sm mb-8">
-        We're working hard to bring this feature to the SIT platform. Stay tuned for updates!
+        We&apos;re working hard to bring this feature to the SIT platform. Stay tuned for updates!
       </p>
       <div className="flex gap-2">
          <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce shadow-sm shadow-blue-600/40" />

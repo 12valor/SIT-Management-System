@@ -10,26 +10,24 @@ import {
   AlertCircle,
   Briefcase,
   ChevronRight,
-  ArrowUpRight,
   Loader2,
   Activity,
-  ShieldCheck,
-  Zap,
   Building2,
   TrendingUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStudentDashboardData } from "./actions";
+import { StudentDashboardData, StudentApplication } from "./types";
 
 export default function StudentDashboard() {
   const { data: session } = useSession();
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<StudentDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       const result = await getStudentDashboardData();
-      if (result.success) {
+      if (result.success && result.data) {
         setData(result.data);
       }
       setIsLoading(false);
@@ -37,11 +35,13 @@ export default function StudentDashboard() {
     loadData();
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
         <Loader2 className="h-10 w-10 text-indigo-600 animate-spin" />
-        <p className="text-slate-500 font-black uppercase tracking-widest text-xs animate-pulse">Retrieving Academic Progress...</p>
+        <p className="text-slate-500 font-black uppercase tracking-widest text-xs animate-pulse">
+          {isLoading ? "Retrieving Academic Progress..." : "Industrial Data Unavailable"}
+        </p>
       </div>
     );
   }
@@ -164,7 +164,7 @@ export default function StudentDashboard() {
           
           <div className="space-y-6">
             {data.applications.length > 0 ? (
-              data.applications.slice(0, 5).map((app: any) => (
+              data.applications.slice(0, 5).map((app: StudentApplication) => (
                 <div key={app.id} className="group flex items-center justify-between p-8 rounded-[2.5rem] bg-card border border-border/60 hover:bg-slate-50 dark:hover:bg-indigo-500/5 transition-all">
                   <div className="flex items-center gap-6">
                     <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-2xl font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm border border-border/40">

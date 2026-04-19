@@ -6,24 +6,24 @@ import {
   Building2, 
   CheckCircle2, 
   TrendingUp, 
-  AlertCircle,
-  Briefcase,
-  ArrowUpRight,
-  MoreHorizontal,
-  Award,
-  Loader2
+  Briefcase, 
+  ArrowUpRight, 
+  MoreHorizontal, 
+  Award, 
+  Loader2 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getCoordinatorStats } from "./actions";
+import { CoordinatorStats, RecentPlacement } from "./types";
 
 export default function CoordinatorDashboard() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<CoordinatorStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
       const result = await getCoordinatorStats();
-      if (result.success) {
+      if (result.success && result.data) {
         setStats(result.data);
       }
       setIsLoading(false);
@@ -31,11 +31,13 @@ export default function CoordinatorDashboard() {
     loadStats();
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !stats) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
         <Loader2 className="h-10 w-10 text-indigo-600 animate-spin" />
-        <p className="text-slate-500 font-bold animate-pulse uppercase tracking-widest text-xs">Synchronizing Ecosystem Data...</p>
+        <p className="text-slate-500 font-bold animate-pulse uppercase tracking-widest text-xs">
+          {isLoading ? "Synchronizing Ecosystem Data..." : "Industrial Data Unavailable"}
+        </p>
       </div>
     );
   }
@@ -146,20 +148,20 @@ export default function CoordinatorDashboard() {
                 Industrial Placements
               </h3>
               <button className="text-[10px] font-black text-indigo-600 hover:text-indigo-700 uppercase tracking-widest flex items-center gap-1 group">
-                Full Database <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Full Database <ArrowUpRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
            </div>
            
            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] overflow-hidden shadow-sm">
               <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                {stats.recentPlacements.map((app: any) => (
+                {stats.recentPlacements.map((app: RecentPlacement) => (
                   <div key={app.id} className="p-8 flex items-center justify-between hover:bg-slate-50/80 dark:hover:bg-indigo-500/5 transition-all group">
                      <div className="flex items-center gap-6">
                         <div className="w-16 h-16 rounded-[1.5rem] bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-2xl font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm">
-                          {app.studentName[0]}
+                           {app.studentName?.[0] || 'U'}
                         </div>
                         <div>
-                          <p className="text-lg font-black text-slate-900 dark:text-white tracking-tight">{app.studentName}</p>
+                          <p className="text-lg font-black text-slate-900 dark:text-white tracking-tight">{app.studentName || 'Unknown Student'}</p>
                           <div className="flex flex-wrap items-center gap-3 mt-1.5">
                              <span className="text-xs font-bold text-slate-500">Interning as</span>
                              <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg uppercase tracking-widest">{app.postingTitle}</span>
@@ -179,7 +181,7 @@ export default function CoordinatorDashboard() {
                 {stats.recentPlacements.length === 0 && (
                    <div className="p-24 text-center">
                       <div className="w-20 h-20 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center mx-auto mb-6">
-                        <AlertCircle className="h-10 w-10 text-slate-300" />
+                        <Loader2 className="h-10 w-10 text-slate-300" />
                       </div>
                       <p className="font-black text-slate-400 uppercase tracking-widest text-sm">No active placements registered</p>
                       <p className="text-xs text-slate-500 mt-2">Hiring records will appear here once finalized.</p>
@@ -203,7 +205,7 @@ export default function CoordinatorDashboard() {
               Partner Queue
            </h3>
            <div className="space-y-6">
-              {stats.pendingCompanies.map((company: any) => (
+              {stats.pendingCompanies.map((company) => (
                 <div key={company.id} className="p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden group hover:border-amber-500/50 transition-all">
                    <div className="absolute top-0 right-0 w-3 h-full bg-amber-500" />
                    <div className="flex items-start justify-between mb-6">
@@ -258,6 +260,4 @@ export default function CoordinatorDashboard() {
   );
 }
 
-import { ChevronRight as ChevronRightIcon } from "lucide-react";
-function ChevronRight(props: any) { return <ChevronRightIcon {...props} />; }
 

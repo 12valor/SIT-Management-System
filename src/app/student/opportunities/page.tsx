@@ -3,30 +3,27 @@
 import { useState, useEffect } from "react";
 import { 
   Search, 
-  MapPin, 
-  Clock, 
   Briefcase, 
   Filter, 
-  ChevronRight,
-  Sparkles,
   CheckCircle2,
   X,
   Send,
   Loader2,
-  ShieldCheck,
   Building2,
-  ArrowUpRight,
   Zap,
-  Activity
+  ArrowUpRight,
+  Activity,
+  Sparkles
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getSITOpportunities, applyForOpportunity } from "./actions";
+import { SITOpportunity } from "./types";
 
 export default function OpportunitiesPage() {
-  const [postings, setPostings] = useState<any[]>([]);
+  const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [applyingTo, setApplyingTo] = useState<any | null>(null);
+  const [applyingTo, setApplyingTo] = useState<SITOpportunity | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -59,7 +56,7 @@ export default function OpportunitiesPage() {
     setIsSubmitting(false);
   };
 
-  const filteredPostings = postings.filter((p) => {
+  const filteredPostings = postings.filter((p: SITOpportunity) => {
     const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                          p.company.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;

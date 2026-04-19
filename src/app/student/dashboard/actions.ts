@@ -53,7 +53,8 @@ export async function getStudentDashboardData() {
         } : null
       }
     };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+    return { success: false, error: message };
   }
 }

@@ -74,8 +74,9 @@ export async function getCoordinatorStats() {
         }))
       }
     };
-  } catch (error: any) {
-    console.error("Error fetching coordinator stats:", error);
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    console.error("Historical trace failure in coordinator stats:", error);
+    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+    return { success: false, error: message };
   }
 }

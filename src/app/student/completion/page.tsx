@@ -103,7 +103,7 @@ export default function StudentCompletionPage() {
                       </div>
                    </div>
                    <div className="p-5 rounded-2xl bg-muted/30 border border-border italic text-sm font-medium text-slate-600 leading-relaxed">
-                      "{evaluation.comments}"
+                      &quot;{evaluation.comments}&quot;
                    </div>
                 </div>
               ) : (
@@ -111,7 +111,7 @@ export default function StudentCompletionPage() {
                    <AlertCircle className="h-10 w-10 text-amber-500 mx-auto" />
                    <div className="space-y-1">
                       <p className="font-black text-slate-900">Awaiting Assessment</p>
-                      <p className="text-xs font-bold text-slate-500 max-w-[180px] mx-auto">Your supervisor hasn't submitted your final performance evaluation yet.</p>
+                      <p className="text-xs font-bold text-slate-500 max-w-[180px] mx-auto">Your supervisor hasn&apos;t submitted your final performance evaluation yet.</p>
                    </div>
                 </div>
               )}
@@ -161,7 +161,7 @@ export default function StudentCompletionPage() {
            <div className="space-y-1">
               <h3 className="text-xl font-bold text-slate-400">Final Verification Pending</h3>
               <p className="text-sm font-medium text-slate-500 max-w-sm mx-auto">
-                 Finish your 300 hours and obtain your supervisor's final assessment to unlock your SIT Certificate of Completion.
+                 Finish your 300 hours and obtain your supervisor&apos;s final assessment to unlock your SIT Certificate of Completion.
               </p>
            </div>
         </div>
