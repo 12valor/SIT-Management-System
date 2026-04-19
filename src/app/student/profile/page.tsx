@@ -17,7 +17,7 @@ type Profile = {
 };
 
 export default function StudentProfilePage() {
-  const { data: session } = useSession();
+
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
