@@ -80,7 +80,7 @@ export default function OpportunitiesPage() {
              <Briefcase className="h-4 w-4" />
              <span className="text-[10px] font-black uppercase tracking-widest">Industry Stream</span>
           </div>
-          <h2 className="text-6xl font-black tracking-tighter leading-none italic uppercase">Career <span className="text-primary">Postings</span></h2>
+          <h2 className="text-6xl font-black tracking-tighter leading-none uppercase">Career <span className="text-primary">Postings</span></h2>
           <p className="text-muted-foreground font-medium text-lg">Acquire elite industrial placements within the TUP-V ecosystem.</p>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
@@ -127,7 +127,7 @@ export default function OpportunitiesPage() {
                </div>
 
                <div className="space-y-2 mb-10 relative z-10 flex-1">
-                  <h3 className="text-2xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors uppercase italic">{posting.title}</h3>
+                  <h3 className="text-2xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors uppercase">{posting.title}</h3>
                   <p className="text-sm font-black text-muted-foreground uppercase tracking-widest leading-none flex items-center gap-2">
                      <Building2 className="h-4 w-4" /> {posting.company.name}
                   </p>
@@ -170,7 +170,7 @@ export default function OpportunitiesPage() {
                   <Activity className="h-10 w-10 text-muted-foreground" />
                 </div>
                 <h3 className="text-3xl font-black mb-3 tracking-tight">Zero Results Manifested</h3>
-                <p className="text-base font-medium max-w-sm mx-auto text-muted-foreground leading-relaxed italic italic">Your search criteria did not match any active industrial opportunities. Try expanding your parameters.</p>
+                <p className="text-base font-medium max-w-sm mx-auto text-muted-foreground leading-relaxed">Your search criteria did not match any active industrial opportunities. Try expanding your parameters.</p>
             </div>
         )}
       </div>
@@ -185,8 +185,8 @@ export default function OpportunitiesPage() {
                 <div className="w-32 h-32 bg-primary/10 text-primary rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-primary/20 ring-8 ring-primary/5">
                   <CheckCircle2 className="h-16 w-16" />
                 </div>
-                <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic">Success.</h3>
-                <p className="text-muted-foreground text-lg font-medium italic">Your industrial candidacy has been transmitted to {applyingTo.company.name}. Access your dashboard for status updates.</p>
+                <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase">Success.</h3>
+                <p className="text-muted-foreground text-lg font-medium">Your industrial candidacy has been transmitted to {applyingTo.company.name}. Access your dashboard for status updates.</p>
               </div>
             ) : (
               <div className="relative z-10">
@@ -196,7 +196,7 @@ export default function OpportunitiesPage() {
                        <Zap className="h-5 w-5 text-primary" />
                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Transmission Request</span>
                     </div>
-                    <h3 className="text-3xl font-black tracking-tighter italic uppercase">Confirm <span className="text-primary">Application</span></h3>
+                    <h3 className="text-3xl font-black tracking-tighter uppercase">Confirm <span className="text-primary">Application</span></h3>
                   </div>
                   <button 
                     onClick={() => setApplyingTo(null)}
@@ -214,7 +214,7 @@ export default function OpportunitiesPage() {
                          </div>
                          <div className="space-y-2">
                            <p className="text-xl font-black tracking-tight leading-none">Security clearance granted.</p>
-                           <p className="text-sm font-medium text-white leading-relaxed italic opacity-80">
+                           <p className="text-sm font-medium text-white leading-relaxed opacity-80">
                              By finalizing this transmission, your verified SIT manifest, academic records, and professional details will be securely shared with {applyingTo.company.name} for executive review.
                            </p>
                          </div>
@@ -224,11 +224,11 @@ export default function OpportunitiesPage() {
                    <div className="grid grid-cols-2 gap-10 border-b border-border/40 pb-10">
                       <div className="space-y-2">
                          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Position Matrix</p>
-                         <p className="text-2xl font-black tracking-tighter uppercase italic text-foreground">{applyingTo.title}</p>
+                         <p className="text-2xl font-black tracking-tighter uppercase text-foreground">{applyingTo.title}</p>
                       </div>
                       <div className="space-y-2">
                          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Module Requirement</p>
-                         <p className="text-2xl font-black tracking-tighter uppercase italic text-foreground">{applyingTo.requiredHours} Industrial Hours</p>
+                         <p className="text-2xl font-black tracking-tighter uppercase text-foreground">{applyingTo.requiredHours} Industrial Hours</p>
                       </div>
                    </div>
 

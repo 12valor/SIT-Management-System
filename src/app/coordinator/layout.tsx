@@ -83,7 +83,7 @@ export default function CoordinatorLayout({
             <Command className="text-primary-foreground h-6 w-6" />
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-xl tracking-tighter leading-none text-foreground uppercase italic">ADMIN.HQ</span>
+            <span className="font-black text-xl tracking-tighter leading-none text-foreground uppercase">ADMIN.HQ</span>
             <span className="text-[9px] font-black text-primary uppercase tracking-[0.3em] mt-2">Executive Command</span>
           </div>
           <button 
@@ -164,7 +164,7 @@ export default function CoordinatorLayout({
           
           <div className="flex-1">
             <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-1.5 leading-none">Administrative Manifest</p>
-            <h1 className="text-xl font-black tracking-tighter text-foreground uppercase italic">
+            <h1 className="text-xl font-black tracking-tighter text-foreground uppercase">
               {navItems.find(item => item.href === pathname)?.name || "Strategic Unit"}
             </h1>
           </div>

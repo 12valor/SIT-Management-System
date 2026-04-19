@@ -150,7 +150,7 @@ export default function EmployerEvaluationsPage() {
                       <CheckCircle2 className="h-12 w-12 text-emerald-600 dark:text-emerald-400" />
                    </div>
                    <h3 className="text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">Assessment Finalized</h3>
-                   <p className="text-slate-500 dark:text-slate-400 font-medium max-w-sm mx-auto leading-relaxed italic">The trainee&apos;s SIT record has been updated with your professional industrial endorsement.</p>
+                   <p className="text-slate-500 dark:text-slate-400 font-medium max-w-sm mx-auto leading-relaxed">The trainee&apos;s SIT record has been updated with your professional industrial endorsement.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-12">

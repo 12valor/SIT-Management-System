@@ -6,7 +6,7 @@ export default function Loading() {
       <div className="relative flex items-center justify-center">
         <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
         <div className="absolute w-8 h-8 bg-primary rounded-lg flex items-center justify-center animate-pulse">
-          <span className="text-primary-foreground font-bold italic text-xs">T</span>
+          <span className="text-primary-foreground font-bold text-xs">T</span>
         </div>
       </div>
       <div className="mt-8 space-y-2 text-center animate-in fade-in slide-in-from-bottom-2 duration-500">

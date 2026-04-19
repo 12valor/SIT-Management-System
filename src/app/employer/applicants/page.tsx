@@ -130,7 +130,7 @@ export default function ApplicantsPage() {
                     <div className="space-y-1 mb-4 relative z-10">
                       <h4 className="font-bold text-base leading-tight text-foreground">{app.student.name || 'Unknown Student'}</h4>
                       <p className="text-xs font-bold text-primary">Apply for: {app.posting.title}</p>
-                      <div className="flex items-center text-[11px] text-muted-foreground mt-2 italic">
+                      <div className="flex items-center text-[11px] text-muted-foreground mt-2">
                         <Clock className="h-3 w-3 mr-1" />
                         Applied {new Date(app.appliedAt).toLocaleDateString()}
                       </div>
@@ -165,7 +165,7 @@ export default function ApplicantsPage() {
                 {colApps.length === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center text-center p-8 opacity-40">
                      <Users className="h-8 w-8 text-muted-foreground mb-2" />
-                     <p className="text-xs font-bold text-muted-foreground italic capitalize tracking-widest uppercase">Empty Stage</p>
+                     <p className="text-xs font-bold text-muted-foreground capitalize tracking-widest uppercase">Empty Stage</p>
                   </div>
                 )}
               </div>

@@ -175,7 +175,7 @@ export default function StudentCompletionPage() {
                          </div>
                       </div>
                    </div>
-                   <div className="text-xs font-bold text-muted-foreground leading-relaxed line-clamp-2 italic">
+                   <div className="text-xs font-bold text-muted-foreground leading-relaxed line-clamp-2">
                       &quot;{evaluationData.comments}&quot;
                    </div>
                 </div>

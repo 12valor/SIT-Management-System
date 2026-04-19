@@ -8,7 +8,7 @@ export default function Home() {
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold italic">T</span>
+              <span className="text-primary-foreground font-bold">T</span>
             </div>
             <span className="font-bold text-xl tracking-tight text-gradient">SIT Platform</span>
           </div>

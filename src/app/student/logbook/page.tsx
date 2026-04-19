@@ -87,7 +87,7 @@ export default function LogbookPage() {
              <ShieldCheck className="h-4 w-4" />
              <span className="text-[10px] font-black uppercase tracking-widest">Compliance Registry</span>
           </div>
-          <h2 className="text-6xl font-black tracking-tighter leading-none italic uppercase">Virtual <span className="text-primary">Archive</span></h2>
+          <h2 className="text-6xl font-black tracking-tighter leading-none uppercase">Virtual <span className="text-primary">Archive</span></h2>
           <p className="text-muted-foreground font-medium text-lg">Official documentation for your Supervised Industrial Training manifest.</p>
         </div>
         <button 
@@ -140,7 +140,7 @@ export default function LogbookPage() {
                <div className="p-3 bg-primary rounded-xl shadow-lg shadow-primary/20">
                   <TrendingUp className="h-6 w-6 text-primary-foreground" />
                </div>
-               <p className="text-sm font-medium text-muted-foreground leading-relaxed italic">
+               <p className="text-sm font-medium text-muted-foreground leading-relaxed">
                  Academic status: Your manifest is currently at <span className="font-black text-foreground underline decoration-primary/30 underline-offset-4">{data.totalApprovedHours} validated hours</span>. Compliance protocol requires a minimum of 300 for SIT module certification.
                </p>
             </div>
@@ -150,7 +150,7 @@ export default function LogbookPage() {
       {/* Entry History */}
       <div className="space-y-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-6">
-          <h3 className="text-2xl font-black flex items-center gap-4 tracking-tight uppercase italic">
+          <h3 className="text-2xl font-black flex items-center gap-4 tracking-tight uppercase">
             <div className="p-2 bg-primary rounded-lg text-primary-foreground">
               <Timer className="h-6 w-6" />
             </div>
@@ -219,7 +219,7 @@ export default function LogbookPage() {
                   <FileText className="h-10 w-10 text-muted-foreground" />
                 </div>
                 <h3 className="text-3xl font-black mb-3 tracking-tight">Empty Manifest</h3>
-                <p className="text-base font-medium max-w-sm mx-auto text-muted-foreground leading-relaxed italic italic">No operational entries detected. Initialize your SIT record to begin data tracking.</p>
+                <p className="text-base font-medium max-w-sm mx-auto text-muted-foreground leading-relaxed">No operational entries detected. Initialize your SIT record to begin data tracking.</p>
             </div>
           )}
         </div>
@@ -238,7 +238,7 @@ export default function LogbookPage() {
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Protocol Initialization</span>
                  </div>
-                 <h3 className="text-4xl font-black tracking-tighter uppercase italic">Submit <span className="text-primary">Entry</span></h3>
+                 <h3 className="text-4xl font-black tracking-tighter uppercase">Submit <span className="text-primary">Entry</span></h3>
               </div>
               <button 
                 onClick={() => setIsAdding(false)}

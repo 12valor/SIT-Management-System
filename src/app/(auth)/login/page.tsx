@@ -1,153 +1,98 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { GraduationCap, Building2, ShieldCheck, ArrowRight } from "lucide-react";
 
-import { signIn } from "next-auth/react";
-import { LogIn, Loader2, ShieldCheck, Mail, Lock } from "lucide-react";
+const roles = [
+  {
+    key: "student",
+    label: "Student",
+    sub: "Track your SIT hours and logbook",
+    icon: GraduationCap,
+    href: "/login/student",
+    signup: "/signup/student",
+    signupLabel: "Register as Student",
+    accent: "text-primary",
+    border: "hover:border-primary/60",
+    bg: "hover:bg-primary/5",
+  },
+  {
+    key: "employer",
+    label: "Employer",
+    sub: "Post roles and manage trainees",
+    icon: Building2,
+    href: "/login/employer",
+    signup: "/signup/employer",
+    signupLabel: "Register as Employer",
+    accent: "text-blue-600",
+    border: "hover:border-blue-500/60",
+    bg: "hover:bg-blue-500/5",
+  },
+  {
+    key: "coordinator",
+    label: "Coordinator",
+    sub: "Manage students, companies, and reports",
+    icon: ShieldCheck,
+    href: "/login/coordinator",
+    signup: null,
+    signupLabel: null,
+    accent: "text-amber-600",
+    border: "hover:border-amber-500/60",
+    bg: "hover:bg-amber-500/5",
+  },
+];
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError("Invalid email or password. If you just registered, your account might still be pending coordinator approval.");
-        setIsLoading(false);
-        return;
-      }
-
-      // Fetch session to get user role for selective redirection
-      const response = await fetch("/api/auth/session");
-      const session = await response.json();
-      const role = session?.user?.role;
-
-      if (role) {
-        router.push(`/${role.toLowerCase()}/dashboard`);
-      } else {
-        router.push("/");
-      }
-    } catch {
-      setError("An unexpected error occurred. Please try again.");
-      setIsLoading(false);
-    }
-  };
-
+export default function LoginGatePage() {
   return (
-    <div className="space-y-8 animate-in-fade">
-      <div className="space-y-2 text-center">
-        <div className="mx-auto w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-          <ShieldCheck className="h-6 w-6 text-primary" />
+    <div className="w-full max-w-lg">
+      {/* Header */}
+      <div className="mb-10 text-center">
+        <div className="inline-flex items-center gap-2 mb-6">
+          <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
+            <span className="text-primary-foreground font-black text-sm">T</span>
+          </div>
+          <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">TUP-V SIT System</span>
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-gradient">Welcome Back</h1>
-        <p className="text-sm text-muted-foreground">
-          Sign in to your SIT account to manage your progress
-        </p>
+        <h1 className="text-2xl font-black tracking-tight text-foreground mb-2">Sign In</h1>
+        <p className="text-sm text-muted-foreground">Select your role to continue</p>
       </div>
 
-      <form onSubmit={handleLogin} className="space-y-5">
-        {error && (
-          <div className="p-4 text-sm font-medium text-destructive bg-destructive/10 rounded-lg border border-destructive/20 text-center">
-            {error}
-          </div>
-        )}
-        <div className="space-y-2">
-          <label className="text-sm font-semibold ml-1" htmlFor="email">
-            Email Address
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <input
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex h-11 w-full rounded-lg border border-input bg-background pl-10 pr-3 py-2 text-sm transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
-              placeholder="name@tupv.edu.ph"
-              type="email"
-              required
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <div className="flex justify-between items-center ml-1">
-            <label className="text-sm font-semibold" htmlFor="password">
-              Password
-            </label>
-            <Link href="#" className="text-xs text-primary hover:underline">Forgot password?</Link>
-          </div>
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <input
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="flex h-11 w-full rounded-lg border border-input bg-background pl-10 pr-3 py-2 text-sm transition-all focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
-              type="password"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="group relative flex h-11 w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 disabled:opacity-70 active:scale-95"
-        >
-          {isLoading ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
-          ) : (
-            <>
-              Sign In
-              <LogIn className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </>
-          )}
-        </button>
-      </form>
+      {/* Role cards */}
+      <div className="space-y-3">
+        {roles.map((role) => {
+          const Icon = role.icon;
+          return (
+            <Link
+              key={role.key}
+              href={role.href}
+              className={`flex items-center gap-5 p-5 rounded-lg bg-card border border-border ${role.border} ${role.bg} transition-all group cursor-pointer`}
+            >
+              <div className={`w-11 h-11 rounded-md border border-border bg-muted flex items-center justify-center shrink-0 group-hover:border-inherit transition-colors ${role.border.replace("hover:", "group-hover:")}`}>
+                <Icon className={`h-5 w-5 ${role.accent}`} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black text-foreground">{role.label}</p>
+                <p className="text-[11px] font-mono text-muted-foreground mt-0.5">{role.sub}</p>
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
+            </Link>
+          );
+        })}
+      </div>
 
-      <div className="text-center space-y-4">
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-border" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground font-medium">New to the platform?</span>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <Link 
-            href="/signup/student"
-            className="flex flex-col items-center justify-center p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all group"
-          >
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Students</span>
-            <span className="text-xs font-bold text-foreground group-hover:text-primary">Register Here</span>
-          </Link>
-          <Link 
-            href="/signup/employer"
-            className="flex flex-col items-center justify-center p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all group"
-          >
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Employers</span>
-            <span className="text-xs font-bold text-foreground group-hover:text-primary">Join as Partner</span>
-          </Link>
-        </div>
+      {/* Register links */}
+      <div className="mt-8 pt-6 border-t border-border flex items-center justify-center gap-6">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">New here?</span>
+        <Link href="/signup/student" className="text-xs font-bold text-primary hover:underline underline-offset-2">
+          Student Sign-up
+        </Link>
+        <Link href="/signup/employer" className="text-xs font-bold text-primary hover:underline underline-offset-2">
+          Employer Sign-up
+        </Link>
+      </div>
 
-        <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 pt-4">
+      <div className="mt-6 text-center">
+        <Link href="/" className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors">
           ← Back to home
         </Link>
       </div>

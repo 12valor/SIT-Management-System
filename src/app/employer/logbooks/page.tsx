@@ -70,7 +70,7 @@ export default function EmployerLogbookReviewPage() {
              <ShieldCheck className="h-4 w-4" />
              <span className="text-[10px] font-black uppercase tracking-widest">Supervisor Oversight</span>
           </div>
-          <h2 className="text-6xl font-black tracking-tighter leading-none italic uppercase">Logbook <span className="text-blue-600">Verification</span></h2>
+          <h2 className="text-6xl font-black tracking-tighter leading-none uppercase">Logbook <span className="text-blue-600">Verification</span></h2>
           <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Industrial certification and daily activity auditing for SIT trainees.</p>
         </div>
         <div className="flex bg-slate-100 dark:bg-slate-900/50 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-inner">
@@ -108,7 +108,7 @@ export default function EmployerLogbookReviewPage() {
                       {trainee.studentName?.[0] || "?"}
                     </div>
                     <div className="flex-1 overflow-hidden">
-                      <p className="font-black text-sm tracking-tight truncate uppercase italic">{trainee.studentName}</p>
+                      <p className="font-black text-sm tracking-tight truncate uppercase">{trainee.studentName}</p>
                       <div className="flex items-center gap-2 mt-1">
                          <div className={cn("w-1.5 h-1.5 rounded-full", pendingCount > 0 ? "bg-amber-500 animate-pulse" : "bg-emerald-500")} />
                          <p className={cn(
@@ -139,7 +139,7 @@ export default function EmployerLogbookReviewPage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-8">
                    <div className="space-y-2">
                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">Verification Stream</p>
-                     <h3 className="text-3xl font-black flex items-center gap-4 tracking-tighter italic uppercase text-slate-900 dark:text-white">
+                     <h3 className="text-3xl font-black flex items-center gap-4 tracking-tighter uppercase text-slate-900 dark:text-white">
                         {selectedStudent?.studentName}
                      </h3>
                    </div>
@@ -186,7 +186,7 @@ export default function EmployerLogbookReviewPage() {
                                        </span>
                                     </div>
                                     <div className="p-6 rounded-[1.5rem] bg-slate-50/50 dark:bg-slate-800/30 border-l-4 border-blue-600 shadow-inner">
-                                       <p className="text-base text-slate-700 dark:text-slate-300 font-medium leading-relaxed italic">
+                                       <p className="text-base text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
                                           &quot;{entry.tasks}&quot;
                                        </p>
                                     </div>
@@ -236,7 +236,7 @@ export default function EmployerLogbookReviewPage() {
                            <ClipboardCheck className="h-10 w-10 text-slate-300" />
                         </div>
                         <h3 className="text-3xl font-black mb-3 tracking-tight">Audit Stream Empty</h3>
-                        <p className="text-base font-medium max-w-sm mx-auto text-slate-500 leading-relaxed italic italic">No active manifest entries detected for this trainee. Real-time logging will populate this module.</p>
+                        <p className="text-base font-medium max-w-sm mx-auto text-slate-500 leading-relaxed">No active manifest entries detected for this trainee. Real-time logging will populate this module.</p>
                      </div>
                    )}
                 </div>
@@ -247,8 +247,8 @@ export default function EmployerLogbookReviewPage() {
                 <div className="w-28 h-28 rounded-[2rem] bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mb-10 shadow-3xl ring-8 ring-blue-600/5">
                    <UserIcon className="h-12 w-12 text-slate-300 group-hover:text-blue-600 transition-colors" />
                 </div>
-                <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase italic">Initialize <span className="text-blue-600">Review</span></h3>
-                <p className="text-slate-500 dark:text-slate-400 text-lg max-w-sm font-medium leading-relaxed italic">
+                <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase">Initialize <span className="text-blue-600">Review</span></h3>
+                <p className="text-slate-500 dark:text-slate-400 text-lg max-w-sm font-medium leading-relaxed">
                    Select a professional trainee from the manifest manifest to commence industrial performance auditing.
                 </p>
              </div>

@@ -135,7 +135,7 @@ export function NotificationCenter() {
             ) : notifications.length === 0 ? (
               <div className="p-12 flex flex-col items-center justify-center gap-4 opacity-30">
                 <Inbox className="h-8 w-8 text-muted-foreground" />
-                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic">All clean. No new intel.</p>
+                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">All clean. No new intel.</p>
               </div>
             ) : (
               <div className="divide-y divide-border/50">

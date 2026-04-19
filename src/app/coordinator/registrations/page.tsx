@@ -73,7 +73,7 @@ export default function CoordinatorRegistrationsPage() {
     <div className="space-y-12 pb-24 animate-in-fade">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 overflow-hidden">
         <div className="space-y-2">
-          <h1 className="text-5xl font-black tracking-tighter text-foreground uppercase italic">Account Requests</h1>
+          <h1 className="text-5xl font-black tracking-tighter text-foreground uppercase">Account Requests</h1>
           <p className="text-muted-foreground font-bold text-lg">Validate and approve new industrial trainees and partners.</p>
         </div>
         <div className="flex items-center gap-4 px-6 py-4 rounded-[1.5rem] bg-primary/10 border border-primary/20 shadow-xl shadow-primary/5">
@@ -123,7 +123,7 @@ export default function CoordinatorRegistrationsPage() {
                     <span className="truncate">{user.email}</span>
                   </div>
                   {user.course && (
-                    <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground italic">
+                    <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
                       <GraduationCap className="h-3.5 w-3.5" />
                       {user.course}
                     </div>
@@ -161,7 +161,7 @@ export default function CoordinatorRegistrationsPage() {
               <div className="col-span-full p-20 text-center rounded-[3rem] border-2 border-dashed border-border/60 bg-muted/20 opacity-40">
                 <CheckCircle2 className="h-10 w-10 text-muted-foreground mx-auto mb-6" />
                 <p className="font-black text-muted-foreground uppercase tracking-widest text-sm">Clear Manifest</p>
-                <p className="text-xs text-muted-foreground mt-2 font-medium italic">No new users are currently awaiting validation.</p>
+                <p className="text-xs text-muted-foreground mt-2 font-medium">No new users are currently awaiting validation.</p>
               </div>
             )}
           </div>
@@ -190,7 +190,7 @@ export default function CoordinatorRegistrationsPage() {
                  </div>
 
                  <div className="flex-1 space-y-3">
-                    <p className="text-sm font-bold text-muted-foreground italic mb-4">Requesting industrial partnership verification.</p>
+                    <p className="text-sm font-bold text-muted-foreground mb-4">Requesting industrial partnership verification.</p>
                     <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
                       <Mail className="h-3.5 w-3.5" />
                       {company.email}
@@ -209,7 +209,7 @@ export default function CoordinatorRegistrationsPage() {
               <div className="col-span-full p-20 text-center rounded-[3rem] border-2 border-dashed border-border/60 bg-muted/20 opacity-40">
                 <ShieldAlert className="h-10 w-10 text-muted-foreground mx-auto mb-6" />
                 <p className="font-black text-muted-foreground uppercase tracking-widest text-sm">Compliance Target Met</p>
-                <p className="text-xs text-muted-foreground mt-2 font-medium italic">All partner companies are currently verified.</p>
+                <p className="text-xs text-muted-foreground mt-2 font-medium">All partner companies are currently verified.</p>
               </div>
             )}
           </div>

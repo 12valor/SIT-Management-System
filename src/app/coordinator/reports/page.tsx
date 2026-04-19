@@ -82,7 +82,7 @@ export default function CoordinatorReportsPage() {
     <div className="space-y-8 animate-in-fade">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-foreground uppercase italic tracking-tighter">Strategic Intelligence</h1>
+          <h1 className="text-3xl font-black text-foreground uppercase tracking-tighter">Strategic Intelligence</h1>
           <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mt-2">Executive Export Portal</p>
         </div>
         <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-xl bg-muted border border-border">

@@ -173,7 +173,7 @@ export default function StudentLayout({
             <div className="flex items-center gap-4 pl-1">
                <div className="text-right hidden sm:block">
                   <p className="text-sm font-black text-foreground leading-none tracking-tight">{session?.user?.name}</p>
-                  <p className="text-[10px] text-muted-foreground mt-1.5 uppercase font-black tracking-widest italic">{session?.user?.id?.slice(0, 8)}</p>
+                  <p className="text-[10px] text-muted-foreground mt-1.5 uppercase font-black tracking-widest">{session?.user?.id?.slice(0, 8)}</p>
                </div>
                <div className="h-14 w-14 rounded-[1.5rem] bg-gradient-to-br from-primary to-red-600 p-0.5 shadow-2xl shadow-primary/20 ring-4 ring-background transition-all hover:rotate-3">
                   <div className="h-full w-full rounded-[1.3rem] bg-card flex items-center justify-center">
