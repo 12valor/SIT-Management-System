@@ -39,7 +39,7 @@ export function NotificationCenter() {
     setIsLoading(true);
     const result = await getNotifications();
     if (result.success && result.data) {
-      setNotifications(result.data.notifications as any);
+      setNotifications(result.data.notifications as Notification[]);
       setUnreadCount(result.data.unreadCount);
     }
     setIsLoading(false);

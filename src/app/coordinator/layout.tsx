@@ -14,6 +14,7 @@ import {
   Settings,
   LogOut,
   Menu,
+  X,
   ShieldCheck,
   ChevronRight,
   Zap,

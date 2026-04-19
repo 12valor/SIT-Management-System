@@ -42,9 +42,17 @@ export async function getCompletionStatus() {
 
     const uploadedMandatoryCount = docs.filter(d => MANDATORY_DOC_NAMES.includes(d.name)).length;
 
+    // 4. Fetch Student Info for Certificate
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { name: true, course: true }
+    });
+
     return {
       success: true,
       data: {
+        studentName: user?.name || "Unknown Graduate",
+        studentCourse: user?.course || "Information Technology",
         totalHours,
         hourGoal: 300,
         hasEvaluation: !!evaluation,

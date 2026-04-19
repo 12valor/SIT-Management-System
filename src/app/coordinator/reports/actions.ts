@@ -3,109 +3,67 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 
-export async function getParticipationReport() {
+export async function getReportsData() {
   const session = await auth();
-  if (session?.user?.role !== 'COORDINATOR') return { success: false, error: "Unauthorized" };
-
-  try {
-    // Group logbook entries by month
-    const stats = await prisma.logbookEntry.findMany({
-      where: { status: 'APPROVED' },
-      select: {
-        date: true,
-        hours: true,
-      }
-    });
-
-    const monthlyStats: Record<string, { totalHours: number, activeTrainees: Set<string> }> = {};
-
-    stats.forEach(entry => {
-      const monthYear = entry.date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-      if (!monthlyStats[monthYear]) {
-        monthlyStats[monthYear] = { totalHours: 0, activeTrainees: new Set() };
-      }
-      monthlyStats[monthYear].totalHours += entry.hours;
-    });
-
-    return {
-      success: true,
-      data: Object.entries(monthlyStats).map(([month, data]) => ({
-        month,
-        totalHours: data.totalHours,
-      }))
-    };
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
-    return { success: false, error: message };
+  if (!session?.user?.id || session.user.role !== 'coordinator') {
+    return { success: false, error: "Unauthorized access to strategic intelligence." };
   }
-}
-
-export async function getComplianceReport() {
-  const session = await auth();
-  if (session?.user?.role !== 'COORDINATOR') return { success: false, error: "Unauthorized" };
 
   try {
-    const totalCompanies = await prisma.company.count();
-    const verifiedCompanies = await prisma.company.count({ where: { isVerified: true } });
-    
-    const companyList = await prisma.company.findMany({
+    // 1. Participation Report Data
+    const trainees = await prisma.user.findMany({
+      where: { role: 'STUDENT' },
+      select: {
+        name: true,
+        course: true,
+        logbooks: {
+          where: { status: 'APPROVED' },
+          select: { hours: true }
+        }
+      }
+    });
+
+    const participationData = trainees.map(t => {
+      const totalHours = t.logbooks.reduce((sum, l) => sum + l.hours, 0);
+      return [t.name || "N/A", t.course || "N/A", `${totalHours} hrs`, totalHours >= 300 ? "COMPLETED" : "ACTIVE"];
+    });
+
+    // 2. Compliance Report Data
+    const companies = await prisma.company.findMany({
       select: {
         name: true,
         industry: true,
         isVerified: true,
-        joinedAt: true,
-      },
-      orderBy: { joinedAt: 'desc' }
+        joinedAt: true
+      }
     });
+
+    const complianceData = companies.map(c => [
+      c.name,
+      c.industry,
+      c.isVerified ? "VERIFIED" : "PENDING",
+      new Date(c.joinedAt).toLocaleDateString()
+    ]);
+
+    // 3. Completion Status Data
+    const completionData = trainees
+      .map(t => {
+        const totalHours = t.logbooks.reduce((sum, l) => sum + l.hours, 0);
+        return { name: t.name, hours: totalHours, course: t.course };
+      })
+      .filter(t => t.hours >= 250) // Nearing completion
+      .map(t => [t.name || "N/A", t.course || "N/A", `${t.hours} / 300`, `${Math.round((t.hours/300)*100)}%`]);
 
     return {
       success: true,
       data: {
-        totalCompanies,
-        verifiedCompanies,
-        complianceRate: totalCompanies > 0 ? (verifiedCompanies / totalCompanies) * 100 : 0,
-        companyList
+        participation: participationData,
+        compliance: complianceData,
+        completion: completionData
       }
     };
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
-    return { success: false, error: message };
-  }
-}
-
-export async function getCompletionReport() {
-  const session = await auth();
-  if (session?.user?.role !== 'COORDINATOR') return { success: false, error: "Unauthorized" };
-
-  try {
-    const students = await prisma.user.findMany({
-      where: { role: 'STUDENT' },
-      include: {
-        logbookEntries: {
-          where: { status: 'APPROVED' }
-        },
-        evaluations: true,
-      }
-    });
-
-    const completionStats = students.map(student => {
-      const totalHours = student.logbookEntries.reduce((acc, curr) => acc + curr.hours, 0);
-      return {
-        id: student.id,
-        name: student.name,
-        email: student.email,
-        totalHours,
-        isComplete: totalHours >= 300 && student.evaluations.length > 0,
-        lastActive: student.logbookEntries[0]?.date || student.createdAt
-      };
-    });
-
-    return {
-      success: true,
-      data: completionStats.sort((a, b) => b.totalHours - a.totalHours)
-    };
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
-    return { success: false, error: message };
+    console.error("Report extraction failure:", error);
+    return { success: false, error: "Failed to compile strategic data." };
   }
 }

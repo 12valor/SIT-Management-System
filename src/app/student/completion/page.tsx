@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { getCompletionStatus } from "./actions";
 import { useSession } from "next-auth/react";
+import { generateSITCertificate } from "@/lib/pdf-generator";
 
 interface CompletionData {
   totalHours: number;
@@ -31,6 +32,8 @@ interface CompletionData {
   documentsUploaded: number;
   totalRequiredDocs: number;
   isFullyComplete: boolean;
+  studentName: string;
+  studentCourse: string;
 }
 
 export default function StudentCompletionPage() {
@@ -58,9 +61,23 @@ export default function StudentCompletionPage() {
     );
   }
 
-  const { totalHours, hourGoal, hasEvaluation, evaluationData, documentsUploaded, totalRequiredDocs, isFullyComplete } = data;
+  const { totalHours, hourGoal, hasEvaluation, evaluationData, documentsUploaded, totalRequiredDocs, isFullyComplete, studentName, studentCourse } = data;
   const isHoursComplete = totalHours >= hourGoal;
   const isDocsComplete = documentsUploaded >= totalRequiredDocs;
+
+  const handleDownloadCertificate = () => {
+    if (!isFullyComplete || !evaluationData) return;
+    
+    generateSITCertificate({
+       studentName: studentName,
+       course: studentCourse,
+       companyName: evaluationData.companyName,
+       totalHours: totalHours,
+       grade: evaluationData.overallGrade,
+       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+       certificateId: `SIT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`
+    });
+  };
 
   return (
     <div className="space-y-10 pb-20 max-w-6xl mx-auto">
@@ -197,7 +214,10 @@ export default function StudentCompletionPage() {
                  </div>
               </div>
               <div className="flex justify-center">
-                 <button className="group relative flex flex-col items-center gap-4 w-56 h-56 rounded-[3.5rem] bg-indigo-600 text-white font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-indigo-600/50 hover:shadow-indigo-600/70">
+                 <button 
+                    onClick={handleDownloadCertificate}
+                    className="group relative flex flex-col items-center gap-4 w-56 h-56 rounded-[3.5rem] bg-indigo-600 text-white font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-indigo-600/50 hover:shadow-indigo-600/70"
+                 >
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-[3.5rem]" />
                     <div className="flex-1 flex items-center justify-center pt-8">
                        <Download className="h-14 w-14 group-hover:-translate-y-2 transition-transform duration-500" />
