@@ -1,4 +1,3 @@
-"use client"; // This won't work in a server action file, removing.
 "use server";
 
 import prisma from "@/lib/prisma";
