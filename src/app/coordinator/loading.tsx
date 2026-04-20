@@ -48,12 +48,6 @@ export default function CoordinatorLoading() {
            </div>
         </div>
       </div>
-
-      {/* Subtle Centered Feedback */}
-      <div className="fixed bottom-12 right-12 flex items-center gap-3 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-lg z-50">
-         <Loader2 className="h-4 w-4 text-[#800000] animate-spin" />
-         <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Registry Analytics</span>
-      </div>
     </div>
   );
 }
