@@ -38,24 +38,15 @@ export function DashboardHeader({
   roleInitials
 }: DashboardHeaderProps) {
   const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
     
-    // Scrolled state for visual feedback
+    // Simply set scrolled state for visual feedback
     if (latest > 10) {
       setScrolled(true);
     } else {
       setScrolled(false);
-    }
-
-    // Smart visibility logic
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
     }
   });
 
@@ -63,11 +54,8 @@ export function DashboardHeader({
 
   return (
     <motion.header
-      variants={{
-        visible: { y: 0, opacity: 1 },
-        hidden: { y: "-100%", opacity: 0 },
-      }}
-      animate={hidden ? "hidden" : "visible"}
+      initial="visible"
+      animate="visible"
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={`sticky top-0 z-40 flex h-16 items-center gap-6 border-b px-8 lg:px-10 transition-all duration-300 ${
         scrolled 
@@ -103,7 +91,7 @@ export function DashboardHeader({
                 {session?.user?.name || "User"}
               </p>
               <p className="text-[10px] text-muted-foreground mt-1 font-medium">
-                {roleTitle === "Verified Candidate" ? "BSIT-4A" : roleTitle}
+                {roleTitle}
               </p>
            </div>
            
