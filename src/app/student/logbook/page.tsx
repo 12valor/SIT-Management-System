@@ -81,145 +81,135 @@ export default function LogbookPage() {
   return (
     <div className="space-y-12 max-w-6xl mx-auto pb-24 animate-in-fade">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border pb-10">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-             <ShieldCheck className="h-4 w-4" />
-             <span className="text-[10px] font-black uppercase tracking-widest">Compliance Registry</span>
-          </div>
-          <h2 className="text-6xl font-black tracking-tighter leading-none uppercase">Virtual <span className="text-primary">Archive</span></h2>
-          <p className="text-muted-foreground font-medium text-lg">Official documentation for your Supervised Industrial Training manifest.</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
+        <div className="space-y-1">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-800">Training Logbook</h2>
+          <p className="text-sm text-slate-500 font-medium">Record and track your industrial hours for SIT certification.</p>
         </div>
         <button 
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-4 px-8 py-5 rounded-[2rem] bg-primary text-primary-foreground font-black tracking-widest uppercase text-xs shadow-3xl shadow-primary/20 hover:scale-[1.05] active:scale-95 transition-all group"
+          className="flex items-center gap-2 h-11 px-6 rounded-lg bg-[#800000] text-white font-bold uppercase tracking-wider text-xs shadow-md shadow-red-900/10 hover:bg-red-900 transition-all active:scale-95"
         >
-          <PlusCircle className="h-5 w-5 group-hover:rotate-90 transition-transform" />
-          Append New Entry
+          <PlusCircle className="h-4 w-4" />
+          Add Entry
         </button>
       </div>
 
       {/* Progress Overview Card */}
-      <div className="group p-10 lg:p-14 rounded-[3.5rem] bg-card border border-border/60 shadow-4xl relative overflow-hidden flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
-         
-         {/* Radial Progress */}
-         <div className="relative w-48 h-48 flex items-center justify-center shrink-0">
-            <svg className="w-full h-full transform -rotate-90 drop-shadow-2xl">
-               <circle cx="96" cy="96" r="86" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-muted/50" />
+      <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-10">
+         {/* Circular Progress (Softened) */}
+         <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
+            <svg className="w-full h-full transform -rotate-90">
+               <circle cx="64" cy="64" r="58" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-100" />
                <circle 
-                 cx="96" cy="96" r="86" stroke="currentColor" strokeWidth="12" fill="transparent" 
-                 strokeDasharray={540} 
-                 strokeDashoffset={540 - (540 * progress / 100)} 
+                 cx="64" cy="64" r="58" stroke="currentColor" strokeWidth="8" fill="transparent" 
+                 strokeDasharray={364} 
+                 strokeDashoffset={364 - (364 * progress / 100)} 
                  strokeLinecap="round" 
-                 className="text-primary transition-all duration-2000 ease-out shadow-[0_0_20px_rgba(128,0,0,0.4)]" 
+                 className="text-[#800000] transition-all duration-1000 ease-out" 
                />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-               <span className="text-4xl font-black tracking-tighter text-foreground leading-none">{Math.round(progress)}%</span>
-               <span className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.2em] mt-2">Manifested</span>
+               <span className="text-2xl font-bold text-slate-800 leading-none">{Math.round(progress)}%</span>
+               <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider mt-1">Goal</span>
             </div>
          </div>
 
-         <div className="flex-1 space-y-8 text-center lg:text-left">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-14">
+         <div className="flex-1 space-y-6 text-center md:text-left">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
                <div className="space-y-1">
-                  <p className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.3em] leading-none mb-3">Modular Target</p>
-                  <p className="text-3xl font-black tracking-tighter">300.00<span className="text-xs text-muted-foreground ml-1">HRS</span></p>
+                  <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Target Hours</p>
+                  <p className="text-2xl font-bold text-slate-800">300.00</p>
                </div>
                <div className="space-y-1">
-                  <p className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.3em] leading-none mb-3">Validated Credit</p>
-                  <p className="text-3xl font-black tracking-tighter text-primary">{data.totalApprovedHours.toFixed(2)}<span className="text-xs text-muted-foreground ml-1">HRS</span></p>
+                  <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Approved</p>
+                  <p className="text-2xl font-bold text-[#800000]">{data.totalApprovedHours.toFixed(2)}</p>
                </div>
-               <div className="space-y-1 col-span-2 md:col-span-1">
-                  <p className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.3em] leading-none mb-3">Deficit Requirement</p>
-                  <p className="text-3xl font-black tracking-tighter text-primary">{Math.max(300 - data.totalApprovedHours, 0).toFixed(2)}<span className="text-xs text-muted-foreground ml-1">HRS</span></p>
+               <div className="space-y-1 hidden lg:block">
+                  <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Remaining</p>
+                  <p className="text-2xl font-bold text-slate-400">{Math.max(300 - data.totalApprovedHours, 0).toFixed(2)}</p>
                </div>
             </div>
-            <div className="p-6 rounded-[1.5rem] bg-muted/50 border border-border flex items-center gap-5">
-               <div className="p-3 bg-primary rounded-xl shadow-lg shadow-primary/20">
-                  <TrendingUp className="h-6 w-6 text-primary-foreground" />
+            <div className="p-4 rounded-lg bg-slate-50 border border-slate-100 flex items-center gap-4">
+               <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100">
+                  <TrendingUp className="h-5 w-5 text-[#800000]" />
                </div>
-               <p className="text-sm font-medium text-muted-foreground leading-relaxed">
-                 Academic status: Your manifest is currently at <span className="font-black text-foreground underline decoration-primary/30 underline-offset-4">{data.totalApprovedHours} validated hours</span>. Compliance protocol requires a minimum of 300 for SIT module certification.
+               <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                 Academic Record: You have achieved <span className="font-bold text-slate-800">{data.totalApprovedHours} hours</span> towards SIT module certification.
                </p>
             </div>
          </div>
       </div>
 
       {/* Entry History */}
-      <div className="space-y-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-6">
-          <h3 className="text-2xl font-black flex items-center gap-4 tracking-tight uppercase">
-            <div className="p-2 bg-primary rounded-lg text-primary-foreground">
-              <Timer className="h-6 w-6" />
-            </div>
-            Historical Manifest
-          </h3>
-          <div className="relative group">
-             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-             <input 
-              type="text" 
-              placeholder="Filter operational logs..." 
-              className="pl-12 pr-6 py-4 rounded-[1.5rem] border border-border bg-card text-xs font-black uppercase tracking-widest focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none w-full md:w-80 transition-all shadow-sm"
-             />
-          </div>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+           <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest flex items-center gap-2">
+              <Clock className="h-4 w-4 text-slate-300" /> Recent Entries
+           </h3>
+           <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <input 
+               type="text" 
+               placeholder="Filter logs..." 
+               className="pl-9 pr-4 h-9 rounded-lg border border-slate-200 bg-white text-xs focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] outline-none w-64 transition-all"
+              />
+           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {data.entries.length > 0 ? (
             data.entries.map((entry: LogbookEntry) => (
-              <div key={entry.id} className="group flex flex-col md:flex-row md:items-center justify-between p-8 rounded-[2.5rem] bg-card border border-border/60 hover:bg-primary/5 transition-all relative overflow-hidden">
-                <div className="flex items-center gap-8 relative z-10">
-                   <div className="flex flex-col items-center justify-center w-20 h-20 rounded-[1.5rem] bg-muted border border-border/40 group-hover:bg-primary transition-all group-hover:border-primary group-hover:scale-105">
-                     <span className="text-[10px] font-black uppercase text-muted-foreground group-hover:text-primary-foreground leading-none mb-1">
+              <div key={entry.id} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-[#800000]/20 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-6">
+                   <div className="flex flex-col items-center justify-center w-14 h-14 rounded-lg bg-slate-50 border border-slate-100 shrink-0">
+                     <span className="text-[9px] font-bold uppercase text-slate-400 leading-none mb-1">
                         {new Date(entry.date).toLocaleDateString('en-US', { month: 'short' })}
                      </span>
-                     <span className="text-3xl font-black text-foreground group-hover:text-primary-foreground leading-none">
+                     <span className="text-xl font-bold text-slate-700 leading-none">
                         {new Date(entry.date).toLocaleDateString('en-US', { day: 'numeric' })}
                      </span>
                    </div>
-                   <div className="space-y-2">
-                     <p className="text-lg font-black tracking-tight text-foreground leading-none">{entry.tasks.slice(0, 60)}{entry.tasks.length > 60 ? '...' : ''}</p>
-                     <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-1.5 px-3 py-1 bg-background rounded-lg border border-border/40 shadow-sm">
-                           <Clock className="h-3.5 w-3.5 text-primary" />
-                           <span className="text-xs font-black tracking-tighter text-foreground">{entry.hours} Hours Logged</span>
+                   <div className="space-y-1">
+                     <p className="text-sm font-bold text-slate-800 line-clamp-1">{entry.tasks}</p>
+                     <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1 text-[11px] font-bold text-[#800000] bg-red-50 px-2 py-0.5 rounded border border-red-100">
+                           <Clock className="h-3 w-3" />
+                           {entry.hours}h
                         </div>
-                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{entry.tasks.length} Characters recorded</p>
+                        <p className="text-[10px] text-slate-400 font-medium uppercase tracking-tight">ID: {entry.id.slice(-6).toUpperCase()}</p>
                      </div>
                    </div>
                 </div>
                 
-                <div className="mt-6 md:mt-0 flex items-center justify-between md:justify-end gap-10 relative z-10">
-                   <div className="flex flex-col items-end gap-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Status Protocol</p>
+                <div className="flex items-center justify-between sm:justify-end gap-6">
+                   <div className="flex flex-col items-end">
                       <span className={cn(
-                        "px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border shadow-sm flex items-center gap-2",
-                        entry.status === 'PENDING' ? "bg-primary/5 text-primary border-primary/20" :
-                        entry.status === 'APPROVED' ? "bg-primary/10 text-primary border-primary/20 font-bold" :
-                        "bg-destructive/10 text-destructive border-destructive/20"
+                        "px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider border shadow-sm flex items-center gap-1.5",
+                        entry.status === 'PENDING' ? "bg-amber-50 text-amber-600 border-amber-100" :
+                        entry.status === 'APPROVED' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
+                        "bg-red-50 text-red-600 border-red-100"
                       )}>
                         <div className={cn("w-1.5 h-1.5 rounded-full", 
-                           entry.status === 'PENDING' ? "bg-primary animate-pulse" : 
-                           entry.status === 'APPROVED' ? "bg-primary" : "bg-destructive")} 
+                           entry.status === 'PENDING' ? "bg-amber-400 animate-pulse" : 
+                           entry.status === 'APPROVED' ? "bg-emerald-500" : "bg-red-500")} 
                         />
                         {entry.status}
                       </span>
                    </div>
-                   <button className="h-12 w-12 rounded-2xl bg-muted border border-border/40 flex items-center justify-center transition-all hover:bg-primary hover:text-primary-foreground group/btn">
-                     <MoreVertical className="h-5 w-5 text-muted-foreground group-hover/btn:text-primary-foreground" />
+                   <button className="h-9 w-9 rounded-lg hover:bg-slate-50 border border-slate-200 flex items-center justify-center transition-colors text-slate-400 hover:text-slate-600">
+                     <MoreVertical className="h-4 w-4" />
                    </button>
                 </div>
               </div>
             ))
           ) : (
-            <div className="py-40 text-center rounded-[4rem] border-2 border-dashed border-border/40 bg-muted/40 opacity-40">
-                <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mx-auto mb-8">
-                  <FileText className="h-10 w-10 text-muted-foreground" />
+            <div className="py-24 text-center rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto mb-6">
+                  <FileText className="h-8 w-8 text-slate-200" />
                 </div>
-                <h3 className="text-3xl font-black mb-3 tracking-tight">Empty Manifest</h3>
-                <p className="text-base font-medium max-w-sm mx-auto text-muted-foreground leading-relaxed">No operational entries detected. Initialize your SIT record to begin data tracking.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Empty Records</h3>
+                <p className="text-sm text-slate-500 font-medium max-w-xs mx-auto">Initialize your industrial record to begin data tracking.</p>
             </div>
           )}
         </div>
@@ -227,83 +217,79 @@ export default function LogbookPage() {
 
       {/* Entry Modal */}
       {isAdding && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12">
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-xl animate-in-fade" onClick={() => setIsAdding(false)} />
-          <div className="relative w-full max-w-[42rem] bg-card border border-border/60 rounded-[3rem] shadow-4xl overflow-hidden animate-in-bounce">
-            <div className="p-10 md:p-14 border-b border-border/50 flex justify-between items-center relative z-10">
-              <div className="space-y-2">
-                 <div className="flex items-center gap-3">
-                    <div className="p-2 bg-primary rounded-lg text-primary-foreground">
-                       <Zap className="h-5 w-5" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Protocol Initialization</span>
-                 </div>
-                 <h3 className="text-4xl font-black tracking-tighter uppercase">Submit <span className="text-primary">Entry</span></h3>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in transition-all">
+          <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+              <div className="space-y-1">
+                <h3 className="text-lg font-bold text-slate-900">New Logbook Entry</h3>
+                <p className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+                  <Zap className="h-3.5 w-3.5 text-[#800000]" /> Formal industrial activity registration
+                </p>
               </div>
               <button 
                 onClick={() => setIsAdding(false)}
-                className="h-14 w-14 rounded-2xl bg-muted hover:bg-destructive hover:text-white flex items-center justify-center transition-all shadow-inner group"
+                className="h-8 w-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors text-slate-400 hover:text-slate-600"
               >
-                <X className="h-6 w-6 group-hover:rotate-90 transition-transform" />
+                <X className="h-4 w-4" />
               </button>
             </div>
             
             <form onSubmit={handleSubmit}>
-              <div className="p-10 md:p-14 space-y-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground ml-2">Manifest Date</label>
-                    <div className="relative group/field">
-                      <CalendarIcon className="absolute left-5 top-5 h-5 w-5 text-muted-foreground group-focus-within/field:text-primary transition-colors" />
+              <div className="p-8 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Training Date</label>
+                    <div className="relative">
+                      <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
                       <input 
                         type="date" 
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full pl-14 pr-6 h-16 rounded-[1.5rem] border border-border bg-muted/30 focus:bg-card focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none text-sm font-black transition-all"
+                        className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] outline-none transition-all"
                         required
                       />
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground ml-2">Duration (Hours)</label>
-                    <div className="relative group/field">
-                      <Clock className="absolute left-5 top-5 h-5 w-5 text-muted-foreground group-focus-within/field:text-primary transition-colors" />
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Daily Hours</label>
+                    <div className="relative">
+                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
                       <input 
                         type="number" 
                         step="0.5"
                         placeholder="e.g. 8.0"
                         value={hours}
                         onChange={(e) => setHours(e.target.value)}
-                        className="w-full pl-14 pr-6 h-16 rounded-[1.5rem] border border-border bg-muted/30 focus:bg-card focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none text-sm font-black transition-all"
+                        className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] outline-none transition-all"
                         required
                       />
                     </div>
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground ml-2">Operational Activity Summary</label>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Activity Narrative</label>
                   <textarea 
-                    placeholder="Provide a professional summary of your tasks, industrial contributions, and daily accomplishments..."
+                    placeholder="Provide a professional summary of your daily industrial tasks..."
                     value={tasks}
                     onChange={(e) => setTasks(e.target.value)}
-                    className="w-full p-8 h-48 rounded-[2rem] border border-border bg-muted/30 focus:bg-card focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none text-base font-medium leading-relaxed transition-all resize-none shadow-sm"
+                    className="w-full p-4 h-32 rounded-xl border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] outline-none transition-all resize-none shadow-sm"
                     required
                   />
                 </div>
-              </div>
-              
-              <div className="p-10 md:p-14 bg-muted/30 border-t border-border/50">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex h-20 items-center justify-center rounded-[2rem] bg-primary px-8 text-sm font-black text-primary-foreground uppercase tracking-[0.3em] shadow-3xl shadow-primary/20 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-30 disabled:grayscale"
-                >
-                  {isSubmitting ? (
-                    <Loader2 className="h-6 w-6 animate-spin" />
-                  ) : (
-                    <>Commit Entry to Archive <ChevronRight className="ml-3 h-5 w-5" /></>
-                  )}
-                </button>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full h-12 rounded-xl bg-[#800000] text-sm font-bold text-white uppercase tracking-wider shadow-lg shadow-red-900/10 hover:bg-red-900 transition-all disabled:opacity-50"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <>Commit to Archive</>
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           </div>

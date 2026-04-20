@@ -45,67 +45,71 @@ export default function CoordinatorPlacementsPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border pb-5">
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">Registry</p>
-          <h1 className="text-2xl font-black tracking-tight text-foreground">Active Placements</h1>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-800">Industrial Placements</h1>
+          <p className="text-sm text-slate-500 font-medium">Verified student affiliations and active industry partnerships.</p>
         </div>
-        <div className="text-[10px] font-mono text-muted-foreground bg-muted px-3 py-1.5 rounded-md border border-border">
-          {placements.length} confirmed
+        <div className="h-10 px-4 flex items-center bg-white rounded-lg border border-slate-200 shadow-sm text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          {placements.length} Confirmed Placements
         </div>
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/30 text-left">
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Student</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Role</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hidden md:table-cell">Company</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hidden lg:table-cell">Location</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground text-right">Type</th>
+              <tr className="bg-slate-50/50 border-b border-slate-100">
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Internal Intern</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Industrial Role</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden md:table-cell">Host Company</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden lg:table-cell">Site Location</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">Modality</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-slate-50">
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center">
-                    <Loader2 className="h-5 w-5 animate-spin text-primary mx-auto" />
+                  <td colSpan={5} className="py-24 text-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-[#800000] mx-auto opacity-20" />
                   </td>
                 </tr>
               ) : placements.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-16 text-center text-xs text-muted-foreground font-mono">
-                    No confirmed placements yet. Approve applications to see records here.
+                  <td colSpan={5} className="py-32 text-center">
+                    <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">
+                      No Records Confirmed
+                    </p>
                   </td>
                 </tr>
               ) : (
                 placements.map((p) => (
-                  <tr key={p.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="px-5 py-3.5">
-                      <p className="font-bold text-foreground text-sm">{p.student.name ?? "—"}</p>
-                      <p className="text-[10px] font-mono text-muted-foreground mt-0.5">{p.student.email}</p>
+                  <tr key={p.id} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-6 py-4">
+                      <p className="font-bold text-slate-800 leading-tight">{p.student.name ?? "—"}</p>
+                      <p className="text-[10px] text-slate-400 font-medium mt-0.5">{p.student.email}</p>
                     </td>
-                    <td className="px-5 py-3.5">
-                      <span className="text-xs font-bold text-foreground">{p.posting.title}</span>
+                    <td className="px-6 py-4">
+                      <span className="text-xs font-bold text-slate-700">{p.posting.title}</span>
                     </td>
-                    <td className="px-5 py-3.5 hidden md:table-cell">
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Building2 className="h-3 w-3 text-primary" />
+                    <td className="px-6 py-4 hidden md:table-cell">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                        <Building2 className="h-3.5 w-3.5 text-[#800000] opacity-60" />
                         {p.posting.company?.name ?? "—"}
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 hidden lg:table-cell">
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <MapPin className="h-3 w-3" /> {p.posting.location}
+                    <td className="px-6 py-4 hidden lg:table-cell">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                        <MapPin className="h-3.5 w-3.5" /> {p.posting.location}
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 text-right">
+                    <td className="px-6 py-4 text-right">
                       <span className={cn(
-                        "inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border",
-                        TYPE_STYLE[p.posting.type]
+                        "inline-flex items-center px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider border shadow-sm",
+                        p.posting.type === 'ON_SITE' ? "bg-slate-50 text-slate-500 border-slate-200" :
+                        p.posting.type === 'REMOTE' ? "bg-blue-50 text-blue-600 border-blue-100" :
+                        "bg-purple-50 text-purple-600 border-purple-100"
                       )}>
                         {TYPE_LABEL[p.posting.type]}
                       </span>
@@ -116,9 +120,9 @@ export default function CoordinatorPlacementsPage() {
             </tbody>
           </table>
         </div>
-        <div className="px-5 py-3 border-t border-border bg-muted/20">
-          <p className="text-[10px] font-mono text-muted-foreground">
-            {placements.length} total placements on record
+        <div className="px-6 py-3 border-t border-slate-50 bg-slate-50/30 flex items-center justify-between">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            {placements.length} Total Synchronized Placements
           </p>
         </div>
       </div>

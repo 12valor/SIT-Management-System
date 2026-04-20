@@ -62,120 +62,136 @@ export default function StudentProfilePage() {
 
   if (!profile) return null;
 
-  return (
-    <div className="max-w-3xl space-y-6 pb-12">
       {/* Header */}
-      <div className="border-b border-border pb-5">
-        <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">Account</p>
-        <h1 className="text-2xl font-black tracking-tight text-foreground">Profile</h1>
+      <div className="pb-8 border-b border-slate-100 mb-8">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-800">Account Profile</h1>
+        <p className="text-sm text-slate-500 font-medium">Manage your industrial training identity and academic credentials.</p>
       </div>
 
-      {/* Identity strip */}
-      <div className="p-5 rounded-lg bg-primary border border-primary/80 text-primary-foreground flex items-center gap-5">
-        <div className="w-14 h-14 rounded-md bg-white/20 flex items-center justify-center text-xl font-black shrink-0">
-          {profile.name?.charAt(0).toUpperCase() ?? "?"}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-black text-lg leading-tight truncate">{profile.name}</p>
-          <p className="text-[11px] font-mono opacity-70">{profile.email}</p>
-        </div>
-        <div className="shrink-0 flex items-center gap-1.5 bg-white/20 border border-white/20 px-3 py-1.5 rounded text-[10px] font-black uppercase tracking-widest">
-          <ShieldCheck className="h-3.5 w-3.5" />
-          {profile.isApproved ? "Approved" : "Pending"}
-        </div>
-      </div>
-
-      {/* Quick stats */}
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          { label: "Logbook Hours",   value: `${totalHours.toFixed(0)}/300` },
-          { label: "Applications",    value: appCount },
-          { label: "Member Since",    value: new Date(profile.createdAt).getFullYear() },
-        ].map((s) => (
-          <div key={s.label} className="p-4 rounded-lg bg-card border border-border">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{s.label}</p>
-            <p className="text-xl font-black font-mono tabular-nums text-foreground mt-1">{s.value}</p>
+      <div className="space-y-8">
+        {/* Identity Strip */}
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center gap-6">
+          <div className="w-16 h-16 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-2xl font-bold text-[#800000] shrink-0">
+            {profile.name?.charAt(0).toUpperCase() ?? "?"}
           </div>
-        ))}
-      </div>
-
-      {/* Edit form */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-border bg-muted/30">
-          <h2 className="text-xs font-black uppercase tracking-widest text-foreground">Edit Personal Information</h2>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-xl font-bold text-slate-800 truncate">{profile.name}</h2>
+            <p className="text-sm text-slate-400 font-medium">{profile.email}</p>
+          </div>
+          <div className={cn(
+            "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border shadow-sm",
+            profile.isApproved ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-amber-50 text-amber-600 border-amber-100"
+          )}>
+            <ShieldCheck className="h-3.5 w-3.5" />
+            {profile.isApproved ? "Verified Candidate" : "Pending Audit"}
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className="p-5 space-y-5">
-          {error && (
-            <p className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded px-3 py-2 font-bold">
-              {error}
-            </p>
-          )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
-              <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  name="name"
-                  required
-                  defaultValue={profile.name ?? ""}
-                  className="w-full pl-9 pr-3 h-9 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                />
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { label: "Logbook Hours",   value: `${totalHours.toFixed(0)}/300`, icon: Clock },
+            { label: "Applications",    value: appCount, icon: GraduationCap },
+            { label: "Registration",    value: new Date(profile.createdAt).getFullYear(), icon: UserIcon },
+          ].map((s) => (
+            <div key={s.label} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">{s.label}</p>
+                <s.icon className="h-3.5 w-3.5 text-slate-200" />
               </div>
+              <p className="text-2xl font-bold text-slate-800">{s.value}</p>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Email (read-only)</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  value={profile.email ?? ""}
-                  disabled
-                  className="w-full pl-9 pr-3 h-9 rounded-md border border-border bg-muted/30 text-muted-foreground text-sm cursor-not-allowed"
-                />
+          ))}
+        </div>
+
+        {/* Edit Form */}
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-50 bg-slate-50/50">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-800">Edit Personal Information</h3>
+          </div>
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-xs text-red-600 font-bold">
+                {error}
               </div>
-            </div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Course / Specialization</label>
-            <div className="relative">
-              <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <select
-                name="course"
-                defaultValue={profile.course ?? ""}
-                className="w-full pl-9 pr-3 h-9 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary appearance-none cursor-pointer"
-              >
-                <option value="">Select course...</option>
-                <option value="BS in Information Technology">BS in Information Technology</option>
-                <option value="BS in Computer Science">BS in Computer Science</option>
-                <option value="BS in Civil Engineering">BS in Civil Engineering</option>
-                <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
-                <option value="BS in Electrical Engineering">BS in Electrical Engineering</option>
-                <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
-              </select>
-            </div>
-          </div>
-          <div className={cn("flex items-center", success ? "justify-between" : "justify-end")}>
-            {success && (
-              <p className="text-xs text-primary font-bold flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4" /> Profile updated successfully.
-              </p>
             )}
-            <button
-              type="submit"
-              disabled={isPending}
-              className="flex items-center gap-2 h-9 px-5 rounded-md bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors disabled:opacity-60"
-            >
-              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              Save Changes
-            </button>
-          </div>
-        </form>
-      </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Full Name</label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+                  <input
+                    name="name"
+                    required
+                    defaultValue={profile.name ?? ""}
+                    className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Email (Immutable)</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+                  <input
+                    value={profile.email ?? ""}
+                    disabled
+                    className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-slate-50 text-slate-400 text-sm cursor-not-allowed"
+                  />
+                </div>
+              </div>
+            </div>
 
-      {/* Help note */}
-      <p className="text-[11px] text-muted-foreground font-mono border border-border rounded-md px-4 py-3 bg-muted/20">
-        To change your school ID, student number, or role, contact the TUP-V SIT Coordinator.
-      </p>
-    </div>
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Academic Program</label>
+              <div className="relative">
+                <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300 pointer-events-none" />
+                <select
+                  name="course"
+                  defaultValue={profile.course ?? ""}
+                  className="w-full pl-10 pr-10 h-11 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] appearance-none cursor-pointer transition-all"
+                >
+                  <option value="">Select program...</option>
+                  <option value="BS in Information Technology text-slate-800">BS in Information Technology</option>
+                  <option value="BS in Computer Science">BS in Computer Science</option>
+                  <option value="BS in Civil Engineering">BS in Civil Engineering</option>
+                  <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
+                  <option value="BS in Electrical Engineering">BS in Electrical Engineering</option>
+                  <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
+                </select>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 border-l border-slate-100 pl-3 pointer-events-none">
+                  <Save className="h-3.5 w-3.5 text-slate-300" />
+                </div>
+              </div>
+            </div>
+
+            <div className={cn("flex items-center gap-4 border-t border-slate-50 pt-6", success ? "justify-between" : "justify-end")}>
+              {success && (
+                <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs animate-in slide-in-from-left-2">
+                  <CheckCircle2 className="h-4 w-4" /> Identification updated successfully.
+                </div>
+              )}
+              <button
+                type="submit"
+                disabled={isPending}
+                className="flex items-center gap-2 h-11 px-6 rounded-lg bg-[#800000] text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-red-900/10 hover:bg-red-900 transition-all disabled:opacity-50 active:scale-95"
+              >
+                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                Commit Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Support Note */}
+        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center gap-4">
+           <div className="p-2 bg-white rounded-lg border border-slate-100">
+              <Mail className="h-4 w-4 text-slate-400" />
+           </div>
+           <p className="text-[11px] text-slate-500 font-medium">
+             To modify critical records (Student ID, Institutional Role), please contact the <span className="text-slate-800 font-bold uppercase tracking-tighter">SIT Administration Desk</span>.
+           </p>
+        </div>
+      </div>
   );
 }

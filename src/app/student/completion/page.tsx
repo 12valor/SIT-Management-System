@@ -82,39 +82,36 @@ export default function StudentCompletionPage() {
   return (
     <div className="space-y-10 pb-20 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="text-center space-y-4 pt-10 animate-in-fade">
+      <div className="text-center space-y-2 py-12">
         <div className={cn(
-          "w-24 h-24 rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-2xl transition-all duration-1000",
-          isFullyComplete ? "bg-primary text-primary-foreground animate-bounce shadow-primary/40" : "bg-muted text-muted-foreground"
+          "w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-md transition-all duration-1000",
+          isFullyComplete ? "bg-[#800000] text-white animate-bounce shadow-red-900/20" : "bg-slate-50 text-slate-300 border border-slate-100"
         )}>
-           {isFullyComplete ? <Award className="h-12 w-12" /> : <Trophy className="h-12 w-12" />}
+           {isFullyComplete ? <Award className="h-10 w-10" /> : <Trophy className="h-10 w-10" />}
         </div>
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight text-gradient uppercase">Program Completion</h1>
-        <p className="text-muted-foreground font-bold max-w-lg mx-auto leading-relaxed">
-          The final audit of your Supervised Industrial Training (SIT) requirements. All metrics are synchronized with university standards.
+        <h1 className="text-3xl font-bold tracking-tight text-slate-800">Program Completion Status</h1>
+        <p className="text-sm text-slate-500 font-medium max-w-lg mx-auto">
+          Final audit of your industrial training requirements synchronized with academic standards.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Requirement 1: Hours */}
-        <div className="bg-card border border-border rounded-[3rem] p-10 shadow-2xl shadow-primary/5 relative overflow-hidden group border-b-8 border-b-primary transition-all hover:-translate-y-2">
-           <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-all">
-              <Clock className="h-32 w-32" />
-           </div>
-           <div className="relative z-10 space-y-8">
+        <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm relative overflow-hidden group">
+           <div className="relative z-10 space-y-6">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Requirement 01</span>
-                {isHoursComplete && <CheckCircle2 className="h-6 w-6 text-primary" />}
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#800000]">Phase 01</span>
+                {isHoursComplete && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}
               </div>
-              <h3 className="text-3xl font-black text-foreground">Industrial Hours</h3>
-              <div className="space-y-6">
+              <h3 className="text-xl font-bold text-slate-800">Industrial Hours</h3>
+              <div className="space-y-4">
                  <div className="flex items-end justify-between">
-                    <div className="text-6xl font-black text-foreground leading-none tracking-tighter">{totalHours}<span className="text-xl text-muted-foreground font-medium ml-1">/{hourGoal}</span></div>
-                    <span className="text-xs font-black uppercase tracking-widest text-primary">{Math.round((totalHours/hourGoal)*100)}%</span>
+                    <div className="text-4xl font-bold text-slate-800 tracking-tight">{totalHours}<span className="text-sm text-slate-400 font-medium ml-1">/{hourGoal}</span></div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{Math.round((totalHours/hourGoal)*100)}%</span>
                  </div>
-                 <div className="h-3 w-full bg-muted rounded-full overflow-hidden">
+                 <div className="h-2 w-full bg-slate-50 rounded-full overflow-hidden border border-slate-100">
                     <div 
-                      className={cn("h-full transition-all duration-1000", "bg-primary")} 
+                      className={cn("h-full transition-all duration-1000", "bg-[#800000]")} 
                       style={{ width: `${Math.min((totalHours/hourGoal)*100, 100)}%` }} 
                     />
                  </div>
@@ -123,24 +120,21 @@ export default function StudentCompletionPage() {
         </div>
 
         {/* Requirement 2: Documentation */}
-        <div className="bg-card border border-border rounded-[3rem] p-10 shadow-2xl shadow-primary/5 relative overflow-hidden group border-b-8 border-b-primary transition-all hover:-translate-y-2">
-           <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-all">
-              <FileUp className="h-32 w-32" />
-           </div>
-           <div className="relative z-10 space-y-8">
+        <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm relative overflow-hidden group">
+           <div className="relative z-10 space-y-6">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Requirement 02</span>
-                {isDocsComplete && <CheckCircle2 className="h-6 w-6 text-primary" />}
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#800000]">Phase 02</span>
+                {isDocsComplete && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}
               </div>
-              <h3 className="text-3xl font-black text-foreground">Mandatory Docs</h3>
-              <div className="space-y-6">
+              <h3 className="text-xl font-bold text-slate-800">Documentation</h3>
+              <div className="space-y-4">
                  <div className="flex items-end justify-between">
-                    <div className="text-6xl font-black text-foreground leading-none tracking-tighter">{documentsUploaded}<span className="text-xl text-muted-foreground font-medium ml-1">/{totalRequiredDocs}</span></div>
-                    <span className="text-xs font-black uppercase tracking-widest text-primary">{Math.round((documentsUploaded/totalRequiredDocs)*100)}%</span>
+                    <div className="text-4xl font-bold text-slate-800 tracking-tight">{documentsUploaded}<span className="text-sm text-slate-400 font-medium ml-1">/{totalRequiredDocs}</span></div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{Math.round((documentsUploaded/totalRequiredDocs)*100)}%</span>
                  </div>
-                 <div className="h-3 w-full bg-muted rounded-full overflow-hidden">
+                 <div className="h-2 w-full bg-slate-50 rounded-full overflow-hidden border border-slate-100">
                     <div 
-                      className={cn("h-full transition-all duration-1000", "bg-primary")} 
+                      className={cn("h-full transition-all duration-1000", "bg-[#800000]")} 
                       style={{ width: `${Math.min((documentsUploaded/totalRequiredDocs)*100, 100)}%` }} 
                     />
                  </div>
@@ -149,40 +143,37 @@ export default function StudentCompletionPage() {
         </div>
 
         {/* Requirement 3: Evaluation */}
-        <div className="bg-card border border-border rounded-[3rem] p-10 shadow-2xl shadow-primary/5 relative overflow-hidden group border-b-8 border-b-primary transition-all hover:-translate-y-2">
-           <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-all">
-              <Star className="h-32 w-32" />
-           </div>
-           <div className="relative z-10 space-y-8">
+        <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm relative overflow-hidden group">
+           <div className="relative z-10 space-y-6">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Requirement 03</span>
-                {hasEvaluation && <CheckCircle2 className="h-6 w-6 text-primary" />}
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#800000]">Phase 03</span>
+                {hasEvaluation && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}
               </div>
-              <h3 className="text-3xl font-black text-foreground">Performance</h3>
+              <h3 className="text-xl font-bold text-slate-800">Performance</h3>
               
               {hasEvaluation && evaluationData ? (
-                <div className="space-y-6">
-                   <div className="flex items-center gap-4 p-5 rounded-2xl bg-muted/50 border border-border">
-                      <div className="h-14 w-14 rounded-xl bg-primary text-primary-foreground flex items-center justify-center text-2xl font-black">
+                <div className="space-y-4">
+                   <div className="flex items-center gap-4 p-4 rounded-lg bg-slate-50 border border-slate-100">
+                      <div className="h-12 w-12 rounded-lg bg-[#800000] text-white flex items-center justify-center text-xl font-bold shadow-sm">
                          {evaluationData.overallGrade.toFixed(1)}
                       </div>
                       <div>
-                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Final Score</p>
-                         <div className="flex text-primary">
+                         <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Final Score</p>
+                         <div className="flex gap-0.5 text-[#800000]">
                             {Array.from({length: 5}).map((_, i) => (
-                              <Star key={i} className={cn("h-4 w-4", i < Math.round(evaluationData.overallGrade) ? "fill-primary" : "fill-none")} />
+                              <Star key={i} className={cn("h-3 w-3", i < Math.round(evaluationData.overallGrade) ? "fill-[#800000]" : "fill-none")} />
                             ))}
                          </div>
                       </div>
                    </div>
-                   <div className="text-xs font-bold text-muted-foreground leading-relaxed line-clamp-2">
+                   <p className="text-[11px] font-medium text-slate-500 leading-relaxed italic line-clamp-2">
                       &quot;{evaluationData.comments}&quot;
-                   </div>
+                   </p>
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center pt-2 space-y-3">
-                   <AlertCircle className="h-10 w-10 text-muted/30 animate-pulse" />
-                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Awaiting Assessment</p>
+                   <AlertCircle className="h-8 w-8 text-slate-200 animate-pulse" />
+                   <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Awaiting Assessment</p>
                 </div>
               )}
            </div>
@@ -191,49 +182,50 @@ export default function StudentCompletionPage() {
 
       {/* Completion Dashboard / Certificate Section */}
       {isFullyComplete ? (
-        <div className="p-10 md:p-16 rounded-[4rem] bg-foreground text-background shadow-3xl shadow-primary/20 relative overflow-hidden group animate-in-fade-slow">
-           <div className="absolute top-[-100%] left-[-20%] w-[60%] h-[300%] bg-primary/20 blur-[120px] skew-x-12 animate-pulse" />
-           <div className="relative z-10 grid md:grid-cols-3 items-center gap-12">
-              <div className="md:col-span-2 space-y-8 text-center md:text-left">
-                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/20 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/30">
-                    <ShieldCheck className="h-4 w-4" /> Official SIT Graduation Verified
+        <div className="p-10 md:p-12 rounded-xl bg-slate-900 text-white shadow-xl shadow-slate-900/20 relative overflow-hidden group animate-in slide-in-from-bottom-5">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-[#800000]/10 blur-[80px] rounded-full" />
+           <div className="relative z-10 grid md:grid-cols-3 items-center gap-10">
+              <div className="md:col-span-2 space-y-6">
+                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/30">
+                    <ShieldCheck className="h-3.5 w-3.5" /> Program Requirements Fulfilled
                  </div>
-                 <h2 className="text-5xl font-black tracking-tight leading-tight">Elite Status Achieved, {session?.user?.name?.split(' ')[0]}!</h2>
-                 <p className="text-muted-foreground font-bold text-lg leading-relaxed max-w-xl">
-                   You have successfully fulfilled all industrial protocols. Your final performance is permanently archived under <span className="text-foreground font-black">{evaluationData?.companyName}</span>.
+                 <h2 className="text-3xl font-bold tracking-tight">Industrial Excellence Achieved</h2>
+                 <p className="text-slate-400 font-medium text-sm leading-relaxed max-w-xl">
+                   Congratulations, {session?.user?.name?.split(' ')[0]}. You have successfully synchronized all industrial records. Your final performance is permanently archived under <span className="text-white font-bold">{evaluationData?.companyName}</span>.
                  </p>
-                 <div className="flex flex-wrap items-center gap-8 justify-center md:justify-start">
-                    <div className="flex items-center gap-3">
-                       <Building2 className="h-5 w-5 text-primary" />
-                       <span className="text-xs font-black uppercase tracking-widest">{evaluationData?.companyName}</span>
+                 <div className="flex flex-wrap items-center gap-6">
+                    <div className="flex items-center gap-2.5">
+                       <Building2 className="h-4 w-4 text-[#800000]" />
+                       <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300">{evaluationData?.companyName}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                       <Calendar className="h-5 w-5 text-primary" />
-                       <span className="text-xs font-black uppercase tracking-widest">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
+                    <div className="flex items-center gap-2.5">
+                       <Calendar className="h-4 w-4 text-[#800000]" />
+                       <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
                     </div>
                  </div>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center md:justify-end">
                  <button 
                     onClick={handleDownloadCertificate}
-                    className="group relative flex flex-col items-center gap-4 w-56 h-56 rounded-[3.5rem] bg-primary text-primary-foreground font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-primary/50 hover:shadow-primary/70"
+                    className="group relative flex flex-col items-center gap-3 w-40 h-40 rounded-2xl bg-[#800000] text-white font-bold transition-all hover:scale-105 active:scale-95 shadow-xl shadow-red-900/40"
                  >
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-[3.5rem]" />
-                    <div className="flex-1 flex items-center justify-center pt-8">
-                       <Download className="h-14 w-14 group-hover:-translate-y-2 transition-transform duration-500" />
+                    <div className="flex-1 flex items-center justify-center pt-6">
+                       <Download className="h-10 w-10 group-hover:-translate-y-1 transition-transform" />
                     </div>
-                    <div className="pb-12 text-[10px] uppercase tracking-[0.2em]">Secure Export: PDF</div>
+                    <div className="pb-8 text-[9px] uppercase tracking-widest font-bold opacity-80">Export PDF</div>
                  </button>
               </div>
            </div>
         </div>
       ) : (
-        <div className="p-16 rounded-[4rem] bg-muted/50 border-2 border-dashed border-border text-center space-y-6">
-           <Loader2 className="h-10 w-10 text-muted-foreground opacity-20 mx-auto" />
-           <div className="space-y-2">
-              <h3 className="text-2xl font-black text-muted-foreground uppercase tracking-tight">Industrial Verification Pending</h3>
-              <p className="text-sm font-bold text-muted-foreground max-w-md mx-auto leading-relaxed">
-                 Complete all requirements (Hours, Evaluations, and Documentation) to unlock your verified SIT Industrial Certificate.
+        <div className="p-12 rounded-xl bg-slate-50 border border-slate-200 border-dashed text-center space-y-4">
+           <div className="w-12 h-12 rounded-full bg-white border border-slate-100 flex items-center justify-center mx-auto">
+             <Loader2 className="h-6 w-6 text-slate-200" />
+           </div>
+           <div className="space-y-1">
+              <h3 className="text-lg font-bold text-slate-700 uppercase tracking-tight">Audit in Progress</h3>
+              <p className="text-xs font-medium text-slate-400 max-w-sm mx-auto leading-relaxed">
+                 Coordinate your remaining manifests (Hours, Evaluation, Docs) to unlock your verified SIT Certificate.
               </p>
            </div>
         </div>

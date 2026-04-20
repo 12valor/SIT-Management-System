@@ -73,85 +73,92 @@ export default function EmployerPostingsPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border pb-5">
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">Manage</p>
-          <h1 className="text-2xl font-black tracking-tight text-foreground">SIT Postings</h1>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-800">SIT Opportunities</h1>
+          <p className="text-sm text-slate-500 font-medium">Manage and monitor your active industrial training roles.</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+          className="flex items-center gap-2 h-11 px-6 rounded-lg bg-[#800000] text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-red-900/10 hover:bg-red-900 transition-all active:scale-95 shrink-0"
         >
-          <Plus className="h-4 w-4" /> New Posting
+          <Plus className="h-4 w-4" /> Post New Role
         </button>
       </div>
 
       {/* Search + summary */}
-      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="relative w-full max-w-md">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
           <input
             type="text"
-            placeholder="Search postings..."
+            placeholder="Filter opportunities..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 h-9 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            className="w-full pl-11 pr-4 h-11 rounded-xl border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all shadow-sm"
           />
         </div>
-        <span className="text-[10px] font-mono text-muted-foreground">{filtered.length} of {postings.length} postings</span>
+        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+          {filtered.length} Displaying results
+        </p>
       </div>
 
       {/* Postings table */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/30 text-left">
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Position</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hidden md:table-cell">Type</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hidden md:table-cell">Hours</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Applicants</th>
-                <th className="px-5 py-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground text-right">Status</th>
+              <tr className="bg-slate-50/50 border-b border-slate-100">
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Position Title</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden md:table-cell">Modality</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden md:table-cell">Duration</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Applications</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">Visibility</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-slate-50">
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center">
-                    <Loader2 className="h-5 w-5 animate-spin text-primary mx-auto" />
+                  <td colSpan={5} className="py-24 text-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-[#800000] mx-auto opacity-20" />
                   </td>
                 </tr>
               ) : filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-16 text-center text-xs text-muted-foreground font-mono">
-                    {postings.length === 0 ? "No postings yet. Create your first SIT role." : "No results match your search."}
+                  <td colSpan={5} className="py-32 text-center">
+                    <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">
+                      {postings.length === 0 ? "No Active Postings" : "No results match query"}
+                    </p>
                   </td>
                 </tr>
               ) : (
                 filtered.map((p) => (
-                  <tr key={p.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="px-5 py-4">
-                      <p className="font-bold text-foreground leading-tight">{p.title}</p>
-                      <div className="flex items-center gap-1 mt-1 text-[10px] font-mono text-muted-foreground">
+                  <tr key={p.id} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-6 py-4">
+                      <p className="font-bold text-slate-800 leading-tight">{p.title}</p>
+                      <div className="flex items-center gap-1.5 mt-1 text-[10px] font-medium text-slate-400">
                         <MapPin className="h-3 w-3" /> {p.location}
                       </div>
                     </td>
-                    <td className="px-5 py-4 hidden md:table-cell">
-                      <span className="text-xs font-medium text-muted-foreground">{TYPE_LABEL[p.type]}</span>
+                    <td className="px-6 py-4 hidden md:table-cell">
+                      <span className="text-xs font-bold text-slate-500">{TYPE_LABEL[p.type]}</span>
                     </td>
-                    <td className="px-5 py-4 hidden md:table-cell">
-                      <div className="flex items-center gap-1 text-xs font-mono text-muted-foreground">
-                        <Clock className="h-3 w-3" /> {p.requiredHours}h
+                    <td className="px-6 py-4 hidden md:table-cell">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400">
+                        <Clock className="h-3.5 w-3.5" /> {p.requiredHours}h Target
                       </div>
                     </td>
-                    <td className="px-5 py-4">
-                      <span className="text-sm font-black font-mono text-foreground tabular-nums">{p._count.applications}</span>
+                    <td className="px-6 py-4">
+                      <div className="inline-flex items-center justify-center min-w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-sm font-bold text-slate-700 tabular-nums">
+                        {p._count.applications}
+                      </div>
                     </td>
-                    <td className="px-5 py-4 text-right">
+                    <td className="px-6 py-4 text-right">
                       <span className={cn(
-                        "inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border",
-                        STATUS_STYLE[p.status]
+                        "inline-flex items-center px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider border shadow-sm",
+                        p.status === 'OPEN' ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-slate-50 text-slate-500 border-slate-200"
                       )}>
+                        <div className={cn("w-1 h-1 rounded-full mr-1.5", p.status === 'OPEN' ? "bg-emerald-500 animate-pulse" : "bg-slate-400")} />
                         {p.status}
                       </span>
                     </td>
@@ -165,71 +172,75 @@ export default function EmployerPostingsPage() {
 
       {/* Create Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-          <div className="relative w-full max-w-xl bg-card border border-border rounded-lg shadow-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-border flex items-center justify-between">
-              <h3 className="text-sm font-black uppercase tracking-widest">Post SIT Role</h3>
-              <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-md hover:bg-muted flex items-center justify-center transition-colors">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in transition-all">
+          <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div className="space-y-1">
+                <h3 className="text-lg font-bold text-slate-900">Post New SIT Opportunity</h3>
+                <p className="text-xs text-slate-500 font-medium">Define parameters for student internships.</p>
+              </div>
+              <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors text-slate-400 hover:text-slate-600">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            <form onSubmit={handleSubmit} className="p-8 space-y-6">
               {error && (
-                <p className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-md px-3 py-2 font-bold">
+                <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-xs text-red-600 font-bold">
                   {error}
-                </p>
+                </div>
               )}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Job Title *</label>
-                  <input name="title" required placeholder="e.g. Backend Engineer Trainee"
-                    className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Opportunity Title *</label>
+                  <input name="title" required placeholder="e.g. Software Systems Intern"
+                    className="w-full h-11 px-4 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all" />
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Location *</label>
-                  <input name="location" required placeholder="e.g. Bacolod City"
-                    className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Site Location *</label>
+                  <input name="location" required placeholder="e.g. Metro Manila"
+                    className="w-full h-11 px-4 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all" />
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Placement Type</label>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Training Modality</label>
                   <div className="relative">
                     <select name="type" defaultValue="ON_SITE"
-                      className="w-full h-9 pl-3 pr-8 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary appearance-none">
-                      <option value="ON_SITE">On-site</option>
-                      <option value="REMOTE">Remote</option>
-                      <option value="HYBRID">Hybrid</option>
+                      className="w-full h-11 pl-4 pr-10 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] appearance-none cursor-pointer transition-all">
+                      <option value="ON_SITE">On-site Presence</option>
+                      <option value="REMOTE">Remote Operations</option>
+                      <option value="HYBRID">Hybrid Engagement</option>
                     </select>
-                    <ChevronDown className="absolute right-2.5 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300 pointer-events-none" />
                   </div>
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Required Hours</label>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Clock Requirement</label>
                   <input name="requiredHours" type="number" defaultValue={300} min={1}
-                    className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20" />
+                    className="w-full h-11 px-4 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all" />
                 </div>
               </div>
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Description *</label>
-                <textarea name="description" required rows={3} placeholder="Duties, expectations, requirements..."
-                  className="w-full p-3 rounded-md border border-border bg-background text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none" />
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Industrial Scope *</label>
+                <textarea name="description" required rows={3} placeholder="Define duties, technical expectations, and academic requirements..."
+                  className="w-full p-4 h-32 rounded-xl border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] resize-none shadow-sm transition-all" />
               </div>
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Tags (press Enter)</label>
-                <div className="min-h-[38px] border border-border rounded-md bg-background p-2 flex flex-wrap gap-1.5">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
+                <div className="min-h-[44px] border border-slate-200 rounded-xl bg-slate-50/50 p-2.5 flex flex-wrap gap-2 transition-all">
                   {tags.map((t) => (
-                    <span key={t} className="flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded border border-primary/20">
-                      {t} <X className="h-2.5 w-2.5 cursor-pointer" onClick={() => setTags(tags.filter(x => x !== t))} />
+                    <span key={t} className="flex items-center gap-1.5 px-2.5 py-1 bg-white text-slate-600 text-[10px] font-bold rounded-lg border border-slate-100 shadow-sm">
+                      {t} <X className="h-3 w-3 cursor-pointer text-slate-300 hover:text-red-500" onClick={() => setTags(tags.filter(x => x !== t))} />
                     </span>
                   ))}
                   <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
-                    placeholder={tags.length === 0 ? "e.g. React, Python..." : ""} className="flex-1 bg-transparent outline-none text-sm min-w-[100px]" />
+                    placeholder={tags.length === 0 ? "e.g. React, Logistics, CAD..." : ""} className="flex-1 bg-transparent outline-none text-sm min-w-[120px] ml-2" />
                 </div>
               </div>
-              <button type="submit" disabled={isSubmitting}
-                className="w-full h-10 rounded-md bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
-                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Publish Posting"}
-              </button>
+              <div className="pt-2">
+                <button type="submit" disabled={isSubmitting}
+                  className="w-full h-12 rounded-xl bg-[#800000] text-white text-sm font-bold uppercase tracking-wider shadow-lg shadow-red-900/10 hover:bg-red-900 transition-all disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2">
+                  {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : "Broadcast Opportunity"}
+                </button>
+              </div>
             </form>
           </div>
         </div>

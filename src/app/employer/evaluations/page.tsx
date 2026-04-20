@@ -244,78 +244,78 @@ export default function EmployerEvaluationsPage() {
   return (
     <div className="space-y-12 pb-24 animate-in-fade">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border pb-10">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800">
-             <Trophy className="h-4 w-4" />
-             <span className="text-[10px] font-black uppercase tracking-widest">Performance Hub</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-50 text-slate-500 border border-slate-100 shadow-sm">
+             <Trophy className="h-3.5 w-3.5" />
+             <span className="text-[10px] font-bold uppercase tracking-wider">Performance Hub</span>
           </div>
-          <h2 className="text-6xl font-black tracking-tighter leading-none">Industrial <span className="text-indigo-600">Audit</span></h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Evaluate and certify trainee performance for the current SIT term.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-800">Industrial Audit</h1>
+          <p className="text-sm text-slate-500 font-medium max-w-2xl">Evaluate and certify student performance based on their industrial training achievements and professional development.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {trainees.map((trainee) => {
           const hours = trainee.totalHours;
           const evaluation = trainee.evaluation;
           const isEligible = hours >= 280; 
 
           return (
-            <div key={trainee.id} className="group p-10 rounded-[3rem] bg-card border border-border/60 hover:border-indigo-500/40 transition-all hover:shadow-4xl hover:shadow-indigo-500/5 relative overflow-hidden flex flex-col items-center text-center">
-               <div className="absolute top-0 left-0 w-full h-[6px] bg-slate-100 dark:bg-slate-800" />
-               <div className="absolute top-0 left-0 h-[6px] bg-indigo-600 transition-all duration-1500 ease-out shadow-[0_0_15px_rgba(79,70,229,0.5)]" style={{ width: `${Math.min((hours/300)*100, 100)}%` }} />
+            <div key={trainee.id} className="group bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md hover:border-[#800000]/20 transition-all flex flex-col items-center text-center relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-50" />
+               <div className="absolute top-0 left-0 h-1.5 bg-[#800000] transition-all duration-1000 shadow-sm" style={{ width: `${Math.min((hours/300)*100, 100)}%` }} />
 
-               <div className="mb-8 relative">
-                  <div className="w-28 h-28 rounded-[2rem] bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-4xl font-black text-slate-300 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-3 shadow-sm border border-border/40">
+               <div className="mb-6 relative">
+                  <div className="w-20 h-20 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-3xl font-bold text-slate-300 group-hover:bg-[#800000] group-hover:text-white transition-all transform group-hover:scale-105 shadow-sm">
                     {trainee.studentName?.[0] || 'U'}
                   </div>
                   {evaluation && (
-                    <div className="absolute -bottom-3 -right-3 w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-xl border-[4px] border-card">
-                       <Award className="h-6 w-6" />
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center shadow-lg border-2 border-white">
+                       <Award className="h-4 w-4" />
                     </div>
                   )}
                </div>
 
-               <div className="mb-10 space-y-2">
-                  <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">{trainee.studentName}</h3>
-                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{trainee.studentEmail}</p>
+               <div className="mb-8 space-y-1">
+                  <h3 className="text-lg font-bold text-slate-800 leading-tight">{trainee.studentName}</h3>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{trainee.studentEmail}</p>
                </div>
 
-               <div className="w-full grid grid-cols-2 gap-6 mb-10 border-y border-border/40 py-8">
-                  <div className="space-y-1.5 border-r border-border/40">
-                     <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] leading-none mb-1">Validated Hours</p>
-                     <p className="text-2xl font-black flex items-center justify-center gap-1.5 tracking-tighter">
-                        <Clock className="h-5 w-5 text-indigo-500" /> {hours} <span className="text-[10px] text-slate-400 font-bold">/ 300</span>
+               <div className="w-full grid grid-cols-2 gap-4 mb-8 border-y border-slate-50 py-6">
+                  <div className="space-y-1 border-r border-slate-100">
+                     <p className="text-[9px] font-bold uppercase text-slate-400 tracking-wider">Validated Hours</p>
+                     <p className="text-xl font-bold text-slate-800 flex items-center justify-center gap-1.5 tracking-tight">
+                        {hours} <span className="text-[10px] text-slate-300 font-medium">/ 300</span>
                      </p>
                   </div>
-                  <div className="space-y-1.5 flex flex-col items-center justify-center">
-                     <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] leading-none mb-1">Term Status</p>
-                     <p className={cn(
-                        "text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full inline-block border",
+                  <div className="space-y-1 flex flex-col items-center justify-center">
+                     <p className="text-[9px] font-bold uppercase text-slate-400 tracking-wider">Status</p>
+                     <span className={cn(
+                        "text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border shadow-sm mt-0.5",
                         evaluation 
-                          ? "bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-900/30 dark:border-emerald-800" 
+                          ? "bg-emerald-50 text-emerald-600 border-emerald-100" 
                           : (isEligible 
-                              ? "bg-amber-50 text-amber-600 border-amber-200 dark:bg-amber-900/30 dark:border-amber-800 animate-pulse" 
-                              : "bg-slate-50 text-slate-400 border-slate-200 dark:bg-slate-800/50 dark:border-slate-800")
+                              ? "bg-[#800000]/5 text-[#800000] border-[#800000]/10 animate-pulse" 
+                              : "bg-slate-50 text-slate-400 border-slate-100")
                      )}>
-                        {evaluation ? "Certified" : (isEligible ? "Evaluation Ready" : "Hours Incomplete")}
-                     </p>
+                        {evaluation ? "Certified" : (isEligible ? "Ready" : "Pending")}
+                     </span>
                   </div>
                </div>
 
                {evaluation ? (
-                 <div className="w-full space-y-5">
-                    <div className="flex items-center justify-between text-[10px] font-black px-2 text-slate-400 uppercase tracking-widest">
+                 <div className="w-full space-y-4">
+                    <div className="flex items-center justify-between text-[10px] font-bold px-1 text-slate-400 uppercase tracking-widest">
                        <span>Audit Score</span>
-                       <div className="flex gap-0.5 text-amber-500">
+                       <div className="flex gap-0.5 text-[#800000]">
                           {Array.from({length: 5}).map((_, i) => (
-                            <Star key={i} className={cn("h-3.5 w-3.5", i < Math.round(evaluation.overallGrade) ? "fill-current" : "fill-none")} />
+                             <Star key={i} className={cn("h-3 w-3", i < Math.round(evaluation.overallGrade) ? "fill-[#800000]" : "fill-none")} />
                           ))}
                        </div>
                     </div>
-                    <button disabled className="w-full py-4 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 border border-border/40 shadow-inner">
-                       <CheckCircle2 className="h-4 w-4" /> Record Finalized
+                    <button disabled className="w-full h-11 rounded-lg bg-slate-50 border border-slate-100 text-slate-400 font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm">
+                       <CheckCircle2 className="h-3.5 w-3.5 opacity-40" /> Record Finalized
                     </button>
                  </div>
                ) : (
@@ -323,14 +323,14 @@ export default function EmployerEvaluationsPage() {
                    disabled={!isEligible}
                    onClick={() => setSelectedStudentId(trainee.studentId)}
                    className={cn(
-                    "w-full py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all shadow-xl flex items-center justify-center gap-3",
+                    "w-full h-11 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2",
                     isEligible 
-                      ? "bg-indigo-600 text-white shadow-indigo-600/20 hover:scale-[1.05] active:scale-95 hover:shadow-indigo-600/40" 
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed grayscale opacity-60"
+                      ? "bg-[#800000] text-white shadow-red-900/10 hover:bg-red-900 active:scale-95" 
+                      : "bg-slate-50 text-slate-300 border border-slate-100 cursor-not-allowed opacity-60"
                    )}
                  >
-                    {isEligible ? <Trophy className="h-5 w-5" /> : <Activity className="h-5 w-5" />}
-                    {isEligible ? "Open Performance Audit" : "Progress Insufficient"}
+                    {isEligible ? <Activity className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
+                    {isEligible ? "Enter Final Assessment" : "Hours Incomplete"}
                  </button>
                )}
             </div>
@@ -338,38 +338,38 @@ export default function EmployerEvaluationsPage() {
         })}
 
         {trainees.length === 0 && (
-           <div className="col-span-full py-48 flex flex-col items-center justify-center text-center bg-card border-2 border-dashed border-border/40 rounded-[4rem] opacity-40">
-              <div className="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-8">
-                <Star className="h-10 w-10 text-slate-400" />
+           <div className="col-span-full py-32 flex flex-col items-center justify-center text-center bg-slate-50/50 border border-slate-200 border-dashed rounded-xl opacity-50">
+              <div className="w-16 h-16 rounded-full bg-white border border-slate-100 flex items-center justify-center mb-6 shadow-sm">
+                <Star className="h-6 w-6 text-slate-200" />
               </div>
-              <h3 className="text-3xl font-black mb-3 tracking-tight">No Active Trainee Roster</h3>
-              <p className="text-base font-medium max-w-sm text-slate-500 leading-relaxed">Industrial assessment manifests after successfully onboarding and coordinating with TUP-V students.</p>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">No Active Trainee Manifest</h3>
+              <p className="text-xs font-medium max-w-xs text-slate-400 leading-relaxed">Evaluation protocols will activate once student hours are validated by the coordinator.</p>
            </div>
         )}
       </div>
 
       {/* Info Card */}
-      <div className="p-12 lg:p-20 rounded-[4rem] bg-slate-950 text-white shadow-4xl relative overflow-hidden group/info border border-white/5">
-         <div className="absolute top-[-50%] right-[-10%] w-[50%] h-[200%] bg-indigo-600/20 blur-[120px] skew-x-12 group-hover/info:translate-x-20 transition-transform duration-2000" />
-         <div className="relative z-10 flex flex-col xl:flex-row items-center justify-between gap-12 lg:gap-20">
-            <div className="space-y-6 text-center xl:text-left">
-               <h3 className="text-4xl font-black flex flex-col md:flex-row items-center gap-5 tracking-tight leading-tight">
-                  <div className="p-4 bg-indigo-600 rounded-[1.5rem] shadow-2xl shadow-indigo-600/40">
-                    <Award className="h-10 w-10 text-white" />
+      <div className="p-10 lg:p-12 rounded-xl bg-slate-900 text-white shadow-xl relative overflow-hidden group">
+         <div className="absolute top-0 right-0 w-80 h-80 bg-[#800000]/10 blur-[100px] rounded-full" />
+         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div className="space-y-4 text-center lg:text-left">
+               <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="p-3 bg-[#800000] rounded-xl shadow-lg shadow-red-900/20">
+                    <Award className="h-7 w-7 text-white" />
                   </div>
-                  Industrial Certification Policy
-               </h3>
-               <p className="text-slate-400 font-medium max-w-3xl leading-relaxed text-lg">
-                  Performance audits are mandatory for TUP-V students who have completed **280+ training hours**. This data serves as the primary metric for the SIT Executive Certificate. Your direct assessment shapes the career trajectory of tomorrow&apos;s engineers.
+                  <h3 className="text-2xl font-bold tracking-tight">Institutional Certification Policy</h3>
+               </div>
+               <p className="text-slate-400 font-medium max-w-3xl leading-relaxed text-sm">
+                 Industrial assessments are required for all students reaching the **280-hour milestone**. Your professional vetting directly impacts the synchronization of academic records and future placement eligibility.
                </p>
             </div>
-            <div className="flex items-center gap-6 bg-white/5 p-8 rounded-[2.5rem] border border-white/10 backdrop-blur-xl shadow-2xl min-w-[320px]">
-               <div className="text-right flex-1">
-                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-2">Technical Support</p>
-                  <p className="text-sm font-black tracking-tight">coordinator.sit@tupv.edu.ph</p>
+            <div className="flex items-center gap-5 bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-md min-w-[300px]">
+               <div className="text-right flex-1 space-y-1">
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-[#800000]">Technical Support</p>
+                  <p className="text-xs font-bold text-slate-200">coordinator.sit@tupv.edu.ph</p>
                </div>
-               <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10">
-                  <AlertCircle className="h-7 w-7 text-indigo-300" />
+               <div className="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center border border-white/10">
+                  <AlertCircle className="h-5 w-5 text-slate-400" />
                </div>
             </div>
          </div>
