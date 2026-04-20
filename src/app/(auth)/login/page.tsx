@@ -26,10 +26,7 @@ export default function LoginGatePage() {
           <div className="flex items-center gap-6">
             <div className="hidden sm:block text-right">
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest font-heading">Academic Session</p>
-              <p className="text-[10px] font-bold text-slate-900 font-sans">2023 - 2024</p>
-            </div>
-            <div className="w-9 h-9 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-300">
-              <ShieldCheck className="h-4 w-4" />
+              <p className="text-[10px] font-bold text-slate-900 font-sans">2025 - 2026</p>
             </div>
           </div>
         </div>
