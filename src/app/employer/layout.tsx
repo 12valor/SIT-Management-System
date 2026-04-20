@@ -59,7 +59,7 @@ export default function EmployerLayout({
   }
 
   return (
-    <div className="flex min-h-screen w-full bg-background selection:bg-primary/20">
+    <div className="flex min-h-screen w-full bg-[#f8fafc] selection:bg-[#800000]/10">
       {/* Mobile Backdrop */}
       {isMobileMenuOpen && (
         <div 
@@ -70,80 +70,77 @@ export default function EmployerLayout({
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border bg-card transition-all duration-500 ease-in-out lg:translate-x-0 overflow-hidden",
+        "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-white transition-all duration-500 ease-in-out lg:translate-x-0 overflow-hidden",
         isMobileMenuOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
       )}>
-        <div className="absolute top-0 left-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none" />
-        
-        <div className="flex h-24 items-center border-b border-border px-8 gap-4 relative z-10">
+        {/* Logo/Branding Section */}
+        <div className="flex h-20 items-center px-6 gap-3 mb-4">
           <Image 
             src="/Technological_University_of_the_Philippines_Seal.svg.png" 
             alt="TUP Seal" 
-            width={40}
-            height={40}
-            className="h-10 w-auto object-contain" 
+            width={36}
+            height={36}
+            className="h-9 w-auto object-contain" 
           />
-          <div className="h-6 w-px bg-slate-200" />
-          <div className="flex flex-col">
-            <span className="font-bold text-lg tracking-tight leading-none text-foreground uppercase font-heading">SIT Platform</span>
-            <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-1 font-sans">TUP-V Employer</span>
+          <div className="flex flex-col justify-center leading-none">
+            <span className="font-bold text-base tracking-tight text-slate-800 font-heading">SIT Platform</span>
+            <span className="text-[10px] font-medium text-[#800000] mt-1">TUP-V Employer</span>
           </div>
           <button 
-            className="ml-auto lg:hidden p-2 rounded-xl bg-muted" 
+            className="ml-auto lg:hidden p-2 rounded-lg bg-slate-100" 
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <X className="h-5 w-5 text-foreground" />
+            <X className="h-4 w-4 text-slate-600" />
           </button>
         </div>
         
-        <div className="flex-1 overflow-y-auto px-5 py-10 relative z-10">
-           <div className="px-5 mb-6">
-              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-6">Management Matrix</h3>
-           </div>
-          <nav className="space-y-2">
+        {/* Navigation Section */}
+        <div className="flex-1 overflow-y-auto px-4 py-2">
+          <nav className="space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
+              const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center justify-between rounded-2xl px-5 py-4 text-xs font-black transition-all group relative overflow-hidden",
+                    "flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all rounded-lg group",
                     isActive 
-                      ? "bg-primary text-primary-foreground shadow-2xl shadow-primary/30 scale-[1.02]" 
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? "bg-[#fff1f1] text-[#800000]" 
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   )}
                 >
-                  <div className="flex items-center gap-4 relative z-10">
-                    <item.icon className={cn(
-                      "h-5 w-5 transition-all duration-500",
-                      isActive ? "text-primary-foreground scale-110" : "text-muted-foreground/40 group-hover:text-primary"
-                    )} />
-                    <span className="uppercase tracking-[0.1em]">{item.name}</span>
-                  </div>
-                  {isActive && (
-                    <div className="w-1.5 h-6 bg-primary-foreground rounded-full opacity-40 relative z-10" />
-                  )}
+                  <Icon className={cn(
+                    "h-5 w-5 transition-colors",
+                    isActive ? "text-[#800000]" : "text-slate-400 group-hover:text-slate-600"
+                  )} />
+                  <span>{item.name}</span>
                 </Link>
               );
             })}
           </nav>
         </div>
 
-        <div className="border-t border-border p-8 space-y-6 relative z-10">
-          <div className="p-5 rounded-[2rem] bg-primary/5 border border-primary/10 shadow-inner">
-             <p className="text-[9px] font-black text-primary uppercase tracking-widest mb-1.5">Compliance Level</p>
-             <div className="flex items-center gap-3">
-                <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(128,0,0,0.5)]" />
-                <span className="text-[11px] font-black text-foreground uppercase tracking-tight">Active Partner</span>
+        {/* Bottom Sidebar Sections */}
+        <div className="p-4 space-y-4">
+          {/* Status Card */}
+          <div className="p-4 rounded-lg bg-slate-50 border border-slate-100">
+             <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-[11px] font-medium text-slate-500">Industry:</span>
+                <span className="text-[11px] font-bold text-[#800000]">Active Partner</span>
              </div>
+             <p className="text-[10px] font-medium text-slate-400">
+                Authorized Node: {session?.user?.id?.slice(-8).toUpperCase() || "SYST-B-04"}
+             </p>
           </div>
+
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex w-full items-center gap-4 rounded-2xl px-5 py-4 text-xs font-black text-destructive hover:bg-destructive/10 transition-all group uppercase tracking-widest"
+            className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-all group w-full text-left"
           >
-            <LogOut className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+            <LogOut className="h-4 w-4 text-slate-400 group-hover:text-slate-900 transition-transform group-hover:-translate-x-1" />
             Sign Out
           </button>
         </div>

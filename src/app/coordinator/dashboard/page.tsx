@@ -1,33 +1,34 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import {
-  Users, Building2, CheckCircle2, Award, Briefcase, Loader2, Clock, AlertCircle,
+import { auth } from "@/auth";
+import { 
+  Users, 
+  Building2, 
+  CheckCircle2, 
+  Award, 
+  Briefcase, 
+  Clock, 
+  AlertCircle,
+  Calendar,
+  ChevronRight
 } from "lucide-react";
+import Link from "next/link";
 import { getCoordinatorStats } from "./actions";
-import { CoordinatorStats, RecentPlacement } from "./types";
+import { cn } from "@/lib/utils";
 
-
-export default function CoordinatorDashboard() {
-  const [stats, setStats]       = useState<CoordinatorStats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getCoordinatorStats().then((res) => {
-      if (res.success && res.data) setStats(res.data);
-      setIsLoading(false);
-    });
-  }, []);
-
-  if (isLoading || !stats) {
+export default async function CoordinatorDashboardPage() {
+  const session = await auth();
+  const res = await getCoordinatorStats();
+  
+  if (!res.success || !res.data) {
     return (
-      <div className="flex items-center justify-center h-64 gap-3">
-        <Loader2 className="h-5 w-5 text-primary animate-spin" />
-        <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Loading...</span>
+      <div className="p-8 rounded-xl bg-red-50 border border-red-100 text-red-600">
+        <h2 className="text-sm font-bold uppercase tracking-widest mb-2">Registry Error</h2>
+        <p className="text-xs">Failed to load strategic program metrics.</p>
       </div>
     );
   }
 
+  const { data: stats } = res;
+  
   const placementRate = stats.totalStudents > 0
     ? Math.round((stats.hiredStudents / stats.totalStudents) * 100)
     : 0;
@@ -40,133 +41,144 @@ export default function CoordinatorDashboard() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Page header */}
-      <div className="flex items-center justify-between border-b border-border pb-5">
+    <div className="flex-1 space-y-8 animate-in-fade">
+      {/* 1. Header Section */}
+      <div className="flex items-center justify-between">
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">
-            TUP-V SIT Coordinator Portal
+          <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+            Program Control, {session?.user?.name?.split(" ")[0]}
+          </h2>
+          <p className="text-sm text-slate-500 font-medium mt-1">
+            SIT Administrative Terminal · {new Date().getFullYear()}
           </p>
-          <h1 className="text-2xl font-black tracking-tight text-foreground">Program Overview</h1>
         </div>
-        <div className="text-right">
-          <p className="text-[10px] font-mono text-muted-foreground">Placement Rate</p>
-          <p className="text-2xl font-black font-mono tabular-nums text-primary">{placementRate}%</p>
+        <div className="flex items-center gap-4">
+           <div className="hidden md:flex flex-col items-end">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Placement Velocity</p>
+              <p className="text-xl font-bold text-[#800000]">{placementRate}%</p>
+           </div>
+           <div className="h-10 w-px bg-slate-200 hidden md:block mx-2" />
+           <div className="hidden sm:flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-widest bg-white px-4 py-2 rounded-lg border border-slate-200">
+              <Calendar className="h-3.5 w-3.5" />
+              {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+           </div>
         </div>
       </div>
 
-      {/* KPI strip */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 2. Stats Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {statCards.map((s) => (
-          <div key={s.label} className="p-5 rounded-lg bg-card border border-border space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{s.label}</span>
-              <s.icon className="h-4 w-4 text-muted-foreground/40" />
+          <div key={s.label} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <p className="text-xs font-medium text-slate-500 mb-4">{s.label}</p>
+            <div className="flex items-baseline justify-between">
+              <span className="text-2xl font-bold text-slate-900">{s.value}</span>
+              <s.icon className="h-5 w-5 text-slate-200" />
             </div>
-            <p className="text-3xl font-black font-mono tabular-nums text-foreground">{s.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Placements feed */}
-        <div className="lg:col-span-2 rounded-lg border border-border bg-card overflow-hidden">
-          <div className="px-5 py-4 border-b border-border bg-muted/30 flex items-center justify-between">
-            <h2 className="text-xs font-black uppercase tracking-widest text-foreground">Recent Placements</h2>
-            <span className="text-[10px] font-mono text-muted-foreground">{stats.recentPlacements.length} records</span>
+      {/* 3. Main Content Grid */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        
+        {/* Left: Recent Placements */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="px-6 py-5 border-b border-slate-50 flex items-center justify-between">
+            <h3 className="text-sm font-bold text-slate-800">Recent Placements</h3>
+            <Link href="/coordinator/placements" className="text-[10px] font-bold text-[#800000] uppercase tracking-widest hover:underline">
+              Audit all
+            </Link>
           </div>
-          <div className="divide-y divide-border">
+
+          <div className="divide-y divide-slate-50">
             {stats.recentPlacements.length === 0 ? (
-              <div className="py-16 flex flex-col items-center gap-2 text-center">
-                <AlertCircle className="h-8 w-8 text-muted-foreground/30" />
-                <p className="text-xs font-mono text-muted-foreground">No placements confirmed yet.</p>
+              <div className="py-20 flex flex-col items-center gap-2 text-center text-slate-400">
+                <AlertCircle className="h-8 w-8 opacity-20" />
+                <p className="text-sm font-medium">No placement activity recorded in current cycle.</p>
               </div>
             ) : (
-              stats.recentPlacements.map((p: RecentPlacement) => (
-                <div key={p.id} className="px-5 py-3.5 flex items-center justify-between hover:bg-muted/30 transition-colors">
+              stats.recentPlacements.map((p) => (
+                <div key={p.id} className="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
                   <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-black text-primary">
-                      {p.studentName?.[0] ?? "?"}
+                    <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 font-bold uppercase">
+                      {p.studentName?.[0]}
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-foreground leading-tight">{p.studentName}</p>
-                      <div className="flex items-center gap-1 mt-0.5 text-[10px] font-mono text-muted-foreground">
-                        <span>{p.postingTitle}</span>
-                        <span className="opacity-40">—</span>
-                        <span>{p.companyName}</span>
-                      </div>
+                      <p className="text-sm font-bold text-slate-900">{p.studentName}</p>
+                      <p className="text-[11px] text-slate-500 font-medium">
+                        {p.postingTitle} at <span className="text-slate-800 font-bold">{p.companyName}</span>
+                      </p>
                     </div>
                   </div>
-                  <span className="text-[9px] font-black uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">
-                    Active
-                  </span>
+                  <div className="hidden sm:flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active</span>
+                  </div>
                 </div>
               ))
             )}
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-4">
-          {/* Company verification queue */}
-          <div className="rounded-lg border border-border bg-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-border bg-muted/30">
-              <h2 className="text-xs font-black uppercase tracking-widest text-foreground">MOU Pending</h2>
+        {/* Right: Program Context */}
+        <div className="space-y-6">
+          {/* MOU Status Card */}
+          <div className="bg-[#800000] p-6 rounded-xl shadow-lg shadow-red-900/10 text-white space-y-6">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 mb-1">Critical Queue</p>
+              <h3 className="text-lg font-bold">MOU Verification</h3>
             </div>
-            <div className="divide-y divide-border">
+            
+            <div className="space-y-3">
               {stats.pendingCompanies.length === 0 ? (
-                <div className="py-10 flex flex-col items-center gap-2 text-center">
-                  <CheckCircle2 className="h-7 w-7 text-primary/30" />
-                  <p className="text-[10px] font-mono text-muted-foreground">All partners verified.</p>
+                <div className="flex items-center gap-3 py-2 opacity-80">
+                  <CheckCircle2 className="h-5 w-5" />
+                  <span className="text-xs font-medium">All partners verified</span>
                 </div>
               ) : (
                 stats.pendingCompanies.map((c) => (
-                  <div key={c.id} className="px-5 py-3.5">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-bold text-foreground leading-tight">{c.name}</p>
-                        <p className="text-[10px] font-mono text-muted-foreground mt-0.5">{c.industry}</p>
-                      </div>
-                      <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
-                    </div>
+                  <div key={c.id} className="flex items-center justify-between py-1 px-3 bg-white/10 rounded-lg">
+                    <span className="text-[11px] font-bold truncate max-w-[120px]">{c.name}</span>
+                    <span className="text-[10px] opacity-60 italic">{c.industry}</span>
                   </div>
                 ))
               )}
             </div>
-            {stats.pendingCompanies.length > 0 && (
-              <div className="px-5 py-3 border-t border-border bg-muted/20">
-                <a href="/coordinator/companies" className="text-[10px] font-mono text-primary hover:underline underline-offset-2 uppercase tracking-widest">
-                  Manage Partners →
-                </a>
-              </div>
-            )}
+            
+            <Link 
+              href="/coordinator/companies" 
+              className="flex h-11 w-full items-center justify-center rounded-lg bg-white text-[#800000] text-xs font-bold hover:bg-slate-50 transition-colors"
+            >
+              Verify Partners
+            </Link>
           </div>
 
-          {/* Program status */}
-          <div className="p-5 rounded-lg bg-primary text-primary-foreground border border-primary/80 space-y-4">
-            <div className="flex items-center justify-between">
-              <p className="text-[10px] font-mono uppercase tracking-widest opacity-70">Program Status</p>
-              <Clock className="h-4 w-4 opacity-40" />
-            </div>
-            <div className="space-y-3">
-              {[
-                { label: "Verified Companies",   value: stats.verifiedCompanies, total: stats.totalCompanies },
-                { label: "Placed Students",       value: stats.hiredStudents,     total: stats.totalStudents },
-              ].map((row) => (
-                <div key={row.label} className="space-y-1">
-                  <div className="flex items-center justify-between text-[10px] font-mono opacity-80">
-                    <span>{row.label}</span>
-                    <span className="tabular-nums">{row.value}/{row.total}</span>
+          {/* Program Health Card */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 overflow-hidden relative">
+             <div className="flex items-center justify-between mb-6">
+                <h4 className="text-xs font-bold text-slate-800 uppercase tracking-widest">Program Health</h4>
+                <Award className="h-4 w-4 text-slate-200" />
+             </div>
+             
+             <div className="space-y-5">
+                {[
+                  { label: "Company Network", value: stats.verifiedCompanies, total: stats.totalCompanies, color: "bg-[#800000]" },
+                  { label: "Student Placement", value: stats.hiredStudents, total: stats.totalStudents, color: "bg-slate-800" }
+                ].map((item) => (
+                  <div key={item.label} className="space-y-2">
+                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-tight">
+                      <span className="text-slate-400 font-medium">{item.label}</span>
+                      <span className="text-slate-900">{item.value}/{item.total}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                      <div 
+                        className={cn("h-full rounded-full transition-all duration-1000", item.color)} 
+                        style={{ width: `${item.total > 0 ? (item.value / item.total) * 100 : 0}%` }} 
+                      />
+                    </div>
                   </div>
-                  <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-white rounded-full transition-all"
-                      style={{ width: `${row.total > 0 ? Math.round((row.value / row.total) * 100) : 0}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+             </div>
           </div>
         </div>
       </div>

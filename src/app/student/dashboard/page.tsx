@@ -1,192 +1,216 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import {
-  Clock, Send, CheckCircle2, Briefcase, Loader2, AlertCircle, Building2,
+import { auth } from "@/auth";
+import { 
+  Clock, 
+  Send, 
+  CheckCircle2, 
+  Briefcase, 
+  AlertCircle,
+  Building2,
+  FolderOpen
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { getStudentDashboardData } from "./actions";
-import { StudentDashboardData, StudentApplication } from "./types";
+import { cn } from "@/lib/utils";
 
-const STATUS_STYLE: Record<string, string> = {
-  PENDING:  "bg-amber-500/10 text-amber-600 border-amber-500/20",
-  ACCEPTED: "bg-primary/10 text-primary border-primary/20",
-  REJECTED: "bg-destructive/10 text-destructive border-destructive/20",
-};
+// Greeting Component (Simple Client Component to handle local time)
+import { Greeting } from "./Greeting";
 
-export default function StudentDashboard() {
-  const { data: session } = useSession();
-  const [data, setData]       = useState<StudentDashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getStudentDashboardData().then((res) => {
-      if (res.success && res.data) setData(res.data);
-      setIsLoading(false);
-    });
-  }, []);
-
-  if (isLoading || !data) {
+export default async function StudentDashboardPage() {
+  const session = await auth();
+  const res = await getStudentDashboardData();
+  
+  if (!res.success || !res.data) {
     return (
-      <div className="flex items-center justify-center h-64 gap-3">
-        <Loader2 className="h-5 w-5 text-primary animate-spin" />
-        <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Loading...</span>
+      <div className="p-8 rounded-xl bg-red-50 border border-red-100 text-red-600">
+        <h2 className="text-sm font-bold uppercase tracking-widest mb-2">System Error</h2>
+        <p className="text-xs">{res.error || "Failed to load industrial data matrix."}</p>
       </div>
     );
   }
 
+  const { data } = res;
   const hoursPct = Math.min(Math.round((data.totalHours / 300) * 100), 100);
-  const firstName = session?.user?.name?.split(" ")[0] || "Student";
-
-  const statCards = [
-    { label: "SIT Hours",          value: `${data.totalHours}/300`,                icon: Clock },
-    { label: "Applications",       value: data.applications.length,                 icon: Send },
-    { label: "Verified Logs",      value: data.approvedLogs,                        icon: CheckCircle2 },
-    { label: "Placement Status",   value: data.hiredPlacement ? "Active" : "Open",  icon: Briefcase },
-  ];
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-border pb-5">
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">Student Portal</p>
-          <h1 className="text-2xl font-black tracking-tight text-foreground">Hello, {firstName}</h1>
-        </div>
-        {/* Hours progress inline */}
-        <div className="hidden sm:block text-right">
-          <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1.5">SIT Completion</p>
-          <div className="flex items-center gap-3">
-            <div className="w-32 h-1.5 bg-muted rounded-full overflow-hidden">
-              <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${hoursPct}%` }} />
-            </div>
-            <span className="text-xs font-mono font-bold tabular-nums text-foreground">{hoursPct}%</span>
-          </div>
-        </div>
+    <div className="flex-1 space-y-8 animate-in-fade">
+      {/* 1. Header Greeting Section */}
+      <div>
+        <Greeting name={session?.user?.name?.split(" ")[0] || "Student"} />
+        <p className="text-sm text-slate-500 font-medium mt-1">
+          Here&apos;s your SIT progress for A.Y. 2025-2026
+        </p>
       </div>
 
-      {/* Active placement banner */}
-      {data.hiredPlacement && (
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-black text-sm shrink-0">
-            {data.hiredPlacement.company[0]}
+      {/* 2. Top Metric Cards Row (4 Columns) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* SIT Hours Card */}
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <p className="text-xs font-medium text-slate-500 mb-4">SIT hours</p>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-bold text-slate-900">{data.totalHours} / 300</span>
+            </div>
+            <p className="text-xs text-slate-400 mt-1">hours logged</p>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-primary mb-0.5">Active Placement</p>
-            <p className="font-black text-foreground text-sm leading-tight truncate">{data.hiredPlacement.title}</p>
-            <p className="text-xs text-muted-foreground">{data.hiredPlacement.company} · {data.hiredPlacement.location}</p>
-          </div>
-          <span className="shrink-0 text-[9px] font-black uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">
-            Confirmed
+          <Link href="/student/logbook" className="text-xs font-bold text-[#007bff] hover:underline mt-4">
+            View logbook
+          </Link>
+        </div>
+
+        {/* Applications Card */}
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-medium text-slate-500 mb-4">Applications</p>
+          <span className="text-2xl font-bold text-slate-900">{data.applications.length}</span>
+          <p className="text-xs text-slate-400 mt-1">
+            {data.applications.length === 0 ? "No active applications" : "Active submissions"}
+          </p>
+        </div>
+
+        {/* Verified Logs Card */}
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-medium text-slate-500 mb-4">Verified logs</p>
+          <span className="text-2xl font-bold text-slate-900">{data.approvedLogs}</span>
+          <p className="text-xs text-slate-400 mt-1">Pending adviser approval</p>
+        </div>
+
+        {/* Placement Status Card */}
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-medium text-slate-500 mb-4">Placement status</p>
+          <span className={cn(
+            "text-2xl font-bold",
+            data.hiredPlacement ? "text-emerald-600" : "text-slate-900"
+          )}>
+            {data.hiredPlacement ? "Hired" : "Open"}
           </span>
+          <p className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
+            <span className={cn("h-2 w-2 rounded-full", data.hiredPlacement ? "bg-emerald-500" : "bg-amber-500")} />
+            {data.hiredPlacement ? "Deployed to Company" : "Not yet deployed"}
+          </p>
         </div>
-      )}
-
-      {/* KPI strip */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {statCards.map((s) => (
-          <div key={s.label} className="p-5 rounded-lg bg-card border border-border space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{s.label}</span>
-              <s.icon className="h-4 w-4 text-muted-foreground/40" />
-            </div>
-            <p className="text-2xl font-black font-mono tabular-nums text-foreground">{s.value}</p>
-          </div>
-        ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Applications table */}
-        <div className="lg:col-span-2 rounded-lg border border-border bg-card overflow-hidden">
-          <div className="px-5 py-4 border-b border-border bg-muted/30 flex items-center justify-between">
-            <h2 className="text-xs font-black uppercase tracking-widest text-foreground">Application History</h2>
-            <span className="text-[10px] font-mono text-muted-foreground">{data.applications.length} records</span>
+      {/* 3. Main Content Grid (2 Columns) */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        
+        {/* Left: Application History */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <div className="px-6 py-5 border-b border-slate-50 flex items-center justify-between">
+            <h3 className="text-sm font-bold text-slate-800">Application history</h3>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              {data.applications.length} records
+            </span>
           </div>
-          <div className="divide-y divide-border">
+          
+          <div className="flex-1 flex flex-col justify-center items-center py-20 px-6 text-center">
             {data.applications.length === 0 ? (
-              <div className="py-16 flex flex-col items-center gap-2 text-center">
-                <AlertCircle className="h-8 w-8 text-muted-foreground/30" />
-                <p className="text-xs font-mono text-muted-foreground">No applications yet.</p>
-                <a href="/student/opportunities" className="text-[10px] font-mono text-primary hover:underline underline-offset-2 uppercase tracking-widest mt-1">
-                  Browse Opportunities →
-                </a>
-              </div>
+              <>
+                <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center mb-6">
+                  <FolderOpen className="h-6 w-6 text-slate-300" />
+                </div>
+                <p className="text-sm text-slate-500 mb-6 font-medium">
+                  You haven&apos;t applied to any companies yet.<br />
+                  Browse industry partners and submit your first application.
+                </p>
+                <Link 
+                  href="/student/opportunities" 
+                  className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-[#007bff] text-white text-xs font-bold hover:bg-[#0069d9] transition-colors"
+                >
+                  Browse opportunities
+                </Link>
+              </>
             ) : (
-              data.applications.slice(0, 6).map((app: StudentApplication) => (
-                <div key={app.id} className="px-5 py-3.5 flex items-center justify-between hover:bg-muted/30 transition-colors">
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-md bg-muted flex items-center justify-center text-xs font-black text-muted-foreground shrink-0">
-                      {app.companyName[0]}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-foreground leading-tight">{app.postingTitle}</p>
-                      <div className="flex items-center gap-1 mt-0.5 text-[10px] font-mono text-muted-foreground">
-                        <Building2 className="h-3 w-3" /> {app.companyName}
+              <div className="w-full divide-y divide-slate-50">
+                {data.applications.slice(0, 5).map((app) => (
+                  <div key={app.id} className="py-4 flex items-center justify-between text-left">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 font-bold">
+                        {app.companyName[0]}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-900">{app.postingTitle}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">{app.companyName}</p>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-4 shrink-0">
-                    <span className="hidden sm:block text-[10px] font-mono text-muted-foreground">
-                      {new Date(app.appliedAt).toLocaleDateString()}
-                    </span>
                     <span className={cn(
-                      "inline-flex items-center px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border",
-                      STATUS_STYLE[app.status] ?? "bg-muted text-muted-foreground border-border"
+                      "px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
+                      app.status === 'ACCEPTED' ? "bg-emerald-50 text-emerald-600" :
+                      app.status === 'REJECTED' ? "bg-red-50 text-red-600" :
+                      "bg-amber-50 text-amber-600"
                     )}>
                       {app.status}
                     </span>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
         </div>
 
-        {/* Hours progress card */}
-        <div className="space-y-4">
-          <div className="p-5 rounded-lg bg-primary text-primary-foreground border border-primary/80 space-y-5">
+        {/* Right: Progress & Links */}
+        <div className="space-y-6">
+          {/* Progress Card */}
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <h3 className="text-sm font-bold text-slate-800">SIT progress</h3>
             <div>
-              <p className="text-[10px] font-mono uppercase tracking-widest opacity-70 mb-1">SIT Progress</p>
-              <p className="text-4xl font-black font-mono tabular-nums">{data.totalHours}<span className="text-xl opacity-50 font-normal">/300</span></p>
-              <p className="text-[10px] font-mono opacity-60 mt-1">Hours validated</p>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-[10px] font-mono opacity-70">
-                <span>Completion</span>
-                <span className="tabular-nums">{hoursPct}%</span>
+              <div className="flex justify-between items-baseline mb-2">
+                <span className="text-xl font-bold text-slate-900">{data.totalHours} / 300 hours</span>
+                <span className="text-xs font-bold text-slate-400">{hoursPct}% complete</span>
               </div>
-              <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full bg-white rounded-full transition-all" style={{ width: `${hoursPct}%` }} />
+              <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-slate-300 rounded-full transition-all duration-1000" 
+                  style={{ width: `${hoursPct}%` }} 
+                />
               </div>
             </div>
-            <a
-              href="/student/logbook"
-              className="block w-full h-9 rounded-md bg-white/10 hover:bg-white/20 text-[10px] font-black uppercase tracking-widest transition-colors text-center leading-9"
+            <Link 
+              href="/student/logbook" 
+              className="flex h-11 w-full items-center justify-center rounded-lg bg-[#800000] text-white text-xs font-bold hover:bg-red-900 transition-colors mt-4"
             >
-              Update Logbook
-            </a>
+              Update logbook
+            </Link>
+            <p className="text-[10px] text-slate-400 font-medium text-center">
+              Last entry: —
+            </p>
           </div>
 
-          <div className="p-5 rounded-lg bg-card border border-border space-y-3">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Quick Links</p>
-            {[
-              { label: "Browse Opportunities",  href: "/student/opportunities" },
-              { label: "Upload Documents",      href: "/student/documents" },
-              { label: "My Logbook",            href: "/student/logbook" },
-            ].map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                className="flex items-center justify-between py-2 text-xs font-bold text-foreground hover:text-primary transition-colors border-b border-border last:border-0"
-              >
-                {l.label}
-                <span className="text-muted-foreground text-xs">→</span>
-              </a>
-            ))}
+          {/* Quick Links Card */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-50">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest text-[10px]">Quick links</h3>
+            </div>
+            <div className="divide-y divide-slate-50">
+              {[
+                { label: "Browse opportunities", href: "/student/opportunities" },
+                { label: "Upload documents", href: "/student/documents" },
+                { label: "Request MOA", href: "#" },
+              ].map((link) => (
+                <Link 
+                  key={link.label}
+                  href={link.href}
+                  className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all"
+                >
+                  {link.label}
+                  <ChevronRight className="h-3 w-3 text-slate-300" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Floating Action Component (Optional/Manual) */}
+      <div className="fixed bottom-8 right-8 z-50">
+        <button className="h-12 px-6 rounded-full bg-slate-800 text-white shadow-xl shadow-slate-900/20 text-sm font-bold flex items-center gap-2 hover:scale-105 transition-all">
+          Open
+        </button>
       </div>
     </div>
   );
 }
+
+const ChevronRight = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+  </svg>
+);

@@ -70,47 +70,45 @@ export function DashboardHeader({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`sticky top-0 z-40 flex h-20 items-center gap-6 border-b px-8 lg:px-12 transition-all duration-300 ${
+      className={`sticky top-0 z-40 flex h-16 items-center gap-6 border-b px-8 lg:px-10 transition-all duration-300 ${
         scrolled 
-          ? "bg-white/80 backdrop-blur-2xl border-slate-200 shadow-sm shadow-slate-200/20" 
-          : "bg-background border-transparent"
+          ? "bg-white/80 backdrop-blur-xl border-slate-200" 
+          : "bg-white border-transparent"
       }`}
     >
       <button 
-        className="lg:hidden p-2 rounded-xl bg-muted border border-border hover:scale-105 transition-transform"
+        className="lg:hidden p-2 rounded-lg bg-slate-100 hover:scale-105 transition-transform"
         onClick={() => setIsMobileMenuOpen(true)}
       >
-        <Menu className="h-5 w-5 text-foreground" />
+        <Menu className="h-4 w-4 text-slate-600" />
       </button>
       
       <div className="flex-1">
-        <p className="text-[9px] font-black text-primary uppercase tracking-[0.4em] mb-1 leading-none opacity-70">
-          Standard Operational Matrix
-        </p>
-        <h1 className="text-lg font-black tracking-tighter text-foreground uppercase truncate max-w-[200px] sm:max-w-none">
-          {activeItem?.name || "System Unit"}
+        <h1 className="text-lg font-bold tracking-tight text-slate-800">
+          {activeItem?.name || "Dashboard"}
         </h1>
       </div>
 
-      <div className="flex items-center gap-4 sm:gap-6">
-        <div className="hidden sm:flex items-center gap-4">
-          <NotificationCenter />
+      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2">
+          {/* Notification Icon - Placeholder like the minus sign in screenshot or just NotificationCenter */}
+          <div className="h-8 w-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+            <span className="text-lg font-medium leading-none mb-1">-</span>
+          </div>
           <ThemeToggle />
         </div>
         
-        <div className="h-8 w-px bg-slate-200 mx-1 hidden sm:block" />
-        
-        <div className="flex items-center gap-4 pl-1">
-           <div className="text-right hidden md:block">
-              <p className="text-xs font-black text-foreground leading-none tracking-tight">
-                {session?.user?.name || "Principal Agent"}
+        <div className="flex items-center gap-3">
+           <div className="text-right hidden sm:block leading-none">
+              <p className="text-sm font-bold text-slate-900 truncate max-w-[150px]">
+                {session?.user?.name || "User"}
               </p>
-              <p className="text-[9px] text-primary mt-1.5 uppercase font-black tracking-widest leading-none">
-                {roleTitle}
+              <p className="text-[10px] text-slate-400 mt-1 font-medium">
+                {roleTitle === "Verified Candidate" ? "BSIT-4A" : roleTitle}
               </p>
            </div>
            
-           <div className="h-12 w-12 rounded-xl bg-slate-900 flex items-center justify-center text-white text-sm font-black shadow-lg shadow-slate-900/20 ring-4 ring-background transition-all hover:scale-105">
+           <div className="h-9 w-9 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
             {session?.user?.name?.split(' ').filter(Boolean).map((n: string) => n[0]).join('') || roleInitials}
           </div>
         </div>
