@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { 
   Search, 
   Briefcase, 
-  Filter, 
+  ListFilter, 
   CheckCircle2,
   X,
   Send,
@@ -93,7 +93,7 @@ export default function OpportunitiesPage() {
             />
           </div>
           <button className="h-11 px-4 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors flex items-center justify-center shadow-sm">
-             <Filter className="h-4 w-4" />
+             <ListFilter className="h-4 w-4" />
           </button>
         </div>
       </div>
