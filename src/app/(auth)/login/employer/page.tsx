@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Building2, Mail, Lock, Loader2, ArrowLeft, ShieldCheck, ArrowRight } from "lucide-react";
+import { Building2, Mail, Lock, Loader2, ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -56,9 +56,11 @@ export default function EmployerLoginPage() {
       <header className="fixed top-0 left-0 right-0 z-30 w-full bg-white border-b border-slate-200 py-4 px-6 md:px-10 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/login" className="flex items-center gap-4 group">
-            <img 
+            <Image 
               src="/Technological_University_of_the_Philippines_Seal.svg.png" 
               alt="TUP Seal" 
+              width={40}
+              height={40}
               className="h-10 w-auto object-contain" 
             />
             <div className="flex flex-col items-start leading-tight">

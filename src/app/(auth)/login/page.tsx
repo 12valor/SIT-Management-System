@@ -20,13 +20,6 @@ const roles = [
     icon: Building2,
     href: "/login/employer",
   },
-  {
-    key: "coordinator",
-    label: "Coordinator",
-    sub: "Manage students and companies",
-    icon: ShieldCheck,
-    href: "/login/coordinator",
-  },
 ];
 
 export default function LoginGatePage() {
@@ -47,9 +40,11 @@ export default function LoginGatePage() {
       <header className="relative z-20 w-full bg-white border-b border-slate-100 py-5 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-5">
-            <img 
+            <Image 
               src="/Technological_University_of_the_Philippines_Seal.svg.png" 
               alt="TUP Seal" 
+              width={48}
+              height={48}
               className="h-12 w-auto object-contain" 
             />
             <div className="flex flex-col items-start leading-tight">

@@ -6,10 +6,25 @@ import { Menu } from "lucide-react";
 import { NotificationCenter } from "@/components/NotificationCenter";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+interface Session {
+  user?: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    role?: string | null;
+  };
+}
+
+interface NavItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
 interface DashboardHeaderProps {
-  session: any;
+  session: Session | null;
   pathname: string;
-  navItems: { name: string; href: string; icon: any }[];
+  navItems: NavItem[];
   setIsMobileMenuOpen: (open: boolean) => void;
   roleTitle: string;
   roleInitials: string;

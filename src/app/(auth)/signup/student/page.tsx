@@ -69,7 +69,13 @@ export default function StudentSignupPage() {
         </div>
 
         <div className="relative z-10 flex items-center">
-          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
+          <Image 
+            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+            alt="TUP Seal" 
+            width={48}
+            height={48}
+            className="h-12 w-auto object-contain" 
+          />
         </div>
 
         <div className="relative z-10 max-w-lg mt-12 px-2">

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { ShieldAlert, Mail, Lock, Loader2, ArrowLeft, Command } from "lucide-react";
+import { ShieldAlert, Mail, Lock, Loader2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -58,25 +58,27 @@ export default function CoordinatorLoginPage() {
       {/* Institutional Header Bar */}
       <header className="fixed top-0 left-0 right-0 z-30 w-full bg-white border-b border-slate-200 py-4 px-6 md:px-10 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/login" className="flex items-center gap-4 group">
-            <img 
+          <Link href="/" className="flex items-center gap-4 group">
+            <Image 
               src="/Technological_University_of_the_Philippines_Seal.svg.png" 
               alt="TUP Seal" 
+              width={40}
+              height={40}
               className="h-10 w-auto object-contain" 
             />
             <div className="flex flex-col items-start leading-tight">
                <h1 className="text-sm font-black text-slate-900 tracking-tight font-heading uppercase group-hover:text-primary transition-colors">TUP-Visayas</h1>
-               <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em] font-sans">Supervised Industrial Training</span>
+               <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em] font-sans">Institutional Terminal</span>
             </div>
           </Link>
           <div className="flex items-center gap-6">
              <div className="hidden md:flex flex-col items-end leading-none">
-                <span className="text-[8px] font-bold text-red-600 uppercase tracking-widest mb-1">Secure Terminal</span>
-                <span className="text-[10px] font-medium text-slate-400 font-sans">v1.2.0-Audit</span>
+                <span className="text-[8px] font-bold text-red-600 uppercase tracking-widest mb-1">Administrative Node</span>
+                <span className="text-[10px] font-medium text-slate-400 font-sans">Secure Authorization</span>
              </div>
              <div className="h-6 w-px bg-slate-200 hidden md:block" />
-             <Link href="/login" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors font-heading flex items-center gap-2 group">
-               <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Role Selection
+             <Link href="/" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors font-heading flex items-center gap-2 group">
+               <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Institutional Home
              </Link>
           </div>
         </div>

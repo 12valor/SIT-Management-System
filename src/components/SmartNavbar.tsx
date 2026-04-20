@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 export function SmartNavbar() {
@@ -47,9 +48,11 @@ export function SmartNavbar() {
       >
         <div className="container mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-4 group">
-            <img 
+            <Image 
               src="/Technological_University_of_the_Philippines_Seal.svg.png" 
               alt="TUP Seal" 
+              width={44}
+              height={44}
               className="h-11 w-auto object-contain transition-transform group-hover:scale-105" 
             />
             <div className={`h-8 w-px ${scrolled ? "bg-slate-200" : "bg-white/20"}`} />

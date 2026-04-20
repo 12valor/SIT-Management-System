@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Briefcase, GraduationCap, CheckCircle } from "lucide-react";
+import { Briefcase, GraduationCap, CheckCircle } from "lucide-react";
+import Image from "next/image";
 import { SmartNavbar } from "@/components/SmartNavbar";
 import { HeroCarousel } from "@/components/HeroCarousel";
 
@@ -71,9 +72,11 @@ export default function Home() {
             {/* Column 1: Branding */}
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4">
-                <img 
+                <Image 
                   src="/Technological_University_of_the_Philippines_Seal.svg.png" 
                   alt="TUP Seal" 
+                  width={56}
+                  height={56}
                   className="h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" 
                 />
                 <div className="flex flex-col">
@@ -103,7 +106,6 @@ export default function Home() {
               <ul className="space-y-4">
                 <li><Link href="/login/student" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Student Portal</Link></li>
                 <li><Link href="/login/employer" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Employer Portal</Link></li>
-                <li><Link href="/login/coordinator" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">Coordinator Terminal</Link></li>
                 <li><Link href="/signup/student" className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-sans">New Student Registration</Link></li>
               </ul>
             </div>

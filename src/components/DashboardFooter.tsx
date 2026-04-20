@@ -1,14 +1,17 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function DashboardFooter() {
   return (
     <footer className="mt-20 pt-8 pb-12 border-t border-border">
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex items-center gap-3 opacity-50 hover:opacity-100 transition-opacity">
-          <img 
+          <Image 
             src="/Technological_University_of_the_Philippines_Seal.svg.png" 
             alt="TUP Seal" 
+            width={32}
+            height={32}
             className="h-8 w-auto object-contain transition-all hover:scale-110" 
           />
           <div className="flex flex-col">
