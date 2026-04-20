@@ -65,7 +65,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
 
         {/* 2. Metric Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-card border-border shadow-sm flex flex-col justify-between">
+          <div className="bg-card p-6 rounded-xl border border-border shadow-sm flex flex-col justify-between">
             <div>
               <p className="text-xs font-medium text-muted-foreground mb-4">SIT hours</p>
               <div className="flex items-baseline gap-1">
@@ -79,22 +79,22 @@ export function StudentDashboardShell({ data, userName }: Props) {
           </div>
 
           <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-            <p className="text-xs font-medium text-slate-500 mb-4">Applications</p>
-            <span className="text-2xl font-bold text-slate-900">{data?.applications.length ?? 0}</span>
+            <p className="text-xs font-medium text-muted-foreground mb-4">Applications</p>
+            <span className="text-2xl font-bold text-foreground">{data?.applications.length ?? 0}</span>
             <p className="text-xs text-muted-foreground mt-1">
               {!data?.applications.length ? "No active applications" : "Active submissions"}
             </p>
           </div>
 
           <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-            <p className="text-xs font-medium text-slate-500 mb-4">Verified logs</p>
-            <span className="text-2xl font-bold text-slate-900">{data?.approvedLogs ?? 0}</span>
+            <p className="text-xs font-medium text-muted-foreground mb-4">Verified logs</p>
+            <span className="text-2xl font-bold text-foreground">{data?.approvedLogs ?? 0}</span>
             <p className="text-xs text-muted-foreground mt-1">Pending adviser approval</p>
           </div>
 
           <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-            <p className="text-xs font-medium text-slate-500 mb-4">Placement status</p>
-            <span className={cn("text-2xl font-bold", data?.hiredPlacement ? "text-emerald-600" : "text-slate-900")}>
+            <p className="text-xs font-medium text-muted-foreground mb-4">Placement status</p>
+            <span className={cn("text-2xl font-bold", data?.hiredPlacement ? "text-emerald-600" : "text-foreground")}>
               {data?.hiredPlacement ? "Hired" : "Open"}
             </span>
             <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
