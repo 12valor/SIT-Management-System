@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { GraduationCap, Building2, ShieldCheck, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 const roles = [
