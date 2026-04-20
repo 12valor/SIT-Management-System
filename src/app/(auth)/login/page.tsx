@@ -38,98 +38,100 @@ const roles = [
 export default function LoginGatePage() {
   return (
     <div className="flex h-screen overflow-hidden bg-white">
-      {/* Left side - Visual Experience (Light Edition) */}
-      <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 h-full">
-        {/* Subtle Background Pattern or Faded Image */}
-        <div className="absolute inset-0 pointer-events-none">
+      {/* Left side - Unified Branding Panel */}
+      <div className="relative hidden lg:flex lg:w-1/2 xl:w-[45%] bg-slate-950 flex-col justify-between p-16 overflow-hidden h-full">
+        <div className="absolute inset-0 z-0">
           <Image 
             src="/images/auth/gate.png" 
             alt="University Campus" 
             fill
-            className="object-cover transition-opacity duration-700"
-            style={{ opacity: 0.35, filter: 'grayscale(100%)' }}
+            className="object-cover opacity-20 grayscale brightness-50"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/80 to-transparent" />
         </div>
 
-        {/* Branding Overlay */}
-        <div className="relative z-10 flex items-center">
-          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
+        {/* Brand Identity */}
+        <div className="relative z-10">
+          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-16 w-auto object-contain" />
         </div>
 
-        <div className="relative z-10 max-w-2xl mt-12 px-2">
-          <p className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-6 font-heading">Institutional Core</p>
-          <h1 className="text-7xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
-            TUP-V <br />
-            NextGen <br /> 
-            <span className="text-primary italic">SIT System</span>
-          </h1>
-          <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-md font-sans">
-            Secure access gateway for TUP-Visayas Supervised Industrial Training. Connect with partners, track excellence, build careers.
-          </p>
+        <div className="relative z-10 max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h1 className="text-5xl font-bold text-white tracking-tight leading-[1.1] mb-6 font-heading">
+              SIT Management Platform
+            </h1>
+            <p className="text-lg text-slate-400 font-medium leading-relaxed font-sans">
+              Professional Training & Industry Immersion gateway for Technological University of the Philippines - Visayas.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="relative z-10 flex items-center gap-12 text-slate-400">
-           <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Official Registry</span>
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-tight">TUP-Visayas</span>
-           </div>
-           <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Infrastructure</span>
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-tight">UIPEN Network</span>
-           </div>
+        <div className="relative z-10">
+          <div className="w-12 h-1 bg-primary/40 rounded-full" />
         </div>
       </div>
 
-      {/* Right side - Interaction Logic */}
-      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-20 bg-white relative z-20">
-        <div className="max-w-md w-full lg:ml-12 xl:ml-20">
-          <div className="mb-12 text-left">
-            <h2 className="text-4xl font-bold tracking-tight text-slate-900 mb-3 font-heading uppercase">Sign In</h2>
-            <p className="text-base text-slate-500 font-medium font-sans">Select your designated portal to continue.</p>
+      {/* Right side - Ergonomic Interaction Panel */}
+      <div className="flex-1 flex flex-col justify-center bg-white relative z-20 p-8 sm:p-12 lg:p-24 overflow-y-auto">
+        <div className="max-w-md w-full mx-auto">
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2 font-heading uppercase">Sign In</h2>
+            <p className="text-sm text-slate-500 font-medium font-sans">Select your designated portal to continue.</p>
           </div>
 
-          <div className="space-y-3">
-            {roles.map((role) => {
+          <div className="space-y-4">
+            {roles.map((role, idx) => {
               const Icon = role.icon;
               return (
-                <Link
+                <motion.div
                   key={role.key}
-                  href={role.href}
-                  className={`flex items-center gap-5 p-6 rounded-xl border border-slate-200 bg-white ${role.border} ${role.bg} transition-all group cursor-pointer`}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                 >
-                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 bg-slate-50 group-hover:border-inherit transition-all shadow-sm`}>
-                    <Icon className={`h-6 w-6 ${role.accent}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-base font-bold text-slate-900 tracking-tight font-heading uppercase">{role.label}</p>
-                    <p className="text-xs text-slate-500 mt-1 font-sans">{role.sub}</p>
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
-                </Link>
+                  <Link
+                    href={role.href}
+                    className="flex items-center gap-5 p-5 rounded-2xl border border-slate-100 bg-white hover:border-primary/20 hover:bg-slate-50/50 hover:shadow-xl hover:shadow-slate-200/50 transition-all group lg:min-h-[100px]"
+                  >
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 bg-slate-50 group-hover:border-primary/10 transition-all group-hover:scale-105">
+                      <Icon className="h-6 w-6 text-slate-900" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-base font-bold text-slate-900 tracking-tight font-heading uppercase">{role.label}</p>
+                      <p className="text-xs text-slate-500 mt-1 font-sans">{role.sub}</p>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
 
-          <div className="mt-12 pt-8 border-t border-slate-100 space-y-6">
-            <div className="flex items-center gap-6">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 font-heading">New registration</span>
+          <div className="mt-12 pt-8 border-t border-slate-100">
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 font-heading">Registration Options</span>
               <div className="flex-1 border-t border-slate-100" />
             </div>
+            
             <div className="grid grid-cols-2 gap-4">
-              <Link href="/signup/student" className="h-14 flex items-center justify-center rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-50 hover:border-primary/30 transition-all font-heading">
+              <Link href="/signup/student" className="h-12 flex items-center justify-center rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-50 hover:border-primary/30 transition-all font-heading">
                 Student
               </Link>
-              <Link href="/signup/employer" className="h-14 flex items-center justify-center rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-50 hover:border-primary/30 transition-all font-heading">
+              <Link href="/signup/employer" className="h-12 flex items-center justify-center rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-50 hover:border-primary/30 transition-all font-heading">
                 Employer
               </Link>
             </div>
           </div>
 
-          <div className="mt-12">
-            <Link href="/" className="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors flex items-center gap-2 font-heading">
-              <ArrowRight className="h-3 w-3 rotate-180" /> Back to landing
+          <div className="mt-10">
+            <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors font-heading group">
+              <ArrowRight className="h-3 w-3 rotate-180 group-hover:-translate-x-1 transition-transform" /> 
+              Back to landing
             </Link>
           </div>
         </div>
