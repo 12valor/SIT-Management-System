@@ -50,7 +50,7 @@ export default function EmployerLayout({
 
 
   return (
-    <div className="flex min-h-screen w-full bg-[#f8fafc] selection:bg-[#800000]/10">
+    <div className="flex min-h-screen w-full bg-background selection:bg-primary/10">
       {/* Mobile Backdrop */}
       {isMobileMenuOpen && (
         <div 
@@ -61,7 +61,7 @@ export default function EmployerLayout({
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-white transition-all duration-500 ease-in-out lg:translate-x-0 overflow-hidden",
+        "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border bg-card transition-all duration-500 ease-in-out lg:translate-x-0 overflow-hidden",
         isMobileMenuOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
       )}>
         {/* Logo/Branding Section */}
@@ -74,14 +74,14 @@ export default function EmployerLayout({
             className="h-9 w-auto object-contain" 
           />
           <div className="flex flex-col justify-center leading-none">
-            <span className="font-bold text-base tracking-tight text-slate-800 font-heading">SIT Platform</span>
-            <span className="text-[10px] font-medium text-[#800000] mt-1">TUP-V Employer</span>
+            <span className="font-bold text-base tracking-tight text-foreground font-heading">SIT Platform</span>
+            <span className="text-[10px] font-medium text-primary mt-1">TUP-V Employer</span>
           </div>
           <button 
-            className="ml-auto lg:hidden p-2 rounded-lg bg-slate-100" 
+            className="ml-auto lg:hidden p-2 rounded-lg bg-muted" 
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <X className="h-4 w-4 text-slate-600" />
+            <X className="h-4 w-4 text-muted-foreground" />
           </button>
         </div>
         
@@ -99,13 +99,13 @@ export default function EmployerLayout({
                   className={cn(
                     "flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all rounded-lg group",
                     isActive 
-                      ? "bg-[#fff1f1] text-[#800000]" 
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      ? "bg-primary/10 text-primary" 
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
                   <Icon className={cn(
                     "h-5 w-5 transition-colors",
-                    isActive ? "text-[#800000]" : "text-slate-400 group-hover:text-slate-600"
+                    isActive ? "text-primary" : "text-muted-foreground/50 group-hover:text-muted-foreground"
                   )} />
                   <span>{item.name}</span>
                 </Link>
@@ -117,10 +117,10 @@ export default function EmployerLayout({
         {/* Bottom Sidebar Sections */}
         <div className="p-4 space-y-4">
           {/* Status Card */}
-          <div className="p-4 rounded-lg bg-slate-50 border border-slate-100">
+          <div className="p-4 rounded-lg bg-muted border border-border">
              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-medium text-slate-500">Industry:</span>
-                <span className="text-[11px] font-bold text-[#800000]">Active Partner</span>
+                <span className="text-[11px] font-medium text-muted-foreground">Industry:</span>
+                <span className="text-[11px] font-bold text-primary">Active Partner</span>
              </div>
              {status === "loading" ? (
                 <div className="h-3 w-24 bg-slate-200 animate-pulse rounded" />
@@ -133,9 +133,9 @@ export default function EmployerLayout({
 
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-all group w-full text-left"
+            className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group w-full text-left"
           >
-            <LogOut className="h-4 w-4 text-slate-400 group-hover:text-slate-900 transition-transform group-hover:-translate-x-1" />
+            <LogOut className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-x-1" />
             Sign Out
           </button>
         </div>

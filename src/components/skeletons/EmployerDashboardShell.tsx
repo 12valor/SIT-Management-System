@@ -66,14 +66,14 @@ export function EmployerDashboardShell({ data, userName }: Props) {
         {/* 1. Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Overview, {userName?.split(" ")[0]}
             </h2>
-            <p className="text-sm text-slate-500 font-medium mt-1">
+            <p className="text-sm text-muted-foreground font-medium mt-1">
               Industrial Partnership Hub · {new Date().getFullYear()}
             </p>
           </div>
-          <div className="hidden md:flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-widest bg-white px-4 py-2 rounded-lg border border-slate-200">
+          <div className="hidden md:flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-widest bg-card px-4 py-2 rounded-lg border border-border">
             <Calendar className="h-3.5 w-3.5" data-no-skeleton />
             {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}
           </div>
@@ -82,8 +82,8 @@ export function EmployerDashboardShell({ data, userName }: Props) {
         {/* 2. Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {statCards.map((s) => (
-            <div key={s.label} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-              <p className="text-xs font-medium text-slate-500 mb-4">{s.label}</p>
+            <div key={s.label} className="bg-card p-6 rounded-xl border border-border shadow-sm">
+              <p className="text-xs font-medium text-muted-foreground mb-4">{s.label}</p>
               <span className="text-2xl font-bold text-slate-900">{s.value}</span>
             </div>
           ))}
@@ -92,38 +92,38 @@ export function EmployerDashboardShell({ data, userName }: Props) {
         {/* 3. Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Recent Applicants */}
-          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-50 flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-800">Recent Applicants</h3>
+          <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="px-6 py-5 border-b border-border flex items-center justify-between">
+              <h3 className="text-sm font-bold text-foreground">Recent Applicants</h3>
               <Link href="/employer/applicants" className="text-[10px] font-bold text-[#800000] uppercase tracking-widest hover:underline">
                 View all
               </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-border">
                   {!data?.recentApplications.length ? (
                     <tr>
-                      <td className="px-6 py-20 text-center text-sm text-slate-400 font-medium">
+                      <td className="px-6 py-20 text-center text-sm text-muted-foreground font-medium">
                         No active applicants found in current cycle.
                       </td>
                     </tr>
                   ) : (
                     data.recentApplications.map((app) => (
-                      <tr key={app.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={app.id} className="hover:bg-muted transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 font-bold uppercase">
+                            <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center text-foreground font-bold uppercase">>
                               {app.student.name?.[0]}
                             </div>
                             <div>
-                              <p className="text-sm font-bold text-slate-900">{app.student.name}</p>
-                              <p className="text-[11px] text-slate-500 font-medium">{app.posting.title}</p>
+                              <p className="text-sm font-bold text-foreground">{app.student.name}</p>
+                              <p className="text-[11px] text-muted-foreground font-medium">{app.posting.title}</p>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 hidden sm:table-cell">
-                          <span className="text-[11px] font-medium text-slate-400 uppercase tracking-widest">{app.student.course}</span>
+                          <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">{app.student.course}</span>
                         </td>
                         <td className="px-6 py-4 text-right">
                           <span className={cn(
@@ -164,23 +164,23 @@ export function EmployerDashboardShell({ data, userName }: Props) {
               </div>
               <Link
                 href="/employer/postings"
-                className="flex h-11 w-full items-center justify-center rounded-lg bg-white text-[#800000] text-xs font-bold hover:bg-slate-50 transition-colors"
+                className="flex h-11 w-full items-center justify-center rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors"
               >
                 Manage Postings
               </Link>
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <div className="bg-card rounded-xl border border-border shadow-sm p-6">>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
                   <Building2 className="h-5 w-5" data-no-skeleton />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-widest">Partner Support</h4>
-                  <p className="text-[10px] text-slate-400 font-medium">SIT Coordinator Terminal</p>
+                  <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Partner Support</h4>
+                  <p className="text-[10px] text-muted-foreground font-medium">SIT Coordinator Terminal</p>
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed mb-4">
+              <p className="text-[11px] text-muted-foreground leading-relaxed mb-4">
                 For administrative assistance regarding MOA/MOU processing, please contact the TUP-V SIT Office.
               </p>
               <Link href="#" className="text-xs font-bold text-[#800000] hover:underline flex items-center gap-1">

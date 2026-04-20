@@ -76,10 +76,10 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         {/* 1. Header Section */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Program Control, {userName?.split(" ")[0]}
             </h2>
-            <p className="text-sm text-slate-500 font-medium mt-1">
+            <p className="text-sm text-muted-foreground font-medium mt-1">
               SIT Administrative Terminal · {new Date().getFullYear()}
             </p>
           </div>
@@ -88,8 +88,8 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Placement Velocity</p>
               <p className="text-xl font-bold text-[#800000]">{placementRate}%</p>
             </div>
-            <div className="h-10 w-px bg-slate-200 hidden md:block mx-2" />
-            <div className="hidden sm:flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-widest bg-white px-4 py-2 rounded-lg border border-slate-200">
+            <div className="h-10 w-px bg-border hidden md:block mx-2" />
+            <div className="hidden sm:flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-widest bg-card px-4 py-2 rounded-lg border border-border">
               <Calendar className="h-3.5 w-3.5" data-no-skeleton />
               {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}
             </div>
@@ -99,9 +99,9 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         {/* 2. Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {statCards.map((s) => (
-            <div key={s.label} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-              <p className="text-xs font-medium text-slate-500 mb-4">{s.label}</p>
-              <span className="text-2xl font-bold text-slate-900">{s.value}</span>
+            <div key={s.label} className="bg-card p-6 rounded-xl border border-border shadow-sm">
+              <p className="text-xs font-medium text-muted-foreground mb-4">{s.label}</p>
+              <span className="text-2xl font-bold text-foreground">{s.value}</span>
             </div>
           ))}
         </div>
@@ -109,36 +109,36 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         {/* 3. Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Recent Placements */}
-          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-5 border-b border-slate-50 flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-800">Recent Placements</h3>
+          <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="px-6 py-5 border-b border-border flex items-center justify-between">
+              <h3 className="text-sm font-bold text-foreground">Recent Placements</h3>
               <Link href="/coordinator/placements" className="text-[10px] font-bold text-[#800000] uppercase tracking-widest hover:underline">
                 Audit all
               </Link>
             </div>
 
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-border">
               {!data?.recentPlacements.length ? (
-                <div className="py-20 flex flex-col items-center gap-2 text-center text-slate-400">
+                <div className="py-20 flex flex-col items-center gap-2 text-center text-muted-foreground">
                   <p className="text-sm font-medium">No placement activity recorded in current cycle.</p>
                 </div>
               ) : (
                 data.recentPlacements.map((p) => (
-                  <div key={p.id} className="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                  <div key={p.id} className="px-6 py-4 flex items-center justify-between hover:bg-muted transition-colors">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 font-bold uppercase">
+                      <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center text-foreground font-bold uppercase">
                         {p.studentName?.[0]}
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-slate-900">{p.studentName}</p>
-                        <p className="text-[11px] text-slate-500 font-medium">
-                          {p.postingTitle} at <span className="text-slate-800 font-bold">{p.companyName}</span>
+                        <p className="text-sm font-bold text-foreground">{p.studentName}</p>
+                        <p className="text-[11px] text-muted-foreground font-medium">
+                          {p.postingTitle} at <span className="text-foreground font-bold">{p.companyName}</span>
                         </p>
                       </div>
                     </div>
                     <div className="hidden sm:flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active</span>
+                      <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active</span>
                     </div>
                   </div>
                 ))
@@ -173,17 +173,17 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
 
               <Link
                 href="/coordinator/companies"
-                className="flex h-11 w-full items-center justify-center rounded-lg bg-white text-[#800000] text-xs font-bold hover:bg-slate-50 transition-colors"
-              >
+                className="flex h-11 w-full items-center justify-center rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors"
+                >
                 Verify Partners
               </Link>
             </div>
 
             {/* Program Health Card */}
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 overflow-hidden relative">
+            <div className="bg-card border-border shadow-sm p-6 overflow-hidden relative">
               <div className="flex items-center justify-between mb-6">
-                <h4 className="text-xs font-bold text-slate-800 uppercase tracking-widest">Program Health</h4>
-                <Award className="h-4 w-4 text-slate-200" data-no-skeleton />
+                <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Program Health</h4>
+                <Award className="h-4 w-4 text-border" data-no-skeleton />
               </div>
 
               <div className="space-y-5">
@@ -193,10 +193,10 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                 ].map((item) => (
                   <div key={item.label} className="space-y-2">
                     <div className="flex justify-between text-[11px] font-bold uppercase tracking-tight">
-                      <span className="text-slate-400 font-medium">{item.label}</span>
-                      <span className="text-slate-900">{item.value}/{item.total}</span>
+                      <span className="text-muted-foreground font-medium">{item.label}</span>
+                      <span className="text-foreground">{item.value}/{item.total}</span>
                     </div>
-                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                       <div
                         className={cn("h-full rounded-full transition-all duration-1000", item.color)}
                         style={{ width: `${item.total > 0 ? (item.value / item.total) * 100 : 0}%` }}
