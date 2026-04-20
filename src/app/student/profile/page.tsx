@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import { User as UserIcon, Mail, GraduationCap, Save, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { User as UserIcon, Mail, GraduationCap, Save, CheckCircle2, Loader2, ShieldCheck, Clock } from "lucide-react";
 import { getStudentProfile, updateStudentProfile } from "./actions";
 import { cn } from "@/lib/utils";
 
@@ -62,6 +62,8 @@ export default function StudentProfilePage() {
 
   if (!profile) return null;
 
+  return (
+    <div className="space-y-8">
       {/* Header */}
       <div className="pb-8 border-b border-slate-100 mb-8">
         <h1 className="text-3xl font-bold tracking-tight text-slate-800">Account Profile</h1>
@@ -193,5 +195,6 @@ export default function StudentProfilePage() {
            </p>
         </div>
       </div>
+    </div>
   );
 }
