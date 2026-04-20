@@ -5,28 +5,28 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <header className="fixed top-0 w-full z-50 bg-transparent py-6 transition-all duration-500">
-        <div className="container mx-auto px-10 h-24 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-16 w-auto object-contain" />
-             <div className="h-10 w-px bg-white/20" />
+      <header className="fixed top-0 w-full z-50 bg-transparent py-4 transition-all duration-500">
+        <div className="container mx-auto px-10 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-5">
+             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
+             <div className="h-8 w-px bg-white/20" />
              <div className="flex flex-col">
-               <span className="font-black text-2xl tracking-tighter text-white leading-none font-heading uppercase">SIT Platform</span>
-               <span className="text-[10px] font-bold text-white/60 uppercase tracking-[0.4em] leading-none mt-2 font-sans">TUP-Visayas</span>
+               <span className="font-bold text-xl tracking-tight text-white leading-none font-heading uppercase">SIT Platform</span>
+               <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] leading-none mt-1.5 font-sans">TUP-Visayas</span>
              </div>
           </div>
-          <nav className="hidden md:flex items-center gap-14">
-            <Link className="text-[11px] font-black text-white hover:text-primary transition-all font-heading uppercase tracking-[0.3em]" href="/login">
+          <nav className="hidden md:flex items-center gap-10">
+            <Link className="text-[11px] font-bold text-white hover:text-white/70 transition-all font-heading uppercase tracking-widest" href="/login">
               Opportunities
             </Link>
-            <Link className="text-[11px] font-black text-white hover:text-primary transition-all font-heading uppercase tracking-[0.3em]" href="/login">
+            <Link className="text-[11px] font-bold text-white hover:text-white/70 transition-all font-heading uppercase tracking-widest" href="/login">
               Companies
             </Link>
           </nav>
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-6">
             <Link 
               href="/login" 
-              className="px-10 py-4 rounded-xl bg-primary text-white text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all hover:-translate-y-1 font-heading border border-primary/20"
+              className="px-8 py-3 rounded-xl bg-primary text-white text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all font-heading"
             >
               Portal Login
             </Link>
