@@ -11,7 +11,7 @@ import {
   MessageSquare,
   ClipboardCheck,
   MoreVertical,
-  Filter,
+  Search,
   Loader2,
   ShieldCheck,
   Zap,
@@ -153,7 +153,7 @@ export default function EmployerLogbookReviewPage() {
                          <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Total Logs: {selectedStudent?.logs.length}</span>
                       </div>
                       <button className="h-12 w-12 rounded-xl bg-white dark:bg-slate-800 border border-border/60 flex items-center justify-center hover:bg-slate-50 transition-all shadow-sm">
-                         <Filter className="h-5 w-5 text-slate-400" />
+                         <Search className="h-5 w-5 text-slate-400" />
                       </button>
                    </div>
                 </div>

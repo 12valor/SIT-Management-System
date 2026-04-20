@@ -6,16 +6,9 @@ import { useState, useEffect } from "react";
 import { 
   Search, 
   Briefcase, 
-  ListFilter, 
-  CheckCircle2,
-  X,
-  Send,
-  Loader2,
-  Building2,
-  Zap,
-  ArrowUpRight,
   Activity,
-  Sparkles
+  Sparkles,
+  SlidersHorizontal
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getSITOpportunities, applyForOpportunity } from "./actions";
@@ -95,7 +88,7 @@ export default function OpportunitiesPage() {
               />
             </div>
             <button className="h-11 px-4 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors flex items-center justify-center shadow-sm">
-               <ListFilter className="h-4 w-4" />
+               <SlidersHorizontal className="h-4 w-4" />
             </button>
           </div>
         </div>

@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
-  Filter,
+  SlidersHorizontal,
   ArrowRight,
   Loader2
 } from "lucide-react";
@@ -94,7 +94,7 @@ export default function ApplicantsPage() {
             />
           </div>
           <button className="h-11 px-4 rounded-xl border border-slate-200 bg-white flex items-center gap-2 font-bold text-[11px] uppercase tracking-wider hover:bg-slate-50 transition-colors text-slate-500 shadow-sm">
-            <Filter className="h-4 w-4" /> Filter
+            <SlidersHorizontal className="h-4 w-4" /> Filter
           </button>
         </div>
       </div>
