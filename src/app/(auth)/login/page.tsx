@@ -7,30 +7,30 @@ import Image from "next/image";
 export default function LoginGatePage() {
   return (
     <div className="min-h-screen w-full flex flex-col bg-slate-100 font-sans selection:bg-red-900/10">
-      {/* 1. Institutional Maroon Header */}
-      <header className="w-full bg-[#800000] text-white py-3 px-6 md:px-12 shadow-md">
+      {/* 1. Institutional White Header (Matching Navbar Aesthetic) */}
+      <header className="relative z-20 w-full bg-white border-b border-slate-100 py-5 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="bg-white p-1 rounded-full shadow-sm">
-              <Image 
-                src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-                alt="TUP Seal" 
-                width={44}
-                height={44}
-                className="h-11 w-auto object-contain" 
-              />
-            </div>
-            <div className="flex flex-col">
-              <h1 className="text-base md:text-xl font-bold tracking-tight leading-tight">
-                Technological University of the Philippines Visayas
-              </h1>
-              <span className="text-[10px] md:text-xs font-medium text-white/90">
-                SIT Monitoring System
-              </span>
+          <div className="flex items-center gap-5">
+            <Image 
+              src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+              alt="TUP Seal" 
+              width={48}
+              height={48}
+              className="h-12 w-auto object-contain" 
+            />
+            <div className="flex flex-col items-start leading-tight">
+               <h1 className="text-lg font-black text-slate-900 tracking-tight font-heading uppercase">TUP-Visayas</h1>
+               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] font-sans">SIT Monitoring System</span>
             </div>
           </div>
-          <div className="hidden sm:block text-right">
-            <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/80">A.Y. 2023-2024</p>
+          <div className="flex items-center gap-6">
+            <div className="hidden sm:block text-right">
+              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest font-heading">Academic Session</p>
+              <p className="text-[10px] font-bold text-slate-900 font-sans">2023 - 2024</p>
+            </div>
+            <div className="w-9 h-9 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-300">
+              <ShieldCheck className="h-4 w-4" />
+            </div>
           </div>
         </div>
       </header>
