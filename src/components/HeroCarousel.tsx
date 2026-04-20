@@ -14,17 +14,14 @@ const images = [
 
 const messages = [
   {
-    kicker: "Institutional Portal",
     title: "Unified SIT Management for the Next Generation",
     description: "Digital gateway for Supervised Industrial Training at Technological University of the Philippines - Visayas."
   },
   {
-    kicker: "Strategic Growth",
     title: "Bridge the Gap Between Campus and Career",
     description: "Standardized industrial immersion programs designed for professional engineering excellence."
   },
   {
-    kicker: "Industry Network",
     title: "Centralized Oversight for Industry Partners",
     description: "A secure ecosystem for student verification, progress monitoring, and institutional coordination."
   }
@@ -78,12 +75,7 @@ export function HeroCarousel() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="space-y-8"
             >
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60 font-heading">
-                  {messages[index].kicker}
-                </span>
-              </div>
+
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] font-heading">
                 {messages[index].title}
