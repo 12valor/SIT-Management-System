@@ -20,7 +20,6 @@ import _coordinator_registrations from './coordinator-registrations.bones.json'
 import _coordinator_reports from './coordinator-reports.bones.json'
 import _coordinator_students from './coordinator-students.bones.json'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 registerBones({
   "student-dashboard": _student_dashboard as any,
   "student-logbook": _student_logbook as any,

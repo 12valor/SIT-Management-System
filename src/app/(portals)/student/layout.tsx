@@ -13,8 +13,7 @@ import {
   User as UserIcon, 
   LogOut,
   X,
-  Award,
-  ShieldCheck
+  Award
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DashboardFooter } from "@/components/DashboardFooter";
@@ -47,11 +46,6 @@ export default function StudentLayout({
     { name: "Professional Profile", href: "/student/profile", icon: UserIcon },
   ];
 
-  if (status === "loading" || !session) {
-  // We no longer block the entire UI with a black screen.
-  // Instead, we render the layout structure and use skeletons for session-dependent parts if needed.
-  // The useEffect handles the redirect if unauthenticated.
-  }
 
   return (
     <div className="flex min-h-screen w-full bg-[#f8fafc] selection:bg-[#800000]/10">
@@ -126,9 +120,13 @@ export default function StudentLayout({
                 <span className="text-[11px] font-medium text-slate-500">Status:</span>
                 <span className="text-[11px] font-bold text-[#800000]">Verified</span>
              </div>
-             <p className="text-[10px] font-medium text-slate-400">
-                Student ID: {session?.user?.email?.split('@')[0].toUpperCase() || "2021-0042"}
-             </p>
+             {status === "loading" ? (
+                <div className="h-3 w-24 bg-slate-200 animate-pulse rounded" />
+             ) : (
+                <p className="text-[10px] font-medium text-slate-400">
+                   Student ID: {session?.user?.email?.split('@')[0].toUpperCase() || "2021-0042"}
+                </p>
+             )}
           </div>
 
           <button

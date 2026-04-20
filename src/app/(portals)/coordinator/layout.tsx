@@ -14,7 +14,6 @@ import {
   Settings,
   LogOut,
   X,
-  ShieldCheck,
   ShieldAlert
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -49,14 +48,6 @@ export default function CoordinatorLayout({
     { name: "System Control", href: "/coordinator/settings", icon: Settings },
   ];
 
-  if (status === "loading" || !session) {
-    return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-background gap-4">
-         <ShieldCheck className="h-12 w-12 text-primary animate-pulse" />
-         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Authenticating Executive Access...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen w-full bg-[#f8fafc] selection:bg-[#800000]/10">
@@ -131,9 +122,13 @@ export default function CoordinatorLayout({
                 <span className="text-[11px] font-medium text-slate-500">Access:</span>
                 <span className="text-[11px] font-bold text-[#800000]">Executive Node</span>
              </div>
-             <p className="text-[10px] font-medium text-slate-400">
-                Authorized: {session?.user?.id?.slice(-8).toUpperCase() || "ADM-X-99"}
-             </p>
+             {status === "loading" ? (
+                <div className="h-3 w-24 bg-slate-200 animate-pulse rounded" />
+             ) : (
+                <p className="text-[10px] font-medium text-slate-400">
+                   Authorized: {session?.user?.id?.slice(-8).toUpperCase() || "ADM-X-99"}
+                </p>
+             )}
           </div>
 
           <button

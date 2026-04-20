@@ -3,8 +3,10 @@ import { getEmployerDashboardData } from "./actions";
 import { EmployerDashboardShell } from "@/components/skeletons/EmployerDashboardShell";
 
 export default async function EmployerDashboardPage() {
-  const session = await auth();
-  const res = await getEmployerDashboardData();
+  const [session, res] = await Promise.all([
+    auth(),
+    getEmployerDashboardData()
+  ]);
 
   // Pass null if fetch failed so shell renders fallback skeleton
   const data = res.success && res.data ? res.data : null;
