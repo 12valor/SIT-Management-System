@@ -113,7 +113,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
                       <tr key={app.id} className="hover:bg-muted transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center text-foreground font-bold uppercase">>
+                            <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center text-foreground font-bold uppercase">
                               {app.student.name?.[0]}
                             </div>
                             <div>
@@ -170,7 +170,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
               </Link>
             </div>
 
-            <div className="bg-card rounded-xl border border-border shadow-sm p-6">>
+            <div className="bg-card rounded-xl border border-border shadow-sm p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
                   <Building2 className="h-5 w-5" data-no-skeleton />
