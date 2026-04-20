@@ -5,17 +5,12 @@ import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
 import { Plus, Search, MapPin, Clock, X, Loader2, ChevronDown } from "lucide-react";
 import { getEmployerPostings, createSITPosting } from "./actions";
-import { SITPosting, PlacementType, PostingStatus } from "@prisma/client";
+import { SITPosting, PlacementType } from "@prisma/client";
 import { cn } from "@/lib/utils";
 
 type PostingWithCount = SITPosting & {
   _count: { applications: number };
   company: { name: string };
-};
-
-const STATUS_STYLE: Record<PostingStatus, string> = {
-  OPEN:   "bg-primary/10 text-primary border-primary/20",
-  CLOSED: "bg-muted text-muted-foreground border-border",
 };
 
 const TYPE_LABEL: Record<PlacementType, string> = {

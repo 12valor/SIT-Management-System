@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Building2, ShieldCheck, ChevronRight } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 export default function LoginGatePage() {

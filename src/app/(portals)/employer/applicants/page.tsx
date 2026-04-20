@@ -103,7 +103,6 @@ export default function ApplicantsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {columns.map((col) => {
           const colApps = filteredApps.filter(a => a.status === col.id);
-          const isMaroon = col.id === 'PENDING' || col.id === 'ACCEPTED';
           return (
             <div key={col.id} className="flex flex-col gap-6">
               <div className="flex items-center justify-between px-1">

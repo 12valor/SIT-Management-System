@@ -15,9 +15,7 @@ import {
   LogOut,
   X,
   ShieldCheck,
-  ShieldAlert,
-  ChevronRight,
-  Zap
+  ShieldAlert
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DashboardFooter } from "@/components/DashboardFooter";

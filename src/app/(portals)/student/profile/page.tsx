@@ -106,7 +106,7 @@ export default function StudentProfilePage() {
           {[
             { label: "Logbook Hours",   value: `${totalHours.toFixed(0)}/300`, icon: Clock },
             { label: "Applications",    value: appCount, icon: GraduationCap },
-            { label: "Registration",    value: new Date(profile.createdAt).getFullYear(), icon: UserIcon },
+            { label: "Registration",    value: new Date(safeProfile.createdAt).getFullYear(), icon: UserIcon },
           ].map((s) => (
             <div key={s.label} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between mb-2">

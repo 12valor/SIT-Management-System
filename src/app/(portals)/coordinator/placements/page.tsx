@@ -20,12 +20,6 @@ type Placement = {
   };
 };
 
-const TYPE_STYLE: Record<PlacementType, string> = {
-  ON_SITE: "bg-muted text-muted-foreground border-border",
-  REMOTE:  "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  HYBRID:  "bg-purple-500/10 text-purple-600 border-purple-500/20",
-};
-
 const TYPE_LABEL: Record<PlacementType, string> = {
   ON_SITE: "On-site",
   REMOTE: "Remote",

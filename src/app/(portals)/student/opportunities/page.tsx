@@ -5,7 +5,13 @@ import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect } from "react";
 import { 
   Search, 
-  Briefcase, 
+  CheckCircle2,
+  X,
+  Send,
+  Loader2,
+  Building2,
+  Zap,
+  ArrowUpRight,
   Activity,
   Sparkles,
   SlidersHorizontal

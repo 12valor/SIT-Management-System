@@ -8,14 +8,12 @@ import {
   CheckCircle2, 
   Award, 
   Download, 
-  Clock, 
   Star, 
   ShieldCheck,
   Building2,
   Calendar,
   AlertCircle,
-  Loader2,
-  FileUp
+  Loader2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getCompletionStatus } from "./actions";

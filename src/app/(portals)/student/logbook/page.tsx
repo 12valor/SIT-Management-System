@@ -7,16 +7,13 @@ import {
   PlusCircle, 
   Clock, 
   Calendar as CalendarIcon, 
-  Timer, 
-  FileText,
-  Search,
-  MoreVertical,
   X,
   Loader2,
   TrendingUp,
   Zap,
-  ChevronRight,
-  ShieldCheck
+  Search,
+  MoreVertical,
+  FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStudentLogbook, submitLogbookEntry } from "./actions";

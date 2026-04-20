@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu } from "lucide-react";
-import { NotificationCenter } from "@/components/NotificationCenter";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 interface Session {
