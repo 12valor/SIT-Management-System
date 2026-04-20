@@ -18,12 +18,12 @@ import {
   ShieldCheck,
   ShieldAlert,
   ChevronRight,
-  Zap,
-  Command
+  Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NotificationCenter } from "@/components/NotificationCenter";
 import { DashboardFooter } from "@/components/DashboardFooter";
+import { DashboardHeader } from "@/components/DashboardHeader";
 
 export default function CoordinatorLayout({
   children,
@@ -154,36 +154,14 @@ export default function CoordinatorLayout({
 
       {/* Main Content */}
       <div className="flex flex-col flex-1 lg:pl-72">
-        <header className="sticky top-0 z-40 flex h-24 items-center gap-6 border-b border-border bg-background/70 backdrop-blur-2xl px-8 lg:px-12">
-          <button 
-            className="lg:hidden p-2 rounded-xl bg-muted border border-border hover:scale-105 transition-transform"
-            onClick={() => setIsMobileMenuOpen(true)}
-          >
-            <Menu className="h-6 w-6 text-foreground" />
-          </button>
-          
-          <div className="flex-1">
-            <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-1.5 leading-none">Administrative Manifest</p>
-            <h1 className="text-xl font-black tracking-tighter text-foreground uppercase">
-              {navItems.find(item => item.href === pathname)?.name || "Strategic Unit"}
-            </h1>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <NotificationCenter />
-            <ThemeToggle />
-            <div className="h-10 w-px bg-border mx-1" />
-            <div className="flex items-center gap-5 pl-2">
-               <div className="text-right hidden sm:block">
-                  <p className="text-sm font-black text-foreground leading-none tracking-tight">{session?.user?.name}</p>
-                  <p className="text-[10px] text-primary mt-2 uppercase font-black tracking-widest leading-none">Office Registrar</p>
-               </div>
-                <div className="h-14 w-14 rounded-[1.5rem] bg-primary flex items-center justify-center text-primary-foreground text-lg font-black shadow-2xl shadow-primary/20 ring-4 ring-background transition-all hover:scale-105">
-                {session?.user?.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || 'C'}
-              </div>
-            </div>
-          </div>
-        </header>
+        <DashboardHeader 
+          session={session}
+          pathname={pathname}
+          navItems={navItems}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          roleTitle="Office Registrar"
+          roleInitials="C"
+        />
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">
           <div className="max-w-7xl mx-auto flex flex-col min-h-[calc(100vh-14rem)]">

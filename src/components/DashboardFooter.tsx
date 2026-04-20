@@ -9,7 +9,7 @@ export function DashboardFooter() {
           <img 
             src="/Technological_University_of_the_Philippines_Seal.svg.png" 
             alt="TUP Seal" 
-            className="h-8 w-auto object-contain grayscale" 
+            className="h-8 w-auto object-contain transition-all hover:scale-110" 
           />
           <div className="flex flex-col">
             <span className="text-[10px] font-black text-foreground uppercase tracking-[0.2em] font-heading">TUP-V SIT Platform</span>
