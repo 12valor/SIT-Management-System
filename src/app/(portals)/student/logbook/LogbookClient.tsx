@@ -125,7 +125,7 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
                 <input 
                  type="text" 
                  placeholder="Filter logs..." 
-                 className="pl-9 pr-4 h-9 rounded-lg border border-slate-200 bg-white text-xs focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] outline-none w-64 transition-all"
+                 className="pl-9 pr-4 h-9 rounded-lg border border-slate-200 bg-white text-xs text-slate-900 focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] outline-none w-64 transition-all"
                 />
              </div>
           </div>
@@ -198,10 +198,10 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
                </div>
                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
-                     <input type="date" value={date} onChange={e => setDate(e.target.value)} className="border p-2 rounded" required />
-                     <input type="number" placeholder="Hours" value={hours} onChange={e => setHours(e.target.value)} className="border p-2 rounded" required />
+                     <input type="date" value={date} onChange={e => setDate(e.target.value)} className="border p-2 rounded text-slate-900 bg-white" required />
+                     <input type="number" placeholder="Hours" value={hours} onChange={e => setHours(e.target.value)} className="border p-2 rounded text-slate-900 bg-white" required />
                   </div>
-                  <textarea placeholder="Tasks" value={tasks} onChange={e => setTasks(e.target.value)} className="w-full border p-2 rounded h-32" required />
+                  <textarea placeholder="Tasks" value={tasks} onChange={e => setTasks(e.target.value)} className="w-full border p-2 rounded h-32 text-slate-900 bg-white" required />
                   <button type="submit" disabled={isSubmitting} className="w-full bg-[#800000] text-white p-3 rounded font-bold uppercase tracking-widest text-xs">
                      {isSubmitting ? "Committing..." : "Commit to Archive"}
                   </button>

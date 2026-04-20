@@ -139,7 +139,7 @@ export default function StudentProfilePage() {
                     name="name"
                     required
                     defaultValue={safeProfile.name ?? ""}
-                    className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all"
+                    className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-white text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all"
                   />
                 </div>
               </div>
@@ -163,15 +163,15 @@ export default function StudentProfilePage() {
                 <select
                   name="course"
                   defaultValue={safeProfile.course ?? ""}
-                  className="w-full pl-10 pr-10 h-11 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] appearance-none cursor-pointer transition-all"
+                  className="w-full pl-10 pr-10 h-11 rounded-lg border border-slate-200 bg-white text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] appearance-none cursor-pointer transition-all"
                 >
-                  <option value="">Select program...</option>
-                  <option value="BS in Information Technology text-slate-800">BS in Information Technology</option>
-                  <option value="BS in Computer Science">BS in Computer Science</option>
-                  <option value="BS in Civil Engineering">BS in Civil Engineering</option>
-                  <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
-                  <option value="BS in Electrical Engineering">BS in Electrical Engineering</option>
-                  <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
+                  <option value="" className="text-slate-900">Select program...</option>
+                  <option value="BS in Information Technology" className="text-slate-900">BS in Information Technology</option>
+                  <option value="BS in Computer Science" className="text-slate-900">BS in Computer Science</option>
+                  <option value="BS in Civil Engineering" className="text-slate-900">BS in Civil Engineering</option>
+                  <option value="BS in Electronics Engineering" className="text-slate-900">BS in Electronics Engineering</option>
+                  <option value="BS in Electrical Engineering" className="text-slate-900">BS in Electrical Engineering</option>
+                  <option value="BS in Mechanical Engineering" className="text-slate-900">BS in Mechanical Engineering</option>
                 </select>
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 border-l border-slate-100 pl-3 pointer-events-none">
                   <Save className="h-3.5 w-3.5 text-slate-300" />
