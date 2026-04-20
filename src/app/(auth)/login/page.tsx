@@ -40,101 +40,115 @@ const roles = [
 
 export default function LoginGatePage() {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-start relative overflow-y-auto bg-slate-900 py-12 md:py-20 lg:py-24">
-      {/* Dynamic Background with Maroon Overlay */}
-      <div className="fixed inset-0 z-0">
+    <div className="min-h-screen w-full flex flex-col bg-slate-50 relative overflow-x-hidden">
+      {/* Background Layer: Institutional Subtlety */}
+      <div className="fixed inset-0 z-0 overflow-hidden">
         <Image 
           src="/images/auth/gate.png" 
           alt="University Campus" 
           fill
-          className="object-cover opacity-25 grayscale"
+          className="object-cover opacity-10 grayscale"
           priority
         />
-        <div className="absolute inset-0 bg-primary/90 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-slate-100/50" />
       </div>
 
-      <div className="max-w-md w-full relative z-10 px-6">
-        {/* TUPv Branding Hub */}
-        <div className="flex flex-col items-center text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-6"
-          >
+      {/* Institutional Top Bar */}
+      <header className="relative z-20 w-full bg-white border-b border-slate-200 py-6 px-10 shadow-sm transition-all duration-500">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
+          <div className="flex items-center gap-6">
             <img 
               src="/Technological_University_of_the_Philippines_Seal.svg.png" 
               alt="TUP Seal" 
-              className="h-24 w-auto object-contain drop-shadow-2xl" 
+              className="h-14 w-auto object-contain" 
             />
-            <div className="h-20 w-px bg-white/20" />
-            <div className="flex flex-col items-start">
-               <h1 className="text-4xl font-black text-white tracking-tighter leading-none font-heading uppercase">TUPv</h1>
-               <span className="text-[11px] font-bold text-white/50 uppercase tracking-[0.4em] mt-3 font-sans">SIT Platform</span>
+            <div className="h-10 w-px bg-slate-200 lg:block hidden" />
+            <div className="flex flex-col items-start leading-tight">
+               <h1 className="text-xl font-black text-slate-900 tracking-tight font-heading uppercase">TUP-Visayas</h1>
+               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] font-sans">SIT Monitoring System</span>
             </div>
-          </motion.div>
+          </div>
+          <div className="hidden md:flex items-center gap-6">
+            <div className="text-right">
+              <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest font-heading mb-0.5">Academic Session</p>
+              <p className="text-[10px] font-medium text-slate-400 font-sans">2023 - 2024</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center">
+              <ShieldCheck className="h-5 w-5 text-slate-300" />
+            </div>
+          </div>
         </div>
+      </header>
 
-        {/* Interaction Panel */}
-        <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-black/50 border border-white/10 backdrop-blur-sm">
-          <div className="mb-10 text-center md:text-left">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight font-heading uppercase mb-1">Sign In</h2>
-            <p className="text-xs text-slate-500 font-medium font-sans">Access your designated institutional portal.</p>
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-12">
+        <div className="max-w-4xl w-full">
+          <div className="mb-14 text-center">
+             <h2 className="text-4xl font-bold text-slate-900 tracking-tighter font-heading uppercase mb-3">Portal Access Gateway</h2>
+             <div className="w-12 h-1.5 bg-primary mx-auto rounded-full mb-6" />
+             <p className="text-sm text-slate-500 font-medium font-sans">Select your specific institutional role to access the supervision terminal.</p>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {roles.map((role, idx) => {
               const Icon = role.icon;
               return (
                 <motion.div
                   key={role.key}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                 >
                   <Link
                     href={role.href}
-                    className="flex items-center gap-5 p-5 rounded-2xl border border-slate-100 bg-white hover:border-primary/20 hover:bg-slate-50 hover:shadow-xl hover:shadow-slate-200/50 transition-all group"
+                    className="flex flex-col h-full bg-white rounded-xl border border-slate-200 p-8 hover:border-primary/30 hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-300 group relative overflow-hidden"
                   >
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 border border-slate-100 bg-slate-50 group-hover:border-primary/10 transition-all shadow-sm">
-                      <Icon className="h-6 w-6 text-slate-900" />
+                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-125 transition-transform duration-700">
+                       <Icon className="h-24 w-24 text-slate-900" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-base font-bold text-slate-900 tracking-tight font-heading uppercase">{role.label}</p>
-                      <p className="text-[10px] text-slate-500 font-sans tracking-wide">{role.sub}</p>
+                    <div className="w-16 h-16 rounded-lg flex items-center justify-center shrink-0 bg-slate-50 border border-slate-100 mb-8 transition-colors group-hover:bg-primary group-hover:border-primary">
+                      <Icon className="h-7 w-7 text-slate-900 group-hover:text-white transition-colors" />
                     </div>
-                    <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                    <div className="flex-1">
+                      <h3 className="text-lg font-black text-slate-900 tracking-tight font-heading uppercase mb-2">{role.label}</h3>
+                      <p className="text-[11px] leading-relaxed text-slate-500 font-sans font-medium">{role.sub}</p>
+                    </div>
+                    <div className="mt-10 flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">
+                      Enter Terminal <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </Link>
                 </motion.div>
               );
             })}
           </div>
 
-          <div className="mt-12 pt-8 border-t border-slate-100">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 font-heading">Registration Portals</span>
-              <div className="flex-1 border-t border-slate-100" />
+          <div className="mt-16 pt-10 border-t border-slate-200 flex flex-col items-center">
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 font-heading">Registry Services</span>
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
-              <Link href="/signup/student" className="h-12 flex items-center justify-center rounded-xl border border-slate-200 text-[10px] font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-50 hover:border-primary/30 hover:text-primary transition-all font-heading">
-                Student
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/signup/student" className="px-8 py-3.5 flex items-center justify-center rounded-lg border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-700 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all font-heading shadow-sm">
+                New Student Registration
               </Link>
-              <Link href="/signup/employer" className="h-12 flex items-center justify-center rounded-xl border border-slate-200 text-[10px] font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-50 hover:border-primary/30 hover:text-primary transition-all font-heading">
-                Employer
+              <Link href="/signup/employer" className="px-8 py-3.5 flex items-center justify-center rounded-lg border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-700 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all font-heading shadow-sm">
+                Corporate Partnership Application
               </Link>
             </div>
           </div>
         </div>
+      </main>
 
-        <div className="mt-12 flex justify-center pb-12">
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/50 hover:text-white transition-colors font-heading group">
-            <ArrowRight className="h-3 w-3 rotate-180 group-hover:-translate-x-1 transition-transform" /> 
-            Back to landing
-          </Link>
+      <footer className="relative z-20 py-8 px-10 border-t border-slate-200 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-heading">
+            © 2024 Technological University of the Philippines Visayas
+          </p>
+          <div className="flex items-center gap-8">
+             <Link href="/" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors font-heading">Institutional Policy</Link>
+             <Link href="/" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors font-heading">System Status</Link>
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
