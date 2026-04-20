@@ -3,7 +3,7 @@
 import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Greeting } from "@/app/student/dashboard/Greeting";
+import { Greeting } from "@/app/(portals)/student/dashboard/Greeting";
 
 // ─── Types (mirroring server action return) ─────────────────────────────────
 interface Application {

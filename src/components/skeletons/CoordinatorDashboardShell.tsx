@@ -9,7 +9,7 @@ import { Calendar, CheckCircle2, Award } from "lucide-react";
 interface RecentPlacement {
   id: string;
   studentName: string | null;
-  studentEmail: string;
+  studentEmail: string | null;
   postingTitle: string;
   companyName: string;
 }

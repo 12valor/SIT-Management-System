@@ -7,7 +7,8 @@ import bcrypt from "bcryptjs";
 
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  adapter: PrismaAdapter(prisma) as any, // Type cast to avoid NextAuth beta Adapter mismatch with custom fields
   session: { strategy: "jwt" },
   ...authConfig,
   providers: [
