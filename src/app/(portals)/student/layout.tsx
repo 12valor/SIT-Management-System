@@ -48,12 +48,9 @@ export default function StudentLayout({
   ];
 
   if (status === "loading" || !session) {
-    return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-background gap-4">
-         <ShieldCheck className="h-12 w-12 text-primary animate-pulse" />
-         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Securing Session Context...</p>
-      </div>
-    );
+  // We no longer block the entire UI with a black screen.
+  // Instead, we render the layout structure and use skeletons for session-dependent parts if needed.
+  // The useEffect handles the redirect if unauthenticated.
   }
 
   return (
