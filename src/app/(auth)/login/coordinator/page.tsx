@@ -6,6 +6,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { ShieldAlert, Mail, Lock, Loader2, ArrowLeft, Command } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function CoordinatorLoginPage() {
   const [email, setEmail]       = useState("");
@@ -41,55 +42,51 @@ export default function CoordinatorLoginPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-white">
-      {/* Left side - Visual Experience (Light Edition) */}
-      <div className="relative hidden lg:flex lg:w-3/5 xl:w-[60%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 h-full">
-        <div className="absolute inset-0 pointer-events-none">
-          <Image 
-            src="/images/auth/coordinator.png" 
-            alt="Administrative Office" 
-            fill
-            className="object-cover transition-opacity duration-700"
-            style={{ opacity: 0.45, filter: 'grayscale(100%) brightness(0.95)' }}
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
-        </div>
-
-        <div className="relative z-10 flex items-center">
-          <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-12 w-auto object-contain" />
-        </div>
-
-        <div className="relative z-10 max-w-2xl mt-12 px-2">
-          <p className="text-[10px] font-black text-amber-600 uppercase tracking-[0.5em] mb-6 font-heading">Authority Terminal</p>
-          <h1 className="text-7xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
-            Institutional <br />
-            Control <br /> 
-            <span className="text-amber-600 italic">Command.</span>
-          </h1>
-          <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-md font-sans">
-            Centralized administrative hub for TUP-Visayas. Monitor institutional compliance, manage registries, and secure academic integrity.
-          </p>
-        </div>
-
-        <div className="relative z-10">
-           <div className="inline-flex items-center gap-4 px-5 py-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-heading">Restricted Access Node</p>
-           </div>
-        </div>
+    <div className="min-h-screen w-full flex flex-col items-center justify-start relative overflow-y-auto bg-slate-900 py-12 md:py-20 lg:py-24">
+      {/* Fixed Dynamic Background with Maroon Overlay */}
+      <div className="fixed inset-0 z-0">
+        <Image 
+          src="/images/auth/gate.png" 
+          alt="University Campus" 
+          fill
+          className="object-cover opacity-25 grayscale"
+          priority
+        />
+        <div className="absolute inset-0 bg-primary/90 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60" />
       </div>
 
-      {/* Right side - Login Form */}
-      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-20 bg-white relative z-20">
-        <div className="max-w-md w-full lg:ml-12 xl:ml-20">
-          <div className="mb-10">
-            <Link href="/login" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-amber-600 transition-colors mb-10 font-heading">
-              <ArrowLeft className="h-3 w-3" /> Back to role selection
+      <div className="max-w-md w-full relative z-10 px-6">
+        {/* TUPv Branding Hub */}
+        <div className="flex flex-col items-center text-center mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-6"
+          >
+            <img 
+              src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+              alt="TUP Seal" 
+              className="h-16 w-auto object-contain drop-shadow-2xl" 
+            />
+            <div className="h-16 w-px bg-white/20" />
+            <div className="flex flex-col items-start text-left">
+               <h1 className="text-3xl font-black text-white tracking-tighter leading-none font-heading uppercase">TUPv</h1>
+               <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.3em] mt-2 font-sans">SIT Platform</span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Interaction Panel */}
+        <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-black/50 border border-white/10 backdrop-blur-sm">
+          <div className="mb-10 text-center md:text-left">
+            <Link href="/login" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors mb-6 font-heading group">
+              <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Back to role selection
             </Link>
-            <h2 className="text-4xl font-bold tracking-tight text-slate-900 mb-3 font-heading uppercase">Admin Login</h2>
-            <div className="p-4 bg-amber-50 border-l-4 border-amber-500 rounded-lg">
-              <p className="text-xs text-amber-800 font-medium leading-relaxed font-sans">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2 font-heading uppercase">Admin Login</h2>
+            <div className="p-4 bg-primary/5 border-l-4 border-primary rounded-r-lg mb-4">
+              <p className="text-[10px] text-primary font-bold leading-relaxed font-sans uppercase tracking-tight">
                 Security Notice: All administrative logins are strictly audited. Unauthorized access attempts will be logged and reported.
               </p>
             </div>
@@ -97,15 +94,19 @@ export default function CoordinatorLoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             {error && (
-              <div className="p-4 text-xs font-bold text-red-600 bg-red-50 border border-red-100 rounded-xl uppercase tracking-wider font-heading">
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="p-4 text-[10px] font-bold text-red-600 bg-red-50 border border-red-100 rounded-xl uppercase tracking-wider font-heading"
+              >
                 {error}
-              </div>
+              </motion.div>
             )}
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading">Admin Email</label>
+              <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Admin Email</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-amber-600 transition-colors" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                 <input
                   id="email"
                   type="email"
@@ -113,17 +114,17 @@ export default function CoordinatorLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@tupv.edu.ph"
-                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-amber-600 focus:ring-4 focus:ring-amber-600/5 transition-all text-slate-900"
+                  className="w-full h-14 pl-12 pr-4 rounded-2xl border border-slate-100 bg-slate-50/50 text-sm font-medium font-sans outline-none focus:bg-white focus:border-primary/20 focus:ring-4 focus:ring-primary/5 transition-all text-slate-900 shadow-inner shadow-slate-100/50"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center ml-1">
                 <label htmlFor="password" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading">Access Key</label>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-amber-600 transition-colors" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                 <input
                   id="password"
                   type="password"
@@ -131,7 +132,7 @@ export default function CoordinatorLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-amber-600 focus:ring-4 focus:ring-amber-600/5 transition-all text-slate-900"
+                  className="w-full h-14 pl-12 pr-4 rounded-2xl border border-slate-100 bg-slate-50/50 text-sm font-medium font-sans outline-none focus:bg-white focus:border-primary/20 focus:ring-4 focus:ring-primary/5 transition-all text-slate-900 shadow-inner shadow-slate-100/50"
                 />
               </div>
             </div>
@@ -139,16 +140,23 @@ export default function CoordinatorLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full h-14 bg-amber-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-600/20 transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading"
+              className="w-full h-14 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-[0.2em] rounded-2xl hover:shadow-xl hover:shadow-primary/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading group"
             >
-              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Authorize & Sign In"}
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  Authorize & Sign In
+                  <ArrowLeft className="h-3 w-3 rotate-180 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form>
 
-          <footer className="mt-12 pt-8 border-t border-border">
-            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] leading-relaxed">
-              TUP-V SIT Management Office <br /> Technical University of the Philippines Visayas
-            </p>
+          <footer className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-heading">
+              TUP-V SIT Management Office
+            </span>
           </footer>
         </div>
       </div>

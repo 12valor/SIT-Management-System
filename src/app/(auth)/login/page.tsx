@@ -63,13 +63,11 @@ export default function LoginGatePage() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-6"
           >
-            <div className="bg-white/95 p-3 rounded-2xl shadow-xl shadow-black/20 backdrop-blur-sm border border-white/20">
-              <img 
-                src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-                alt="TUP Seal" 
-                className="h-20 w-auto object-contain" 
-              />
-            </div>
+            <img 
+              src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+              alt="TUP Seal" 
+              className="h-24 w-auto object-contain drop-shadow-2xl" 
+            />
             <div className="h-20 w-px bg-white/20" />
             <div className="flex flex-col items-start">
                <h1 className="text-4xl font-black text-white tracking-tighter leading-none font-heading uppercase">TUPv</h1>
