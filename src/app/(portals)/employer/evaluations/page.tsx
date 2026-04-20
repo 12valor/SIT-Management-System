@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { 
   Star, 
@@ -105,14 +107,7 @@ export default function EmployerEvaluationsPage() {
     </div>
   );
 
-  if (isLoading && !selectedStudentId) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-indigo-600 animate-spin" />
-        <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Synchronizing Trainee Records...</p>
-      </div>
-    );
-  }
+
 
   if (selectedStudentId) {
     const student = trainees.find(s => s.studentId === selectedStudentId);
@@ -242,6 +237,15 @@ export default function EmployerEvaluationsPage() {
   }
 
   return (
+    <Skeleton 
+      name="employer-evaluations" 
+      loading={isLoading && !selectedStudentId}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-12 pb-24 animate-in-fade">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10">
@@ -375,5 +379,6 @@ export default function EmployerEvaluationsPage() {
          </div>
       </div>
     </div>
+    </Skeleton>
   );
 }

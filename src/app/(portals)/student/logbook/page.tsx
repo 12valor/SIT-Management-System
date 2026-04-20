@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { 
   PlusCircle, 
@@ -65,22 +67,21 @@ export default function LogbookPage() {
     setIsSubmitting(false);
   };
 
-  if (isLoading || !data) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-primary animate-spin" />
-        <p className="text-muted-foreground font-black uppercase tracking-widest text-xs animate-pulse">
-          {isLoading ? "Synchronizing Archive Records..." : "Logbook Data Unavailable"}
-        </p>
-      </div>
-    );
-  }
-
-  const progress = Math.min((data.totalApprovedHours / 300) * 100, 100);
+  const safeData = data || { totalApprovedHours: 0, entries: [] };
+  const progress = Math.min((safeData.totalApprovedHours / 300) * 100, 100);
 
   return (
-    <div className="space-y-12 max-w-6xl mx-auto pb-24 animate-in-fade">
-      {/* Header */}
+    <Skeleton 
+      name="student-logbook" 
+      loading={isLoading || !data}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
+      <div className="space-y-12 max-w-6xl mx-auto pb-24 animate-in-fade">
+        {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
         <div className="space-y-1">
           <h2 className="text-3xl font-bold tracking-tight text-slate-800">Training Logbook</h2>
@@ -123,11 +124,11 @@ export default function LogbookPage() {
                </div>
                <div className="space-y-1">
                   <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Approved</p>
-                  <p className="text-2xl font-bold text-[#800000]">{data.totalApprovedHours.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-[#800000]">{safeData.totalApprovedHours.toFixed(2)}</p>
                </div>
                <div className="space-y-1 hidden lg:block">
                   <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Remaining</p>
-                  <p className="text-2xl font-bold text-slate-400">{Math.max(300 - data.totalApprovedHours, 0).toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-slate-400">{Math.max(300 - safeData.totalApprovedHours, 0).toFixed(2)}</p>
                </div>
             </div>
             <div className="p-4 rounded-lg bg-slate-50 border border-slate-100 flex items-center gap-4">
@@ -135,7 +136,7 @@ export default function LogbookPage() {
                   <TrendingUp className="h-5 w-5 text-[#800000]" />
                </div>
                <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                 Academic Record: You have achieved <span className="font-bold text-slate-800">{data.totalApprovedHours} hours</span> towards SIT module certification.
+                 Academic Record: You have achieved <span className="font-bold text-slate-800">{safeData.totalApprovedHours} hours</span> towards SIT module certification.
                </p>
             </div>
          </div>
@@ -158,8 +159,8 @@ export default function LogbookPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          {data.entries.length > 0 ? (
-            data.entries.map((entry: LogbookEntry) => (
+          {safeData.entries.length > 0 ? (
+            safeData.entries.map((entry: LogbookEntry) => (
               <div key={entry.id} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-[#800000]/20 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-6">
                    <div className="flex flex-col items-center justify-center w-14 h-14 rounded-lg bg-slate-50 border border-slate-100 shrink-0">
@@ -296,5 +297,6 @@ export default function LogbookPage() {
         </div>
       )}
     </div>
+    </Skeleton>
   );
 }

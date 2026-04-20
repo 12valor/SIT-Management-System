@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect, useTransition } from "react";
 import { User as UserIcon, Mail, GraduationCap, Save, CheckCircle2, Loader2, ShieldCheck, Clock } from "lucide-react";
 import { getStudentProfile, updateStudentProfile } from "./actions";
@@ -31,8 +33,8 @@ export default function StudentProfilePage() {
     });
   }, []);
 
-  const totalHours = profile?.logbookEntries.reduce((a, e) => a + e.hours, 0) ?? 0;
-  const appCount = profile?.applications.length ?? 0;
+  const totalHours = profile?.logbookEntries?.reduce((a, e) => a + e.hours, 0) ?? 0;
+  const appCount = profile?.applications?.length ?? 0;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,17 +54,27 @@ export default function StudentProfilePage() {
     });
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64 gap-3">
-        <Loader2 className="h-5 w-5 text-primary animate-spin" />
-      </div>
-    );
-  }
 
-  if (!profile) return null;
 
+  const safeProfile = profile || {
+    name: 'Student Name',
+    email: 'student@example.com',
+    course: 'BS in Information Technology',
+    createdAt: new Date(),
+    isApproved: true,
+    applications: [],
+    logbookEntries: []
+  };
   return (
+    <Skeleton 
+      name="student-profile" 
+      loading={isLoading}
+      fallback={
+        <div className="flex items-center justify-center h-64 gap-3">
+          <Loader2 className="h-5 w-5 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-8">
       {/* Header */}
       <div className="pb-8 border-b border-slate-100 mb-8">
@@ -74,18 +86,18 @@ export default function StudentProfilePage() {
         {/* Identity Strip */}
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center gap-6">
           <div className="w-16 h-16 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-2xl font-bold text-[#800000] shrink-0">
-            {profile.name?.charAt(0).toUpperCase() ?? "?"}
+            {safeProfile.name?.charAt(0).toUpperCase() ?? "?"}
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold text-slate-800 truncate">{profile.name}</h2>
-            <p className="text-sm text-slate-400 font-medium">{profile.email}</p>
+            <h2 className="text-xl font-bold text-slate-800 truncate">{safeProfile.name}</h2>
+            <p className="text-sm text-slate-400 font-medium">{safeProfile.email}</p>
           </div>
           <div className={cn(
             "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border shadow-sm",
-            profile.isApproved ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-amber-50 text-amber-600 border-amber-100"
+            safeProfile.isApproved ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-amber-50 text-amber-600 border-amber-100"
           )}>
             <ShieldCheck className="h-3.5 w-3.5" />
-            {profile.isApproved ? "Verified Candidate" : "Pending Audit"}
+            {safeProfile.isApproved ? "Verified Candidate" : "Pending Audit"}
           </div>
         </div>
 
@@ -126,7 +138,7 @@ export default function StudentProfilePage() {
                   <input
                     name="name"
                     required
-                    defaultValue={profile.name ?? ""}
+                    defaultValue={safeProfile.name ?? ""}
                     className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all"
                   />
                 </div>
@@ -136,7 +148,7 @@ export default function StudentProfilePage() {
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
                   <input
-                    value={profile.email ?? ""}
+                    value={safeProfile.email ?? ""}
                     disabled
                     className="w-full pl-10 pr-4 h-11 rounded-lg border border-slate-200 bg-slate-50 text-slate-400 text-sm cursor-not-allowed"
                   />
@@ -150,7 +162,7 @@ export default function StudentProfilePage() {
                 <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300 pointer-events-none" />
                 <select
                   name="course"
-                  defaultValue={profile.course ?? ""}
+                  defaultValue={safeProfile.course ?? ""}
                   className="w-full pl-10 pr-10 h-11 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] appearance-none cursor-pointer transition-all"
                 >
                   <option value="">Select program...</option>
@@ -196,5 +208,6 @@ export default function StudentProfilePage() {
         </div>
       </div>
     </div>
+    </Skeleton>
   );
 }

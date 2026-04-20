@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { 
   CheckCircle2, 
@@ -50,18 +52,20 @@ export default function EmployerLogbookReviewPage() {
     setIsProcessing(null);
   };
 
-  if (isLoading && trainees.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
-        <p className="text-slate-500 font-black uppercase tracking-widest text-xs">Accessing Personnel Manifest...</p>
-      </div>
-    );
-  }
+
 
   const selectedStudent = trainees.find(s => s.studentId === selectedStudentId);
 
   return (
+    <Skeleton 
+      name="employer-logbooks" 
+      loading={isLoading && trainees.length === 0}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-12 max-w-7xl mx-auto pb-24 animate-in-fade">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border pb-10">
@@ -256,5 +260,6 @@ export default function EmployerLogbookReviewPage() {
         </div>
       </div>
     </div>
+    </Skeleton>
   );
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect, useCallback } from "react";
 import { Building2, MapPin, Loader2 } from "lucide-react";
 import { getPlacements } from "./actions";
@@ -43,6 +45,15 @@ export default function CoordinatorPlacementsPage() {
   useEffect(() => { load(); }, [load]);
 
   return (
+    <Skeleton 
+      name="coordinator-placements" 
+      loading={isLoading}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
@@ -69,13 +80,7 @@ export default function CoordinatorPlacementsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {isLoading ? (
-                <tr>
-                  <td colSpan={5} className="py-24 text-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-[#800000] mx-auto opacity-20" />
-                  </td>
-                </tr>
-              ) : placements.length === 0 ? (
+              {placements.length === 0 && !isLoading ? (
                 <tr>
                   <td colSpan={5} className="py-32 text-center">
                     <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">
@@ -127,5 +132,6 @@ export default function CoordinatorPlacementsPage() {
         </div>
       </div>
     </div>
+    </Skeleton>
   );
 }

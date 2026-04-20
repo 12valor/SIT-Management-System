@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { 
   Trophy, 
@@ -52,16 +54,19 @@ export default function StudentCompletionPage() {
     loadData();
   }, []);
 
-  if (isLoading || !data) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-primary animate-spin" />
-        <p className="text-muted-foreground font-bold animate-pulse uppercase tracking-widest text-xs">Auditing Program Milestone Status...</p>
-      </div>
-    );
-  }
+  const safeData = data || {
+    totalHours: 0,
+    hourGoal: 300,
+    hasEvaluation: false,
+    evaluationData: null,
+    documentsUploaded: 0,
+    totalRequiredDocs: 3,
+    isFullyComplete: false,
+    studentName: 'Student Name',
+    studentCourse: 'Course'
+  };
 
-  const { totalHours, hourGoal, hasEvaluation, evaluationData, documentsUploaded, totalRequiredDocs, isFullyComplete, studentName, studentCourse } = data;
+  const { totalHours, hourGoal, hasEvaluation, evaluationData, documentsUploaded, totalRequiredDocs, isFullyComplete, studentName, studentCourse } = safeData;
   const isHoursComplete = totalHours >= hourGoal;
   const isDocsComplete = documentsUploaded >= totalRequiredDocs;
 
@@ -80,6 +85,15 @@ export default function StudentCompletionPage() {
   };
 
   return (
+    <Skeleton 
+      name="student-completion" 
+      loading={isLoading || !data}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-10 pb-20 max-w-6xl mx-auto">
       {/* Header */}
       <div className="text-center space-y-2 py-12">
@@ -231,5 +245,6 @@ export default function StudentCompletionPage() {
         </div>
       )}
     </div>
+    </Skeleton>
   );
 }

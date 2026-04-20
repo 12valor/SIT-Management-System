@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { FileSearch, Download, FileText, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { getReportsData } from "./actions";
@@ -69,16 +71,18 @@ export default function CoordinatorReportsPage() {
     },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[50vh] gap-4">
-        <Loader2 className="h-8 w-8 text-primary animate-spin" />
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Compiling Strategic Intelligence...</p>
-      </div>
-    );
-  }
+
 
   return (
+    <Skeleton 
+      name="coordinator-reports" 
+      loading={isLoading}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-8 animate-in-fade">
       <div className="flex items-center justify-between">
         <div>
@@ -109,5 +113,6 @@ export default function CoordinatorReportsPage() {
         ))}
       </div>
     </div>
+    </Skeleton>
   );
 }

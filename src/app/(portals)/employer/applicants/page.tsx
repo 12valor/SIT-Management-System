@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { 
   Users, 
@@ -64,16 +66,17 @@ export default function ApplicantsPage() {
     { id: 'REJECTED', label: 'Not Suitable', color: 'text-destructive', bg: 'bg-destructive/5', dot: 'bg-destructive' },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-primary animate-spin" />
-        <p className="text-muted-foreground font-bold animate-pulse uppercase tracking-widest text-xs">Scanning Applicant Matrix...</p>
-      </div>
-    );
-  }
 
   return (
+    <Skeleton 
+      name="employer-applicants" 
+      loading={isLoading}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-8 max-w-6xl mx-auto pb-20 animate-in-fade">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
@@ -178,5 +181,6 @@ export default function ApplicantsPage() {
         })}
       </div>
     </div>
+    </Skeleton>
   );
 }

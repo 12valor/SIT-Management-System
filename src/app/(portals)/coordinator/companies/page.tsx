@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect, useCallback } from "react";
 import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2 } from "lucide-react";
 import { getCompanies, setCompanyVerification } from "./actions";
@@ -45,6 +47,15 @@ export default function CoordinatorCompaniesPage() {
   const pendingCount   = companies.filter((c) => !c.isVerified).length;
 
   return (
+    <Skeleton 
+      name="coordinator-companies" 
+      loading={isLoading}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border pb-5">
@@ -95,13 +106,7 @@ export default function CoordinatorCompaniesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {isLoading ? (
-                <tr>
-                  <td colSpan={6} className="py-12 text-center">
-                    <Loader2 className="h-5 w-5 animate-spin text-primary mx-auto" />
-                  </td>
-                </tr>
-              ) : filtered.length === 0 ? (
+              {filtered.length === 0 && !isLoading ? (
                 <tr>
                   <td colSpan={6} className="py-16 text-center text-xs text-muted-foreground font-mono">
                     {companies.length === 0 ? "No partner companies registered." : "No results for your search."}
@@ -172,5 +177,6 @@ export default function CoordinatorCompaniesPage() {
         </div>
       </div>
     </div>
+    </Skeleton>
   );
 }

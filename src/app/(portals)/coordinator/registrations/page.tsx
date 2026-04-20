@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect } from "react";
 import { 
   UserCheck, 
@@ -55,21 +57,21 @@ export default function CoordinatorRegistrationsPage() {
     setActionId(null);
   }
 
-  if (isLoading && !data) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 text-primary animate-spin" />
-        <p className="text-muted-foreground font-black uppercase tracking-widest text-xs animate-pulse underline decoration-primary decoration-2 underline-offset-8">
-          Accessing Security Vault...
-        </p>
-      </div>
-    );
-  }
+
 
   const pendingUsers = data?.users || [];
   const pendingCompanies = data?.companies || [];
 
   return (
+    <Skeleton 
+      name="coordinator-registrations" 
+      loading={isLoading && !data}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-12 pb-24 animate-in-fade">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 overflow-hidden">
         <div className="space-y-2">
@@ -216,5 +218,6 @@ export default function CoordinatorRegistrationsPage() {
         </div>
       </div>
     </div>
+    </Skeleton>
   );
 }

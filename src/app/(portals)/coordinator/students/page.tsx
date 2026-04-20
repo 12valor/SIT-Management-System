@@ -1,5 +1,7 @@
 "use client";
 
+import { Skeleton } from "boneyard-js/react";
+
 import { useState, useEffect, useCallback } from "react";
 import { Search, Download, ExternalLink, Loader2 } from "lucide-react";
 import { getStudentManifest } from "./actions";
@@ -41,6 +43,15 @@ export default function CoordinatorStudentsPage() {
   const completedCount = students.filter((s) => s.progress >= 100).length;
 
   return (
+    <Skeleton 
+      name="coordinator-students" 
+      loading={isLoading}
+      fallback={
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        </div>
+      }
+    >
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
@@ -99,13 +110,7 @@ export default function CoordinatorStudentsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {isLoading ? (
-                <tr>
-                  <td colSpan={6} className="py-24 text-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-[#800000] mx-auto opacity-20" />
-                  </td>
-                </tr>
-              ) : filtered.length === 0 ? (
+              {filtered.length === 0 && !isLoading ? (
                 <tr>
                   <td colSpan={6} className="py-32 text-center">
                     <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">
@@ -168,5 +173,6 @@ export default function CoordinatorStudentsPage() {
         </div>
       </div>
     </div>
+    </Skeleton>
   );
 }
