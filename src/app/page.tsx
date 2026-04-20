@@ -5,10 +5,10 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <header className="fixed top-0 w-full z-50 bg-transparent py-4 transition-all duration-500">
+      <header className="fixed top-0 w-full z-50 bg-transparent py-6 transition-all duration-500">
         <div className="container mx-auto px-10 h-24 flex items-center justify-between">
           <div className="flex items-center gap-6">
-             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-16 w-auto object-contain brightness-0 invert" />
+             <img src="/Technological_University_of_the_Philippines_Seal.svg.png" alt="TUP Seal" className="h-16 w-auto object-contain" />
              <div className="h-10 w-px bg-white/20" />
              <div className="flex flex-col">
                <span className="font-black text-2xl tracking-tighter text-white leading-none font-heading uppercase">SIT Platform</span>
