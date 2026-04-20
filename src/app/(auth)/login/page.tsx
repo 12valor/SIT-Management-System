@@ -40,39 +40,46 @@ const roles = [
 
 export default function LoginGatePage() {
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-slate-900">
+    <div className="min-h-screen w-full flex flex-col items-center justify-start relative overflow-y-auto bg-slate-900 py-12 md:py-20 lg:py-24">
       {/* Dynamic Background with Maroon Overlay */}
-      <div className="absolute inset-0 z-0">
+      <div className="fixed inset-0 z-0">
         <Image 
           src="/images/auth/gate.png" 
           alt="University Campus" 
           fill
-          className="object-cover opacity-30 grayscale"
+          className="object-cover opacity-25 grayscale"
           priority
         />
         <div className="absolute inset-0 bg-primary/90 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60" />
       </div>
 
       <div className="max-w-md w-full relative z-10 px-6">
-        {/* Branding Hub */}
-        <div className="flex flex-col items-center text-center mb-8">
+        {/* TUPv Branding Hub */}
+        <div className="flex flex-col items-center text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-2"
+            className="flex items-center gap-6"
           >
-            <img 
-              src="/des_UIPEN.png" 
-              alt="UIPEN Logo" 
-              className="h-32 w-auto object-contain mx-auto brightness-0 invert" 
-            />
+            <div className="bg-white/95 p-3 rounded-2xl shadow-xl shadow-black/20 backdrop-blur-sm border border-white/20">
+              <img 
+                src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                alt="TUP Seal" 
+                className="h-20 w-auto object-contain" 
+              />
+            </div>
+            <div className="h-20 w-px bg-white/20" />
+            <div className="flex flex-col items-start">
+               <h1 className="text-4xl font-black text-white tracking-tighter leading-none font-heading uppercase">TUPv</h1>
+               <span className="text-[11px] font-bold text-white/50 uppercase tracking-[0.4em] mt-3 font-sans">SIT Platform</span>
+            </div>
           </motion.div>
         </div>
 
         {/* Interaction Panel */}
-        <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-2xl shadow-black/40 border border-white/10 backdrop-blur-sm">
+        <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-black/50 border border-white/10 backdrop-blur-sm">
           <div className="mb-10 text-center md:text-left">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight font-heading uppercase mb-1">Sign In</h2>
             <p className="text-xs text-slate-500 font-medium font-sans">Access your designated institutional portal.</p>
@@ -123,8 +130,8 @@ export default function LoginGatePage() {
           </div>
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/60 hover:text-white transition-colors font-heading group">
+        <div className="mt-12 flex justify-center pb-12">
+          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/50 hover:text-white transition-colors font-heading group">
             <ArrowRight className="h-3 w-3 rotate-180 group-hover:-translate-x-1 transition-transform" /> 
             Back to landing
           </Link>
