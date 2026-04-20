@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Building2, Mail, Lock, Loader2, ArrowLeft, ShieldCheck } from "lucide-react";
+import { Building2, Mail, Lock, Loader2, ArrowLeft, ShieldCheck, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 

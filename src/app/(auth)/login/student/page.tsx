@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { GraduationCap, Mail, Lock, Loader2, ArrowLeft } from "lucide-react";
+import { GraduationCap, Mail, Lock, Loader2, ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
