@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function LoginGatePage() {
   return (
     <div className="min-h-screen w-full flex flex-col bg-slate-100 font-sans selection:bg-red-900/10">
-      {/* 1. Institutional White Header (Matching Navbar Aesthetic) */}
+      {/* 1. Institutional White Header */}
       <header className="relative z-20 w-full bg-white border-b border-slate-100 py-5 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-5">
@@ -48,7 +48,7 @@ export default function LoginGatePage() {
             {/* Student Access Card */}
             <div className="flex-1 p-8 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors group">
               <div className="flex items-center gap-3 mb-6">
-                <GraduationCap className="h-6 w-6 text-[#800000]" />
+                <GraduationCap className="h-6 w-6 text-primary" />
                 <h3 className="text-xl font-bold text-slate-900">Student Access</h3>
               </div>
               <p className="text-sm text-slate-500 leading-relaxed min-h-[4rem] mb-8">
@@ -56,12 +56,12 @@ export default function LoginGatePage() {
               </p>
               <Link 
                 href="/login/student"
-                className="inline-flex h-12 items-center justify-center px-8 rounded-lg bg-[#007bff] text-white font-bold text-sm hover:bg-[#0069d9] transition-all shadow-md shadow-blue-500/10 active:scale-95 mb-4"
+                className="inline-flex h-12 items-center justify-center px-8 rounded-lg bg-primary text-white font-bold text-sm hover:shadow-lg hover:shadow-primary/20 transition-all shadow-md active:scale-95 mb-4"
               >
                 Student Login
               </Link>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">
-                Requires @tup.edu.ph account
+                Requires @tupv.edu.ph account
               </p>
             </div>
 
@@ -85,19 +85,19 @@ export default function LoginGatePage() {
 
           {/* 3. Announcement Board */}
           <div className="px-10 pb-10">
-            <div className="p-8 rounded-xl bg-[#fffbec] border border-[#f5e7c1] relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4">
-                 <ShieldCheck className="h-20 w-20 text-amber-900/5 rotate-12" />
+            <div className="p-8 rounded-xl bg-primary/5 border border-primary/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-5">
+                 <ShieldCheck className="h-20 w-20 text-primary rotate-12" />
               </div>
-              <h4 className="text-sm font-black text-amber-900 uppercase tracking-widest mb-4">Announcements</h4>
+              <h4 className="text-sm font-black text-primary uppercase tracking-widest mb-4">Announcements</h4>
               <ul className="space-y-3">
                 {[
-                  "- DTR submission deadline: Every Friday 5PM",
-                  "- New: Upload photos in journal (max 2MB)",
-                  "- For password reset, contact ojt@tupv.edu.ph"
+                  "DTR submission deadline: Every Friday 5PM",
+                  "New: Upload photos in journal (max 2MB)",
+                  "For password reset, contact ojt@tupv.edu.ph"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm font-medium text-amber-900/80">
-                    <span className="w-1 h-1 rounded-full bg-amber-400" />
+                  <li key={i} className="flex items-center gap-2 text-sm font-medium text-slate-800">
+                    <span className="w-1 h-1 rounded-full bg-primary" />
                     {item}
                   </li>
                 ))}
@@ -110,15 +110,15 @@ export default function LoginGatePage() {
       {/* 4. Registry Services & Footer */}
       <footer className="w-full max-w-5xl mx-auto pb-12 px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex gap-8">
-          <Link href="/signup/student" className="text-[10px] font-bold text-slate-400 hover:text-red-800 uppercase tracking-widest transition-colors mb-1 md:mb-0">
+          <Link href="/signup/student" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors mb-1 md:mb-0">
              Student Registry
           </Link>
-          <Link href="/signup/employer" className="text-[10px] font-bold text-slate-400 hover:text-red-800 uppercase tracking-widest transition-colors">
+          <Link href="/signup/employer" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">
              Partner Application
           </Link>
         </div>
         <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">
-          © 2024 Technological University of the Philippines Visayas • Digital Logbook System
+          © 2026 Technological University of the Philippines Visayas • Digital Logbook System
         </p>
       </footer>
     </div>
