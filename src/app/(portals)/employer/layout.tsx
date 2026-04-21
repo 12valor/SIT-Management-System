@@ -17,7 +17,7 @@ import {
   Star
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DashboardFooter } from "@/components/DashboardFooter";
+
 import { DashboardHeader } from "@/components/DashboardHeader";
 
 export default function EmployerLayout({
@@ -157,7 +157,7 @@ export default function EmployerLayout({
             <div className="flex-1">
               {children}
             </div>
-            <DashboardFooter />
+
           </div>
         </main>
       </div>

@@ -16,7 +16,7 @@ import {
   Award
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DashboardFooter } from "@/components/DashboardFooter";
+
 import { DashboardHeader } from "@/components/DashboardHeader";
 
 export default function StudentLayout({
@@ -146,7 +146,7 @@ export default function StudentLayout({
             <div className="flex-1">
               {children}
             </div>
-            <DashboardFooter />
+
           </div>
         </main>
       </div>

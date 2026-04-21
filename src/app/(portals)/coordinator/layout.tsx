@@ -17,7 +17,7 @@ import {
   ShieldAlert
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DashboardFooter } from "@/components/DashboardFooter";
+
 import { DashboardHeader } from "@/components/DashboardHeader";
 
 export default function CoordinatorLayout({
@@ -157,7 +157,7 @@ export default function CoordinatorLayout({
             <div className="flex-1">
               {children}
             </div>
-            <DashboardFooter />
+
           </div>
         </main>
       </div>
