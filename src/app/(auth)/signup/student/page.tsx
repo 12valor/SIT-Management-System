@@ -55,7 +55,7 @@ export default function StudentSignupPage() {
   return (
     <div className="flex h-screen overflow-hidden bg-white">
       {/* Left side - Institutional Branding */}
-      <div className="relative hidden lg:flex lg:w-1/2 bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 min-w-0 h-full">
+      <div className="relative hidden lg:flex lg:w-1/2 bg-slate-50 flex-col justify-center p-12 overflow-hidden border-r border-slate-200 min-w-0 h-full">
         <div className="absolute inset-0 pointer-events-none select-none">
           <Image 
             src="/images/auth/student.png" 
@@ -68,40 +68,27 @@ export default function StudentSignupPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
         </div>
 
-        <div className="relative z-10 flex items-center">
+        <div className="absolute top-12 left-12 z-20">
           <Image 
             src="/Technological_University_of_the_Philippines_Seal.svg.png" 
             alt="TUP Seal" 
-            width={48}
-            height={48}
-            className="h-12 w-auto object-contain" 
+            width={56}
+            height={56}
+            className="h-14 w-auto object-contain" 
           />
         </div>
 
-        <div className="relative z-10 max-w-lg mt-12 px-2">
-          <p className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-6 font-heading">Onboarding Manifest</p>
-          <h1 className="text-6xl font-bold text-slate-900 tracking-tighter leading-[0.9] mb-10 font-heading">
+        <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
+          <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-8 font-heading">Onboarding Manifest</p>
+          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-[0.85] mb-12 font-heading">
             Your First <br />Step to <br /> 
             <span className="text-primary italic">Excellence.</span>
           </h1>
-          <p className="text-lg text-slate-500 font-medium leading-relaxed font-sans">
+          <p className="text-xl text-slate-500 font-medium leading-relaxed font-sans max-w-sm">
             Securely register your academic credentials to join the TUP-Visayas Supervised Industrial Training network.
           </p>
         </div>
 
-        <div className="relative z-10">
-           <div className="flex items-center gap-6">
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 font-heading">Authorized By</span>
-                <span className="text-xs font-bold text-slate-600 uppercase tracking-tight font-sans">TUP-V Registry</span>
-              </div>
-              <div className="h-8 w-px bg-slate-200" />
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 font-heading">Network</span>
-                <span className="text-xs font-bold text-slate-600 uppercase tracking-tight font-sans">UIPEN Strategic</span>
-              </div>
-           </div>
-        </div>
       </div>
 
       {/* Right side - Registration Form */}
