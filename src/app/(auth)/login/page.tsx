@@ -139,16 +139,14 @@ export default function LoginGatePage() {
             
             {/* BRAND COLUMN */}
             <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-slate-900 rounded-lg">
-                  <Image 
-                    src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-                    alt="TUP Seal" 
-                    width={24}
-                    height={24}
-                    className="h-6 w-auto brightness-0 invert" 
-                  />
-                </div>
+              <div className="flex items-center gap-4">
+                <Image 
+                  src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                  alt="TUP Seal" 
+                  width={48}
+                  height={48}
+                  className="h-12 w-auto grayscale contrast-125 brightness-75" 
+                />
                 <div className="flex flex-col uppercase">
                    <h5 className="text-sm font-bold text-slate-900 font-heading leading-tight">TUP-V SIT</h5>
                    <span className="text-[10px] font-medium text-slate-400 tracking-widest font-heading">Institutional Link</span>
