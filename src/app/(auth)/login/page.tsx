@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
-import Image from "next/image";
 
 /**
  * AESTHETIC DIRECTION: Grounded Institutional Portal

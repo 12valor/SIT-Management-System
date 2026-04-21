@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Briefcase, GraduationCap, CheckCircle } from "lucide-react";
-import Image from "next/image";
 import { HeroCarousel } from "@/components/HeroCarousel";
 
 export default function Home() {

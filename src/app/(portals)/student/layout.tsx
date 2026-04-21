@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { 
@@ -25,17 +25,8 @@ export default function StudentLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const router = useRouter();
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    } else if (session?.user?.role && session.user.role.toLowerCase() !== 'student') {
-      router.push(`/${session.user.role.toLowerCase()}/dashboard`);
-    }
-  }, [session, status, router]);
 
   const navItems = [
     { name: "Executive Dashboard", href: "/student/dashboard", icon: LayoutDashboard },

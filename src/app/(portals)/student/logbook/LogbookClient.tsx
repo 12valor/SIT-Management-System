@@ -1,6 +1,5 @@
 "use client";
 
-import { Skeleton } from "boneyard-js/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { 
@@ -56,7 +55,6 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
   const progress = Math.min((data.totalApprovedHours / 300) * 100, 100);
 
   return (
-    <Skeleton name="student-logbook" loading={false}>
       <div className="space-y-12 max-w-6xl mx-auto pb-24 animate-in-fade">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
@@ -210,6 +208,5 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
           </div>
         )}
       </div>
-    </Skeleton>
   );
 }
