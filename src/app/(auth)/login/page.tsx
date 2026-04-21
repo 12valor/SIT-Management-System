@@ -31,7 +31,7 @@ export default function LoginGatePage() {
             </div>
 
             {/* SELECTION GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
               
               {/* STUDENT ACCESS */}
               <div className="group relative bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col justify-between">
@@ -64,7 +64,7 @@ export default function LoginGatePage() {
                 <div>
                   <div className="flex items-center gap-3 mb-6">
                     <Building2 className="h-6 w-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
-                    <h3 className="text-xl font-bold text-slate-900 font-heading">Company / Supervisor Access</h3>
+                    <h3 className="text-xl font-bold text-slate-900 font-heading">Company / Supervisor</h3>
                   </div>
                   <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
                     For partner companies and industry supervisors. Verify trainee attendance and submit performance rating.
@@ -75,6 +75,25 @@ export default function LoginGatePage() {
                   className="inline-flex w-fit items-center justify-center bg-white border-2 border-slate-100 px-8 py-3.5 rounded-xl text-slate-700 text-sm font-bold tracking-tight hover:bg-slate-50 hover:border-slate-200 active:scale-[0.98] transition-all"
                 >
                   Company Login
+                </Link>
+              </div>
+
+              {/* COORDINATOR ACCESS */}
+              <div className="group bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-slate-200 hover:shadow-xl hover:shadow-slate-200/20 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <ShieldCheck className="h-6 w-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
+                    <h3 className="text-xl font-bold text-slate-900 font-heading">Coordinator Access</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
+                    For SIT Coordinators and System Administrators. Manage student records, approve accounts, and overall monitoring.
+                  </p>
+                </div>
+                <Link 
+                  href="/login/coordinator"
+                  className="inline-flex w-fit items-center justify-center bg-white border-2 border-slate-100 px-8 py-3.5 rounded-xl text-slate-700 text-sm font-bold tracking-tight hover:bg-slate-50 hover:border-slate-200 active:scale-[0.98] transition-all"
+                >
+                  Admin Login
                 </Link>
               </div>
 
