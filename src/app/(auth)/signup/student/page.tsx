@@ -80,7 +80,7 @@ export default function StudentSignupPage() {
 
         <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
           <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-8 font-heading">Onboarding Manifest</p>
-          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-[0.85] mb-12 font-heading">
+          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-tight mb-12 font-heading">
             Your First <br />Step to <br /> 
             <span className="text-primary italic">Excellence.</span>
           </h1>

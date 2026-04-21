@@ -92,7 +92,7 @@ export default function EmployerSignupPage() {
 
         <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
           <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-8 font-heading">Partner Intake</p>
-          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-[0.85] mb-12 font-heading">
+          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-tight mb-12 font-heading">
             Secure <br />Future <br /> 
             <span className="text-primary italic">Talent.</span>
           </h1>
