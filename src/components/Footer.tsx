@@ -1,7 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Hide the marketing footer on application portal routes
+  if (
+    pathname.startsWith("/student") ||
+    pathname.startsWith("/employer") ||
+    pathname.startsWith("/coordinator")
+  ) {
+    return null;
+  }
+
   return (
     <footer className="pt-24 pb-12 bg-slate-50 border-t border-slate-100">
       <div className="container mx-auto px-6">
