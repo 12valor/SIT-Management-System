@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { Briefcase, GraduationCap, CheckCircle } from "lucide-react";
 import Image from "next/image";
-import { SmartNavbar } from "@/components/SmartNavbar";
 import { HeroCarousel } from "@/components/HeroCarousel";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <SmartNavbar />
 
       <main className="flex-1">
         <HeroCarousel />

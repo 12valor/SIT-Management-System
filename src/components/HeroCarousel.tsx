@@ -65,7 +65,7 @@ export function HeroCarousel() {
 
       {/* Content Overlay */}
       <div className="container relative z-10 mx-auto px-6 h-full flex flex-col items-center justify-center text-center">
-        <div className="max-w-4xl pt-20">
+        <div className="max-w-4xl pt-36">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}

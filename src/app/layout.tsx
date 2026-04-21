@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 
 import { AuthProvider } from "@/components/providers/session-provider";
 import { Footer } from "@/components/Footer";
+import { SmartNavbar } from "@/components/SmartNavbar";
 
 export default function RootLayout({
   children,
@@ -42,6 +43,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <SmartNavbar />
             <div className="flex-1 flex flex-col">
               {children}
             </div>

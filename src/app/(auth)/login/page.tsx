@@ -15,33 +15,8 @@ export default function LoginGatePage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans selection:bg-primary/20">
       
-      {/* HEADER */}
-      <header className="w-full px-8 md:px-20 py-8 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Image 
-            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-            alt="TUP Seal" 
-            width={56}
-            height={56}
-            className="h-14 w-auto" 
-          />
-          <div className="flex flex-col">
-            <h1 className="text-lg font-bold text-slate-900 tracking-tighter leading-none font-heading uppercase">
-              TUP-VISAYAS
-            </h1>
-            <span className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none mt-1">
-              SIT Monitoring System
-            </span>
-          </div>
-        </div>
-        <div className="hidden md:flex flex-col items-end">
-           <span className="text-[10px] font-semibold text-slate-300 uppercase tracking-[0.2em] mb-1">Academic Session</span>
-           <span className="text-sm font-bold text-slate-800 font-heading tracking-tight">2025 – 2026</span>
-        </div>
-      </header>
-
       {/* MAIN CONTAINER */}
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-4 pt-36 pb-12">
         <div className="max-w-5xl w-full bg-white rounded-[2.5rem] shadow-[0_10px_50px_-12px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
           <div className="p-8 md:p-16">
             
