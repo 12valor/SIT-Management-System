@@ -4,123 +4,149 @@ import Link from "next/link";
 import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
+/**
+ * AESTHETIC DIRECTION: Grounded Institutional Portal
+ * LAYOUT: Centered Floating Card
+ * TYPOGRAPHY: Montserrat (Headings) + Poppins (Links/Body)
+ * COLOR: Maroon (#800000), Soft Slate, Light Red Accents
+ */
+
 export default function LoginGatePage() {
   return (
-    <div className="min-h-screen w-full flex flex-col bg-slate-100 font-sans selection:bg-red-900/10">
-      {/* 1. Institutional White Header */}
-      <header className="relative z-20 w-full bg-white border-b border-slate-100 py-5 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-5">
-            <Image 
-              src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-              alt="TUP Seal" 
-              width={48}
-              height={48}
-              className="h-12 w-auto object-contain" 
-            />
-            <div className="flex flex-col items-start leading-tight">
-               <h1 className="text-lg font-black text-slate-900 tracking-tight font-heading uppercase">TUP-Visayas</h1>
-               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] font-sans">SIT Monitoring System</span>
-            </div>
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans selection:bg-primary/20">
+      
+      {/* HEADER */}
+      <header className="w-full px-8 md:px-20 py-8 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Image 
+            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+            alt="TUP Seal" 
+            width={56}
+            height={56}
+            className="h-14 w-auto" 
+          />
+          <div className="flex flex-col">
+            <h1 className="text-lg font-bold text-slate-900 tracking-tighter leading-none font-heading uppercase">
+              TUP-VISAYAS
+            </h1>
+            <span className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none mt-1">
+              SIT Monitoring System
+            </span>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="hidden sm:block text-right">
-              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest font-heading">Academic Session</p>
-              <p className="text-[10px] font-bold text-slate-900 font-sans">2025 - 2026</p>
-            </div>
-          </div>
+        </div>
+        <div className="hidden md:flex flex-col items-end">
+           <span className="text-[10px] font-semibold text-slate-300 uppercase tracking-[0.2em] mb-1">Academic Session</span>
+           <span className="text-sm font-bold text-slate-800 font-heading tracking-tight">2025 – 2026</span>
         </div>
       </header>
 
-      {/* 2. Main Portal Container */}
-      <main className="flex-1 flex items-center justify-center p-6 md:p-12">
-        <div className="w-full max-w-5xl bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-          
-          {/* Header Section */}
-          <div className="p-10 border-b border-slate-50">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight mb-2">
-              Student Industrial Training Portal
-            </h2>
-            <p className="text-sm text-slate-500 font-medium">Select the account type to continue.</p>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-8 p-10">
-            {/* Student Access Card */}
-            <div className="flex-1 p-8 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors group">
-              <div className="flex items-center gap-3 mb-6">
-                <GraduationCap className="h-6 w-6 text-primary" />
-                <h3 className="text-xl font-bold text-slate-900">Student Access</h3>
-              </div>
-              <p className="text-sm text-slate-500 leading-relaxed min-h-[4rem] mb-8">
-                For TUPV students enrolled in OJT/SIT. Log daily time record (DTR), upload journal, view evaluation.
-              </p>
-              <Link 
-                href="/login/student"
-                className="inline-flex h-12 items-center justify-center px-8 rounded-lg bg-primary text-white font-bold text-sm hover:shadow-lg hover:shadow-primary/20 transition-all shadow-md active:scale-95 mb-4"
-              >
-                Student Login
-              </Link>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">
-                Requires @tupv.edu.ph account
+      {/* MAIN CONTAINER */}
+      <main className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="max-w-5xl w-full bg-white rounded-[2.5rem] shadow-[0_10px_50px_-12px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
+          <div className="p-8 md:p-16">
+            
+            {/* CARD HEADER */}
+            <div className="mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 font-heading tracking-tight">
+                Student Industrial Training Portal
+              </h2>
+              <p className="text-sm md:text-base font-medium text-slate-400">
+                Select the account type to continue.
               </p>
             </div>
 
-            {/* Company Access Card */}
-            <div className="flex-1 p-8 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors group">
-              <div className="flex items-center gap-3 mb-6">
-                <Building2 className="h-6 w-6 text-slate-600" />
-                <h3 className="text-xl font-bold text-slate-900">Company / Supervisor Access</h3>
+            {/* SELECTION GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+              
+              {/* STUDENT ACCESS */}
+              <div className="group relative bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <GraduationCap className="h-6 w-6 text-primary" />
+                    <h3 className="text-xl font-bold text-slate-900 font-heading">Student Access</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
+                    For TUPV students enrolled in OJT/SIT. Log daily time record (DTR), upload journal, view evaluation.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <Link 
+                    href="/login/student"
+                    className="inline-flex w-fit items-center justify-center bg-primary px-8 py-3.5 rounded-xl text-white text-sm font-bold tracking-tight hover:bg-[#600000] active:scale-[0.98] transition-all"
+                  >
+                    Student Login
+                  </Link>
+                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-none">
+                    REQUIRES @TUPV.EDU.PH ACCOUNT
+                  </div>
+                </div>
               </div>
-              <p className="text-sm text-slate-500 leading-relaxed min-h-[4rem] mb-8">
-                For partner companies and industry supervisors. Verify trainee attendance and submit performance rating.
-              </p>
-              <Link 
-                href="/login/employer"
-                className="inline-flex h-12 items-center justify-center px-8 rounded-lg border border-slate-300 bg-slate-50 text-slate-700 font-bold text-sm hover:bg-slate-100 transition-all active:scale-95"
-              >
-                Company Login
-              </Link>
-            </div>
-          </div>
 
-          {/* 3. Announcement Board */}
-          <div className="px-10 pb-10">
-            <div className="p-8 rounded-xl bg-primary/5 border border-primary/10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-5">
-                 <ShieldCheck className="h-20 w-20 text-primary rotate-12" />
+              {/* COMPANY ACCESS */}
+              <div className="group bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-slate-200 hover:shadow-xl hover:shadow-slate-200/20 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <Building2 className="h-6 w-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
+                    <h3 className="text-xl font-bold text-slate-900 font-heading">Company / Supervisor Access</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
+                    For partner companies and industry supervisors. Verify trainee attendance and submit performance rating.
+                  </p>
+                </div>
+                <Link 
+                  href="/login/employer"
+                  className="inline-flex w-fit items-center justify-center bg-white border-2 border-slate-100 px-8 py-3.5 rounded-xl text-slate-700 text-sm font-bold tracking-tight hover:bg-slate-50 hover:border-slate-200 active:scale-[0.98] transition-all"
+                >
+                  Company Login
+                </Link>
               </div>
-              <h4 className="text-sm font-black text-primary uppercase tracking-widest mb-4">Announcements</h4>
-              <ul className="space-y-3">
-                {[
-                  "DTR submission deadline: Every Friday 5PM",
-                  "New: Upload photos in journal (max 2MB)",
-                  "For password reset, contact ojt@tupv.edu.ph"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm font-medium text-slate-800">
-                    <span className="w-1 h-1 rounded-full bg-primary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+
             </div>
+
+            {/* ANNOUNCEMENTS SECTION */}
+            <div className="relative bg-red-50/50 rounded-2xl border border-red-100/50 p-8 overflow-hidden">
+               {/* Background Shield Icon */}
+               <ShieldCheck className="absolute right-8 top-1/2 -translate-y-1/2 h-24 w-24 text-red-100/40 -rotate-12 pointer-events-none" />
+               
+               <h4 className="text-[11px] font-bold text-red-800 uppercase tracking-[0.2em] mb-4 font-heading">
+                 ANNOUNCEMENTS
+               </h4>
+               <ul className="space-y-2.5 relative z-10">
+                 <li className="flex items-center gap-3 text-xs font-semibold text-slate-600">
+                    <span className="h-1 w-1 bg-red-400 rounded-full" />
+                    DTR submission deadline: Every Friday 5PM
+                 </li>
+                 <li className="flex items-center gap-3 text-xs font-semibold text-slate-600">
+                    <span className="h-1 w-1 bg-red-400 rounded-full" />
+                    New: Upload photos in journal (max 2MB)
+                 </li>
+                 <li className="flex items-center gap-3 text-xs font-semibold text-slate-600">
+                    <span className="h-1 w-1 bg-red-400 rounded-full" />
+                    For password reset, contact ojt@tupv.edu.ph
+                 </li>
+               </ul>
+            </div>
+
           </div>
         </div>
       </main>
 
-      {/* 4. Registry Services & Footer */}
-      <footer className="w-full max-w-5xl mx-auto pb-12 px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="flex gap-8">
-          <Link href="/signup/student" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors mb-1 md:mb-0">
-             Student Registry
+      {/* FOOTER */}
+      <footer className="w-full px-8 md:px-20 py-10 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-slate-100/50">
+        <div className="flex items-center gap-8">
+          <Link href="/signup/student" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-[0.2em] transition-colors">
+            STUDENT REGISTRY
           </Link>
-          <Link href="/signup/employer" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">
-             Partner Application
+          <Link href="/signup/employer" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-[0.2em] transition-colors">
+            PARTNER APPLICATION
           </Link>
         </div>
-        <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">
-          © 2026 Technological University of the Philippines Visayas • Digital Logbook System
+        <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.2em] text-center md:text-right leading-relaxed">
+          © 2026 TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES VISAYAS • DIGITAL LOGBOOK SYSTEM
         </p>
       </footer>
+
     </div>
   );
 }
+
