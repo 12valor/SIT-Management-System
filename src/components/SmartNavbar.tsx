@@ -24,8 +24,8 @@ export function SmartNavbar() {
     <>
       <header className="fixed top-0 w-full z-50 flex flex-col shadow-sm">
         {/* Top Announcement Banner */}
-        <div className="bg-[#1f1646] text-white py-2 px-4 flex justify-center items-center gap-3 text-[11px] md:text-xs">
-          <span className="bg-white/10 px-2.5 py-0.5 rounded-full font-medium tracking-wide">
+        <div className="bg-primary text-white py-2 px-4 flex justify-center items-center gap-3 text-[11px] md:text-xs">
+          <span className="bg-white/20 px-2.5 py-0.5 rounded-full font-medium tracking-wide">
             New
           </span>
           <span className="hover:underline cursor-pointer flex items-center gap-1 font-medium transition-all text-white/90 hover:text-white">
@@ -53,20 +53,20 @@ export function SmartNavbar() {
               </Link>
 
               <nav className="hidden md:flex items-center gap-6">
-                <Link className="flex items-center gap-1 text-[13px] font-semibold text-[#0f172a] hover:text-[#0b48d4] transition-colors" href="/login">
-                  Features <ChevronDown className="h-3.5 w-3.5 text-[#64748b]" />
+                <Link className="flex items-center gap-1 text-[13px] font-semibold text-[#0f172a] hover:text-primary transition-colors" href="/login">
+                  Portals <ChevronDown className="h-3.5 w-3.5 text-[#64748b]" />
                 </Link>
-                <Link className="flex items-center gap-1 text-[13px] font-semibold text-[#0f172a] hover:text-[#0b48d4] transition-colors" href="/login">
-                  Use Cases <ChevronDown className="h-3.5 w-3.5 text-[#64748b]" />
+                <Link className="flex items-center gap-1 text-[13px] font-semibold text-[#0f172a] hover:text-primary transition-colors" href="/login">
+                  Programs <ChevronDown className="h-3.5 w-3.5 text-[#64748b]" />
                 </Link>
-                <Link className="text-[13px] font-semibold text-[#0f172a] hover:text-[#0b48d4] transition-colors" href="/login">
-                  Prices
+                <Link className="text-[13px] font-semibold text-[#0f172a] hover:text-primary transition-colors" href="/login">
+                  Partners
                 </Link>
-                <Link className="text-[13px] font-semibold text-[#0f172a] hover:text-[#0b48d4] transition-colors" href="/login">
-                  Customers
+                <Link className="text-[13px] font-semibold text-[#0f172a] hover:text-primary transition-colors" href="/login">
+                  Resources
                 </Link>
-                <Link className="text-[13px] font-semibold text-[#0f172a] hover:text-[#0b48d4] transition-colors" href="/login">
-                  About Us
+                <Link className="text-[13px] font-semibold text-[#0f172a] hover:text-primary transition-colors" href="/login">
+                  About
                 </Link>
               </nav>
             </div>
@@ -75,14 +75,14 @@ export function SmartNavbar() {
             <div className="flex items-center gap-4">
               <Link 
                 href="/login" 
-                className="hidden sm:block text-[14px] font-bold text-[#0b48d4] hover:text-[#0836a0] transition-colors px-4"
+                className="hidden sm:block text-[14px] font-bold text-primary hover:text-primary/80 transition-colors px-4"
               >
                 Log In
               </Link>
               
               <Link 
                 href="/login" 
-                className="hidden sm:inline-flex items-center justify-center bg-[#0b48d4] hover:bg-[#0836a0] text-white px-6 py-2.5 rounded-full text-[14px] font-bold transition-all hover:shadow-lg hover:shadow-[#0b48d4]/20 active:scale-95"
+                className="hidden sm:inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-[14px] font-bold transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-95"
               >
                 Get Started
               </Link>
@@ -109,20 +109,20 @@ export function SmartNavbar() {
           >
             <nav className="flex flex-col gap-6">
               <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4 flex justify-between" href="/login">
-                Features <ChevronDown className="h-5 w-5 text-slate-400" />
+                Portals <ChevronDown className="h-5 w-5 text-slate-400" />
               </Link>
               <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4 flex justify-between" href="/login">
-                Use Cases <ChevronDown className="h-5 w-5 text-slate-400" />
+                Programs <ChevronDown className="h-5 w-5 text-slate-400" />
               </Link>
-              <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4" href="/login">Prices</Link>
-              <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4" href="/login">Customers</Link>
-              <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4" href="/login">About Us</Link>
+              <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4" href="/login">Partners</Link>
+              <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4" href="/login">Resources</Link>
+              <Link className="text-lg font-bold text-[#0f172a] border-b border-slate-100 pb-4" href="/login">About</Link>
               
               <div className="flex flex-col gap-4 mt-4">
-                <Link href="/login" className="w-full py-4 text-center text-[#0b48d4] font-bold text-lg">
+                <Link href="/login" className="w-full py-4 text-center text-primary font-bold text-lg">
                   Log In
                 </Link>
-                <Link href="/login" className="w-full py-4 bg-[#0b48d4] text-white text-center rounded-xl font-bold text-lg">
+                <Link href="/login" className="w-full py-4 bg-primary text-white text-center rounded-xl font-bold text-lg">
                   Get Started
                 </Link>
               </div>
