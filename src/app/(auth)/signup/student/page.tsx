@@ -106,8 +106,8 @@ export default function StudentSignupPage() {
 
       {/* Right side - Registration Form */}
       <div className="flex-1 flex flex-col bg-white relative z-20 overflow-y-auto">
-        <div className="min-h-full flex flex-col justify-center p-8 sm:p-12 lg:p-20">
-          <div className="max-w-md w-full lg:ml-12 xl:ml-20 my-auto">
+        <div className="flex-1 flex flex-col p-8 sm:p-12 lg:p-20 lg:pt-32 lg:pb-32">
+          <div className="max-w-md w-full lg:ml-12 xl:ml-20">
             <div className="mb-10 text-left">
             <Link href="/login/student" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors mb-10 font-heading group">
               <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Back to Login
