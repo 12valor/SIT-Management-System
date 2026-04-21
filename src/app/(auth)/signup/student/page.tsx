@@ -79,14 +79,16 @@ export default function StudentSignupPage() {
         </div>
 
         <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
-          <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-8 font-heading">Onboarding Manifest</p>
-          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-tight mb-12 font-heading">
-            Your First <br />Step to <br /> 
-            <span className="text-primary italic">Excellence.</span>
-          </h1>
-          <p className="text-xl text-slate-500 font-medium leading-relaxed font-sans max-w-sm">
-            Securely register your academic credentials to join the TUP-Visayas Supervised Industrial Training network.
-          </p>
+          <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-12 font-heading">Onboarding Manifest</p>
+          <div className="relative w-full aspect-square max-w-lg animate-in fade-in zoom-in duration-1000">
+            <Image 
+              src="/images/auth/student_guide.png" 
+              alt="How to Register Guide" 
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
 
       </div>

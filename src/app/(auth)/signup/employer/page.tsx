@@ -91,14 +91,16 @@ export default function EmployerSignupPage() {
         </div>
 
         <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
-          <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-8 font-heading">Partner Intake</p>
-          <h1 className="text-8xl font-bold text-slate-900 tracking-tighter leading-tight mb-12 font-heading">
-            Secure <br />Future <br /> 
-            <span className="text-primary italic">Talent.</span>
-          </h1>
-          <p className="text-xl text-slate-500 font-medium leading-relaxed font-sans max-w-sm">
-            Onboard your organization to the TUP-Visayas Supervised Industrial Training network and discover the next generation of professionals.
-          </p>
+          <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-12 font-heading">Partner Intake</p>
+          <div className="relative w-full aspect-square max-w-lg animate-in fade-in zoom-in duration-1000">
+            <Image 
+              src="/images/auth/employer_guide.png" 
+              alt="How to Register Guide" 
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
 
       </div>
