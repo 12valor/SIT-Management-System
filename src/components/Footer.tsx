@@ -5,9 +5,9 @@ export function Footer() {
   return (
     <footer className="pt-24 pb-12 bg-slate-50 border-t border-slate-100">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-row lg:justify-between gap-12 mb-16">
           {/* BRAND COLUMN */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 max-w-sm">
             <div className="flex items-center gap-4">
               <Image 
                 src="/Technological_University_of_the_Philippines_Seal.svg.png" 
@@ -21,7 +21,7 @@ export function Footer() {
                  <span className="text-[10px] font-medium text-slate-400 tracking-widest font-heading">Institutional Link</span>
               </div>
             </div>
-            <p className="text-sm text-slate-500 leading-relaxed font-sans max-w-xs">
+            <p className="text-sm text-slate-500 leading-relaxed font-sans">
               The official landing for Supervised Industrial Training at Technological University of the Philippines - Visayas. Connecting emerging talent with industry leadership.
             </p>
             <div className="flex items-center gap-4">
@@ -38,7 +38,7 @@ export function Footer() {
           </div>
 
           {/* PORTALS COLUMN */}
-          <div>
+          <div className="min-w-fit">
             <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Access Portals</h4>
             <ul className="space-y-4">
               <li><Link href="/login/student" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">Student Portal</Link></li>
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           {/* RESOURCES COLUMN */}
-          <div>
+          <div className="min-w-fit">
             <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Resources</h4>
             <ul className="space-y-4">
               <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">SIT Guidelines</Link></li>
@@ -59,7 +59,7 @@ export function Footer() {
           </div>
 
           {/* INSTITUTIONAL COLUMN */}
-          <div>
+          <div className="min-w-fit">
             <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Institutional</h4>
             <ul className="space-y-4">
               <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">About TUP-Visayas</Link></li>
