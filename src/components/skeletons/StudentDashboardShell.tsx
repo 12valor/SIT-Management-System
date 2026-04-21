@@ -123,16 +123,20 @@ export function StudentDashboardShell({ data, userName }: Props) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
                   </div>
-                  <p className="text-sm font-bold text-muted-foreground mb-6 font-medium">
-                    You haven&apos;t applied to any companies yet.<br />
-                    Browse industry partners and submit your first application.
+                  <p className="text-sm font-bold text-muted-foreground font-medium max-w-xs leading-relaxed">
+                    {data?.hiredPlacement 
+                      ? "You are currently deployed. Your application phase is complete."
+                      : "You haven't applied to any companies yet. Browse industry partners and submit your first application."
+                    }
                   </p>
-                  <Link
-                    href="/student/opportunities"
-                    className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-primary text-white text-xs font-bold hover:shadow-lg hover:shadow-primary/20 transition-all font-heading"
-                  >
-                    Browse opportunities
-                  </Link>
+                  {!data?.hiredPlacement && (
+                    <Link
+                      href="/student/opportunities"
+                      className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-primary text-white text-xs font-bold hover:shadow-lg hover:shadow-primary/20 transition-all font-heading mt-6"
+                    >
+                      Browse opportunities
+                    </Link>
+                  )}
                 </>
               ) : (
                 <div className="w-full divide-y divide-border">
@@ -193,7 +197,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
               </div>
               <div className="divide-y divide-slate-50">
                 {[
-                  { label: "Browse opportunities", href: "/student/opportunities" },
+                  ...(data?.hiredPlacement ? [] : [{ label: "Browse opportunities", href: "/student/opportunities" }]),
                   { label: "Upload documents", href: "/student/documents" },
                   { label: "Request MOA", href: "#" },
                 ].map((link) => (

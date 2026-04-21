@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { getStudentPlacementStatus } from "./actions";
 
 export default function StudentLayout({
   children,
@@ -27,10 +28,21 @@ export default function StudentLayout({
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isPlaced, setIsPlaced] = React.useState(false);
+
+  React.useEffect(() => {
+    async function checkPlacement() {
+      const result = await getStudentPlacementStatus();
+      setIsPlaced(result.isPlaced);
+    }
+    if (status === "authenticated") {
+      checkPlacement();
+    }
+  }, [status]);
 
   const navItems = [
     { name: "Executive Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
-    { name: "Industry Opportunities", href: "/student/opportunities", icon: Briefcase },
+    ...(!isPlaced ? [{ name: "Industry Opportunities", href: "/student/opportunities", icon: Briefcase }] : []),
     { name: "Digital Logbook", href: "/student/logbook", icon: BookOpen },
     { name: "Training Documents", href: "/student/documents", icon: FileText },
     { name: "SIT Certification", href: "/student/completion", icon: Award },
