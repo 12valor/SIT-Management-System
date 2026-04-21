@@ -269,5 +269,6 @@ export default function EmployerSignupPage() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

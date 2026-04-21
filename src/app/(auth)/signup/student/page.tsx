@@ -206,5 +206,6 @@ export default function StudentSignupPage() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
