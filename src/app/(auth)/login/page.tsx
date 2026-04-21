@@ -135,10 +135,3 @@ export default function LoginGatePage() {
     </div>
   );
 }
-    </div>
-  );
-}
-
-    </div>
-  );
-}
