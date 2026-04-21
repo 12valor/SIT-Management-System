@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Building2, ShieldCheck, Facebook, Linkedin, Twitter } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 /**
@@ -70,12 +70,14 @@ export default function LoginGatePage() {
                   </p>
                 </div>
                 <div className="space-y-4">
-                  <Link 
-                    href="/login/student"
-                    className="inline-flex w-fit items-center justify-center bg-primary px-8 py-3.5 rounded-xl text-white text-sm font-bold tracking-tight hover:bg-[#600000] active:scale-[0.98] transition-all"
-                  >
-                    Student Login
-                  </Link>
+                  <div className="flex flex-col gap-4">
+                    <Link 
+                      href="/login/student"
+                      className="inline-flex w-fit items-center justify-center bg-primary px-8 py-3.5 rounded-xl text-white text-sm font-bold tracking-tight hover:bg-[#600000] active:scale-[0.98] transition-all"
+                    >
+                      Student Login
+                    </Link>
+                  </div>
                   <div className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-none">
                     REQUIRES @TUPV.EDU.PH ACCOUNT
                   </div>
@@ -130,97 +132,12 @@ export default function LoginGatePage() {
           </div>
         </div>
       </main>
-
-      {/* FOOTER */}
-      <footer className="w-full bg-white pt-20 pb-12 px-8 md:px-20 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          {/* Main Footer Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16">
-            
-            {/* BRAND COLUMN */}
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-4">
-                <Image 
-                  src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-                  alt="TUP Seal" 
-                  width={48}
-                  height={48}
-                  className="h-12 w-auto grayscale contrast-125 brightness-75" 
-                />
-                <div className="flex flex-col uppercase">
-                   <h5 className="text-sm font-bold text-slate-900 font-heading leading-tight">TUP-V SIT</h5>
-                   <span className="text-[10px] font-medium text-slate-400 tracking-widest font-heading">Institutional Link</span>
-                </div>
-              </div>
-              <p className="text-xs leading-relaxed text-slate-500 font-medium">
-                The official landing for Supervised Industrial Training at Technological University of the Philippines - Visayas. Connecting emerging talent with industry leadership.
-              </p>
-              <div className="flex items-center gap-3">
-                <Link href="#" className="h-8 w-8 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/20 transition-all">
-                  <Facebook className="h-4 w-4" />
-                </Link>
-                <Link href="#" className="h-8 w-8 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/20 transition-all">
-                  <Linkedin className="h-4 w-4" />
-                </Link>
-                <Link href="#" className="h-8 w-8 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/20 transition-all">
-                  <Twitter className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* ACCESS COL */}
-            <div className="flex flex-col gap-8">
-              <h5 className="text-[11px] font-bold text-slate-900 uppercase tracking-[0.2em] font-heading">
-                ACCESS PORTALS
-              </h5>
-              <div className="flex flex-col gap-4">
-                <Link href="/login/student" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Student Portal</Link>
-                <Link href="/login/employer" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Employer Portal</Link>
-                <Link href="/signup/student" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">New Student Registration</Link>
-              </div>
-            </div>
-
-            {/* RESOURCES COL */}
-            <div className="flex flex-col gap-8">
-              <h5 className="text-[11px] font-bold text-slate-900 uppercase tracking-[0.2em] font-heading">
-                RESOURCES
-              </h5>
-              <div className="flex flex-col gap-4">
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">SIT Guidelines</Link>
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Partner Companies</Link>
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Digital Logbook Guide</Link>
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Training Modules</Link>
-              </div>
-            </div>
-
-            {/* INSTITUTIONAL COL */}
-            <div className="flex flex-col gap-8">
-              <h5 className="text-[11px] font-bold text-slate-900 uppercase tracking-[0.2em] font-heading">
-                INSTITUTIONAL
-              </h5>
-              <div className="flex flex-col gap-4">
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">About TUP-Visayas</Link>
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">UIPEN Strategic Office</Link>
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Contact Registry</Link>
-                <Link href="#" className="text-xs font-semibold text-slate-500 hover:text-primary transition-colors">Technical Support</Link>
-              </div>
-            </div>
-
-          </div>
-
-          {/* BOTTOM BAR */}
-          <div className="pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.15em]">
-              © 2026 TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES - VISAYAS. ALL RIGHTS RESERVED.
-            </p>
-            <div className="flex items-center gap-8">
-              <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">PRIVACY PROTOCOL</Link>
-              <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">TERMS OF SERVICE</Link>
-              <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">SECURITY</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+    </div>
+  );
+}
+    </div>
+  );
+}
 
     </div>
   );

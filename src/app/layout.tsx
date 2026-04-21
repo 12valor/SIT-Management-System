@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 };
 
 import { AuthProvider } from "@/components/providers/session-provider";
+import { Footer } from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -33,7 +34,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${poppins.variable} ${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="min-h-screen flex flex-col font-sans">
         <AuthProvider>
           <ThemeProvider
             attribute="class"
@@ -41,7 +42,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <div className="flex-1 flex flex-col">
+              {children}
+            </div>
+            <Footer />
           </ThemeProvider>
         </AuthProvider>
       </body>
