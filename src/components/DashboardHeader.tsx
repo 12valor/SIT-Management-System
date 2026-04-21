@@ -95,7 +95,7 @@ export function DashboardHeader({
               </p>
            </div>
            
-           <div className="h-9 w-9 rounded-full bg-[#800000] flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm border border-[#800000]/20">
+           <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm border border-primary/20">
             {session?.user?.name?.split(' ').filter(Boolean).map((n: string) => n[0]).join('') || roleInitials}
           </div>
         </div>

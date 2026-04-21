@@ -95,7 +95,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
           <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
             <div className="px-6 py-5 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-bold text-foreground">Recent Applicants</h3>
-              <Link href="/employer/applicants" className="text-[10px] font-bold text-[#800000] uppercase tracking-widest hover:underline">
+              <Link href="/employer/applicants" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline">
                 View all
               </Link>
             </div>
@@ -128,9 +128,9 @@ export function EmployerDashboardShell({ data, userName }: Props) {
                         <td className="px-6 py-4 text-right">
                           <span className={cn(
                             "px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
-                            app.status === "ACCEPTED" ? "bg-emerald-50 text-emerald-600" :
-                            app.status === "REJECTED" ? "bg-red-50 text-red-600" :
-                            "bg-amber-50 text-amber-600"
+                            app.status === "ACCEPTED" ? "bg-primary text-white" :
+                            app.status === "REJECTED" ? "bg-red-50 text-red-600 border border-red-100" :
+                            "bg-primary/10 text-primary"
                           )}>
                             {app.status}
                           </span>
@@ -145,7 +145,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
 
           {/* Right: Insights & Actions */}
           <div className="space-y-6">
-            <div className="bg-[#800000] p-6 rounded-xl shadow-lg shadow-red-900/10 text-white space-y-6">
+            <div className="bg-primary p-6 rounded-xl shadow-lg shadow-primary/10 text-white space-y-6">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 mb-1">Company Health</p>
                 <h3 className="text-lg font-bold">Industry Engagement</h3>
@@ -183,7 +183,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
               <p className="text-[11px] text-muted-foreground leading-relaxed mb-4">
                 For administrative assistance regarding MOA/MOU processing, please contact the TUP-V SIT Office.
               </p>
-              <Link href="#" className="text-xs font-bold text-[#800000] hover:underline flex items-center gap-1">
+              <Link href="#" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
                 Contact Desk <ChevronRight className="h-3 w-3" data-no-skeleton />
               </Link>
             </div>

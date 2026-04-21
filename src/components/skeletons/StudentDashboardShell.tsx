@@ -73,7 +73,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
               </div>
               <p className="text-xs text-muted-foreground mt-1">hours logged</p>
             </div>
-            <Link href="/student/logbook" className="text-xs font-bold text-[#007bff] hover:underline mt-4">
+            <Link href="/student/logbook" className="text-xs font-bold text-primary hover:underline mt-4">
               View logbook
             </Link>
           </div>
@@ -98,7 +98,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
               {data?.hiredPlacement ? "Hired" : "Open"}
             </span>
             <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
-              <span className={cn("h-2 w-2 rounded-full", data?.hiredPlacement ? "bg-emerald-500" : "bg-amber-500")} />
+              <span className={cn("h-2 w-2 rounded-full", data?.hiredPlacement ? "bg-primary" : "bg-primary/30")} />
               {data?.hiredPlacement ? "Deployed to Company" : "Not yet deployed"}
             </p>
           </div>
@@ -129,7 +129,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
                   </p>
                   <Link
                     href="/student/opportunities"
-                    className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-[#007bff] text-white text-xs font-bold hover:bg-[#0069d9] transition-colors"
+                    className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-primary text-white text-xs font-bold hover:shadow-lg hover:shadow-primary/20 transition-all font-heading"
                   >
                     Browse opportunities
                   </Link>
@@ -149,9 +149,9 @@ export function StudentDashboardShell({ data, userName }: Props) {
                       </div>
                       <span className={cn(
                         "px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
-                        app.status === "ACCEPTED" ? "bg-emerald-50 text-emerald-600" :
-                        app.status === "REJECTED" ? "bg-red-50 text-red-600" :
-                        "bg-amber-50 text-amber-600"
+                        app.status === "ACCEPTED" ? "bg-primary text-white" :
+                        app.status === "REJECTED" ? "bg-red-50 text-red-600 border border-red-100" :
+                        "bg-primary/10 text-primary"
                       )}>
                         {app.status}
                       </span>
@@ -173,14 +173,14 @@ export function StudentDashboardShell({ data, userName }: Props) {
                 </div>
                 <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-slate-300 rounded-full transition-all duration-1000"
+                    className="h-full bg-primary rounded-full transition-all duration-1000"
                     style={{ width: `${hoursPct}%` }}
                   />
                 </div>
               </div>
               <Link
                 href="/student/logbook"
-                className="flex h-11 w-full items-center justify-center rounded-lg bg-[#800000] text-white text-xs font-bold hover:bg-red-900 transition-colors mt-4"
+                className="flex h-11 w-full items-center justify-center rounded-lg bg-primary text-white text-xs font-bold hover:shadow-lg hover:shadow-primary/20 transition-all mt-4 font-heading"
               >
                 Update logbook
               </Link>

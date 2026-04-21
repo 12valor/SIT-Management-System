@@ -13,7 +13,7 @@ export function Greeting({ name }: { name: string }) {
   }, []);
 
   return (
-    <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+    <h2 className="text-2xl font-bold tracking-tight text-foreground">
       {greeting}, {name}
     </h2>
   );
