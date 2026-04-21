@@ -46,7 +46,7 @@ export function SmartNavbar() {
             : "bg-transparent border-transparent py-4 text-white"
         }`}
       >
-        <div className="container mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-4 group">
             <Image 
               src="/Technological_University_of_the_Philippines_Seal.svg.png" 
@@ -66,7 +66,7 @@ export function SmartNavbar() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-12">
             <Link className={`text-[10px] font-bold uppercase tracking-widest transition-colors font-heading ${scrolled ? "text-slate-500 hover:text-primary" : "text-white/70 hover:text-white"}`} href="/login">
               Opportunities
             </Link>
