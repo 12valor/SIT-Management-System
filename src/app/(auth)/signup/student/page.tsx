@@ -55,7 +55,7 @@ export default function StudentSignupPage() {
   return (
     <div className="flex h-screen overflow-hidden bg-white">
       {/* Left side - Institutional Branding */}
-      <div className="relative hidden lg:flex lg:w-2/5 xl:w-[45%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 min-w-0 h-full">
+      <div className="relative hidden lg:flex lg:w-[70%] bg-slate-50 flex-col justify-between p-12 overflow-hidden border-r border-slate-200 min-w-0 h-full transition-all duration-500">
         <div className="absolute inset-0 pointer-events-none select-none">
           <Image 
             src="/images/auth/student.png" 
@@ -105,9 +105,9 @@ export default function StudentSignupPage() {
       </div>
 
       {/* Right side - Registration Form */}
-      <div className="flex-1 flex flex-col bg-white relative z-20 overflow-y-auto">
-        <div className="flex-1 flex flex-col p-8 sm:p-12 lg:p-20 lg:pt-32 lg:pb-32">
-          <div className="max-w-md w-full lg:ml-12 xl:ml-20">
+      <div className="lg:w-[30%] flex-1 flex flex-col bg-white relative z-20 overflow-y-auto">
+        <div className="flex-1 flex flex-col p-8 sm:p-12 lg:p-10 lg:pt-20 lg:pb-20">
+          <div className="max-w-sm w-full lg:ml-auto lg:mr-0 xl:mr-2">
             <div className="mb-10 text-left">
             <Link href="/login/student" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors mb-10 font-heading group">
               <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Back to Login
