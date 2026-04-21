@@ -81,8 +81,8 @@ export default function EmployerPostingsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-800">SIT Opportunities</h1>
-          <p className="text-sm text-slate-500 font-medium">Manage and monitor your active industrial training roles.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">SIT Opportunities</h1>
+          <p className="text-sm text-muted-foreground font-medium">Manage and monitor your active industrial training roles.</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
@@ -95,34 +95,34 @@ export default function EmployerPostingsPage() {
       {/* Search + summary */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative w-full max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
           <input
             type="text"
             placeholder="Filter opportunities..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 h-11 rounded-xl border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all shadow-sm"
+            className="w-full pl-11 pr-4 h-11 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
           />
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+        <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest bg-card px-3 py-1.5 rounded-lg border border-border shadow-sm">
           {filtered.length} Displaying results
         </p>
       </div>
 
       {/* Postings table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100">
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Position Title</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden md:table-cell">Modality</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden md:table-cell">Duration</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Applications</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">Visibility</th>
+              <tr className="bg-muted/30 border-b border-border">
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Position Title</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Modality</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Duration</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Applications</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-right">Visibility</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-border/50">
               {filtered.length === 0 && !isLoading ? (
                 <tr>
                   <td colSpan={5} className="py-32 text-center">
@@ -133,32 +133,32 @@ export default function EmployerPostingsPage() {
                 </tr>
               ) : (
                 filtered.map((p) => (
-                  <tr key={p.id} className="hover:bg-slate-50/50 transition-colors group">
+                  <tr key={p.id} className="hover:bg-muted/30 transition-colors group">
                     <td className="px-6 py-4">
-                      <p className="font-bold text-slate-800 leading-tight">{p.title}</p>
-                      <div className="flex items-center gap-1.5 mt-1 text-[10px] font-medium text-slate-400">
+                      <p className="font-bold text-foreground leading-tight">{p.title}</p>
+                      <div className="flex items-center gap-1.5 mt-1 text-[10px] font-medium text-muted-foreground/60">
                         <MapPin className="h-3 w-3" /> {p.location}
                       </div>
                     </td>
                     <td className="px-6 py-4 hidden md:table-cell">
-                      <span className="text-xs font-bold text-slate-500">{TYPE_LABEL[p.type]}</span>
+                      <span className="text-xs font-bold text-muted-foreground">{TYPE_LABEL[p.type]}</span>
                     </td>
                     <td className="px-6 py-4 hidden md:table-cell">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground/60">
                         <Clock className="h-3.5 w-3.5" /> {p.requiredHours}h Target
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="inline-flex items-center justify-center min-w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-sm font-bold text-slate-700 tabular-nums">
+                      <div className="inline-flex items-center justify-center min-w-8 h-8 rounded-lg bg-muted border border-border text-sm font-bold text-foreground tabular-nums">
                         {p._count.applications}
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <span className={cn(
                         "inline-flex items-center px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider border shadow-sm",
-                        p.status === 'OPEN' ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-slate-50 text-slate-500 border-slate-200"
+                        p.status === 'OPEN' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" : "bg-muted text-muted-foreground/60 border-border"
                       )}>
-                        <div className={cn("w-1 h-1 rounded-full mr-1.5", p.status === 'OPEN' ? "bg-emerald-500 animate-pulse" : "bg-slate-400")} />
+                        <div className={cn("w-1 h-1 rounded-full mr-1.5", p.status === 'OPEN' ? "bg-emerald-500 animate-pulse" : "bg-muted-foreground/40")} />
                         {p.status}
                       </span>
                     </td>
@@ -172,14 +172,14 @@ export default function EmployerPostingsPage() {
 
       {/* Create Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in transition-all">
-          <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
+          <div className="relative w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-muted/30">
               <div className="space-y-1">
-                <h3 className="text-lg font-bold text-slate-900">Post New SIT Opportunity</h3>
-                <p className="text-xs text-slate-500 font-medium">Define parameters for student internships.</p>
+                <h3 className="text-lg font-bold text-foreground">Post New SIT Opportunity</h3>
+                <p className="text-xs text-muted-foreground font-medium">Define parameters for student internships.</p>
               </div>
-              <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors text-slate-400 hover:text-slate-600">
+              <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors text-muted-foreground/40 hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -191,48 +191,48 @@ export default function EmployerPostingsPage() {
               )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Opportunity Title *</label>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Opportunity Title *</label>
                   <input name="title" required placeholder="e.g. Software Systems Intern"
-                    className="w-full h-11 px-4 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all" />
+                    className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Site Location *</label>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Site Location *</label>
                   <input name="location" required placeholder="e.g. Metro Manila"
-                    className="w-full h-11 px-4 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all" />
+                    className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Training Modality</label>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Training Modality</label>
                   <div className="relative">
                     <select name="type" defaultValue="ON_SITE"
-                      className="w-full h-11 pl-4 pr-10 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] appearance-none cursor-pointer transition-all">
+                      className="w-full h-11 pl-4 pr-10 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary appearance-none cursor-pointer transition-all">
                       <option value="ON_SITE">On-site Presence</option>
                       <option value="REMOTE">Remote Operations</option>
                       <option value="HYBRID">Hybrid Engagement</option>
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300 pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Clock Requirement</label>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Clock Requirement</label>
                   <input name="requiredHours" type="number" defaultValue={300} min={1}
-                    className="w-full h-11 px-4 rounded-lg border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all" />
+                    className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Industrial Scope *</label>
+                <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Scope *</label>
                 <textarea name="description" required rows={3} placeholder="Define duties, technical expectations, and academic requirements..."
-                  className="w-full p-4 h-32 rounded-xl border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] resize-none shadow-sm transition-all" />
+                  className="w-full p-4 h-32 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase text-slate-400 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
-                <div className="min-h-[44px] border border-slate-200 rounded-xl bg-slate-50/50 p-2.5 flex flex-wrap gap-2 transition-all">
+                <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
+                <div className="min-h-[44px] border border-border rounded-xl bg-muted/30 p-2.5 flex flex-wrap gap-2 transition-all">
                   {tags.map((t) => (
-                    <span key={t} className="flex items-center gap-1.5 px-2.5 py-1 bg-white text-slate-600 text-[10px] font-bold rounded-lg border border-slate-100 shadow-sm">
-                      {t} <X className="h-3 w-3 cursor-pointer text-slate-300 hover:text-red-500" onClick={() => setTags(tags.filter(x => x !== t))} />
+                    <span key={t} className="flex items-center gap-1.5 px-2.5 py-1 bg-card text-muted-foreground text-[10px] font-bold rounded-lg border border-border shadow-sm">
+                      {t} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setTags(tags.filter(x => x !== t))} />
                     </span>
                   ))}
                   <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
-                    placeholder={tags.length === 0 ? "e.g. React, Logistics, CAD..." : ""} className="flex-1 bg-transparent outline-none text-sm min-w-[120px] ml-2" />
+                    placeholder={tags.length === 0 ? "e.g. React, Logistics, CAD..." : ""} className="flex-1 bg-transparent outline-none text-sm text-foreground min-w-[120px] ml-2" />
                 </div>
               </div>
               <div className="pt-2">

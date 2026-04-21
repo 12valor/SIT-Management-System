@@ -44,13 +44,13 @@ export function StudentDashboardShell({ data, userName }: Props) {
       }}
       fallback={
         <div className="animate-pulse space-y-8">
-          <div className="h-8 w-48 bg-slate-200 rounded-lg" />
+          <div className="h-8 w-48 bg-muted rounded-lg" />
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-28 bg-slate-100 rounded-xl border border-slate-200" />
+              <div key={i} className="h-28 bg-muted rounded-xl border border-border" />
             ))}
           </div>
-          <div className="h-64 bg-slate-100 rounded-xl border border-slate-200" />
+          <div className="h-64 bg-muted rounded-xl border border-border" />
         </div>
       }
     >
@@ -58,7 +58,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
         {/* 1. Header Greeting */}
         <div>
           <Greeting name={userName?.split(" ")[0] || "Student"} />
-          <p className="text-sm text-slate-500 font-medium mt-1">
+          <p className="text-sm text-muted-foreground font-medium mt-1">
             Here&apos;s your SIT progress for A.Y. 2025-2026
           </p>
         </div>
@@ -110,7 +110,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
           <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm overflow-hidden flex flex-col">
             <div className="px-6 py-5 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-bold text-foreground">Application history</h3>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              <span className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                 {data?.applications.length ?? 0} records
               </span>
             </div>
@@ -147,8 +147,8 @@ export function StudentDashboardShell({ data, userName }: Props) {
                           {app.companyName[0]}
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-slate-900">{app.postingTitle}</p>
-                          <p className="text-[11px] text-slate-500 font-medium">{app.companyName}</p>
+                          <p className="text-sm font-bold text-foreground">{app.postingTitle}</p>
+                          <p className="text-[11px] text-muted-foreground font-medium">{app.companyName}</p>
                         </div>
                       </div>
                       <span className={cn(
@@ -172,8 +172,8 @@ export function StudentDashboardShell({ data, userName }: Props) {
               <h3 className="text-sm font-bold text-foreground">SIT progress</h3>
               <div>
                 <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-xl font-bold text-slate-900">{data?.totalHours ?? 0} / 300 hours</span>
-                  <span className="text-xs font-bold text-slate-400">{hoursPct}% complete</span>
+                  <span className="text-xl font-bold text-foreground">{data?.totalHours ?? 0} / 300 hours</span>
+                  <span className="text-xs font-bold text-muted-foreground">{hoursPct}% complete</span>
                 </div>
                 <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                   <div
@@ -204,10 +204,10 @@ export function StudentDashboardShell({ data, userName }: Props) {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all"
+                    className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                   >
                     {link.label}
-                    <svg className="h-3 w-3 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-3 w-3 text-muted-foreground/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>

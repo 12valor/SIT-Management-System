@@ -62,13 +62,13 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
       }}
       fallback={
         <div className="animate-pulse space-y-8">
-          <div className="h-8 w-64 bg-slate-200 rounded-lg" />
+          <div className="h-8 w-64 bg-muted rounded-lg" />
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-28 bg-slate-100 rounded-xl border border-slate-200" />
+              <div key={i} className="h-28 bg-muted rounded-xl border border-border" />
             ))}
           </div>
-          <div className="h-96 bg-slate-100 rounded-xl border border-slate-200" />
+          <div className="h-96 bg-muted rounded-xl border border-border" />
         </div>
       }
     >
@@ -85,8 +85,8 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           </div>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex flex-col items-end">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Placement Velocity</p>
-              <p className="text-xl font-bold text-[#800000]">{placementRate}%</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Placement Velocity</p>
+              <p className="text-xl font-bold text-primary">{placementRate}%</p>
             </div>
             <div className="h-10 w-px bg-border hidden md:block mx-2" />
             <div className="hidden sm:flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-widest bg-card px-4 py-2 rounded-lg border border-border">
@@ -112,7 +112,7 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
             <div className="px-6 py-5 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-bold text-foreground">Recent Placements</h3>
-              <Link href="/coordinator/placements" className="text-[10px] font-bold text-[#800000] uppercase tracking-widest hover:underline">
+              <Link href="/coordinator/placements" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline">
                 Audit all
               </Link>
             </div>
@@ -180,16 +180,16 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
             </div>
 
             {/* Program Health Card */}
-            <div className="bg-card border-border shadow-sm p-6 overflow-hidden relative">
+            <div className="bg-card border-border shadow-sm p-6 overflow-hidden relative rounded-xl border">
               <div className="flex items-center justify-between mb-6">
                 <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Program Health</h4>
-                <Award className="h-4 w-4 text-border" data-no-skeleton />
+                <Award className="h-4 w-4 text-muted-foreground/30" data-no-skeleton />
               </div>
 
               <div className="space-y-5">
                 {[
-                  { label: "Company Network",   value: data?.verifiedCompanies ?? 0, total: data?.totalCompanies ?? 0,  color: "bg-[#800000]" },
-                  { label: "Student Placement", value: data?.hiredStudents ?? 0,      total: data?.totalStudents ?? 0,   color: "bg-slate-800" },
+                  { label: "Company Network",   value: data?.verifiedCompanies ?? 0, total: data?.totalCompanies ?? 0,  color: "bg-primary" },
+                  { label: "Student Placement", value: data?.hiredStudents ?? 0,      total: data?.totalStudents ?? 0,   color: "bg-foreground" },
                 ].map((item) => (
                   <div key={item.label} className="space-y-2">
                     <div className="flex justify-between text-[11px] font-bold uppercase tracking-tight">

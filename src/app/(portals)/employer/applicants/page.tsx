@@ -81,19 +81,19 @@ export default function ApplicantsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-800">Applicant Tracker</h1>
-          <p className="text-sm text-slate-500 font-medium">Review and manage candidates specifically aligned with your industrial roles.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Applicant Tracker</h1>
+          <p className="text-sm text-muted-foreground font-medium">Review and manage candidates specifically aligned with your industrial roles.</p>
         </div>
         <div className="flex gap-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
             <input 
               type="text" 
               placeholder="Search candidate index..." 
-              className="pl-9 pr-4 h-11 w-full md:w-64 rounded-xl border border-slate-200 bg-white shadow-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] text-sm transition-all"
+              className="pl-9 pr-4 h-11 w-full md:w-64 rounded-xl border border-border bg-card text-foreground shadow-sm outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary text-sm transition-all"
             />
           </div>
-          <button className="h-11 px-4 rounded-xl border border-slate-200 bg-white flex items-center gap-2 font-bold text-[11px] uppercase tracking-wider hover:bg-slate-50 transition-colors text-slate-500 shadow-sm">
+          <button className="h-11 px-4 rounded-xl border border-border bg-card flex items-center gap-2 font-bold text-[11px] uppercase tracking-wider hover:bg-muted transition-colors text-muted-foreground/60 shadow-sm">
             <SlidersHorizontal className="h-4 w-4" /> Filter
           </button>
         </div>
@@ -108,59 +108,59 @@ export default function ApplicantsPage() {
               <div className="flex items-center justify-between px-1">
                 <div className="flex items-center gap-3">
                   <div className={cn("px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest border", 
-                    col.id === 'PENDING' ? "bg-slate-50 text-slate-500 border-slate-200" :
-                    col.id === 'ACCEPTED' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
-                    "bg-red-50 text-red-600 border-red-100"
+                    col.id === 'PENDING' ? "bg-muted text-muted-foreground/60 border-border" :
+                    col.id === 'ACCEPTED' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" :
+                    "bg-destructive/10 text-destructive border-destructive/20"
                   )}>
                     {col.label}
                   </div>
-                  <span className="text-xs font-bold text-slate-300 tabular-nums">{colApps.length}</span>
+                  <span className="text-xs font-bold text-muted-foreground/40 tabular-nums">{colApps.length}</span>
                 </div>
               </div>
               
-              <div className="flex flex-col gap-4 min-h-[600px] p-2 rounded-2xl bg-slate-50/50 border border-slate-100 transition-all">
+              <div className="flex flex-col gap-4 min-h-[600px] p-2 rounded-2xl bg-muted/30 border border-border transition-all">
                 {colApps.map((app) => (
                   <div 
                     key={app.id} 
-                    className="group bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-[#800000]/30 transition-all cursor-pointer relative"
+                    className="group bg-card border border-border rounded-xl p-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-pointer relative"
                   >
                     <div className="flex justify-between items-start mb-4">
-                      <div className="h-10 w-10 rounded-lg bg-slate-900 flex items-center justify-center text-white font-bold text-xs shadow-sm group-hover:bg-[#800000] transition-colors">
+                      <div className="h-10 w-10 rounded-lg bg-foreground/5 flex items-center justify-center text-foreground font-bold text-xs shadow-sm group-hover:bg-primary transition-colors">
                         {app.student.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
                       </div>
-                      <button className="h-8 w-8 rounded-lg hover:bg-slate-50 flex items-center justify-center text-slate-300 hover:text-slate-600 transition-all">
+                      <button className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center text-muted-foreground/40 hover:text-foreground transition-all">
                         <MoreVertical className="h-4 w-4" />
                       </button>
                     </div>
 
                     <div className="space-y-1.5 mb-5 text-left">
-                      <h4 className="font-bold text-[15px] text-slate-800 leading-tight">{app.student.name || 'Anonymous Student'}</h4>
-                      <p className="text-[11px] font-bold text-[#800000] uppercase tracking-wider opacity-80">{app.posting.title}</p>
-                      <div className="flex items-center text-[10px] text-slate-400 font-medium pt-1">
+                      <h4 className="font-bold text-[15px] text-foreground leading-tight">{app.student.name || 'Anonymous Student'}</h4>
+                      <p className="text-[11px] font-bold text-primary uppercase tracking-wider opacity-80">{app.posting.title}</p>
+                      <div className="flex items-center text-[10px] text-muted-foreground/60 font-medium pt-1">
                         <Clock className="h-3 w-3 mr-1.5" />
                         Inscribed {new Date(app.appliedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 pt-4 border-t border-slate-50">
+                    <div className="flex items-center gap-2 pt-4 border-t border-border/50">
                       {app.status === 'PENDING' && (
                         <>
                           <button 
                             onClick={() => handleUpdateStatus(app.id, 'ACCEPTED')}
-                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-[#800000] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-red-900 transition-all shadow-sm shadow-red-900/10"
+                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shadow-sm shadow-primary/10"
                           >
                             <CheckCircle2 className="h-3.5 w-3.5" /> Vet
                           </button>
                           <button 
                             onClick={() => handleUpdateStatus(app.id, 'REJECTED')}
-                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-white border border-slate-200 text-slate-400 text-[10px] font-bold uppercase tracking-wider hover:text-red-500 hover:border-red-200 transition-all shadow-sm"
+                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-card border border-border text-muted-foreground/60 text-[10px] font-bold uppercase tracking-wider hover:text-destructive hover:border-destructive/20 transition-all shadow-sm"
                           >
                             <XCircle className="h-3.5 w-3.5" /> Decline
                           </button>
                         </>
                       )}
                       {app.status !== 'PENDING' && (
-                        <button className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-white border border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-wider hover:text-[#800000] hover:border-[#800000] transition-all shadow-sm">
+                        <button className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-card border border-border text-muted-foreground text-[10px] font-bold uppercase tracking-wider hover:text-primary hover:border-primary transition-all shadow-sm">
                           Inspect Credentials <ArrowRight className="h-3.5 w-3.5" />
                         </button>
                       )}
@@ -168,10 +168,10 @@ export default function ApplicantsPage() {
                   </div>
                 ))}
 
-                {colApps.length === 0 && (
+                 {colApps.length === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center text-center p-12 opacity-20 filter grayscale">
-                     <Users className="h-10 w-10 text-slate-400 mb-3" />
-                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Zero Manifests</p>
+                     <Users className="h-10 w-10 text-muted-foreground mb-3" />
+                     <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Zero Manifests</p>
                   </div>
                 )}
               </div>

@@ -52,13 +52,13 @@ export function EmployerDashboardShell({ data, userName }: Props) {
       }}
       fallback={
         <div className="animate-pulse space-y-8">
-          <div className="h-8 w-48 bg-slate-200 rounded-lg" />
+          <div className="h-8 w-48 bg-muted rounded-lg" />
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-28 bg-slate-100 rounded-xl border border-slate-200" />
+              <div key={i} className="h-28 bg-muted rounded-xl border border-border" />
             ))}
           </div>
-          <div className="h-80 bg-slate-100 rounded-xl border border-slate-200" />
+          <div className="h-80 bg-muted rounded-xl border border-border" />
         </div>
       }
     >
@@ -84,7 +84,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
           {statCards.map((s) => (
             <div key={s.label} className="bg-card p-6 rounded-xl border border-border shadow-sm">
               <p className="text-xs font-medium text-muted-foreground mb-4">{s.label}</p>
-              <span className="text-2xl font-bold text-slate-900">{s.value}</span>
+              <span className="text-2xl font-bold text-foreground">{s.value}</span>
             </div>
           ))}
         </div>
@@ -129,7 +129,7 @@ export function EmployerDashboardShell({ data, userName }: Props) {
                           <span className={cn(
                             "px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
                             app.status === "ACCEPTED" ? "bg-primary text-white" :
-                            app.status === "REJECTED" ? "bg-red-50 text-red-600 border border-red-100" :
+                            app.status === "REJECTED" ? "bg-destructive/10 text-destructive border border-destructive/20" :
                             "bg-primary/10 text-primary"
                           )}>
                             {app.status}
