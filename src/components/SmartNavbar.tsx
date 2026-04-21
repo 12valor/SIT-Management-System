@@ -24,12 +24,9 @@ export function SmartNavbar() {
     <>
       <header className="fixed top-0 w-full z-50 flex flex-col shadow-sm">
         {/* Top Announcement Banner */}
-        <div className="bg-primary text-white py-2 px-4 flex justify-center items-center gap-3 text-[11px] md:text-xs">
-          <span className="bg-white/20 px-2.5 py-0.5 rounded-full font-medium tracking-wide">
-            New
-          </span>
-          <span className="hover:underline cursor-pointer flex items-center gap-1 font-medium transition-all text-white/90 hover:text-white">
-            Simplify your institutional training with a unified platform <ChevronRight className="w-3 h-3" />
+        <div className="bg-primary text-white py-2 px-4 flex justify-center items-center gap-3 text-[11px] md:text-xs text-center">
+          <span className="hover:underline cursor-pointer font-medium transition-all text-white/90 hover:text-white">
+            Simplify your institutional training with a unified platform
           </span>
         </div>
 
