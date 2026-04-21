@@ -47,8 +47,8 @@ export function SmartNavbar() {
                   height={32}
                   className="h-8 w-auto object-contain transition-transform group-hover:scale-105" 
                 />
-                <span className="font-extrabold text-xl tracking-tight text-[#0f172a] font-heading lowercase">
-                  sit platform
+                <span className="font-extrabold text-xl tracking-tight text-[#0f172a] font-heading">
+                  TUPV SIT
                 </span>
               </Link>
 
