@@ -47,10 +47,10 @@ export default function EmployerSignupPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white p-6">
         <div className="text-center space-y-6 max-w-sm animate-in-fade">
-          <div className="mx-auto w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6 ring-8 ring-blue-50/50">
-            <CheckCircle2 className="h-12 w-12 text-blue-500" />
+          <div className="mx-auto w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-6 ring-8 ring-emerald-50/50">
+            <CheckCircle2 className="h-12 w-12 text-emerald-500" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900 font-heading lowercase uppercase">Success!</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-slate-900 font-heading">Success!</h1>
           <p className="text-slate-600 font-medium font-sans">
             Your partnership request has been submitted. The <span className="text-primary font-bold">SIT Coordinator</span> will review your credentials and company details.
           </p>
@@ -74,7 +74,7 @@ export default function EmployerSignupPage() {
             alt="Corporate Environment" 
             fill
             className="object-cover transition-opacity duration-1000"
-            style={{ opacity: 0.4, filter: 'grayscale(100%) brightness(0.95)' }}
+            style={{ opacity: 0.4, filter: 'grayscale(100%) brightness(0.9)' }}
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
@@ -119,7 +119,7 @@ export default function EmployerSignupPage() {
       {/* Right side - Registration Form */}
       <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 lg:p-20 bg-white relative z-20 overflow-y-auto">
         <div className="max-w-md w-full lg:ml-12 xl:ml-20">
-          <div className="mb-8 text-left">
+          <div className="mb-10 text-left">
             <Link href="/login/employer" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors mb-10 font-heading group">
               <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Back to Login
             </Link>
@@ -157,7 +157,7 @@ export default function EmployerSignupPage() {
               </button>
             </div>
             
-            <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Full Name</label>
                 <div className="relative group">
@@ -249,7 +249,7 @@ export default function EmployerSignupPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full h-14 bg-primary text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading mt-6 active:scale-[0.98]"
+              className="w-full h-14 bg-primary text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading mt-4 active:scale-[0.98]"
             >
               {isLoading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
