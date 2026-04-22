@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Briefcase, GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2, Users, Rocket, Target, ShieldCheck, Zap } from "lucide-react";
-import Image from "next/image";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion } from "framer-motion";
 
@@ -36,7 +35,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto relative">
+            <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
               {/* Student Card */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
@@ -46,50 +45,32 @@ export default function Home() {
                 className="group relative"
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-primary/20 to-transparent rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-                <div className="relative p-10 rounded-[2rem] bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 hover:border-primary/30 transition-all duration-500 flex flex-col h-full shadow-sm hover:shadow-2xl hover:shadow-primary/5 backdrop-blur-sm overflow-hidden">
+                <div className="relative p-10 rounded-[2rem] bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 hover:border-primary/30 transition-all duration-500 flex flex-col h-full shadow-sm hover:shadow-2xl hover:shadow-primary/5 backdrop-blur-sm">
                   
-                  {/* Student Character Clipart */}
-                  <div className="absolute -right-4 -top-4 w-48 h-48 opacity-100 pointer-events-none z-0">
-                    <motion.div
-                      animate={{ y: [0, -10, 0], rotate: [0, 2, 0] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Image 
-                        src="/illustrations/student-character.png" 
-                        alt="Student" 
-                        width={200} 
-                        height={200}
-                        className="object-contain"
-                      />
-                    </motion.div>
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <GraduationCap className="h-8 w-8 text-primary" />
                   </div>
+                  
+                  <h3 className="text-3xl font-bold font-premium text-slate-900 dark:text-white mb-4 uppercase tracking-tight">For Students</h3>
+                  <p className="text-[15px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8">
+                    Build your professional identity, discover premier internship opportunities, and track your SIT progress with institutional precision.
+                  </p>
+                  
+                  <ul className="space-y-4 mb-12 flex-1">
+                    {["Institutional Profile Builder", "Seamless Internship Applications", "Digital Daily Journal Tracking", "SIT Document Repository"].map((feature) => (
+                      <li key={feature} className="flex items-center text-sm font-semibold text-slate-600 dark:text-slate-300">
+                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mr-3 shrink-0">
+                          <CheckCircle className="h-3 w-3 text-primary" />
+                        </div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
 
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                      <GraduationCap className="h-8 w-8 text-primary" />
-                    </div>
-                    
-                    <h3 className="text-3xl font-bold font-premium text-slate-900 dark:text-white mb-4 uppercase tracking-tight">For Students</h3>
-                    <p className="text-[15px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8 max-w-[70%]">
-                      Build your professional identity, discover premier internship opportunities, and track your SIT progress.
-                    </p>
-                    
-                    <ul className="space-y-4 mb-12 flex-1">
-                      {["Institutional Profile Builder", "Seamless Applications", "Digital Daily Journal", "Document Repository"].map((feature) => (
-                        <li key={feature} className="flex items-center text-sm font-semibold text-slate-600 dark:text-slate-300">
-                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mr-3 shrink-0">
-                            <CheckCircle className="h-3 w-3 text-primary" />
-                          </div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <Link href="/login" className="group/btn w-full inline-flex h-14 items-center justify-center rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold uppercase tracking-widest hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all shadow-lg shadow-slate-900/10 gap-3">
-                      Launch Student Portal
-                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
+                  <Link href="/login" className="group/btn w-full inline-flex h-14 items-center justify-center rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold uppercase tracking-widest hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all shadow-lg shadow-slate-900/10 gap-3">
+                    Launch Student Portal
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </motion.div>
 
@@ -102,50 +83,32 @@ export default function Home() {
                 className="group relative"
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-slate-500/20 to-transparent rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-                <div className="relative p-10 rounded-[2rem] bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 hover:border-slate-400/30 transition-all duration-500 flex flex-col h-full shadow-sm hover:shadow-2xl hover:shadow-slate-500/5 backdrop-blur-sm overflow-hidden">
+                <div className="relative p-10 rounded-[2rem] bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 hover:border-slate-400/30 transition-all duration-500 flex flex-col h-full shadow-sm hover:shadow-2xl hover:shadow-slate-500/5 backdrop-blur-sm">
                   
-                  {/* Partner Character Clipart */}
-                  <div className="absolute -right-4 -top-4 w-48 h-48 opacity-100 pointer-events-none z-0">
-                    <motion.div
-                      animate={{ y: [0, 10, 0], rotate: [0, -2, 0] }}
-                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Image 
-                        src="/illustrations/partner-character.png" 
-                        alt="Partner" 
-                        width={200} 
-                        height={200}
-                        className="object-contain"
-                      />
-                    </motion.div>
+                  <div className="w-16 h-16 bg-slate-100 dark:bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                    <Building2 className="h-8 w-8 text-slate-700 dark:text-slate-300" />
                   </div>
+                  
+                  <h3 className="text-3xl font-bold font-premium text-slate-900 dark:text-white mb-4 uppercase tracking-tight">For Partners</h3>
+                  <p className="text-[15px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8">
+                    Access high-caliber TUP-V talent, post strategic internship roles, and monitor trainee performance via a secure corporate terminal.
+                  </p>
+                  
+                  <ul className="space-y-4 mb-12 flex-1">
+                    {["Premium Talent Acquisition", "Automated Applicant Filtering", "Digital Evaluation Terminal", "Direct Performance Feedback"].map((feature) => (
+                      <li key={feature} className="flex items-center text-sm font-semibold text-slate-600 dark:text-slate-300">
+                        <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center mr-3 shrink-0">
+                          <CheckCircle className="h-3 w-3 text-slate-500 dark:text-slate-300" />
+                        </div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
 
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 bg-slate-100 dark:bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
-                      <Building2 className="h-8 w-8 text-slate-700 dark:text-slate-300" />
-                    </div>
-                    
-                    <h3 className="text-3xl font-bold font-premium text-slate-900 dark:text-white mb-4 uppercase tracking-tight">For Partners</h3>
-                    <p className="text-[15px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8 max-w-[70%]">
-                      Access high-caliber TUP-V talent, post strategic internship roles, and monitor trainee performance.
-                    </p>
-                    
-                    <ul className="space-y-4 mb-12 flex-1">
-                      {["Talent Acquisition", "Applicant Filtering", "Evaluation Terminal", "Direct Performance Feedback"].map((feature) => (
-                        <li key={feature} className="flex items-center text-sm font-semibold text-slate-600 dark:text-slate-300">
-                          <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center mr-3 shrink-0">
-                            <CheckCircle className="h-3 w-3 text-slate-500 dark:text-slate-300" />
-                          </div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <Link href="/login" className="group/btn w-full inline-flex h-14 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-white dark:hover:bg-slate-700 transition-all shadow-lg shadow-slate-100/10 gap-3">
-                      Corporate Access
-                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
+                  <Link href="/login" className="group/btn w-full inline-flex h-14 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold uppercase tracking-widest hover:bg-slate-900 hover:text-white dark:hover:bg-slate-700 transition-all shadow-lg shadow-slate-100/10 gap-3">
+                    Corporate Access
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </motion.div>
             </div>
@@ -153,8 +116,8 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section className="py-32 bg-slate-50/50 dark:bg-white/[0.01] border-y border-slate-100 dark:border-white/5">
-          <div className="container mx-auto px-6">
+        <section className="py-32 bg-slate-50/50 dark:bg-white/[0.01] border-y border-slate-100 dark:border-white/5 relative overflow-hidden">
+          <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-24">
               <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">How It Works</h2>
               <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
