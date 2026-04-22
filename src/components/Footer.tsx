@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Facebook, Instagram } from "lucide-react";
 
 export function Footer() {
   const pathname = usePathname();
@@ -78,15 +79,17 @@ export function Footer() {
               The official landing for Supervised Industrial Training at Technological University of the Philippines - Visayas. Connecting emerging talent with industry leadership.
             </p>
             <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-slate-900 transition-colors cursor-pointer group">
-                <span className="text-[10px] font-bold text-slate-400 group-hover:text-slate-900 transition-colors">FB</span>
-              </div>
-              <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-slate-900 transition-colors cursor-pointer group">
-                <span className="text-[10px] font-bold text-slate-400 group-hover:text-slate-900 transition-colors">LN</span>
-              </div>
-              <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-slate-900 transition-colors cursor-pointer group">
-                 <span className="text-[10px] font-bold text-slate-400 group-hover:text-slate-900 transition-colors">TW</span>
-              </div>
+              <Link href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-slate-900 hover:bg-slate-50 transition-all cursor-pointer group">
+                <Facebook className="w-4 h-4 text-slate-400 group-hover:text-slate-900 transition-colors" />
+              </Link>
+              <Link href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-slate-900 hover:bg-slate-50 transition-all cursor-pointer group">
+                <Instagram className="w-4 h-4 text-slate-400 group-hover:text-slate-900 transition-colors" />
+              </Link>
+              <Link href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:border-slate-900 hover:bg-slate-50 transition-all cursor-pointer group">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-slate-400 group-hover:text-slate-900 transition-colors">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                </svg>
+              </Link>
             </div>
           </div>
 
