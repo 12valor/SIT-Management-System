@@ -4,9 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Building2, Mail, Lock, Loader2, ArrowLeft, ArrowRight } from "lucide-react";
+import { Building2, Mail, Lock, Loader2, ArrowLeft, ArrowRight, Activity, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function EmployerLoginPage() {
   const [email, setEmail]       = useState("");
@@ -23,7 +24,7 @@ export default function EmployerLoginPage() {
     try {
       const result = await signIn("credentials", { email, password, redirect: false });
       if (result?.error) {
-        setError("Invalid institutional credentials or verification required.");
+        setError("AUTH_FAILURE: INVALID_CORPORATE_CREDENTIALS");
         setIsLoading(false);
         return;
       }
@@ -33,100 +34,92 @@ export default function EmployerLoginPage() {
       if (role === "EMPLOYER") router.push("/employer/dashboard");
       else router.push("/");
     } catch {
-      setError("An unexpected system error occurred.");
+      setError("SYS_ERROR: NETWORK_OR_SERVER_FAILURE");
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-slate-50 relative overflow-x-hidden pt-24 lg:pt-32 pb-12">
-      {/* Institutional Decoration: Subtlety */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
-        <Image 
-          src="/images/auth/gate.png" 
-          alt="University Campus" 
-          fill
-          className="object-cover opacity-10 grayscale"
-          priority
-        />
-        <div className="absolute inset-0 bg-slate-100/50" />
+    <div className="flex-1 flex flex-col pt-32 pb-20 relative">
+      
+      {/* INSTITUTIONAL HEADER */}
+      <div className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-6 z-20">
+        <Link href="/login" className="flex items-center gap-3 group opacity-80 hover:opacity-100 transition-opacity">
+          <Image 
+            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+            alt="TUP Seal" 
+            width={32}
+            height={32}
+            className="h-8 w-auto grayscale dark:invert" 
+          />
+          <div className="flex flex-col leading-none">
+             <span className="font-mono text-[9px] font-bold text-slate-500 uppercase tracking-widest">TUP-VISAYAS</span>
+             <span className="font-mono text-[7px] text-slate-400">PARTNER_ACCESS_PORTAL</span>
+          </div>
+        </Link>
       </div>
 
-      {/* Institutional Header Bar */}
-      <header className="fixed top-0 left-0 right-0 z-30 w-full bg-white border-b border-slate-200 py-4 px-6 md:px-10 shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/login" className="flex items-center gap-4 group">
-            <Image 
-              src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-              alt="TUP Seal" 
-              width={40}
-              height={40}
-              className="h-10 w-auto object-contain" 
-            />
-            <div className="flex flex-col items-start leading-tight">
-               <h1 className="text-sm font-black text-slate-900 tracking-tight font-heading uppercase group-hover:text-primary transition-colors">TUP-Visayas</h1>
-               <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em] font-sans">Supervised Industrial Training</span>
-            </div>
-          </Link>
-          <Link href="/login" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors font-heading flex items-center gap-2 group">
-            <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Role Selection
-          </Link>
-        </div>
-      </header>
+      <main className="flex-1 flex items-center justify-center px-6">
+        <div className="max-w-[450px] w-full relative">
+          
+          {/* DECORATIVE COORDINATES */}
+          <div className="absolute -top-12 -left-12 font-mono text-[8px] text-slate-400 hidden md:block select-none">
+            [ REG_ZONE: SOUTH_VISAYAS ]
+          </div>
 
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-6">
-        <div className="max-w-md w-full">
-          {/* Main Corporate Access Form */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-xl shadow-slate-200/40 overflow-hidden">
-            <div className="p-8 md:p-10 border-b border-slate-100 bg-slate-50/30">
-              <div className="flex items-center gap-4 mb-6">
-                 <div className="w-12 h-12 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm text-slate-900">
-                    <Building2 className="h-6 w-6" />
-                 </div>
-                 <div className="flex-1">
-                    <h2 className="text-xl font-black tracking-tight text-slate-900 font-heading uppercase">Corporate Access</h2>
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest font-sans">Industry Partner Terminal</p>
-                 </div>
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 relative overflow-hidden group">
+            {/* TECHNICAL ACCENT NOTCH */}
+            <div className="absolute top-0 right-0 w-12 h-12 overflow-hidden pointer-events-none">
+               <div className="absolute top-[-24px] right-[-24px] w-12 h-12 bg-slate-100 dark:bg-white/5 rotate-45" />
+            </div>
+
+            {/* FORM HEADER */}
+            <div className="p-8 md:p-10 border-b border-slate-100 dark:border-white/5">
+              <div className="flex items-center justify-between mb-8">
+                <div className="h-12 w-12 border border-slate-200 dark:border-white/10 flex items-center justify-center bg-slate-50 dark:bg-white/5">
+                  <Building2 className="h-6 w-6 text-slate-600 dark:text-slate-400" />
+                </div>
+                <div className="flex flex-col items-end">
+                   <span className="font-mono text-[9px] text-slate-400 uppercase tracking-tighter">NODE_ID</span>
+                   <span className="font-mono text-[11px] font-bold text-slate-900 dark:text-slate-200 uppercase tracking-widest">EMP_AUTH_02</span>
+                </div>
               </div>
-              <p className="text-xs text-slate-500 font-medium font-sans leading-relaxed">
-                Log in to the Industry Partner portal to manage trainee placements and evaluate student performance under the TUP-V SIT program.
+              
+              <h2 className="text-4xl font-bold text-slate-900 dark:text-white font-heading tracking-tighter uppercase mb-2 text-gradient">Partner</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-[280px]">
+                Access the Industry Partner portal to evaluate trainee performance and manage SIT placements.
               </p>
             </div>
 
+            {/* FORM BODY */}
             <div className="p-8 md:p-10">
               <form onSubmit={handleLogin} className="space-y-6">
                 {error && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="p-4 text-[10px] font-bold text-red-600 bg-red-50 border border-red-100 rounded-lg uppercase tracking-wider font-heading"
-                  >
-                    {error}
-                  </motion.div>
+                  <div className="p-4 bg-red-50 dark:bg-red-950/20 border-l-2 border-red-600 flex items-center gap-3">
+                    <Activity className="w-4 h-4 text-red-600 shrink-0" />
+                    <span className="font-mono text-[10px] font-bold text-red-600 uppercase tracking-tight">{error}</span>
+                  </div>
                 )}
 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Corporate Identifier (Email)</label>
-                  <div className="relative group">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-slate-900 transition-colors" />
+                  <label htmlFor="email" className="font-mono text-[9px] font-bold uppercase tracking-widest text-slate-400 ml-1">Corporate_Identifier</label>
+                  <div className="relative group/input">
                     <input
                       id="email"
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="corporate@company.com"
-                      className="w-full h-12 pl-12 pr-4 rounded-lg border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-slate-900"
+                      placeholder="CORPORATE@COMPANY.COM"
+                      className="w-full h-14 pl-6 pr-4 bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 text-sm font-bold font-mono outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700 uppercase"
                     />
+                    <div className="absolute bottom-0 left-0 h-[1px] bg-slate-900 dark:bg-white scale-x-0 group-focus-within/input:scale-x-100 transition-transform duration-500 origin-left" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <div className="flex justify-between items-center ml-1">
-                    <label htmlFor="password" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading">Security Passkey</label>
-                  </div>
-                  <div className="relative group">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-slate-900 transition-colors" />
+                  <label htmlFor="password" className="font-mono text-[9px] font-bold uppercase tracking-widest text-slate-400 ml-1">Security_Passkey</label>
+                  <div className="relative group/input">
                     <input
                       id="password"
                       type="password"
@@ -134,35 +127,42 @@ export default function EmployerLoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full h-12 pl-12 pr-4 rounded-lg border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-slate-900"
+                      className="w-full h-14 pl-6 pr-4 bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 text-sm font-bold font-mono outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700"
                     />
+                    <div className="absolute bottom-0 left-0 h-[1px] bg-slate-900 dark:bg-white scale-x-0 group-focus-within/input:scale-x-100 transition-transform duration-500 origin-left" />
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full h-12 bg-slate-900 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-lg hover:bg-primary transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading group"
+                  className="group/btn relative w-full h-14 bg-slate-900 dark:bg-white text-white dark:text-black font-bold tracking-[0.1em] transition-all flex items-center justify-between px-6 disabled:opacity-50 font-heading overflow-hidden"
                 >
+                  <span className="relative z-10 text-sm uppercase italic">Verify_and_Enter</span>
                   {isLoading ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <Loader2 className="h-5 w-5 animate-spin relative z-10" />
                   ) : (
-                    <>
-                      Verify and Enter Portal
-                      <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                    </>
+                    <ArrowRight className="h-4 w-4 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
                   )}
                 </button>
               </form>
 
-              <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col items-center gap-4">
-                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Industry Assistance</p>
-                 <Link href="/signup/employer" className="text-[10px] font-black text-slate-600 hover:text-primary uppercase tracking-widest transition-colors font-heading underline decoration-slate-200 underline-offset-4">
-                    Partner Registration Registry
+              <div className="mt-10 pt-8 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                 <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-3 h-3 text-slate-400" />
+                    <span className="font-mono text-[9px] text-slate-400 uppercase tracking-widest">TLS_ENCRYPTED</span>
+                 </div>
+                 <Link href="/signup/employer" className="font-mono text-[9px] font-bold text-slate-500 hover:text-primary transition-colors uppercase tracking-widest underline underline-offset-4 decoration-slate-200 dark:decoration-slate-800">
+                    Partner_Registration
                  </Link>
               </div>
             </div>
           </div>
+
+          <Link href="/login" className="mt-8 flex items-center justify-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
+            <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest">Return_to_Gateway</span>
+          </Link>
         </div>
       </main>
     </div>
