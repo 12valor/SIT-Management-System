@@ -1,128 +1,151 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck, ArrowRight, Bell } from "lucide-react";
+import { cn } from "@/lib/utils"; // Assuming a utility exists, otherwise will adjust
 
 /**
  * AESTHETIC DIRECTION: Grounded Institutional Portal
- * LAYOUT: Centered Floating Card
+ * LAYOUT: Centered Floating Card with Refined Grid
  * TYPOGRAPHY: Montserrat (Headings) + Poppins (Links/Body)
  * COLOR: Maroon (#800000), Soft Slate, Light Red Accents
  */
 
 export default function LoginGatePage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans selection:bg-primary/20">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-primary/20 dark:bg-slate-950">
       
       {/* MAIN CONTAINER */}
-      <main className="flex-1 flex items-center justify-center px-4 pt-36 pb-12">
-        <div className="max-w-5xl w-full bg-white rounded-[2.5rem] shadow-[0_10px_50px_-12px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
-          <div className="p-8 md:p-16">
+      <main className="flex-1 flex items-center justify-center p-4 pt-32 pb-12">
+        <div className="max-w-[1100px] w-full mx-auto">
+          
+          {/* HEADER SECTION */}
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white font-heading tracking-tight leading-tight">
+              Welcome to the <br/>
+              <span className="text-primary">SIT Management Portal</span>
+            </h1>
+            <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 font-medium">
+              Select your role below to securely access your dashboard and manage your training records.
+            </p>
+          </div>
+
+          {/* SELECTION GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
             
-            {/* CARD HEADER */}
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 font-heading tracking-tight">
-                Student Industrial Training Portal
-              </h2>
-              <p className="text-sm md:text-base font-medium text-slate-400">
-                Select the account type to continue.
-              </p>
+            {/* STUDENT ACCESS */}
+            <div className="group relative bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-10 shadow-sm border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 flex flex-col">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
+                 <GraduationCap className="w-32 h-32 text-primary" />
+              </div>
+              
+              <div className="flex-1 relative z-10">
+                <div className="h-14 w-14 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <GraduationCap className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-heading mb-4">Student Access</h3>
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
+                  For TUPV students enrolled in OJT/SIT. Log your daily time record, upload journal entries, and view evaluations.
+                </p>
+              </div>
+              
+              <div className="mt-auto relative z-10 space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+                <Link 
+                  href="/login/student"
+                  className="flex items-center justify-between w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold transition-all group/btn"
+                >
+                  <span>Student Login</span>
+                  <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
+                <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider text-center">
+                  Requires @tupv.edu.ph account
+                </p>
+              </div>
             </div>
 
-            {/* SELECTION GRID */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
-              
-              {/* STUDENT ACCESS */}
-              <div className="group relative bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                    <h3 className="text-xl font-bold text-slate-900 font-heading">Student Access</h3>
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
-                    For TUPV students enrolled in OJT/SIT. Log daily time record (DTR), upload journal, view evaluation.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex flex-col gap-4">
-                    <Link 
-                      href="/login/student"
-                      className="inline-flex w-fit items-center justify-center bg-primary px-8 py-3.5 rounded-xl text-white text-sm font-bold tracking-tight hover:bg-[#600000] active:scale-[0.98] transition-all"
-                    >
-                      Student Login
-                    </Link>
-                  </div>
-                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-none">
-                    REQUIRES @TUPV.EDU.PH ACCOUNT
-                  </div>
-                </div>
+            {/* COMPANY ACCESS */}
+            <div className="group relative bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-10 shadow-sm border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 flex flex-col">
+               <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-5 transition-opacity pointer-events-none">
+                 <Building2 className="w-32 h-32 text-slate-900 dark:text-white" />
               </div>
 
-              {/* COMPANY ACCESS */}
-              <div className="group bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-slate-200 hover:shadow-xl hover:shadow-slate-200/20 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <Building2 className="h-6 w-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
-                    <h3 className="text-xl font-bold text-slate-900 font-heading">Company / Supervisor</h3>
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
-                    For partner companies and industry supervisors. Verify trainee attendance and submit performance rating.
-                  </p>
+              <div className="flex-1 relative z-10">
+                <div className="h-14 w-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <Building2 className="h-7 w-7 text-slate-700 dark:text-slate-300" />
                 </div>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-heading mb-4">Company Partner</h3>
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
+                  For partner companies and industry supervisors. Verify trainee attendance, review journals, and submit ratings.
+                </p>
+              </div>
+              
+              <div className="mt-auto relative z-10 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <Link 
                   href="/login/employer"
-                  className="inline-flex w-fit items-center justify-center bg-white border-2 border-slate-100 px-8 py-3.5 rounded-xl text-slate-700 text-sm font-bold tracking-tight hover:bg-slate-50 hover:border-slate-200 active:scale-[0.98] transition-all"
+                  className="flex items-center justify-between w-full bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-6 py-4 rounded-xl font-semibold transition-all group/btn"
                 >
-                  Company Login
+                  <span>Employer Login</span>
+                  <ArrowRight className="w-5 h-5 opacity-50 group-hover/btn:opacity-100 group-hover/btn:translate-x-1 transition-all" />
                 </Link>
               </div>
-
-              {/* COORDINATOR ACCESS */}
-              <div className="group bg-white rounded-[1.5rem] p-8 md:p-10 border border-slate-100 hover:border-slate-200 hover:shadow-xl hover:shadow-slate-200/20 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <ShieldCheck className="h-6 w-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
-                    <h3 className="text-xl font-bold text-slate-900 font-heading">Coordinator Access</h3>
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-500 mb-8 font-medium">
-                    For SIT Coordinators and System Administrators. Manage student records, approve accounts, and overall monitoring.
-                  </p>
-                </div>
-                <Link 
-                  href="/login/coordinator"
-                  className="inline-flex w-fit items-center justify-center bg-white border-2 border-slate-100 px-8 py-3.5 rounded-xl text-slate-700 text-sm font-bold tracking-tight hover:bg-slate-50 hover:border-slate-200 active:scale-[0.98] transition-all"
-                >
-                  Admin Login
-                </Link>
-              </div>
-
             </div>
 
-            {/* ANNOUNCEMENTS SECTION */}
-            <div className="relative bg-red-50/50 rounded-2xl border border-red-100/50 p-8 overflow-hidden">
-               {/* Background Shield Icon */}
-               <ShieldCheck className="absolute right-8 top-1/2 -translate-y-1/2 h-24 w-24 text-red-100/40 -rotate-12 pointer-events-none" />
-               
-               <h4 className="text-[11px] font-bold text-red-800 uppercase tracking-[0.2em] mb-4 font-heading">
-                 ANNOUNCEMENTS
-               </h4>
-               <ul className="space-y-2.5 relative z-10">
-                 <li className="flex items-center gap-3 text-xs font-semibold text-slate-600">
-                    <span className="h-1 w-1 bg-red-400 rounded-full" />
-                    DTR submission deadline: Every Friday 5PM
-                 </li>
-                 <li className="flex items-center gap-3 text-xs font-semibold text-slate-600">
-                    <span className="h-1 w-1 bg-red-400 rounded-full" />
-                    New: Upload photos in journal (max 2MB)
-                 </li>
-                 <li className="flex items-center gap-3 text-xs font-semibold text-slate-600">
-                    <span className="h-1 w-1 bg-red-400 rounded-full" />
-                    For password reset, contact ojt@tupv.edu.ph
-                 </li>
-               </ul>
+            {/* COORDINATOR ACCESS */}
+            <div className="group relative bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-10 shadow-sm border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 flex flex-col">
+               <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-5 transition-opacity pointer-events-none">
+                 <ShieldCheck className="w-32 h-32 text-slate-900 dark:text-white" />
+              </div>
+
+              <div className="flex-1 relative z-10">
+                <div className="h-14 w-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <ShieldCheck className="h-7 w-7 text-slate-700 dark:text-slate-300" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-heading mb-4">Coordinator</h3>
+                <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
+                  For SIT Coordinators and Administrators. Manage student records, approve accounts, and oversee the program.
+                </p>
+              </div>
+              
+              <div className="mt-auto relative z-10 pt-6 border-t border-slate-100 dark:border-slate-800">
+                <Link 
+                  href="/login/coordinator"
+                  className="flex items-center justify-between w-full bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-6 py-4 rounded-xl font-semibold transition-all group/btn"
+                >
+                  <span>Admin Login</span>
+                  <ArrowRight className="w-5 h-5 opacity-50 group-hover/btn:opacity-100 group-hover/btn:translate-x-1 transition-all" />
+                </Link>
+              </div>
             </div>
 
           </div>
+
+          {/* ANNOUNCEMENTS BAR */}
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center gap-6">
+            <div className="flex items-center gap-3 shrink-0 text-primary">
+              <div className="p-2.5 bg-primary/10 rounded-xl">
+                <Bell className="w-5 h-5" />
+              </div>
+              <span className="font-bold tracking-wider text-sm uppercase">Notice</span>
+            </div>
+            
+            <div className="flex-1 flex gap-4 overflow-x-auto pb-2 md:pb-0 scrollbar-none snap-x">
+               <div className="shrink-0 snap-start flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-4 py-2 rounded-lg">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  DTR submission deadline: Every Friday 5PM
+               </div>
+               <div className="shrink-0 snap-start flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-4 py-2 rounded-lg">
+                  <span className="w-1.5 h-1.5 bg-slate-400 rounded-full" />
+                  New: Upload photos in journal (max 2MB)
+               </div>
+            </div>
+            
+            <div className="shrink-0">
+               <Link href="/help" className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">
+                 Need Help?
+               </Link>
+            </div>
+          </div>
+
         </div>
       </main>
     </div>
