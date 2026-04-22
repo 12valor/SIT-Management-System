@@ -49,7 +49,7 @@ export default function LoginGatePage() {
                 </p>
               </div>
               
-              <div className="mt-auto relative z-10 space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+              <div className="mt-auto relative z-10 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <Link 
                   href="/login/student"
                   className="flex items-center justify-between w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold transition-all group/btn"
@@ -57,9 +57,6 @@ export default function LoginGatePage() {
                   <span>Student Login</span>
                   <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
-                <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider text-center">
-                  Requires @tupv.edu.ph account
-                </p>
               </div>
             </div>
 
