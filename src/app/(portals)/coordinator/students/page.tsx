@@ -56,10 +56,10 @@ export default function CoordinatorStudentsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-800">Student Manifest</h1>
-          <p className="text-sm text-slate-500 font-medium">Registry of SIT candidates and their current industrial status.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Student Manifest</h1>
+          <p className="text-sm text-muted-foreground font-medium">Registry of SIT candidates and their current industrial status.</p>
         </div>
-        <div className="h-10 px-4 flex items-center bg-white rounded-lg border border-slate-200 shadow-sm text-[11px] font-bold uppercase tracking-wider text-slate-400">
+        <div className="h-10 px-4 flex items-center bg-card rounded-lg border border-border shadow-sm text-[11px] font-bold uppercase tracking-wider text-muted-foreground/60">
           {students.length} Candidates Enrolled
         </div>
       </div>
@@ -71,9 +71,9 @@ export default function CoordinatorStudentsPage() {
           { label: "Active Placement", value: hiredCount },
           { label: "Hours Complete",   value: completedCount },
         ].map((s) => (
-          <div key={s.label} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-            <p className="text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-1">{s.label}</p>
-            <p className="text-2xl font-bold text-slate-800">{s.value}</p>
+          <div key={s.label} className="bg-card p-5 rounded-xl border border-border shadow-sm">
+            <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider mb-1">{s.label}</p>
+            <p className="text-2xl font-bold text-foreground">{s.value}</p>
           </div>
         ))}
       </div>
@@ -81,82 +81,82 @@ export default function CoordinatorStudentsPage() {
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative w-full max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
           <input
             type="text"
             placeholder="Filter by name, email, or program..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 h-11 rounded-xl border border-slate-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#800000]/5 focus:border-[#800000] transition-all shadow-sm"
+            className="w-full pl-11 pr-4 h-11 rounded-xl border border-border bg-card text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
           />
         </div>
-        <button className="h-11 px-6 rounded-xl bg-white border border-slate-200 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 hover:border-slate-300 transition-all shadow-sm">
+        <button className="h-11 px-6 rounded-xl bg-card border border-border flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 hover:text-foreground hover:border-muted-foreground/40 transition-all shadow-sm">
           <Download className="h-4 w-4" /> Export CSV Manifest
         </button>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-slate-50/50 border-b border-slate-100">
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Student Information</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden lg:table-cell">Academic Program</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Status</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left hidden md:table-cell">Host Company</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-left">Progression</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">View</th>
+              <tr className="bg-muted/30 border-b border-border">
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Student Information</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden lg:table-cell">Academic Program</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Status</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Host Company</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Progression</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-right">View</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-border/40">
               {filtered.length === 0 && !isLoading ? (
                 <tr>
                   <td colSpan={6} className="py-32 text-center">
-                    <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">
+                    <p className="text-sm text-muted-foreground/40 font-bold uppercase tracking-widest">
                       {students.length === 0 ? "Empty Registry" : "No results for query"}
                     </p>
                   </td>
                 </tr>
               ) : (
                 filtered.map((s) => (
-                  <tr key={s.id} className="hover:bg-slate-50/50 transition-colors group">
+                  <tr key={s.id} className="hover:bg-muted/30 transition-colors group">
                     <td className="px-6 py-4">
-                      <p className="font-bold text-slate-800 leading-tight">{s.name}</p>
-                      <p className="text-[10px] text-slate-400 font-medium mt-0.5">{s.email}</p>
+                      <p className="font-bold text-foreground leading-tight">{s.name}</p>
+                      <p className="text-[10px] text-muted-foreground/60 font-medium mt-0.5">{s.email}</p>
                     </td>
                     <td className="px-6 py-4 hidden lg:table-cell">
-                      <span className="text-xs text-slate-500 font-medium">{s.course}</span>
+                      <span className="text-xs text-muted-foreground font-medium">{s.course}</span>
                     </td>
                     <td className="px-6 py-4">
                       <span className={cn(
                         "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border shadow-sm",
                         s.status === "HIRED"
-                          ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                          : "bg-amber-50 text-amber-600 border-amber-100"
+                          ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+                          : "bg-amber-500/10 text-amber-500 border-amber-500/20"
                       )}>
                         <div className={cn("w-1 h-1 rounded-full", s.status === "HIRED" ? "bg-emerald-500" : "bg-amber-500")} />
                         {s.status === "HIRED" ? "Interning" : "Seeking"}
                       </span>
                     </td>
                     <td className="px-6 py-4 hidden md:table-cell">
-                      <span className="text-xs font-bold text-slate-700">{s.company || "N/A"}</span>
+                      <span className="text-xs font-bold text-muted-foreground">{s.company || "N/A"}</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="space-y-1.5 max-w-[140px]">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-[11px] font-bold text-slate-700 tabular-nums">
-                            {s.totalHours.toFixed(0)}<span className="text-slate-300 font-medium"> / 300h</span>
+                          <span className="text-[11px] font-bold text-foreground tabular-nums">
+                            {s.totalHours.toFixed(0)}<span className="text-muted-foreground/30 font-medium"> / 300h</span>
                           </span>
-                          <span className="text-[9px] font-bold text-slate-400">{Math.round(s.progress)}%</span>
+                          <span className="text-[9px] font-bold text-muted-foreground/40">{Math.round(s.progress)}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden border border-slate-100">
-                          <div className="h-full bg-[#800000] rounded-full transition-all duration-700" style={{ width: `${s.progress}%` }} />
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden border border-border/60">
+                          <div className="h-full bg-primary rounded-full transition-all duration-700" style={{ width: `${s.progress}%` }} />
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 hover:text-[#800000] hover:border-[#800000] transition-all shadow-sm">
+                      <button className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border bg-card text-muted-foreground/40 hover:text-primary hover:border-primary transition-all shadow-sm">
                         <ExternalLink className="h-4 w-4" />
                       </button>
                     </td>
@@ -166,8 +166,8 @@ export default function CoordinatorStudentsPage() {
             </tbody>
           </table>
         </div>
-        <div className="px-6 py-3 border-t border-slate-50 bg-slate-50/30 flex items-center justify-between">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="px-6 py-3 border-t border-border/40 bg-muted/20 flex items-center justify-between">
+          <p className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-wider">
             Displaying {filtered.length} Manifest Records
           </p>
         </div>

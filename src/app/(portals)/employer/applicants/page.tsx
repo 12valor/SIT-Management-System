@@ -73,7 +73,7 @@ export default function ApplicantsPage() {
       loading={isLoading}
       fallback={
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+          <Loader2 className="h-10 w-10 text-primary animate-spin opacity-20" />
         </div>
       }
     >

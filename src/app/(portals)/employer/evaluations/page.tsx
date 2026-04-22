@@ -173,9 +173,9 @@ export default function EmployerEvaluationsPage() {
                    </div>
 
                    <div className="space-y-6">
-                      <label className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-3">
-                        <div className="p-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                          <MessageSquare className="h-4 w-4 text-indigo-500" />
+                      <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 flex items-center gap-3">
+                        <div className="p-1.5 bg-muted rounded-lg">
+                          <MessageSquare className="h-4 w-4 text-primary" />
                         </div>
                         Executive Summary & Feedback
                       </label>
@@ -184,22 +184,22 @@ export default function EmployerEvaluationsPage() {
                         placeholder="Provide detailed industrial feedback regarding the trainee&apos;s contributions, areas for growth, and overall performance during the SIT period..."
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
-                        className="w-full h-40 p-6 rounded-[2rem] bg-slate-50 dark:bg-slate-800/50 border border-border/60 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all resize-none text-base font-medium leading-relaxed shadow-sm"
+                        className="w-full h-40 p-6 rounded-[2rem] bg-muted/30 border border-border/60 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all resize-none text-base font-medium leading-relaxed shadow-sm text-foreground"
                       />
                    </div>
 
-                   <div className="p-8 rounded-[2.5rem] bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/50 flex flex-col md:flex-row items-center justify-between gap-6">
+                   <div className="p-8 rounded-[2.5rem] bg-primary/5 border border-primary/10 flex flex-col md:flex-row items-center justify-between gap-6">
                       <div className="space-y-1 text-center md:text-left">
-                         <h4 className="font-black text-xl text-indigo-900 dark:text-indigo-100 leading-tight tracking-tight">Industrial Endorsement</h4>
-                         <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-widest mt-1">Recommend this trainee for future employment?</p>
+                         <h4 className="font-black text-xl text-primary leading-tight tracking-tight">Industrial Endorsement</h4>
+                         <p className="text-[10px] text-primary/60 font-bold uppercase tracking-widest mt-1">Recommend this trainee for future employment?</p>
                       </div>
-                      <div className="flex bg-white/40 dark:bg-black/20 p-1.5 rounded-2xl border border-indigo-200 dark:border-indigo-800 backdrop-blur-md shadow-inner">
+                      <div className="flex bg-background/20 p-1.5 rounded-2xl border border-border backdrop-blur-md shadow-inner">
                          <button
                            type="button"
                            onClick={() => setRecommendForHire(true)}
                            className={cn(
                              "px-8 py-3 rounded-xl text-xs font-black transition-all flex items-center gap-2",
-                             recommendForHire ? "bg-indigo-600 text-white shadow-xl shadow-indigo-600/30" : "text-slate-500 hover:text-indigo-600"
+                             recommendForHire ? "bg-primary text-primary-foreground shadow-xl shadow-primary/30" : "text-muted-foreground/60 hover:text-primary"
                            )}
                          >
                             <ThumbsUp className="h-4 w-4" /> POSITIVE
@@ -209,7 +209,7 @@ export default function EmployerEvaluationsPage() {
                            onClick={() => setRecommendForHire(false)}
                            className={cn(
                              "px-8 py-3 rounded-xl text-xs font-black transition-all flex items-center gap-2",
-                             !recommendForHire ? "bg-rose-600 text-white shadow-xl shadow-rose-600/30" : "text-slate-500 hover:text-rose-600"
+                             !recommendForHire ? "bg-rose-600 text-white shadow-xl shadow-rose-600/30" : "text-muted-foreground/60 hover:text-rose-600"
                            )}
                          >
                             <ThumbsDown className="h-4 w-4" /> NEGATIVE
@@ -219,7 +219,7 @@ export default function EmployerEvaluationsPage() {
 
                    <button
                      disabled={isSubmitting || Object.values(ratings).some(v => v === 0)}
-                     className="w-full py-6 rounded-[2rem] bg-slate-900 dark:bg-indigo-600 text-white font-black tracking-[0.2em] uppercase text-sm shadow-3xl shadow-indigo-600/20 hover:scale-[1.01] active:scale-[0.98] transition-all disabled:opacity-20 disabled:grayscale disabled:hover:scale-100 flex items-center justify-center gap-3"
+                     className="w-full py-6 rounded-[2rem] bg-primary text-primary-foreground font-black tracking-[0.2em] uppercase text-sm shadow-3xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.98] transition-all disabled:opacity-20 disabled:grayscale disabled:hover:scale-100 flex items-center justify-center gap-3"
                    >
                      {isSubmitting ? (
                        <>
@@ -242,7 +242,7 @@ export default function EmployerEvaluationsPage() {
       loading={isLoading && !selectedStudentId}
       fallback={
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+          <Loader2 className="h-10 w-10 text-primary animate-spin opacity-20" />
         </div>
       }
     >

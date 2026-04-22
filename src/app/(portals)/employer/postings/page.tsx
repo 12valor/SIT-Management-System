@@ -73,7 +73,7 @@ export default function EmployerPostingsPage() {
       loading={isLoading}
       fallback={
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+          <Loader2 className="h-10 w-10 text-primary animate-spin opacity-20" />
         </div>
       }
     >
@@ -86,7 +86,7 @@ export default function EmployerPostingsPage() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 h-11 px-6 rounded-lg bg-[#800000] text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-red-900/10 hover:bg-red-900 transition-all active:scale-95 shrink-0"
+          className="flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-primary-foreground text-xs font-black uppercase tracking-wider shadow-md shadow-primary/10 hover:brightness-90 transition-all active:scale-95 shrink-0"
         >
           <Plus className="h-4 w-4" /> Post New Role
         </button>
