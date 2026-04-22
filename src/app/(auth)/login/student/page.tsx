@@ -49,7 +49,7 @@ export default function StudentLoginPage() {
             alt="TUP Seal" 
             width={32}
             height={32}
-            className="h-8 w-auto dark:invert grayscale brightness-200" 
+            className="h-8 w-auto grayscale brightness-200" 
           />
           <div className="flex flex-col leading-none">
              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">TUP-Visayas</span>
@@ -61,14 +61,14 @@ export default function StudentLoginPage() {
       <main className="flex-1 flex items-center justify-center px-6">
         <div className="max-w-[420px] w-full">
           
-          <div className="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-none">
+          <div className="bg-white border border-slate-200 p-10 rounded-3xl shadow-2xl shadow-slate-200/50">
             {/* FORM HEADER */}
             <div className="mb-10 text-center">
               <div className="h-14 w-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6">
                 <GraduationCap className="h-7 w-7" />
               </div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-heading tracking-tight uppercase mb-2">Student</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+              <h2 className="text-3xl font-bold text-slate-900 font-heading tracking-tight uppercase mb-2">Student</h2>
+              <p className="text-sm text-slate-500 font-medium">
                 Log in using your institutional GSFE account to manage your SIT training records.
               </p>
             </div>
@@ -76,7 +76,7 @@ export default function StudentLoginPage() {
             {/* FORM BODY */}
             <form onSubmit={handleLogin} className="space-y-6">
               {error && (
-                <div className="p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20 rounded-xl">
+                <div className="p-4 bg-red-50 border border-red-100 rounded-xl">
                   <p className="text-[11px] font-bold text-red-600 uppercase tracking-tight text-center">{error}</p>
                 </div>
               )}
@@ -92,7 +92,7 @@ export default function StudentLoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="student@gsfe.tupv.edu.ph"
-                    className="w-full h-12 pl-12 pr-4 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[13px] font-medium outline-none focus:border-primary transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700"
+                    className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-[13px] font-medium outline-none focus:border-primary transition-all placeholder:text-slate-300"
                   />
                 </div>
               </div>
@@ -108,7 +108,7 @@ export default function StudentLoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full h-12 pl-12 pr-4 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-[13px] font-medium outline-none focus:border-primary transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700"
+                    className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-[13px] font-medium outline-none focus:border-primary transition-all placeholder:text-slate-300"
                   />
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function StudentLoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-slate-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-widest rounded-xl hover:bg-primary dark:hover:bg-slate-200 transition-all flex items-center justify-center gap-3 disabled:opacity-50 text-[11px]"
+                className="w-full h-12 bg-slate-900 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-primary transition-all flex items-center justify-center gap-3 disabled:opacity-50 text-[11px]"
               >
                 {isLoading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -129,7 +129,7 @@ export default function StudentLoginPage() {
               </button>
             </form>
 
-            <div className="mt-10 pt-8 border-t border-slate-100 dark:border-white/5 flex items-center justify-center gap-2">
+            <div className="mt-10 pt-8 border-t border-slate-100 flex items-center justify-center gap-2">
                <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Authorized Access Only</span>
             </div>

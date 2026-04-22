@@ -45,19 +45,19 @@ export default function LoginGatePage() {
             alt="TUP Seal" 
             width={70}
             height={70}
-            className="h-[70px] w-auto dark:invert grayscale brightness-200 opacity-90" 
+            className="h-[70px] w-auto grayscale brightness-200 opacity-90" 
           />
-          <div className="h-10 w-px bg-slate-200 dark:bg-white/10 hidden sm:block" />
+          <div className="h-10 w-px bg-slate-200 hidden sm:block" />
           <div className="flex flex-col items-start leading-none">
-             <h1 className="text-xl font-bold font-heading text-slate-900 dark:text-white uppercase tracking-tight">TUP-Visayas</h1>
+             <h1 className="text-xl font-bold font-heading text-slate-900 uppercase tracking-tight">TUP-Visayas</h1>
              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mt-1">SIT Management System</span>
           </div>
         </motion.div>
         
-        <h2 className="text-4xl md:text-6xl font-bold text-center font-premium text-slate-900 dark:text-white uppercase tracking-tight max-w-2xl leading-[1.1]">
+        <h2 className="text-4xl md:text-6xl font-bold text-center font-premium text-slate-900 uppercase tracking-tight max-w-2xl leading-[1.1]">
           Portal Access Selection
         </h2>
-        <p className="mt-8 text-slate-500 dark:text-slate-400 font-medium text-center max-w-lg leading-relaxed">
+        <p className="mt-8 text-slate-500 font-medium text-center max-w-lg leading-relaxed">
           Please select your role to proceed to the secure authentication terminal.
         </p>
       </div>
@@ -73,23 +73,23 @@ export default function LoginGatePage() {
             >
               <Link 
                 href={role.href}
-                className="group relative flex flex-col h-full bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 p-10 rounded-2xl hover:border-primary/40 dark:hover:border-white/30 transition-all duration-300"
+                className="group relative flex flex-col h-full bg-white border border-slate-200 p-10 rounded-2xl hover:border-primary/40 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <div className="mb-10 flex items-center justify-between">
                   <div className={`h-14 w-14 ${role.color} rounded-xl flex items-center justify-center text-white shadow-md`}>
                     <role.icon className="h-7 w-7" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-slate-300 dark:text-white/20 group-hover:text-primary dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  <ArrowRight className="w-5 h-5 text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                 </div>
 
-                <h3 className="text-2xl font-bold font-heading text-slate-900 dark:text-white mb-4 uppercase tracking-tight">
+                <h3 className="text-2xl font-bold font-heading text-slate-900 mb-4 uppercase tracking-tight">
                   {role.title}
                 </h3>
-                <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8 flex-1">
+                <p className="text-[13px] text-slate-500 font-medium leading-relaxed mb-8 flex-1">
                   {role.description}
                 </p>
 
-                <div className="pt-6 border-t border-slate-100 dark:border-white/5">
+                <div className="pt-6 border-t border-slate-100">
                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">Enter Portal</span>
                 </div>
               </Link>
@@ -99,9 +99,9 @@ export default function LoginGatePage() {
       </main>
 
       {/* SYSTEM ANNOUNCEMENTS */}
-      <div className="mt-20 border-t border-slate-100 dark:border-white/5 py-8">
+      <div className="mt-20 border-t border-slate-100 py-8">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-8">
-          <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-white/5 rounded-full border border-slate-100 dark:border-white/10 shrink-0">
+          <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-full border border-slate-100 shrink-0">
             <Bell className="w-3.5 h-3.5 text-slate-400" />
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Notice</span>
           </div>
@@ -112,8 +112,8 @@ export default function LoginGatePage() {
                "Please check the updated OJT requirements for 2024."
              ].map((log, i) => (
                <div key={i} className="flex items-center gap-3 whitespace-nowrap opacity-70 hover:opacity-100 transition-opacity">
-                  <span className="text-[10px] font-bold text-slate-300 dark:text-slate-600 font-heading">0{i+1}</span>
-                  <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400">{log}</span>
+                  <span className="text-[10px] font-bold text-slate-300 font-heading">0{i+1}</span>
+                  <span className="text-[11px] font-medium text-slate-600">{log}</span>
                </div>
              ))}
           </div>
