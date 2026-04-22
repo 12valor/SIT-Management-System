@@ -1,169 +1,129 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Building2, ShieldCheck, ArrowRight, Bell, Command, Activity, Fingerprint } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { GraduationCap, Building2, ShieldCheck, ArrowRight, Bell } from "lucide-react";
+import { motion } from "framer-motion";
 
-/**
- * AESTHETIC DIRECTION: Industrial Precision
- * LAYOUT: Structural Grid with Monospaced HUD Elements
- * TYPOGRAPHY: Space Grotesk (Display) + JetBrains Mono (Data)
- * COLOR: Deep Ink, SIT Maroon (#800000), Slate Gray
- */
+const roles = [
+  {
+    title: "Student",
+    description: "Manage your SIT logbook, journals, and view your evaluation reports.",
+    icon: GraduationCap,
+    href: "/login/student",
+    color: "bg-primary",
+  },
+  {
+    title: "Industry Partner",
+    description: "Verify trainee attendance and evaluate student performance in the field.",
+    icon: Building2,
+    href: "/login/employer",
+    color: "bg-slate-700",
+  },
+  {
+    title: "Coordinator",
+    description: "Institutional oversight, SIT management, and student placement monitoring.",
+    icon: ShieldCheck,
+    href: "/login/coordinator",
+    color: "bg-red-700",
+  },
+];
 
 export default function LoginGatePage() {
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="flex-1 flex flex-col pt-24 pb-12">
       
-      {/* FLOATING DECORATIVE MARKERS */}
-      <div className="absolute top-20 left-10 z-0 opacity-20 dark:opacity-40 hidden lg:block">
-        <div className="font-mono text-[10px] space-y-1">
-          <p>SYS_REF: TUPV_SIT_v4.0.2</p>
-          <p>LOC_DATA: 10.69 / 122.95</p>
-          <p className="text-primary font-bold">STATUS: OPERATIONAL</p>
-        </div>
+      {/* INSTITUTIONAL HEADER */}
+      <div className="flex flex-col items-center justify-center mb-20 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-4 mb-10"
+        >
+          <Image 
+            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+            alt="TUP Seal" 
+            width={70}
+            height={70}
+            className="h-[70px] w-auto dark:invert grayscale brightness-200 opacity-90" 
+          />
+          <div className="h-10 w-px bg-slate-200 dark:bg-white/10 hidden sm:block" />
+          <div className="flex flex-col items-start leading-none">
+             <h1 className="text-xl font-bold font-heading text-slate-900 dark:text-white uppercase tracking-tight">TUP-Visayas</h1>
+             <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mt-1">SIT Management System</span>
+          </div>
+        </motion.div>
+        
+        <h2 className="text-5xl md:text-8xl font-black text-center font-heading text-slate-900 dark:text-white uppercase tracking-tighter max-w-5xl leading-[0.85] flex flex-col md:flex-row items-center justify-center gap-x-6">
+          <span>Portal</span>
+          <span className="relative group">
+            <span className="relative z-10 text-primary italic -skew-x-12 inline-block transition-transform group-hover:-translate-y-1 duration-500">Access</span>
+            <span className="absolute inset-0 bg-slate-900 dark:bg-white/[0.05] -skew-x-12 translate-y-3 translate-x-3 -z-10 opacity-10"></span>
+            <span className="absolute -bottom-2 left-0 w-full h-1 bg-slate-900 dark:bg-white/40 -skew-x-12"></span>
+          </span>
+          <span>Selection</span>
+        </h2>
+        <p className="mt-10 text-slate-500 dark:text-slate-400 font-medium text-center max-w-lg leading-relaxed">
+          Select your authorized gateway to proceed to the secure authentication terminal.
+        </p>
       </div>
 
-      <main className="flex-1 flex items-center justify-center p-6 pt-32 pb-20 relative z-10">
-        <div className="max-w-[1200px] w-full mx-auto">
-          
-          {/* HEADER SECTION */}
-          <div className="relative mb-20">
-            <div className="flex flex-col items-center text-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-[10px] uppercase tracking-widest text-slate-500">
-                <Command className="w-3 h-3" />
-                Access Gateway
-              </div>
-              
-              <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white font-heading tracking-tighter leading-[0.9] max-w-4xl">
-                SUPERVISED <br/>
-                <span className="text-primary italic">INDUSTRIAL</span> TRAINING
-              </h1>
-              
-              <p className="max-w-xl text-slate-500 dark:text-slate-400 font-medium text-lg">
-                Secure portal for TUPV students, coordinators, and industry partners to manage training lifecycles.
-              </p>
-            </div>
-          </div>
-
-          {/* SELECTION GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
-            
-            {/* PORTAL CARDS MAPPING */}
-            {[
-              {
-                title: "Student",
-                desc: "Manage logs, journals, and view evaluations for your OJT/SIT program.",
-                icon: GraduationCap,
-                href: "/login/student",
-                color: "primary",
-                meta: { id: "USR_STD", perm: "READ/WRITE" }
-              },
-              {
-                title: "Employer",
-                desc: "Review trainee performance, verify attendance, and submit final ratings.",
-                icon: Building2,
-                href: "/login/employer",
-                color: "slate",
-                meta: { id: "USR_EMP", perm: "VERIFY_ONLY" }
-              },
-              {
-                title: "Coordinator",
-                desc: "Oversee SIT records, approve accounts, and manage institutional data.",
-                icon: ShieldCheck,
-                href: "/login/coordinator",
-                color: "slate",
-                meta: { id: "USR_ADM", perm: "ROOT_ACCESS" }
-              }
-            ].map((portal, i) => (
-              <div 
-                key={portal.title}
-                className="group relative bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-8 flex flex-col transition-all duration-500 hover:border-primary/50 dark:hover:border-primary/50"
+      <main className="flex-1 flex items-center justify-center px-6">
+        <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+          {roles.map((role, idx) => (
+            <motion.div
+              key={role.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+            >
+              <Link 
+                href={role.href}
+                className="group relative flex flex-col h-full bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 p-10 rounded-2xl hover:border-primary/40 dark:hover:border-white/30 transition-all duration-300"
               >
-                {/* TECHNICAL ACCENT NOTCH */}
-                <div className="absolute top-0 right-0 w-12 h-12 overflow-hidden pointer-events-none">
-                   <div className="absolute top-[-24px] right-[-24px] w-12 h-12 bg-slate-100 dark:bg-white/5 rotate-45 group-hover:bg-primary/20 transition-colors duration-500" />
-                </div>
-
-                {/* CARD DATA HEADER */}
-                <div className="flex items-center justify-between mb-10">
-                  <div className="flex flex-col">
-                    <span className="font-mono text-[9px] uppercase tracking-tighter text-slate-400 mb-1">AUTH_ID</span>
-                    <span className="font-mono text-[11px] font-bold dark:text-slate-200">{portal.meta.id}</span>
+                <div className="mb-10 flex items-center justify-between">
+                  <div className={`h-14 w-14 ${role.color} rounded-xl flex items-center justify-center text-white shadow-md`}>
+                    <role.icon className="h-7 w-7" />
                   </div>
-                  <div className="h-10 w-10 border border-slate-100 dark:border-white/5 flex items-center justify-center group-hover:border-primary/30 transition-colors">
-                    <portal.icon className={cn("w-5 h-5 transition-transform group-hover:scale-110 duration-500", i === 0 ? "text-primary" : "text-slate-400 dark:text-slate-600")} />
-                  </div>
+                  <ArrowRight className="w-5 h-5 text-slate-300 dark:text-white/20 group-hover:text-primary dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </div>
 
-                <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-slate-900 dark:text-white font-heading mb-4 tracking-tight uppercase">{portal.title}</h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium mb-8">
-                    {portal.desc}
-                  </p>
+                <h3 className="text-2xl font-bold font-heading text-slate-900 dark:text-white mb-4 uppercase tracking-tight">
+                  {role.title}
+                </h3>
+                <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8 flex-1">
+                  {role.description}
+                </p>
+
+                <div className="pt-6 border-t border-slate-100 dark:border-white/5">
+                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">Enter Portal</span>
                 </div>
-
-                {/* ACTION BUTTON */}
-                <div className="mt-auto space-y-4">
-                  <div className="flex items-center gap-2 opacity-50">
-                    <Activity className="w-3 h-3 text-primary animate-pulse" />
-                    <span className="font-mono text-[9px] text-slate-400 uppercase tracking-widest">{portal.meta.perm}</span>
-                  </div>
-                  
-                  <Link 
-                    href={portal.href}
-                    className={cn(
-                      "group/btn relative flex items-center justify-between w-full p-4 font-bold tracking-tight transition-all duration-300",
-                      i === 0 
-                        ? "bg-primary text-white hover:bg-primary/90" 
-                        : "bg-slate-900 dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-slate-200"
-                    )}
-                  >
-                    <span className="relative z-10 text-sm uppercase italic">Authenticate</span>
-                    <ArrowRight className="w-4 h-4 relative z-10 transition-transform group-hover/btn:translate-x-1" />
-                    <div className="absolute inset-0 opacity-0 group-hover/btn:opacity-10 dark:group-hover/btn:opacity-20 transition-opacity bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_100%)]" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* SYSTEM LOG BAR */}
-          <div className="mt-8 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 p-4 md:p-6 flex flex-col md:flex-row items-center gap-6">
-            <div className="flex items-center gap-4 shrink-0">
-               <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-primary rounded-full animate-ping" />
-                  <span className="font-mono text-[11px] font-bold text-primary uppercase tracking-widest">Live_Notice</span>
-               </div>
-               <div className="h-4 w-[1px] bg-slate-300 dark:bg-slate-800 hidden md:block" />
-            </div>
-
-            <div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-8 overflow-hidden">
-               <div className="flex items-center gap-3">
-                  <span className="font-mono text-[10px] text-slate-400">01</span>
-                  <p className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate">DTR submission deadline: Every Friday 5PM</p>
-               </div>
-               <div className="flex items-center gap-3">
-                  <span className="font-mono text-[10px] text-slate-400">02</span>
-                  <p className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate">New: Upload photos in journal (max 2MB)</p>
-               </div>
-            </div>
-
-            <Link href="/help" className="shrink-0 flex items-center gap-2 group/help">
-               <Fingerprint className="w-4 h-4 text-slate-400 group-hover/help:text-primary transition-colors" />
-               <span className="font-mono text-[10px] font-bold text-slate-500 uppercase group-hover/help:text-primary transition-colors">Support_Console</span>
-            </Link>
-          </div>
-
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </main>
 
-      {/* CORNER COORDINATES (Visual Only) */}
-      <div className="absolute bottom-6 left-6 font-mono text-[8px] text-slate-400 uppercase tracking-widest hidden md:block z-20">
-        [ SECURE_LAYER: ENCRYPTED ]
-      </div>
-      <div className="absolute bottom-6 right-6 font-mono text-[8px] text-slate-400 uppercase tracking-widest hidden md:block z-20">
-        TUPV_SIT_SYSTEM_2024
+      {/* SYSTEM ANNOUNCEMENTS */}
+      <div className="mt-20 border-t border-slate-100 dark:border-white/5 py-8">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-8">
+          <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-white/5 rounded-full border border-slate-100 dark:border-white/10 shrink-0">
+            <Bell className="w-3.5 h-3.5 text-slate-400" />
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Notice</span>
+          </div>
+          <div className="flex-1 flex flex-col md:flex-row gap-6 md:gap-10 items-center overflow-hidden">
+             {[
+               "DTR submission deadline: Every Friday 5PM.",
+               "Security updates applied to the Institutional Portal.",
+               "Please check the updated OJT requirements for 2024."
+             ].map((log, i) => (
+               <div key={i} className="flex items-center gap-3 whitespace-nowrap opacity-70 hover:opacity-100 transition-opacity">
+                  <span className="text-[10px] font-bold text-slate-300 dark:text-slate-600 font-heading">0{i+1}</span>
+                  <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400">{log}</span>
+               </div>
+             ))}
+          </div>
+        </div>
       </div>
     </div>
   );
