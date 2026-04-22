@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Briefcase, GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2 } from "lucide-react";
+import { Briefcase, GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2, Users, Rocket, Target, ShieldCheck, Zap } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion } from "framer-motion";
 
@@ -13,7 +13,7 @@ export default function Home() {
         <HeroCarousel />
         
         {/* Entry Points Section */}
-        <section className="py-32 relative overflow-hidden">
+        <section className="py-32 relative overflow-hidden bg-white dark:bg-[#050505]">
           {/* Subtle Background Accents */}
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10" />
@@ -29,24 +29,10 @@ export default function Home() {
                 <Sparkles className="w-3 h-3 text-primary" />
                 <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Institutional Access</span>
               </motion.div>
-              <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4"
-              >
-                Select Your Gateway
-              </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed"
-              >
+              <h2 className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">Select Your Gateway</h2>
+              <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
                 Connect with the official TUP-V Supervised Industrial Training platform. Designed for excellence, engineered for career growth.
-              </motion.p>
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
@@ -124,6 +110,73 @@ export default function Home() {
                 </div>
               </motion.div>
             </div>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="py-32 bg-slate-50/50 dark:bg-white/[0.01] border-y border-slate-100 dark:border-white/5">
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto text-center mb-24">
+              <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">How It Works</h2>
+              <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
+              <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                A streamlined, three-step process designed to bridge the gap between academic training and industrial excellence.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
+              {/* Connector Line (Desktop) */}
+              <div className="hidden md:block absolute top-1/4 left-0 w-full h-px bg-slate-200 dark:bg-white/10 -z-10" />
+
+              {[
+                { 
+                  step: "01", 
+                  title: "Profile Setup", 
+                  desc: "Create your institutional SIT profile with GSFE credentials.", 
+                  icon: ShieldCheck 
+                },
+                { 
+                  step: "02", 
+                  title: "Application", 
+                  desc: "Apply to pre-vetted industry partners matching your skill set.", 
+                  icon: Zap 
+                },
+                { 
+                  step: "03", 
+                  title: "Evaluation", 
+                  desc: "Track progress and receive performance audits in real-time.", 
+                  icon: CheckCircle 
+                }
+              ].map((step, i) => (
+                <motion.div 
+                  key={step.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.2 }}
+                  className="flex flex-col items-center text-center"
+                >
+                  <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 shadow-xl shadow-slate-200/20 dark:shadow-none relative group transition-all hover:border-primary/50">
+                    <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-white dark:border-[#050505]">{step.step}</span>
+                    <step.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
+                  </div>
+                  <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">{step.title}</h5>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">{step.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Partners Marquee Strip */}
+        <section className="py-20 bg-white dark:bg-[#050505] overflow-hidden">
+          <div className="container mx-auto px-6 mb-12 text-center">
+            <p className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.4em] mb-4">Official Training Partners</p>
+          </div>
+          <div className="flex space-x-20 animate-none opacity-30 grayscale hover:grayscale-0 transition-all cursor-default overflow-hidden whitespace-nowrap justify-center items-center">
+            {["INTEL", "ACCENTURE", "GLOBE", "SMART", "MERALCO", "PETRON"].map((partner) => (
+              <span key={partner} className="text-3xl font-black font-premium text-slate-400 dark:text-white/20 tracking-tighter hover:text-primary transition-colors">{partner}</span>
+            ))}
           </div>
         </section>
       </main>
