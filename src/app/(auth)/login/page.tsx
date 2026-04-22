@@ -54,17 +54,11 @@ export default function LoginGatePage() {
           </div>
         </motion.div>
         
-        <h2 className="text-5xl md:text-8xl font-black text-center font-heading text-slate-900 dark:text-white uppercase tracking-tighter max-w-5xl leading-[0.85] flex flex-col md:flex-row items-center justify-center gap-x-6">
-          <span>Portal</span>
-          <span className="relative group">
-            <span className="relative z-10 text-primary italic -skew-x-12 inline-block transition-transform group-hover:-translate-y-1 duration-500">Access</span>
-            <span className="absolute inset-0 bg-slate-900 dark:bg-white/[0.05] -skew-x-12 translate-y-3 translate-x-3 -z-10 opacity-10"></span>
-            <span className="absolute -bottom-2 left-0 w-full h-1 bg-slate-900 dark:bg-white/40 -skew-x-12"></span>
-          </span>
-          <span>Selection</span>
+        <h2 className="text-4xl md:text-6xl font-bold text-center font-heading text-slate-900 dark:text-white uppercase tracking-tight max-w-2xl leading-[1.1]">
+          Portal Access Selection
         </h2>
-        <p className="mt-10 text-slate-500 dark:text-slate-400 font-medium text-center max-w-lg leading-relaxed">
-          Select your authorized gateway to proceed to the secure authentication terminal.
+        <p className="mt-8 text-slate-500 dark:text-slate-400 font-medium text-center max-w-lg leading-relaxed">
+          Please select your role to proceed to the secure authentication terminal.
         </p>
       </div>
 
