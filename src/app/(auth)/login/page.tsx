@@ -54,7 +54,7 @@ export default function LoginGatePage() {
           </div>
         </motion.div>
         
-        <h2 className="text-4xl md:text-6xl font-bold text-center font-heading text-slate-900 dark:text-white uppercase tracking-tight max-w-2xl leading-[1.1]">
+        <h2 className="text-4xl md:text-6xl font-bold text-center font-premium text-slate-900 dark:text-white uppercase tracking-tight max-w-2xl leading-[1.1]">
           Portal Access Selection
         </h2>
         <p className="mt-8 text-slate-500 dark:text-slate-400 font-medium text-center max-w-lg leading-relaxed">

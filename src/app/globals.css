@@ -76,6 +76,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --font-sans: var(--font-poppins);
   --font-heading: var(--font-montserrat);
+  --font-premium: var(--font-outfit);
   --font-serif: var(--font-serif);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
