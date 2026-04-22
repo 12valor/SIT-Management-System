@@ -31,14 +31,14 @@ const roles = [
 
 export default function LoginGatePage() {
   return (
-    <div className="flex-1 flex flex-col pt-24 pb-12">
+    <div className="flex-1 flex flex-col pt-32 pb-12">
       
       {/* INSTITUTIONAL HEADER */}
-      <div className="flex flex-col items-center justify-center mb-20 px-6">
+      <div className="flex flex-col items-center justify-center mb-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4 mb-10"
+          className="flex items-center gap-8 mb-10"
         >
           <Image 
             src="/Technological_University_of_the_Philippines_Seal.svg.png" 
