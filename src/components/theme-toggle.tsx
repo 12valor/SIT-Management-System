@@ -28,7 +28,7 @@ export function ThemeToggle() {
         onChange={() => setTheme(isDark ? "light" : "dark")}
       />
       {/* Track & Knob */}
-      <div className="relative w-[80px] h-[36px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[28px] after:h-[28px] after:bg-gradient-to-r after:from-orange-500 after:to-yellow-400 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[4px] after:left-[4px] active:after:w-[36px] peer-checked:after:left-[76px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md" />
+      <div className="relative w-[80px] h-[36px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[28px] after:h-[28px] after:bg-gradient-to-r after:from-red-600 after:to-orange-500 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[4px] after:left-[4px] active:after:w-[36px] peer-checked:after:left-[76px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md" />
       
       {/* Sun Icon */}
       <svg height={0} width={100} viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="fill-white peer-checked:opacity-40 absolute w-4 h-4 left-[10px] transition-opacity duration-300 pointer-events-none">
