@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Briefcase, GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2, Users, Rocket, Target, ShieldCheck, Zap } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion } from "framer-motion";
+import { HowItWorksTimeline } from "@/components/HowItWorksTimeline";
 
 export default function Home() {
   return (
@@ -115,60 +116,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* How It Works Section */}
-        <section className="py-32 bg-slate-50/50 dark:bg-white/[0.01] border-y border-slate-100 dark:border-white/5 relative overflow-hidden">
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-24">
-              <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">How It Works</h2>
-              <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
-              <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                A streamlined, three-step process designed to bridge the gap between academic training and industrial excellence.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
-              {/* Connector Line (Desktop) */}
-              <div className="hidden md:block absolute top-1/4 left-0 w-full h-px bg-slate-200 dark:bg-white/10 -z-10" />
-
-              {[
-                { 
-                  step: "01", 
-                  title: "Profile Setup", 
-                  desc: "Create your institutional SIT profile with GSFE credentials.", 
-                  icon: ShieldCheck 
-                },
-                { 
-                  step: "02", 
-                  title: "Application", 
-                  desc: "Apply to pre-vetted industry partners matching your skill set.", 
-                  icon: Zap 
-                },
-                { 
-                  step: "03", 
-                  title: "Evaluation", 
-                  desc: "Track progress and receive performance audits in real-time.", 
-                  icon: CheckCircle 
-                }
-              ].map((step, i) => (
-                <motion.div 
-                  key={step.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.2 }}
-                  className="flex flex-col items-center text-center"
-                >
-                  <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 shadow-xl shadow-slate-200/20 dark:shadow-none relative group transition-all hover:border-primary/50">
-                    <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-white dark:border-[#050505]">{step.step}</span>
-                    <step.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
-                  </div>
-                  <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">{step.title}</h5>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">{step.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Cinematic How It Works Section */}
+        <HowItWorksTimeline />
 
         {/* Partners Marquee Strip */}
         <section className="py-20 bg-white dark:bg-[#050505] overflow-hidden">
