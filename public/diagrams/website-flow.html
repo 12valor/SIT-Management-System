@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT Management System · Website Flow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f5f4ed;
+      --color-ink:     #0b0d0b;
+      --color-muted:   #52534e;
+      --color-accent:  #c00000;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1200px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Flowchart · Diagram Design</p>
+    <h1>User Journey & Portal Flow</h1>
+
+    <svg viewBox="0 0 1000 680" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.9" fill="rgba(11,13,11,0.10)"/>
+          </pattern>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#52534e"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c00000"/></marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f5f4ed"/>
+        <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/>
+
+        <!-- Arrows -->
+        <line x1="500" y1="88" x2="500" y2="120" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+        
+        <!-- Diamond 1 (Role?) Left, Down, Right -->
+        <line x1="440" y1="168" x2="200" y2="168" stroke="#52534e" stroke-width="1.2"/>
+        <line x1="200" y1="168" x2="200" y2="240" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+        
+        <line x1="500" y1="216" x2="500" y2="240" stroke="#c00000" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        
+        <line x1="560" y1="168" x2="800" y2="168" stroke="#52534e" stroke-width="1.2"/>
+        <line x1="800" y1="168" x2="800" y2="240" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Roles to actions -->
+        <line x1="200" y1="288" x2="200" y2="340" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="500" y1="288" x2="500" y2="340" stroke="#c00000" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <line x1="800" y1="288" x2="800" y2="340" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Actions to End -->
+        <line x1="200" y1="388" x2="200" y2="440" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="500" y1="388" x2="500" y2="440" stroke="#c00000" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <line x1="800" y1="388" x2="800" y2="440" stroke="#52534e" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Arrow labels -->
+        <rect x="280" y="158" width="48" height="12" rx="2" fill="#f5f4ed"/>
+        <text x="304" y="167" fill="#52534e" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">STUDENT</text>
+
+        <rect x="472" y="222" width="56" height="12" rx="2" fill="#f5f4ed"/>
+        <text x="500" y="231" fill="#c00000" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">EMPLOYER</text>
+
+        <rect x="672" y="158" width="64" height="12" rx="2" fill="#f5f4ed"/>
+        <text x="704" y="167" fill="#52534e" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">COORDINATOR</text>
+
+        <!-- Start oval -->
+        <rect x="420" y="40" width="160" height="48" rx="24" fill="rgba(11,13,11,0.03)" stroke="rgba(11,13,11,0.30)" stroke-width="1"/>
+        <text x="500" y="68" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Landing Page</text>
+
+        <!-- Diamond: Role -->
+        <polygon points="500,120 560,168 500,216 440,168" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="500" y="164" fill="#0b0d0b" font-size="11" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Select</text>
+        <text x="500" y="178" fill="#0b0d0b" font-size="11" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Role</text>
+
+        <!-- Nodes: Portals -->
+        <rect x="120" y="240" width="160" height="48" rx="6" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="200" y="268" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Student Portal</text>
+
+        <rect x="420" y="240" width="160" height="48" rx="6" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="500" y="268" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Employer Portal</text>
+
+        <rect x="720" y="240" width="160" height="48" rx="6" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="800" y="268" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Coordinator Portal</text>
+
+        <!-- Nodes: Actions -->
+        <rect x="120" y="340" width="160" height="48" rx="6" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="200" y="364" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Submit DTR &</text>
+        <text x="200" y="378" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Logbook Entries</text>
+
+        <rect x="420" y="340" width="160" height="48" rx="6" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="500" y="364" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Post Jobs &</text>
+        <text x="500" y="378" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Approve Hours</text>
+
+        <rect x="720" y="340" width="160" height="48" rx="6" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="800" y="364" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Monitor Overall</text>
+        <text x="800" y="378" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Progress</text>
+
+        <!-- Nodes: End / Done -->
+        <rect x="120" y="440" width="160" height="48" rx="24" fill="rgba(11,13,11,0.03)" stroke="rgba(11,13,11,0.30)" stroke-width="1"/>
+        <text x="200" y="468" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Complete Training</text>
+
+        <rect x="420" y="440" width="160" height="48" rx="24" fill="rgba(192,0,0,0.08)" stroke="#c00000" stroke-width="1"/>
+        <text x="500" y="468" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Evaluate Student</text>
+
+        <rect x="720" y="440" width="160" height="48" rx="24" fill="rgba(11,13,11,0.03)" stroke="rgba(11,13,11,0.30)" stroke-width="1"/>
+        <text x="800" y="468" fill="#0b0d0b" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Final Sign-off</text>
+
+        <!-- Legend -->
+        <line x1="40" y1="560" x2="960" y2="560" stroke="rgba(11,13,11,0.10)" stroke-width="0.8"/>
+        <text x="40" y="576" fill="#52534e" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND · SHAPE CARRIES TYPE</text>
+
+        <rect x="40" y="592" width="24" height="12" rx="6" fill="rgba(11,13,11,0.03)" stroke="rgba(11,13,11,0.30)" stroke-width="1"/>
+        <text x="72" y="602" fill="#52534e" font-size="8.5" font-family="'Geist', sans-serif">Start / end (oval)</text>
+
+        <rect x="220" y="592" width="24" height="12" rx="2" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="252" y="602" fill="#52534e" font-size="8.5" font-family="'Geist', sans-serif">Step (rectangle)</text>
+
+        <polygon points="412,598 424,592 436,598 424,604" fill="#ffffff" stroke="#0b0d0b" stroke-width="1"/>
+        <text x="448" y="602" fill="#52534e" font-size="8.5" font-family="'Geist', sans-serif">Decision (diamond)</text>
+
+        <line x1="604" y1="600" x2="632" y2="600" stroke="#c00000" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <text x="640" y="602" fill="#52534e" font-size="8.5" font-family="'Geist', sans-serif">Primary path</text>
+      </svg>
+  </div>
+</body>
+</html>
