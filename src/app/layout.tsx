@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 import { AuthProvider } from "@/components/providers/session-provider";
 import { Footer } from "@/components/Footer";
 import { SmartNavbar } from "@/components/SmartNavbar";
+import { FloatingThemeToggle } from "@/components/FloatingThemeToggle";
 
 export default function RootLayout({
   children,
@@ -54,6 +55,7 @@ export default function RootLayout({
               {children}
             </div>
             <Footer />
+            <FloatingThemeToggle />
           </ThemeProvider>
         </AuthProvider>
       </body>
