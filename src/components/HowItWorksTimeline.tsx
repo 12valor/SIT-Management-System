@@ -42,10 +42,10 @@ export function HowItWorksTimeline() {
   return (
     <section ref={containerRef} className="relative min-h-[300vh] bg-slate-50/50 dark:bg-[#050505] border-y border-slate-100 dark:border-white/5">
       
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-24 pb-16">
         
         {/* Header */}
-        <div className="absolute top-12 md:top-16 left-0 w-full text-center z-30 px-6">
+        <div className="w-full text-center z-30 px-6 shrink-0 mb-12 md:mb-16">
           <span className="inline-block font-black text-[10px] uppercase tracking-[0.3em] text-primary mb-2 md:mb-4">Module 01</span>
           <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">How It Works</h2>
           <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto text-sm md:text-base hidden sm:block">
@@ -54,16 +54,16 @@ export function HowItWorksTimeline() {
         </div>
 
         {/* Timeline Area */}
-        <div className="relative w-full max-w-5xl mx-auto h-[60vh] md:h-[70vh] mt-32 md:mt-24 px-6 flex items-center">
+        <div className="relative w-full max-w-5xl mx-auto flex-1 px-6">
           
           {/* Straight Vertical Line Base */}
-          <div className="absolute left-[32px] md:left-1/2 top-10 bottom-10 w-[2px] bg-slate-200 dark:bg-white/10 -translate-x-1/2 rounded-full" />
+          <div className="absolute left-[32px] md:left-1/2 top-0 bottom-0 w-[2px] bg-slate-200 dark:bg-white/10 -translate-x-1/2 rounded-full" />
           
           {/* Animated Fill Line */}
           <motion.div 
-            className="absolute left-[32px] md:left-1/2 top-10 w-[4px] bg-primary -translate-x-1/2 origin-top rounded-full z-10"
+            className="absolute left-[32px] md:left-1/2 top-0 w-[4px] bg-primary -translate-x-1/2 origin-top rounded-full z-10"
             style={{ 
-              bottom: 40,
+              bottom: 0,
               scaleY: scrollYProgress 
             }}
           />
@@ -75,15 +75,15 @@ export function HowItWorksTimeline() {
               const topPos = index === 0 ? "10%" : index === 1 ? "50%" : "90%";
 
               // Dynamic opacity: Fade in (0 -> 1), Stay active (1 -> 1), Dim when passed (1 -> 0.3)
+              // The last step does not dim, so we provide a shorter array to avoid values > 1.0 (which crash WAAPI)
               const dynamicOpacity = useTransform(
                 scrollYProgress,
-                [
-                  step.scrollStart - 0.1, 
-                  step.scrollStart,       
-                  step.scrollStart + 0.25, 
-                  step.scrollStart + 0.35  
-                ],
-                [0, 1, 1, index === 2 ? 1 : 0.2] // The last step stays at 100% opacity
+                index === steps.length - 1
+                  ? [step.scrollStart - 0.1, step.scrollStart]
+                  : [step.scrollStart - 0.1, step.scrollStart, step.scrollStart + 0.25, step.scrollStart + 0.35],
+                index === steps.length - 1
+                  ? [0, 1]
+                  : [0, 1, 1, 0.2]
               );
 
               // Slide up on reveal
