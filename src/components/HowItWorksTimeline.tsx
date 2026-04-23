@@ -48,8 +48,8 @@ export function HowItWorksTimeline() {
         <div className="w-full text-center z-30 px-6 shrink-0 mb-12 md:mb-16">
           <span className="inline-block font-black text-[10px] uppercase tracking-[0.3em] text-primary mb-2 md:mb-4">Module 01</span>
           <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">How It Works</h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto text-sm md:text-base hidden sm:block">
-            A procedural journey bridging academic training and industrial excellence. Scroll to reveal.
+          <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto text-base md:text-xl leading-relaxed">
+            A procedural journey bridging <strong className="text-slate-900 dark:text-white font-bold">academic training</strong> and <strong className="text-slate-900 dark:text-white font-bold">industrial excellence</strong>. <br className="hidden sm:block"/>Scroll to reveal the timeline.
           </p>
         </div>
 
@@ -74,16 +74,11 @@ export function HowItWorksTimeline() {
               // Exact placement on the Y axis
               const topPos = index === 0 ? "10%" : index === 1 ? "50%" : "90%";
 
-              // Dynamic opacity: Fade in (0 -> 1), Stay active (1 -> 1), Dim when passed (1 -> 0.3)
-              // The last step does not dim, so we provide a shorter array to avoid values > 1.0 (which crash WAAPI)
+              // Dynamic opacity: Fade in (0 -> 1) and stay at 1. No dimming.
               const dynamicOpacity = useTransform(
                 scrollYProgress,
-                index === steps.length - 1
-                  ? [step.scrollStart - 0.1, step.scrollStart]
-                  : [step.scrollStart - 0.1, step.scrollStart, step.scrollStart + 0.25, step.scrollStart + 0.35],
-                index === steps.length - 1
-                  ? [0, 1]
-                  : [0, 1, 1, 0.2]
+                [Math.max(0, step.scrollStart - 0.15), step.scrollStart],
+                [0, 1]
               );
 
               // Slide up on reveal
@@ -115,17 +110,21 @@ export function HowItWorksTimeline() {
                         : "left-[70px] md:left-[calc(50%+60px)] text-left"
                     }`}
                   >
-                    <div className={`bg-white/90 dark:bg-[#050505]/90 backdrop-blur-xl p-6 md:p-8 rounded-3xl border border-slate-200/50 dark:border-white/10 shadow-xl flex flex-col ${isLeft ? 'md:items-end' : 'items-start'} items-start transition-all duration-500`}>
-                      <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-3 py-1 rounded-full text-[10px] font-black tracking-widest mb-4">
+                    <div className={`bg-white dark:bg-[#050505] p-6 md:p-10 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-200/20 dark:shadow-none flex flex-col ${isLeft ? 'md:items-end' : 'items-start'} items-start transition-all duration-500 group hover:border-primary/30 relative overflow-hidden`}>
+                      
+                      {/* Subtle hover gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                      <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest mb-6 relative z-10 shadow-sm">
                         STEP {step.step}
                       </div>
                       
-                      <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
-                        <step.icon className="w-6 h-6 text-primary" />
+                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                        <step.icon className="w-7 h-7 text-primary" />
                       </div>
                       
-                      <h3 className="text-xl md:text-2xl font-bold font-premium text-slate-900 dark:text-white mb-2 uppercase tracking-tight">{step.title}</h3>
-                      <p className="text-sm md:text-[15px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{step.desc}</p>
+                      <h3 className="text-2xl md:text-3xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight relative z-10">{step.title}</h3>
+                      <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed relative z-10">{step.desc}</p>
                     </div>
                   </motion.div>
 
