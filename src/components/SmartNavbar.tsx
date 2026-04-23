@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "./theme-toggle";
 
 export function SmartNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -39,7 +38,7 @@ export function SmartNavbar() {
         </div>
 
         {/* Main Navigation */}
-        <div className={`bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md border-b border-border/40 transition-all duration-300 relative z-10 ${scrolled ? "py-1" : "py-0"}`}>
+        <div className={`bg-white dark:bg-[#050505] border-b border-border/40 transition-all duration-300 relative z-10 ${scrolled ? "py-1" : "py-0"}`}>
           <div className="container mx-auto px-6 h-16 flex items-center justify-between">
             
             {/* Left: Logo & Links */}
@@ -73,19 +72,8 @@ export function SmartNavbar() {
               </nav>
             </div>
 
-            {/* Right: Auth & Theme */}
+            {/* Right: Actions */}
             <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 mr-2">
-                <ThemeToggle />
-              </div>
-              
-              <Link 
-                href="/login" 
-                className="hidden sm:block text-[11px] font-bold text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white uppercase tracking-widest transition-all px-4"
-              >
-                Sign In
-              </Link>
-              
               <Link 
                 href="/login" 
                 className="hidden sm:inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-7 py-3 rounded-xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all hover:bg-primary dark:hover:bg-primary dark:hover:text-white hover:shadow-xl hover:shadow-primary/20 active:scale-95 group/btn gap-2"
@@ -115,11 +103,6 @@ export function SmartNavbar() {
             className="fixed inset-0 z-40 bg-white dark:bg-[#050505] pt-[120px] px-6 md:hidden"
           >
             <nav className="flex flex-col gap-6">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5">
-                <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Interface Settings</span>
-                <ThemeToggle />
-              </div>
-
               <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4 flex justify-between" href="/login">
                 Portals <ChevronDown className="h-5 w-5 opacity-30" />
               </Link>
@@ -127,9 +110,6 @@ export function SmartNavbar() {
               <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4" href="/login">About</Link>
               
               <div className="flex flex-col gap-4 mt-4">
-                <Link href="/login" className="w-full py-4 text-center text-slate-500 dark:text-slate-400 font-bold text-[11px] uppercase tracking-widest">
-                  Sign In
-                </Link>
                 <Link href="/login" className="w-full py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-center rounded-xl font-bold text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10">
                   Launch Portal
                 </Link>
