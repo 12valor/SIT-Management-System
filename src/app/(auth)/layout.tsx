@@ -11,7 +11,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-primary/20 relative">
+    <div className="min-h-screen bg-background flex flex-col font-sans selection:bg-primary/20 relative">
       <div className="relative z-10 flex-1 flex flex-col">
         {children}
       </div>
