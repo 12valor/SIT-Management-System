@@ -30,6 +30,7 @@ import { AuthProvider } from "@/components/providers/session-provider";
 import { Footer } from "@/components/Footer";
 import { SmartNavbar } from "@/components/SmartNavbar";
 import { FloatingThemeToggle } from "@/components/FloatingThemeToggle";
+import NextTopLoader from "nextjs-toploader";
 
 export default function RootLayout({
   children,
@@ -43,6 +44,11 @@ export default function RootLayout({
       className={`${poppins.variable} ${montserrat.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-white">
+        <NextTopLoader 
+          color="hsl(348 83% 40%)"
+          showSpinner={false}
+          shadow="0 0 10px hsl(348 83% 40%),0 0 5px hsl(348 83% 40%)"
+        />
         <AuthProvider>
           <ThemeProvider
             attribute="class"
