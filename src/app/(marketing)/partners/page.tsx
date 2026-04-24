@@ -95,61 +95,93 @@ export default function PartnersPage() {
           </div>
         </div>
 
+            {/* Technical Grid Skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {[1, 2, 3, 4].map((i) => (
+                <div 
+                  key={i}
+                  className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-8 rounded-[5px] space-y-8"
+                >
+                  <div className="flex gap-6 items-start">
+                    <div className="w-20 h-20 shrink-0 rounded-[5px] border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] animate-pulse" />
+                    <div className="space-y-3 flex-1 pt-1">
+                      <div className="h-3 w-1/4 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                      <div className="h-8 w-3/4 bg-slate-100 dark:bg-white/5 rounded-none animate-pulse" />
+                      <div className="h-3 w-1/3 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                    </div>
+                  </div>
+                  <div className="space-y-3 pl-4 border-l-2 border-slate-100 dark:border-white/5">
+                    <div className="h-4 w-full bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                    <div className="h-4 w-5/6 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                  </div>
+                  <div className="mt-10 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-end">
+                    <div className="flex gap-8">
+                      <div className="space-y-2">
+                        <div className="h-2 w-12 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                        <div className="h-6 w-20 bg-slate-100 dark:bg-white/5 rounded-none animate-pulse" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-2 w-12 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                        <div className="h-6 w-20 bg-slate-100 dark:bg-white/5 rounded-none animate-pulse" />
+                      </div>
+                    </div>
+                    <div className="h-11 w-32 bg-slate-900 dark:bg-white rounded-[5px] animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
         {/* Partners Technical Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredPartners.length > 0 ? (
             filteredPartners.map((partner) => (
               <div 
                 key={partner.id}
-                className="group bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-0 flex flex-col transition-all duration-200 hover:border-primary"
+                className="group bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 rounded-[5px] p-0 flex flex-col transition-all duration-300 hover:border-primary hover:shadow-xl hover:shadow-primary/5"
               >
                 <div className="p-8 flex flex-col flex-1">
-                  {/* Top Meta Bar */}
-                  <div className="flex justify-between items-center mb-8 border-b border-slate-100 dark:border-white/5 pb-4">
-                    <span className="font-mono text-[10px] font-bold text-slate-400 tracking-tighter uppercase">
-                      Registry ID: {partner.id}
-                    </span>
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] px-2 py-0.5 border border-slate-200 dark:border-white/10 text-slate-400">
-                      {partner.status}
-                    </span>
-                  </div>
-
-                  <div className="flex gap-6 items-start">
+                  <div className="flex gap-6 items-start mb-6">
                     {/* Logo Square */}
-                    <div className="w-16 h-16 shrink-0 border border-slate-200 dark:border-white/10 flex items-center justify-center bg-slate-50 dark:bg-white/[0.02] grayscale group-hover:grayscale-0 transition-all">
-                      <Building2 className="w-8 h-8 text-slate-400 group-hover:text-primary" />
+                    <div className="w-20 h-20 shrink-0 rounded-[5px] border border-slate-200 dark:border-white/10 flex items-center justify-center bg-slate-50 dark:bg-white/[0.02] grayscale group-hover:grayscale-0 transition-all overflow-hidden">
+                      <Building2 className="w-10 h-10 text-slate-400 group-hover:text-primary transition-colors" />
                     </div>
                     
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold font-heading text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-primary transition-colors">
+                    <div className="flex-1 pt-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <MapPin className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em]">{partner.loc}</span>
+                      </div>
+                      <h3 className="text-2xl font-bold font-heading text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-primary transition-colors leading-tight">
                         {partner.name}
                       </h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <MapPin className="w-3 h-3 text-primary" />
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{partner.loc}</span>
-                      </div>
+                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-1">
+                        {partner.industry}
+                      </p>
                     </div>
                   </div>
 
-                  <p className="mt-8 text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed flex-1 italic">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed flex-1 italic relative pl-4 border-l-2 border-primary/20">
                     "{partner.description}"
                   </p>
 
-                  <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-center">
-                    <div className="flex items-center gap-4">
+                  <div className="mt-10 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-end">
+                    <div className="grid grid-cols-2 gap-8">
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-tighter">Availability</span>
-                        <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{partner.slots} Slots</span>
+                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-tighter mb-1">Training Capacity</span>
+                        <span className="text-lg font-black text-slate-900 dark:text-white uppercase leading-none">
+                          {partner.slots} <span className="text-[10px] font-bold text-slate-400 ml-1">Slots</span>
+                        </span>
                       </div>
-                      <div className="w-px h-6 bg-slate-200 dark:bg-white/10" />
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-tighter">Sector</span>
-                        <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{partner.industry}</span>
+                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-tighter mb-1">Partnership</span>
+                        <span className="text-lg font-black text-slate-900 dark:text-white uppercase leading-none">
+                          TUPV <span className="text-[10px] font-bold text-slate-400 ml-1">SIT</span>
+                        </span>
                       </div>
                     </div>
 
-                    <Link href="#" className="h-10 px-4 flex items-center gap-2 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-[10px] font-bold uppercase tracking-widest hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 transition-all">
-                      Details
+                    <Link href="#" className="h-11 px-6 rounded-[5px] flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-bold uppercase tracking-widest hover:bg-primary dark:hover:bg-primary hover:text-white transition-all shadow-lg shadow-black/5">
+                      Explore Record
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -157,7 +189,7 @@ export default function PartnersPage() {
               </div>
             ))
           ) : (
-            <div className="col-span-full py-20 text-center bg-white dark:bg-[#050505] border border-dashed border-slate-200 dark:border-white/10">
+            <div className="col-span-full py-20 text-center bg-white dark:bg-[#050505] border border-dashed border-slate-200 dark:border-white/10 rounded-[5px]">
               <p className="text-slate-400 font-bold uppercase tracking-widest">No matching registry records found.</p>
             </div>
           )}
