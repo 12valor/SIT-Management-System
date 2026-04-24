@@ -6,7 +6,6 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { GraduationCap, Mail, Lock, Loader2, ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 export default function StudentLoginPage() {
   const [email, setEmail]       = useState("");

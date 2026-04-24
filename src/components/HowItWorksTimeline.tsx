@@ -1,8 +1,85 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ShieldCheck, Zap, CheckCircle } from "lucide-react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { ShieldCheck, Zap, CheckCircle, LucideIcon } from "lucide-react";
+
+interface Step {
+  step: string;
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+  align: string;
+  scrollStart: number;
+}
+
+function TimelineStep({ 
+  step, 
+  index, 
+  scrollYProgress 
+}: { 
+  step: Step; 
+  index: number; 
+  scrollYProgress: MotionValue<number>;
+}) {
+  const topPos = index === 0 ? "10%" : index === 1 ? "50%" : "90%";
+  const isLeft = step.align === "left";
+
+  const dynamicOpacity = useTransform(
+    scrollYProgress,
+    [Math.max(0, step.scrollStart - 0.15), step.scrollStart],
+    [0, 1]
+  );
+
+  const y = useTransform(
+    scrollYProgress,
+    [step.scrollStart - 0.1, step.scrollStart],
+    [40, 0]
+  );
+
+  const scale = useTransform(
+    scrollYProgress, 
+    [step.scrollStart - 0.1, step.scrollStart], 
+    [0, 1]
+  );
+
+  return (
+    <div className="absolute w-full" style={{ top: topPos }}>
+      {/* The Node Dot */}
+      <motion.div 
+        className="absolute left-[32px] md:left-1/2 w-5 h-5 rounded-full bg-white dark:bg-[#050505] border-4 border-primary -translate-x-1/2 -translate-y-1/2 z-20"
+        style={{ scale }}
+      />
+
+      {/* The Card */}
+      <motion.div
+        style={{ opacity: dynamicOpacity, y }}
+        className={`absolute -translate-y-1/2 w-[calc(100%-70px)] md:w-[calc(50%-60px)] ${
+          isLeft 
+            ? "left-[70px] md:left-auto md:right-[calc(50%+60px)] md:text-right" 
+            : "left-[70px] md:left-[calc(50%+60px)] text-left"
+        }`}
+      >
+        <div className={`bg-white dark:bg-[#050505] p-6 md:p-10 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-200/20 dark:shadow-none flex flex-col ${isLeft ? 'md:items-end' : 'items-start'} items-start transition-all duration-500 group hover:border-primary/30 relative overflow-hidden`}>
+          
+          {/* Subtle hover gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+          <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest mb-6 relative z-10 shadow-sm">
+            STEP {step.step}
+          </div>
+          
+          <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 relative z-10">
+            <step.icon className="w-7 h-7 text-primary" />
+          </div>
+          
+          <h3 className="text-2xl md:text-3xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight relative z-10">{step.title}</h3>
+          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed relative z-10">{step.desc}</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 export function HowItWorksTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,7 +89,7 @@ export function HowItWorksTimeline() {
     offset: ["start start", "end end"]
   });
 
-  const steps = [
+  const steps: Step[] = [
     { 
       step: "01", 
       title: "Profile Setup", 
@@ -70,67 +147,14 @@ export function HowItWorksTimeline() {
 
           {/* Nodes and Cards */}
           <div className="relative w-full h-full">
-            {steps.map((step, index) => {
-              // Exact placement on the Y axis
-              const topPos = index === 0 ? "10%" : index === 1 ? "50%" : "90%";
-
-              // Dynamic opacity: Fade in (0 -> 1) and stay at 1. No dimming.
-              const dynamicOpacity = useTransform(
-                scrollYProgress,
-                [Math.max(0, step.scrollStart - 0.15), step.scrollStart],
-                [0, 1]
-              );
-
-              // Slide up on reveal
-              const y = useTransform(
-                scrollYProgress,
-                [step.scrollStart - 0.1, step.scrollStart],
-                [40, 0]
-              );
-
-              const isLeft = step.align === "left";
-              
-              return (
-                <div key={step.step} className="absolute w-full" style={{ top: topPos }}>
-                  
-                  {/* The Node Dot */}
-                  <motion.div 
-                    className="absolute left-[32px] md:left-1/2 w-5 h-5 rounded-full bg-white dark:bg-[#050505] border-4 border-primary -translate-x-1/2 -translate-y-1/2 z-20"
-                    style={{ 
-                      scale: useTransform(scrollYProgress, [step.scrollStart - 0.1, step.scrollStart], [0, 1]) 
-                    }}
-                  />
-
-                  {/* The Card */}
-                  <motion.div
-                    style={{ opacity: dynamicOpacity, y }}
-                    className={`absolute -translate-y-1/2 w-[calc(100%-70px)] md:w-[calc(50%-60px)] ${
-                      isLeft 
-                        ? "left-[70px] md:left-auto md:right-[calc(50%+60px)] md:text-right" 
-                        : "left-[70px] md:left-[calc(50%+60px)] text-left"
-                    }`}
-                  >
-                    <div className={`bg-white dark:bg-[#050505] p-6 md:p-10 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-200/20 dark:shadow-none flex flex-col ${isLeft ? 'md:items-end' : 'items-start'} items-start transition-all duration-500 group hover:border-primary/30 relative overflow-hidden`}>
-                      
-                      {/* Subtle hover gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                      <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest mb-6 relative z-10 shadow-sm">
-                        STEP {step.step}
-                      </div>
-                      
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 relative z-10">
-                        <step.icon className="w-7 h-7 text-primary" />
-                      </div>
-                      
-                      <h3 className="text-2xl md:text-3xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight relative z-10">{step.title}</h3>
-                      <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed relative z-10">{step.desc}</p>
-                    </div>
-                  </motion.div>
-
-                </div>
-              );
-            })}
+            {steps.map((step, index) => (
+              <TimelineStep 
+                key={step.step} 
+                step={step} 
+                index={index} 
+                scrollYProgress={scrollYProgress} 
+              />
+            ))}
           </div>
         </div>
       </div>

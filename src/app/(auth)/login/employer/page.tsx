@@ -6,7 +6,6 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { Building2, Mail, Lock, Loader2, ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 export default function EmployerLoginPage() {
   const [email, setEmail]       = useState("");

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { ShieldAlert, Mail, Lock, Loader2, ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 export default function CoordinatorLoginPage() {
   const [email, setEmail]       = useState("");

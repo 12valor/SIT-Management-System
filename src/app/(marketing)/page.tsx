@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Briefcase, GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2, Users, Rocket, Target, ShieldCheck, Zap } from "lucide-react";
+import { GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2, ShieldCheck, Zap } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion } from "framer-motion";
 
