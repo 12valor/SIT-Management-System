@@ -29,7 +29,7 @@ export function SmartNavbar() {
 
   return (
     <>
-      <header className={`fixed top-0 w-full z-50 flex flex-col transition-all duration-300 ${scrolled ? "shadow-lg" : "shadow-sm"}`}>
+      <header className={`fixed top-0 w-full z-50 flex flex-col transition-all duration-300 ${scrolled ? "bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-white dark:bg-[#050505]"}`}>
         {/* Top Announcement Banner */}
         <div className="bg-primary text-white py-2 px-4 flex justify-center items-center gap-3 text-[11px] md:text-xs text-center relative z-20">
           <span className="hover:underline cursor-pointer font-medium transition-all text-white/90 hover:text-white">
@@ -76,10 +76,10 @@ export function SmartNavbar() {
             <div className="flex items-center gap-3">
               <Link 
                 href="/login" 
-                className="hidden sm:inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-7 py-3 rounded-xl text-[11px] font-bold uppercase tracking-[0.15em] transition-all hover:bg-primary dark:hover:bg-primary dark:hover:text-white hover:shadow-xl hover:shadow-primary/20 active:scale-95 group/btn gap-2"
+                className="hidden sm:inline-flex items-center justify-center bg-primary text-white px-8 py-2.5 rounded-[2px] text-[13px] font-bold transition-all hover:bg-primary/90 active:scale-[0.98] group/btn gap-2"
               >
                 Launch Portal
-                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
               </Link>
 
               <button 
@@ -110,7 +110,7 @@ export function SmartNavbar() {
               <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4" href="/about">About</Link>
               
               <div className="flex flex-col gap-4 mt-4">
-                <Link href="/login" className="w-full py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-center rounded-xl font-bold text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10">
+                <Link href="/login" className="w-full py-4 bg-primary text-white text-center rounded-[2px] font-bold text-[13px] transition-all active:scale-[0.98]">
                   Launch Portal
                 </Link>
               </div>
