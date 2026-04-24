@@ -127,8 +127,6 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
-              {/* Connector Line (Desktop) */}
-              <div className="hidden md:block absolute top-1/4 left-0 w-full h-px bg-slate-200 dark:bg-white/10 -z-10" />
 
               {[
                 { 
