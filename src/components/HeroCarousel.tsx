@@ -94,7 +94,7 @@ export function HeroCarousel() {
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href="#features"
+                  href="/about"
                   className="inline-flex items-center justify-center h-14 px-10 rounded-2xl border border-white/10 bg-white/5 text-white/80 text-xs font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all font-heading"
                 >
                   Learn More

@@ -72,7 +72,7 @@ export function Footer() {
                 alt="TUP Seal" 
                 width={48}
                 height={48}
-                className="h-12 w-auto grayscale contrast-125 brightness-75 transition-all duration-300" 
+                className="h-12 w-auto transition-all duration-300 hover:scale-105" 
               />
                <div className="flex flex-col uppercase">
                   <h5 className="text-sm font-bold text-slate-900 dark:text-white font-heading leading-tight transition-colors">TUP-V SIT</h5>
