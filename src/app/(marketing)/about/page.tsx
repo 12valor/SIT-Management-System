@@ -2,136 +2,132 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Shield, Target, Award, Users, BookOpen, MapPin } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-[#050505] pt-32 pb-20 overflow-hidden">
-      {/* Background Blueprint Grid */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] z-0">
-        <div className="absolute inset-0 bg-[grid-line] bg-[length:40px_40px]" 
-             style={{ backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)' }} />
+    <main className="min-h-screen bg-white dark:bg-[#050505] pt-40 pb-32 overflow-hidden selection:bg-primary selection:text-white font-sans uppercase">
+      
+      {/* 1. ARCHITECTURAL GRID BASE */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.05] dark:opacity-[0.1]">
+        <div className="h-full w-full bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:100px_100px]" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Hero Section - Industrial Brutalism */}
-        <div className="flex flex-col md:flex-row gap-12 items-start mb-32">
-          <div className="md:w-1/2">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "circOut" }}
-            >
-              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] mb-6">
-                Established 1977
-              </span>
-              <h1 className="text-6xl md:text-8xl font-black font-premium text-slate-900 dark:text-white uppercase leading-[0.9] tracking-tighter mb-8">
-                Engineering <br />
-                <span className="text-primary">Excellence</span>
-              </h1>
-              <p className="text-xl text-slate-500 dark:text-slate-400 font-medium max-w-lg leading-relaxed">
-                The TUPV Supervised Industrial Training (SIT) Management System is the institutional bridge between academic theory and industrial practice.
+        
+        {/* SECTION 01: THE MANIFESTO */}
+        <section className="mb-64">
+          <div className="flex flex-col md:flex-row border-t-4 border-slate-900 dark:border-white pt-8 gap-20">
+            <div className="md:w-[20%] shrink-0">
+              <span className="text-4xl font-black block tracking-tighter">01</span>
+              <span className="text-[10px] font-black tracking-[0.4em] text-primary">Manifesto</span>
+            </div>
+            <div className="md:w-[80%]">
+              <motion.h1 
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-[12vw] md:text-[8vw] font-black leading-[0.85] tracking-tighter mb-20"
+              >
+                WE BRIDGE <br />
+                <span className="text-primary italic">ACADEMIA</span> <br />
+                & INDUSTRY.
+              </motion.h1>
+              
+              <div className="grid md:grid-cols-2 gap-12 max-w-4xl">
+                <p className="text-sm md:text-base font-bold leading-tight text-slate-500 dark:text-slate-400">
+                  THE TUPV SUPERVISED INDUSTRIAL TRAINING (SIT) SYSTEM IS NOT A PORTAL. IT IS A TECHNICAL PROTOCOL. A STANDARDIZED BRIDGE BUILT TO CONVERT ACADEMIC THEORY INTO INDUSTRIAL EXCELLENCE.
+                </p>
+                <p className="text-sm md:text-base font-bold leading-tight text-slate-500 dark:text-slate-400">
+                  FOUNDED ON THE PRINCIPLE OF RIGOR. WE AUTOMATE THE ADMINISTRATIVE BURDEN SO THE FOCUS REMAINS ON THE WORK. THE FUTURE OF PHILIPPINE ENGINEERING IS GROWN HERE.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 02: THE SPECIFICATION (MISSION/VISION) */}
+        <section className="mb-64">
+          <div className="grid md:grid-cols-3 border-y-2 border-slate-900/10 dark:border-white/10">
+            
+            {/* MISSION */}
+            <div className="p-12 md:border-r-2 border-slate-900/10 dark:border-white/10 flex flex-col justify-between min-h-[400px] group hover:bg-primary transition-colors duration-500">
+              <div>
+                <span className="text-xs font-black tracking-widest group-hover:text-white/50 transition-colors">SPEC_01 // MISSION</span>
+                <h2 className="text-4xl font-black mt-8 group-hover:text-white transition-colors leading-none tracking-tighter">SEAMLESS <br/>TRANSITION</h2>
+              </div>
+              <p className="text-xs font-bold leading-relaxed group-hover:text-white/90 transition-colors">
+                PROVIDE A TRANSPARENT, HIGH-PERFORMANCE ENVIRONMENT WHERE STUDENTS TRANSITION INTO PROFESSIONAL CAREERS WITH ZERO FRICTION.
               </p>
-            </motion.div>
+            </div>
+
+            {/* VISION */}
+            <div className="p-12 md:border-r-2 border-slate-900/10 dark:border-white/10 flex flex-col justify-between min-h-[400px] group hover:bg-slate-900 dark:hover:bg-white transition-colors duration-500">
+              <div>
+                <span className="text-xs font-black tracking-widest group-hover:text-slate-400 dark:group-hover:text-slate-500 transition-colors">SPEC_02 // VISION</span>
+                <h2 className="text-4xl font-black mt-8 group-hover:text-white dark:group-hover:text-slate-900 transition-colors leading-none tracking-tighter">GLOBAL <br/>BENCHMARK</h2>
+              </div>
+              <p className="text-xs font-bold leading-relaxed group-hover:text-white/70 dark:group-hover:text-slate-700 transition-colors">
+                SET THE INSTITUTIONAL STANDARD FOR INDUSTRIAL TRAINING MANAGEMENT IN THE PHILIPPINES, LEVERAGING RAW TECHNOLOGY.
+              </p>
+            </div>
+
+            {/* VALUES */}
+            <div className="p-12 flex flex-col justify-between min-h-[400px] relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 -rotate-12 translate-x-10 -translate-y-10" />
+               <div>
+                <span className="text-xs font-black tracking-widest">SPEC_03 // CORE_VALUES</span>
+                <div className="mt-8 space-y-4">
+                  {["PRECISION", "SYNERGY", "EXCELLENCE", "RIGOR"].map((val) => (
+                    <div key={val} className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-primary" />
+                      <span className="text-2xl font-black tracking-tighter">{val}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs font-bold text-slate-400">
+                CORE VALUES BUILT INTO THE SYSTEM ARCHITECTURE.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        {/* SECTION 03: THE NUMBERS */}
+        <section>
+          <div className="flex flex-col md:flex-row items-end gap-10">
+            <div className="text-[20vw] md:text-[15vw] font-black leading-[0.8] tracking-[calc(-0.05em)] text-slate-900 dark:text-white">
+              77<span className="text-primary">'</span>
+            </div>
+            <div className="pb-4 md:pb-10 max-w-sm">
+              <span className="text-[10px] font-black tracking-[0.4em] text-primary block mb-2">Heritage Protocol</span>
+              <p className="text-xs font-bold leading-snug text-slate-500">
+                TUPV WAS ESTABLISHED IN 1977. SINCE THEN, WE HAVE BEEN REFINING THE PROCESS OF INDUSTRIAL INTEGRATION. THIS SYSTEM IS THE DIGITAL CULMINATION OF DECADES OF EXPERIENCE.
+              </p>
+            </div>
           </div>
           
-          <div className="md:w-1/2 relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="relative aspect-video bg-slate-900 dark:bg-white/5 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-white/10 group shadow-2xl"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Shield className="w-32 h-32 text-white/10 dark:text-white/5 group-hover:scale-110 transition-transform duration-700" />
+          <div className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-1 border-t border-slate-900/10 dark:border-white/10">
+            {[
+              { label: "Partners", val: "500+" },
+              { label: "Students", val: "2.4K" },
+              { label: "Locations", val: "12" },
+              { label: "Stability", val: "99.9%" }
+            ].map((stat) => (
+              <div key={stat.label} className="pt-8 group">
+                <span className="text-[10px] font-black text-slate-400 block mb-1 group-hover:text-primary transition-colors">{stat.label}</span>
+                <span className="text-4xl font-black group-hover:scale-110 block transition-transform origin-left">{stat.val}</span>
               </div>
-              {/* Decorative data points */}
-              <div className="absolute bottom-6 left-6 flex gap-4">
-                <div className="h-1 w-12 bg-primary rounded-full" />
-                <div className="h-1 w-4 bg-primary/30 rounded-full" />
-              </div>
-            </motion.div>
-            
-            {/* Floating Metric */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="absolute -bottom-10 -left-10 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-white/10 shadow-2xl hidden md:block"
-            >
-              <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">500+</div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Industry Partners</div>
-            </motion.div>
+            ))}
           </div>
-        </div>
+        </section>
 
-        {/* Mission & Vision - Editorial Layout */}
-        <div className="grid md:grid-cols-2 gap-20 mb-40">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col gap-8"
-          >
-            <div className="w-12 h-1.5 bg-primary rounded-full" />
-            <h2 className="text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight">Our Mission</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-              To provide a streamlined, transparent, and high-performance digital environment where TUPV students can transition seamlessly into their professional careers. We aim to automate the administrative burden of SIT while enhancing the quality of industrial engagement.
-            </p>
-          </motion.div>
+      </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col gap-8"
-          >
-            <div className="w-12 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full" />
-            <h2 className="text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight">Our Vision</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-              To be the benchmark for institutional industrial training management in the Philippines, leveraging technology to foster the next generation of Filipino engineering and technology leaders.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Values Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-40">
-          {[
-            { icon: Target, title: "Precision", desc: "Digital tracking of every SIT hour with institutional accuracy." },
-            { icon: Award, title: "Excellence", desc: "Connecting students only with pre-vetted, high-caliber industry partners." },
-            { icon: Users, title: "Synergy", desc: "A unified platform for students, coordinators, and employers." }
-          ].map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="p-10 rounded-[2.5rem] bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 group hover:border-primary/50 transition-all duration-500"
-            >
-              <div className="w-14 h-14 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                <item.icon className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight mb-4">{item.title}</h3>
-              <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Institutional Heritage Strip */}
-        <div className="relative py-24 border-y border-slate-200 dark:border-white/10 overflow-hidden">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 text-[15rem] font-black text-slate-100 dark:text-white/[0.02] whitespace-nowrap pointer-events-none select-none">
-            TUPV HERITAGE TUPV HERITAGE TUPV HERITAGE
-          </div>
-          <div className="relative z-10 text-center max-w-4xl mx-auto">
-            <BookOpen className="w-12 h-12 text-primary mx-auto mb-8" />
-            <h2 className="text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-8">Grounded in Tradition, Engineered for the Future</h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
-              "The Technological University of the Philippines Visayas remains committed to the development of human resources in engineering and technology."
-            </p>
-          </div>
+      {/* OVERSIZED BACKGROUND TEXT */}
+      <div className="fixed -bottom-20 left-0 right-0 pointer-events-none select-none z-[-1] opacity-[0.02] dark:opacity-[0.03]">
+        <div className="text-[30vw] font-black whitespace-nowrap leading-none tracking-tighter">
+          TUP-VISAYAS TUP-VISAYAS TUP-VISAYAS
         </div>
       </div>
     </main>
