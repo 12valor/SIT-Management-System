@@ -118,7 +118,7 @@ export function Footer() {
           <div className="min-w-fit">
             <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-8 font-heading">Institutional</h4>
             <ul className="space-y-4">
-              <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">About TUP-Visayas</Link></li>
+              <li><Link href="/about" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">About the Platform</Link></li>
               <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">UIPEN Strategic Office</Link></li>
               <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">Contact Registry</Link></li>
               <li><Link href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors font-sans focus:outline-none">Technical Support</Link></li>
