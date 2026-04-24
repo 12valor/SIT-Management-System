@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Building2, MapPin, Cpu, ArrowUpRight } from "lucide-react";
+import { Building2, MapPin, ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
 
 export default function PartnersPage() {
@@ -161,7 +161,7 @@ export default function PartnersPage() {
                   </div>
 
                   <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed flex-1 italic relative pl-4 border-l-2 border-primary/20">
-                    "{partner.description}"
+                    &quot;{partner.description}&quot;
                   </p>
 
                   <div className="mt-10 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-end">
