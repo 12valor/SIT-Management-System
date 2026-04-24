@@ -26,28 +26,34 @@ export function PartnersShell() {
               <div className="h-12 w-full md:w-80 bg-slate-50 dark:bg-white/5 rounded-xl animate-pulse" />
             </div>
 
-            {/* Grid Skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+            {/* Technical Grid Skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-200 dark:bg-white/10 border border-slate-200 dark:border-white/10">
+              {[1, 2, 3, 4].map((i) => (
                 <div 
                   key={i}
-                  className="bg-white dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 p-8 rounded-3xl space-y-6"
+                  className="bg-white dark:bg-[#080808] p-8 space-y-8"
                 >
-                  <div className="flex justify-between items-start">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 animate-pulse" />
-                    <div className="h-6 w-16 bg-slate-50 dark:bg-white/5 rounded-md animate-pulse" />
+                  <div className="flex justify-between items-center border-b border-slate-100 dark:border-white/5 pb-4">
+                    <div className="h-3 w-24 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                    <div className="h-4 w-12 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                  </div>
+                  <div className="flex gap-6 items-start">
+                    <div className="w-16 h-16 shrink-0 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] animate-pulse" />
+                    <div className="space-y-3 flex-1">
+                      <div className="h-6 w-3/4 bg-slate-100 dark:bg-white/5 rounded-none animate-pulse" />
+                      <div className="h-3 w-1/4 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                    </div>
                   </div>
                   <div className="space-y-3">
-                    <div className="h-6 w-3/4 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse" />
-                    <div className="h-4 w-1/2 bg-slate-50 dark:bg-white/5 rounded-lg animate-pulse" />
+                    <div className="h-4 w-full bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                    <div className="h-4 w-5/6 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
                   </div>
-                  <div className="space-y-3 pt-4">
-                    <div className="h-4 w-1/3 bg-slate-50 dark:bg-white/5 rounded-lg animate-pulse" />
-                    <div className="h-4 w-1/4 bg-slate-50 dark:bg-white/5 rounded-lg animate-pulse" />
-                  </div>
-                  <div className="mt-8 pt-6 border-t border-slate-50 dark:border-white/5 flex justify-between items-center">
-                    <div className="h-3 w-12 bg-slate-50 dark:bg-white/5 rounded-lg animate-pulse" />
-                    <div className="h-4 w-20 bg-slate-50 dark:bg-white/5 rounded-lg animate-pulse" />
+                  <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-center">
+                    <div className="flex gap-4">
+                      <div className="h-8 w-16 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                      <div className="h-8 w-16 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
+                    </div>
+                    <div className="h-10 w-24 bg-slate-50 dark:bg-white/5 border border-slate-200 animate-pulse" />
                   </div>
                 </div>
               ))}

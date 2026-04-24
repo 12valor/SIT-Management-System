@@ -8,12 +8,60 @@ export default function PartnersPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const partners = [
-    { id: "P-001", name: "Intel Corporation", industry: "Semiconductors", loc: "Cavite", slots: 15, status: "Active" },
-    { id: "P-002", name: "Accenture Philippines", industry: "Technology Services", loc: "Bacolod", slots: 25, status: "Vetted" },
-    { id: "P-003", name: "Globe Telecom", industry: "Telecommunications", loc: "National", slots: 10, status: "Active" },
-    { id: "P-004", name: "Meralco", industry: "Energy", loc: "NCR", slots: 8, status: "Vetted" },
-    { id: "P-005", name: "Petron Corporation", industry: "Energy / Oil", loc: "Bataan", slots: 5, status: "Active" },
-    { id: "P-006", name: "Smart Communications", industry: "Telecommunications", loc: "National", slots: 12, status: "Active" },
+    { 
+      id: "P-001", 
+      name: "Intel Corporation", 
+      industry: "Semiconductors", 
+      loc: "Cavite", 
+      slots: 15, 
+      status: "Active",
+      description: "Leading global manufacturer of semiconductor chips and microprocessor technologies for computing systems."
+    },
+    { 
+      id: "P-002", 
+      name: "Accenture Philippines", 
+      industry: "Technology Services", 
+      loc: "Bacolod", 
+      slots: 25, 
+      status: "Vetted",
+      description: "Professional services company specializing in digital, cloud, and security solutions for global enterprises."
+    },
+    { 
+      id: "P-003", 
+      name: "Globe Telecom", 
+      industry: "Telecommunications", 
+      loc: "National", 
+      slots: 10, 
+      status: "Active",
+      description: "Major telecommunications provider offering wireless and broadband services across the Philippine archipelago."
+    },
+    { 
+      id: "P-004", 
+      name: "Meralco", 
+      industry: "Energy", 
+      loc: "NCR", 
+      slots: 8, 
+      status: "Vetted",
+      description: "The Philippines' largest electric power distribution company serving the National Capital Region and surrounding provinces."
+    },
+    { 
+      id: "P-005", 
+      name: "Petron Corporation", 
+      industry: "Energy / Oil", 
+      loc: "Bataan", 
+      slots: 5, 
+      status: "Active",
+      description: "Leading oil refining and marketing company providing essential energy products for industrial and consumer use."
+    },
+    { 
+      id: "P-006", 
+      name: "Smart Communications", 
+      industry: "Telecommunications", 
+      loc: "National", 
+      slots: 12, 
+      status: "Active",
+      description: "Wholly-owned wireless communications and digital services subsidiary of PLDT, focused on 5G and fiber-tech."
+    },
   ];
 
   const filteredPartners = partners.filter(p => 
@@ -47,55 +95,74 @@ export default function PartnersPage() {
           </div>
         </div>
 
-        {/* Partners Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Partners Technical Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-200 dark:bg-white/10 border border-slate-200 dark:border-white/10">
           {filteredPartners.length > 0 ? (
             filteredPartners.map((partner) => (
               <div 
                 key={partner.id}
-                className="group bg-white dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 p-8 rounded-3xl hover:border-primary/30 transition-all duration-300 flex flex-col justify-between"
+                className="group bg-white dark:bg-[#080808] p-0 flex flex-col transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-white/[0.02]"
               >
-                <div>
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-primary">
-                      <Building2 className="w-6 h-6" />
-                    </div>
-                    <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md ${
+                <div className="p-8 flex flex-col flex-1">
+                  {/* Top Meta Bar */}
+                  <div className="flex justify-between items-center mb-8 border-b border-slate-100 dark:border-white/5 pb-4">
+                    <span className="font-mono text-[10px] font-bold text-slate-400 tracking-tighter uppercase">
+                      Registry ID: {partner.id}
+                    </span>
+                    <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-2 py-0.5 border ${
                       partner.status === 'Active' 
-                        ? 'bg-green-500/10 text-green-600' 
-                        : 'bg-primary/10 text-primary'
+                        ? 'border-green-500/20 bg-green-500/5 text-green-600' 
+                        : 'border-primary/20 bg-primary/5 text-primary'
                     }`}>
                       {partner.status}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{partner.name}</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-6">{partner.industry}</p>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-400 uppercase tracking-tight">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {partner.loc}
+                  <div className="flex gap-6 items-start">
+                    {/* Logo Square */}
+                    <div className="w-16 h-16 shrink-0 border border-slate-200 dark:border-white/10 flex items-center justify-center bg-slate-50 dark:bg-white/[0.02] grayscale group-hover:grayscale-0 transition-all">
+                      <Building2 className="w-8 h-8 text-slate-400 group-hover:text-primary" />
                     </div>
-                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-400 uppercase tracking-tight">
-                      <Cpu className="w-3.5 h-3.5" />
-                      {partner.slots} Training Slots
+                    
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold font-heading text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-primary transition-colors">
+                        {partner.name}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <MapPin className="w-3 h-3 text-primary" />
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{partner.loc}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="mt-8 pt-6 border-t border-slate-50 dark:border-white/5 flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em]">{partner.id}</span>
-                  <Link href="#" className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:gap-2 transition-all">
-                    View Details
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
+                  <p className="mt-8 text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed flex-1 italic">
+                    "{partner.description}"
+                  </p>
+
+                  <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-tighter">Availability</span>
+                        <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{partner.slots} Slots</span>
+                      </div>
+                      <div className="w-px h-6 bg-slate-200 dark:bg-white/10" />
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-tighter">Sector</span>
+                        <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{partner.industry}</span>
+                      </div>
+                    </div>
+
+                    <Link href="#" className="h-10 px-4 flex items-center gap-2 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-[10px] font-bold uppercase tracking-widest hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 transition-all">
+                      Details
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))
           ) : (
-            <div className="col-span-full py-20 text-center border border-dashed border-slate-200 dark:border-white/10 rounded-3xl">
-              <p className="text-slate-400 font-bold uppercase tracking-widest">No partners found matching your search.</p>
+            <div className="col-span-full py-20 text-center bg-white dark:bg-[#050505]">
+              <p className="text-slate-400 font-bold uppercase tracking-widest">No matching registry records found.</p>
             </div>
           )}
         </div>
