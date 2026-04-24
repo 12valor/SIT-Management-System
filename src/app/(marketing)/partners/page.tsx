@@ -96,12 +96,12 @@ export default function PartnersPage() {
         </div>
 
         {/* Partners Technical Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-200 dark:bg-white/10 border border-slate-200 dark:border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredPartners.length > 0 ? (
             filteredPartners.map((partner) => (
               <div 
                 key={partner.id}
-                className="group bg-white dark:bg-[#080808] p-0 flex flex-col transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-white/[0.02]"
+                className="group bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-0 flex flex-col transition-all duration-200 hover:border-primary"
               >
                 <div className="p-8 flex flex-col flex-1">
                   {/* Top Meta Bar */}
@@ -109,11 +109,7 @@ export default function PartnersPage() {
                     <span className="font-mono text-[10px] font-bold text-slate-400 tracking-tighter uppercase">
                       Registry ID: {partner.id}
                     </span>
-                    <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-2 py-0.5 border ${
-                      partner.status === 'Active' 
-                        ? 'border-green-500/20 bg-green-500/5 text-green-600' 
-                        : 'border-primary/20 bg-primary/5 text-primary'
-                    }`}>
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] px-2 py-0.5 border border-slate-200 dark:border-white/10 text-slate-400">
                       {partner.status}
                     </span>
                   </div>
@@ -161,7 +157,7 @@ export default function PartnersPage() {
               </div>
             ))
           ) : (
-            <div className="col-span-full py-20 text-center bg-white dark:bg-[#050505]">
+            <div className="col-span-full py-20 text-center bg-white dark:bg-[#050505] border border-dashed border-slate-200 dark:border-white/10">
               <p className="text-slate-400 font-bold uppercase tracking-widest">No matching registry records found.</p>
             </div>
           )}

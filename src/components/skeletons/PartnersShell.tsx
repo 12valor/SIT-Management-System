@@ -27,11 +27,11 @@ export function PartnersShell() {
             </div>
 
             {/* Technical Grid Skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-200 dark:bg-white/10 border border-slate-200 dark:border-white/10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[1, 2, 3, 4].map((i) => (
                 <div 
                   key={i}
-                  className="bg-white dark:bg-[#080808] p-8 space-y-8"
+                  className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-8 space-y-8"
                 >
                   <div className="flex justify-between items-center border-b border-slate-100 dark:border-white/5 pb-4">
                     <div className="h-3 w-24 bg-slate-50 dark:bg-white/5 rounded-none animate-pulse" />
