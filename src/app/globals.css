@@ -130,4 +130,9 @@
     background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
     background-size: 24px 24px;
   }
+
+  /* TUP Red Filter - Targets hsl(348 83% 40-50%) */
+  .logo-red-filter {
+    filter: invert(21%) sepia(91%) saturate(3500%) hue-rotate(341deg) brightness(90%) contrast(110%);
+  }
 }
