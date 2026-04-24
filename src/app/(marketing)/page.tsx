@@ -168,17 +168,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Partners Marquee Strip */}
-        <section className="py-20 bg-white dark:bg-[#050505] overflow-hidden">
-          <div className="container mx-auto px-6 mb-12 text-center">
-            <p className="text-[10px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.4em] mb-4">Official Training Partners</p>
-          </div>
-          <div className="flex space-x-20 animate-none opacity-30 grayscale hover:grayscale-0 transition-all cursor-default overflow-hidden whitespace-nowrap justify-center items-center">
-            {["INTEL", "ACCENTURE", "GLOBE", "SMART", "MERALCO", "PETRON"].map((partner) => (
-              <span key={partner} className="text-3xl font-black font-premium text-slate-400 dark:text-white/20 tracking-tighter hover:text-primary transition-colors">{partner}</span>
-            ))}
-          </div>
-        </section>
       </main>
     </div>
   );
