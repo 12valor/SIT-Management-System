@@ -45,7 +45,7 @@ export default function LoginGatePage() {
             alt="TUP Seal" 
             width={70}
             height={70}
-            className="h-[70px] w-auto grayscale brightness-100 dark:logo-red-filter opacity-90 transition-all" 
+            className="h-[70px] w-auto grayscale dark:grayscale-0 brightness-100 dark:logo-red-filter opacity-90 transition-all" 
           />
           <div className="h-10 w-px bg-border hidden sm:block" />
           <div className="flex flex-col items-start leading-none">

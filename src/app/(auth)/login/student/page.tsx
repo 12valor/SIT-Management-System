@@ -48,7 +48,7 @@ export default function StudentLoginPage() {
             alt="TUP Seal" 
             width={32}
             height={32}
-            className="h-8 w-auto grayscale brightness-100 dark:logo-red-filter transition-all" 
+            className="h-8 w-auto grayscale dark:grayscale-0 brightness-100 dark:logo-red-filter transition-all" 
           />
           <div className="flex flex-col leading-none">
              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">TUP-Visayas</span>
