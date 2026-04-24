@@ -63,7 +63,7 @@ export function SmartNavbar() {
                 <Link className="flex items-center gap-1 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/login">
                   Programs <ChevronDown className="h-3.5 w-3.5 opacity-50" />
                 </Link>
-                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/login">
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/partners">
                   Partners
                 </Link>
                 <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/about">
@@ -106,7 +106,7 @@ export function SmartNavbar() {
               <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4 flex justify-between" href="/login">
                 Portals <ChevronDown className="h-5 w-5 opacity-30" />
               </Link>
-              <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4" href="/login">Partners</Link>
+              <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4" href="/partners">Partners</Link>
               <Link className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/5 pb-4" href="/about">About</Link>
               
               <div className="flex flex-col gap-4 mt-4">

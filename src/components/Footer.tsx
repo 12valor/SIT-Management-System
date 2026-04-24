@@ -112,7 +112,7 @@ export function Footer() {
             <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] mb-8 font-heading transition-colors">Resources</h4>
             <ul className="space-y-4">
               <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">SIT Guidelines</Link></li>
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Partner Companies</Link></li>
+              <li><Link href="/partners" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Partner Companies</Link></li>
               <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Digital Logbook Guide</Link></li>
               <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Training Modules</Link></li>
             </ul>
