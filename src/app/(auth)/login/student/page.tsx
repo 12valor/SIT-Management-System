@@ -1,23 +1,18 @@
 "use client";
+ 
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Mail, Lock, Loader2, ArrowLeft, ArrowRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Montserrat, Poppins } from "next/font/google";
-
-const montserrat = Montserrat({ 
-  subsets: ["latin"],
-  weight: ["700", "900"],
-  variable: "--font-montserrat",
-});
+import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-poppins",
 });
 
@@ -52,7 +47,7 @@ export default function StudentLoginPage() {
   };
 
   return (
-    <div className={`${montserrat.variable} ${poppins.variable} font-poppins flex-1 flex flex-col pt-32 pb-12 bg-slate-50/50 dark:bg-[#050505]`}>
+    <div className={`${poppins.variable} font-poppins flex-1 flex flex-col pt-32 pb-12 bg-slate-50/50 dark:bg-[#050505]`}>
       
       {/* LOGO */}
       <div className="fixed top-12 left-12 z-20">
@@ -75,7 +70,7 @@ export default function StudentLoginPage() {
         >
           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-100 dark:border-white/5 p-12 md:p-20 rounded-sm shadow-[40px_40px_80px_-20px_rgba(0,0,0,0.05)] dark:shadow-none">
             
-            <h1 className="text-4xl font-black font-montserrat text-slate-900 dark:text-white uppercase tracking-tighter mb-16">
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white uppercase tracking-tight mb-16">
               Student Login
             </h1>
 
@@ -85,31 +80,31 @@ export default function StudentLoginPage() {
               )}
 
               <div className="space-y-10">
-                <div className="relative border-b-2 border-slate-100 dark:border-white/5 focus-within:border-slate-900 dark:focus-within:border-white transition-all">
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 text-[16px] font-black font-montserrat text-slate-400 uppercase tracking-tighter select-none">
-                    Email:
-                  </span>
+                <div className="space-y-3">
+                  <label htmlFor="email" className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block pl-1">
+                    Email
+                  </label>
                   <input
                     id="email"
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-14 pl-16 bg-transparent text-[16px] font-medium outline-none"
+                    className="w-full h-14 px-4 bg-transparent border border-slate-100 dark:border-white/5 rounded-sm text-[15px] font-medium outline-none focus:border-primary transition-all placeholder:text-slate-200"
                   />
                 </div>
 
-                <div className="relative border-b-2 border-slate-100 dark:border-white/5 focus-within:border-slate-900 dark:focus-within:border-white transition-all">
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 text-[16px] font-black font-montserrat text-slate-400 uppercase tracking-tighter select-none">
-                    Password:
-                  </span>
+                <div className="space-y-3">
+                  <label htmlFor="password" className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block pl-1">
+                    Password
+                  </label>
                   <input
                     id="password"
                     type="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-14 pl-28 bg-transparent text-[16px] font-medium outline-none"
+                    className="w-full h-14 px-4 bg-transparent border border-slate-100 dark:border-white/5 rounded-sm text-[15px] font-medium outline-none focus:border-primary transition-all placeholder:text-slate-200"
                   />
                 </div>
               </div>
@@ -117,7 +112,7 @@ export default function StudentLoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-16 bg-slate-900 dark:bg-white text-white dark:text-black font-black font-montserrat uppercase tracking-[0.3em] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all flex items-center justify-center disabled:opacity-50 text-[12px]"
+                className="w-full h-16 bg-slate-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-[0.2em] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all flex items-center justify-center disabled:opacity-50 text-[11px]"
               >
                 {isLoading ? (
                   <Loader2 className="h-6 w-6 animate-spin" />
@@ -132,6 +127,7 @@ export default function StudentLoginPage() {
     </div>
   );
 }
+
 
 
 
