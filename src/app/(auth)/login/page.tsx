@@ -48,10 +48,10 @@ export default function LoginGatePage() {
             className="h-10 w-auto grayscale dark:grayscale-0 dark:logo-red-filter" 
           />
           <div className="h-6 w-px bg-slate-200 dark:bg-white/10" />
-          <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">TUP-Visayas</span>
+          <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white font-poppins">TUP-Visayas</span>
         </motion.div>
         
-        <h2 className="text-4xl md:text-6xl font-black text-center text-slate-900 dark:text-white uppercase tracking-tighter max-w-4xl leading-[0.9]">
+        <h2 className="text-4xl md:text-6xl font-black text-center text-slate-900 dark:text-white uppercase tracking-tighter max-w-4xl leading-[0.9] font-poppins">
           Portal Selection
         </h2>
       </div>
@@ -67,15 +67,8 @@ export default function LoginGatePage() {
             >
               <Link 
                 href={role.href}
-                className="group relative flex flex-col h-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-10 rounded-sm shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none hover:border-primary/50 transition-all duration-500"
+                className="group relative flex flex-col h-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-10 rounded-sm shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none hover:border-primary/50 transition-all duration-500 font-poppins"
               >
-                <div className="mb-10 flex items-center justify-between">
-                  <div className={`h-14 w-14 bg-slate-900 dark:bg-white text-white dark:text-black flex items-center justify-center rounded-sm group-hover:bg-primary dark:group-hover:bg-primary group-hover:text-white transition-colors duration-500`}>
-                    <role.icon className="h-7 w-7" />
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-slate-200 group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </div>
-
                 <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">
                   {role.title}
                 </h3>
@@ -94,6 +87,7 @@ export default function LoginGatePage() {
     </div>
   );
 }
+
 
 
 
