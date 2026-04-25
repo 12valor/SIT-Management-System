@@ -133,21 +133,4 @@ export default function StudentLoginPage() {
   );
 }
 
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-12 text-center"
-          >
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-relaxed">
-              Institutional credentials required. <br />
-              GSFE accounts are managed by the <br />
-              <span className="text-slate-600 dark:text-slate-300">Information Technology Department</span>
-            </p>
-          </motion.div>
-        </motion.div>
-      </main>
-    </div>
-  );
-}
 
