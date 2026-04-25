@@ -31,9 +31,9 @@ const roles = [
 
 export default function LoginGatePage() {
   return (
-    <div className="flex-1 flex flex-col pt-32 pb-24 bg-white dark:bg-[#050505]">
+    <div className="flex-1 flex flex-col pt-32 pb-24 bg-slate-50/50 dark:bg-[#050505]">
       
-      {/* MINIMAL HEADER */}
+      {/* HEADER */}
       <div className="flex flex-col items-center justify-center mb-24 px-6">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -52,37 +52,39 @@ export default function LoginGatePage() {
         </motion.div>
         
         <h2 className="text-4xl md:text-6xl font-black text-center text-slate-900 dark:text-white uppercase tracking-tighter max-w-4xl leading-[0.9]">
-          Portal Access
+          Portal Selection
         </h2>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-6">
-        <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-8">
           {roles.map((role, idx) => (
             <motion.div
               key={role.title}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
             >
               <Link 
                 href={role.href}
-                className="group flex flex-col h-full"
+                className="group relative flex flex-col h-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-10 rounded-sm shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none hover:border-primary/50 transition-all duration-500"
               >
-                <div className="aspect-square bg-slate-50 dark:bg-white/[0.02] flex items-center justify-center mb-8 grayscale group-hover:grayscale-0 transition-all duration-500 border border-transparent group-hover:border-slate-200 dark:group-hover:border-white/10">
-                   <role.icon className="h-10 w-10 text-slate-400 group-hover:text-primary transition-colors duration-500" />
+                <div className="mb-10 flex items-center justify-between">
+                  <div className={`h-14 w-14 bg-slate-900 dark:bg-white text-white dark:text-black flex items-center justify-center rounded-sm group-hover:bg-primary dark:group-hover:bg-primary group-hover:text-white transition-colors duration-500`}>
+                    <role.icon className="h-7 w-7" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-slate-200 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                 </div>
 
-                <h3 className="text-lg font-black text-slate-900 dark:text-white mb-3 uppercase tracking-tight">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">
                   {role.title}
                 </h3>
-                <p className="text-[12px] text-slate-500 font-medium leading-relaxed mb-6 flex-1">
+                <p className="text-[12px] text-slate-500 font-medium leading-relaxed mb-8 flex-1">
                   {role.description}
                 </p>
 
-                <div className="flex items-center gap-2">
-                   <span className="text-[10px] font-black text-slate-400 group-hover:text-primary uppercase tracking-[0.2em] transition-colors">Enter</span>
-                   <ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                <div className="pt-6 border-t border-slate-50 dark:border-white/5">
+                   <span className="text-[10px] font-black text-slate-400 group-hover:text-primary uppercase tracking-[0.2em] transition-colors">Launch Module</span>
                 </div>
               </Link>
             </motion.div>
@@ -92,5 +94,6 @@ export default function LoginGatePage() {
     </div>
   );
 }
+
 
 
