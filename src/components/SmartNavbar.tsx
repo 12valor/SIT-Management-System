@@ -89,12 +89,7 @@ export function SmartNavbar() {
                       >
                         {/* THEME-AGNOSTIC SOLID CONTAINER */}
                         <div className="relative overflow-hidden rounded-sm border border-slate-200 dark:border-white/10 shadow-2xl bg-white dark:bg-[#0c0c0c]">
-                          {/* Animated Accent Line */}
-                          <motion.div 
-                            initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
-                            className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left"
-                          />
+
                           
                           <div className="p-1.5 flex flex-col gap-0.5">
                             {portals.map((portal, idx) => (
