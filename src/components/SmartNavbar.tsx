@@ -87,8 +87,8 @@ export function SmartNavbar() {
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                         className="absolute top-full left-[-20px] w-[280px] z-50 pt-2"
                       >
-                        {/* THEME-AGNOSTIC GLASS CONTAINER */}
-                        <div className="relative overflow-hidden rounded-sm border border-slate-200/50 dark:border-white/10 shadow-2xl backdrop-blur-2xl bg-white/40 dark:bg-black/40">
+                        {/* THEME-AGNOSTIC SOLID CONTAINER */}
+                        <div className="relative overflow-hidden rounded-sm border border-slate-200 dark:border-white/10 shadow-2xl bg-white dark:bg-[#0c0c0c]">
                           {/* Animated Accent Line */}
                           <motion.div 
                             initial={{ scaleX: 0 }}
