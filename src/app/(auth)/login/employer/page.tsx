@@ -4,13 +4,26 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Building2, Mail, Lock, Loader2, ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
-import Image from "next/image";
+import { Loader2, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Bebas_Neue, IBM_Plex_Sans } from "next/font/google";
+
+const bebas = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-bebas",
+});
+
+const ibmPlex = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-ibm",
+});
 
 export default function EmployerLoginPage() {
-  const [email, setEmail]       = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]       = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -22,129 +35,116 @@ export default function EmployerLoginPage() {
     try {
       const result = await signIn("credentials", { email, password, redirect: false });
       if (result?.error) {
-        setError("Invalid credentials. Please verify your corporate account details.");
+        setError("Invalid corporate credentials.");
         setIsLoading(false);
         return;
       }
       const res = await fetch("/api/auth/session");
       const session = await res.json();
-      const role = session?.user?.role;
-      if (role === "EMPLOYER") router.push("/employer/dashboard");
+      if (session?.user?.role === "EMPLOYER") router.push("/employer/dashboard");
       else router.push("/");
     } catch {
-      setError("A network error occurred. Please try again.");
+      setError("Connectivity error.");
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex-1 flex flex-col pt-24 pb-12 relative overflow-hidden">
+    <div className={`${bebas.variable} ${ibmPlex.variable} font-ibm flex-1 flex flex-col items-center bg-white dark:bg-[#080808] min-h-screen pt-40 pb-20 p-6 selection:bg-rose-600 selection:text-white`}>
       
-      {/* INSTITUTIONAL HEADER */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 flex items-center gap-4 z-20">
-        <Link href="/login" className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
-          <Image 
-            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-            alt="TUP Seal" 
-            width={32}
-            height={32}
-            className="h-8 w-auto grayscale dark:grayscale-0 brightness-100 dark:logo-red-filter transition-all" 
-          />
-          <div className="flex flex-col leading-none">
-             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">TUP-Visayas</span>
-             <span className="text-[8px] font-semibold text-muted-foreground/60 uppercase tracking-widest">Partner Portal</span>
-          </div>
-        </Link>
-      </div>
-
-      <main className="flex-1 flex items-center justify-center px-6">
-        <div className="max-w-[420px] w-full">
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+        className="max-w-[480px] w-full"
+      >
+        {/* SHARP CARD CONTAINER */}
+        <div className="bg-white dark:bg-[#0c0c0c] border border-slate-200 dark:border-white/10 p-10 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none">
           
-          <div className="bg-card dark:bg-white/[0.03] border border-border dark:border-white/5 p-10 rounded-3xl shadow-2xl shadow-black/5">
-            {/* FORM HEADER */}
-            <div className="mb-10 text-center">
-              <div className="h-14 w-14 bg-muted dark:bg-white/10 rounded-2xl flex items-center justify-center text-muted-foreground mx-auto mb-6">
-                <Building2 className="h-7 w-7" />
+          <header className="mb-14">
+            <h1 className="font-bebas text-[90px] leading-[0.85] text-slate-900 dark:text-white tracking-[-0.02em] mb-6">
+              Partner
+            </h1>
+            
+            <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-[0.05em] leading-relaxed">
+              Corporate access terminal. <br />
+              All credentials audited per session.
+            </p>
+          </header>
+
+          <form onSubmit={handleLogin} className="space-y-10">
+            {error && (
+              <div className="text-rose-600 text-[10px] font-black uppercase tracking-[0.2em] py-3 border-y border-rose-600/20">
+                {error}
               </div>
-              <h2 className="text-3xl font-bold text-foreground font-heading tracking-tight uppercase mb-2">Partner</h2>
-              <p className="text-sm text-muted-foreground font-medium">
-                Log in to the Industry Partner portal to evaluate trainee performance and manage SIT placements.
-              </p>
+            )}
+
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <label htmlFor="email" className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em]">
+                  Corporate Identifier
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="corporate@company.com"
+                  className="w-full h-12 bg-transparent border-b-2 border-slate-100 dark:border-white/5 text-[15px] font-medium text-slate-900 dark:text-white outline-none focus:border-rose-600 transition-all placeholder:text-slate-200 dark:placeholder:text-slate-800"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <label htmlFor="password" className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em]">
+                  Secure Passkey
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full h-12 bg-transparent border-b-2 border-slate-100 dark:border-white/5 text-[15px] font-medium text-slate-900 dark:text-white outline-none focus:border-rose-600 transition-all placeholder:text-slate-200 dark:placeholder:text-slate-800"
+                />
+              </div>
             </div>
 
-            {/* FORM BODY */}
-            <form onSubmit={handleLogin} className="space-y-6">
-              {error && (
-                <div className="p-4 bg-red-50 border border-red-100 rounded-xl">
-                  <p className="text-[11px] font-bold text-red-600 uppercase tracking-tight text-center">{error}</p>
-                </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-16 bg-slate-900 dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.3em] transition-all hover:bg-rose-600 dark:hover:bg-rose-600 hover:text-white active:scale-[0.98] disabled:opacity-50 text-[12px] flex items-center justify-center gap-4"
+            >
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  Authenticate Partner
+                  <ArrowRight className="w-4 h-4" />
+                </>
               )}
+            </button>
+          </form>
 
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Corporate Email</label>
-                <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50 group-focus-within:text-foreground transition-colors" />
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="corporate@company.com"
-                    className="w-full h-12 pl-12 pr-4 bg-muted dark:bg-white/5 border border-border dark:border-white/10 rounded-xl text-[13px] font-medium outline-none focus:border-muted-foreground/50 transition-all placeholder:text-muted-foreground/30"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="password" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Passkey</label>
-                <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50 group-focus-within:text-foreground transition-colors" />
-                  <input
-                    id="password"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full h-12 pl-12 pr-4 bg-muted dark:bg-white/5 border border-border dark:border-white/10 rounded-xl text-[13px] font-medium outline-none focus:border-muted-foreground/50 transition-all placeholder:text-muted-foreground/30"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full h-12 bg-slate-900 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-3 disabled:opacity-50 text-[11px]"
+          <footer className="mt-16 pt-10 border-t border-slate-50 dark:border-white/5 flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              <Link 
+                href="/signup/employer" 
+                className="inline-flex items-center gap-3 text-slate-900 dark:text-white hover:text-rose-600 transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
               >
-                {isLoading ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <>
-                    Authenticate Partner
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                )}
-              </button>
-            </form>
-
-            <div className="mt-10 pt-8 border-t border-border dark:border-white/5 flex items-center justify-between">
-               <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-muted-foreground/50" />
-                  <span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest">TLS Secured</span>
-               </div>
-               <Link href="/signup/employer" className="text-[10px] font-bold text-primary hover:underline uppercase tracking-widest">
-                  Register Partner
-               </Link>
+                Register Partner
+              </Link>
+              <Link 
+                href="/login" 
+                className="inline-flex items-center gap-3 text-slate-400 hover:text-rose-600 transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
+              >
+                Switch Terminal
+              </Link>
             </div>
-          </div>
-
-          <Link href="/login" className="mt-8 flex items-center justify-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
-            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">Role Selection</span>
-          </Link>
+          </footer>
         </div>
-      </main>
+      </motion.div>
     </div>
   );
 }
