@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { GraduationCap, Mail, Lock, Loader2, ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
+import { GraduationCap, Mail, Lock, Loader2, ArrowLeft, ArrowRight, ShieldCheck, Bell } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function StudentLoginPage() {
   const [email, setEmail]       = useState("");
@@ -171,6 +172,24 @@ export default function StudentLoginPage() {
                    <Link href="/login" className="text-[9px] font-black text-slate-400 dark:text-slate-600 hover:text-primary uppercase tracking-widest transition-colors">
                      Switch Terminal
                    </Link>
+                </div>
+              </div>
+
+              {/* TERMINAL STATUS BAR */}
+              <div className="bg-slate-50 dark:bg-white/[0.02] px-6 py-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between overflow-hidden">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="h-1 w-1 rounded-full bg-primary animate-pulse" />
+                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Live_Terminal</span>
+                  </div>
+                  <div className="h-3 w-px bg-slate-200 dark:bg-white/10" />
+                  <span className="text-[8px] font-mono text-slate-400 dark:text-slate-500 truncate max-w-[150px]">
+                    PACKET_INSPECT: OK ... SYSCALL_CONNECT: OK
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Bell className="h-3 w-3 text-slate-300 dark:text-slate-700" />
+                  <span className="text-[8px] font-bold text-slate-300 dark:text-slate-700 uppercase tracking-tighter">No Notifications</span>
                 </div>
               </div>
             </div>
