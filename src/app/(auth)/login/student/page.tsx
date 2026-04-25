@@ -85,25 +85,33 @@ export default function StudentLoginPage() {
               )}
 
               <div className="space-y-10">
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  className="w-full h-14 bg-transparent border-b-2 border-slate-100 dark:border-white/5 text-[16px] font-medium outline-none focus:border-slate-900 dark:focus:border-white transition-all placeholder:text-slate-300 dark:placeholder:text-slate-800"
-                />
+                <div className="relative border-b-2 border-slate-100 dark:border-white/5 focus-within:border-slate-900 dark:focus-within:border-white transition-all">
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 text-[16px] font-black font-montserrat text-slate-400 uppercase tracking-tighter select-none">
+                    Email:
+                  </span>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full h-14 pl-16 bg-transparent text-[16px] font-medium outline-none"
+                  />
+                </div>
 
-                <input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
-                  className="w-full h-14 bg-transparent border-b-2 border-slate-100 dark:border-white/5 text-[16px] font-medium outline-none focus:border-slate-900 dark:focus:border-white transition-all placeholder:text-slate-300 dark:placeholder:text-slate-800"
-                />
+                <div className="relative border-b-2 border-slate-100 dark:border-white/5 focus-within:border-slate-900 dark:focus-within:border-white transition-all">
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 text-[16px] font-black font-montserrat text-slate-400 uppercase tracking-tighter select-none">
+                    Password:
+                  </span>
+                  <input
+                    id="password"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full h-14 pl-28 bg-transparent text-[16px] font-medium outline-none"
+                  />
+                </div>
               </div>
 
               <button
