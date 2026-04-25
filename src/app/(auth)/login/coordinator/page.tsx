@@ -65,7 +65,7 @@ export default function CoordinatorLoginPage() {
         <div className="bg-white dark:bg-[#0c0c0c] border border-slate-200 dark:border-white/10 p-10 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none">
           
           <header className="mb-14">
-            <h1 className="font-bebas text-[90px] leading-[0.85] text-slate-900 dark:text-white tracking-[-0.02em] mb-6">
+            <h1 className="font-bebas text-[72px] leading-[0.85] text-slate-900 dark:text-white tracking-[-0.02em] mb-6">
               Coordinator
             </h1>
             
