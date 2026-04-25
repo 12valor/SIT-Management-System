@@ -64,49 +64,73 @@ export function SmartNavbar() {
               </Link>
 
               <nav className="hidden md:flex items-center gap-6">
-                {/* Portals Dropdown */}
+                {/* Dynamic Portals Dropdown */}
                 <div 
-                  className="relative"
+                  className="relative h-16 flex items-center"
                   onMouseEnter={() => setActiveDropdown("portals")}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors py-4">
-                    Portals <ChevronDown className={`h-3.5 w-3.5 opacity-50 transition-transform duration-200 ${activeDropdown === "portals" ? "rotate-180" : ""}`} />
+                  <button className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all duration-300">
+                    Portals 
+                    <ChevronDown className={`h-3.5 w-3.5 opacity-50 transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) ${activeDropdown === "portals" ? "rotate-180" : ""}`} />
                   </button>
 
                   <AnimatePresence>
                     {activeDropdown === "portals" && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-full left-0 w-64 bg-white dark:bg-[#0a0a0a] border border-border dark:border-white/10 shadow-xl rounded-sm overflow-hidden z-50 p-1"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute top-full left-[-20px] w-[280px] z-50 pt-2"
                       >
-                        {portals.map((portal) => (
-                          <Link 
-                            key={portal.title}
-                            href={portal.href}
-                            className="flex items-start gap-3 p-3 hover:bg-slate-50 dark:hover:bg-white/[0.03] transition-colors group/item rounded-sm"
-                          >
-                            <div className="mt-0.5 p-1.5 bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 group-hover/item:text-primary group-hover/item:bg-primary/10 transition-colors rounded-sm">
-                              <portal.icon className="h-4 w-4" />
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="text-[13px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-                                {portal.title}
-                              </span>
-                              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                                {portal.description}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                        <div className="border-t border-border dark:border-white/5 mt-1 p-2 bg-slate-50 dark:bg-white/[0.02]">
-                          <Link href="/login" className="flex items-center justify-between px-2 py-1.5 text-[11px] font-bold text-primary uppercase tracking-widest hover:translate-x-1 transition-transform">
-                            View All Portals
-                            <ArrowRight className="h-3 w-3" />
-                          </Link>
+                        {/* THEME-AGNOSTIC GLASS CONTAINER */}
+                        <div className="relative overflow-hidden rounded-sm border border-slate-200/50 dark:border-white/10 shadow-2xl backdrop-blur-2xl bg-white/40 dark:bg-black/40">
+                          {/* Animated Accent Line */}
+                          <motion.div 
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left"
+                          />
+                          
+                          <div className="p-1.5 flex flex-col gap-0.5">
+                            {portals.map((portal, idx) => (
+                              <motion.div
+                                key={portal.title}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.05 }}
+                              >
+                                <Link 
+                                  href={portal.href}
+                                  className="group/item flex items-center gap-4 p-3 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 rounded-sm relative"
+                                >
+                                  <div className="h-9 w-9 flex items-center justify-center bg-black/5 dark:bg-white/5 text-slate-600 dark:text-slate-400 group-hover/item:text-primary group-hover/item:bg-primary/10 transition-all duration-300 rounded-sm">
+                                    <portal.icon className="h-4.5 w-4.5" />
+                                  </div>
+                                  <div className="flex flex-col">
+                                    <span className="text-[12px] font-bold text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1">
+                                      {portal.title}
+                                    </span>
+                                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">
+                                      {portal.description}
+                                    </span>
+                                  </div>
+                                  {/* Dynamic Hover Indicator */}
+                                  <div className="absolute right-3 opacity-0 group-hover/item:opacity-100 transition-opacity">
+                                    <ArrowRight className="h-3 w-3 text-primary" />
+                                  </div>
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </div>
+
+                          <div className="mt-1 px-4 py-3 bg-black/5 dark:bg-white/5 border-t border-slate-200/30 dark:border-white/5 flex items-center justify-between group/footer cursor-pointer">
+                            <Link href="/login" className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.15em] group-hover/footer:text-primary transition-colors">
+                              Full Access Terminal
+                            </Link>
+                            <div className="h-1 w-1 rounded-full bg-primary animate-pulse" />
+                          </div>
                         </div>
                       </motion.div>
                     )}
@@ -150,30 +174,30 @@ export function SmartNavbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-white dark:bg-[#050505] pt-[120px] px-6 md:hidden"
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            className="fixed inset-0 z-40 bg-white/60 dark:bg-black/60 pt-[120px] px-6 md:hidden"
           >
             <nav className="flex flex-col gap-4">
               <div className="flex flex-col">
-                <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4">Portals</span>
-                <div className="grid grid-cols-1 gap-2">
+                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.3em] mb-6">Access Terminals</span>
+                <div className="grid grid-cols-1 gap-3">
                   {portals.map((portal) => (
                     <Link 
                       key={portal.title}
                       href={portal.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-sm border border-border/50 dark:border-white/5"
+                      className="flex items-center gap-5 p-4 bg-white/20 dark:bg-white/5 border border-white/20 dark:border-white/10 rounded-sm active:scale-[0.98] transition-transform"
                     >
-                      <div className="p-2 bg-white dark:bg-white/5 text-primary rounded-sm shadow-sm">
-                        <portal.icon className="h-5 w-5" />
+                      <div className="h-12 w-12 flex items-center justify-center bg-white/30 dark:bg-white/10 text-primary rounded-sm shadow-sm">
+                        <portal.icon className="h-6 w-6" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-                          {portal.title}
+                        <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tighter">
+                          {portal.title} Portal
                         </span>
-                        <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                        <span className="text-[10px] text-slate-600 dark:text-slate-400 font-bold uppercase tracking-widest opacity-60">
                           {portal.description}
                         </span>
                       </div>
@@ -182,18 +206,20 @@ export function SmartNavbar() {
                 </div>
               </div>
 
-              <div className="h-px bg-border/50 dark:bg-white/5 my-2" />
+              <div className="h-px bg-black/10 dark:bg-white/10 my-4" />
 
-              <Link className="text-lg font-bold text-slate-900 dark:text-white flex justify-between items-center py-2" href="/partners">
-                Partners <ArrowRight className="h-4 w-4 opacity-30" />
-              </Link>
-              <Link className="text-lg font-bold text-slate-900 dark:text-white flex justify-between items-center py-2" href="/about">
-                About <ArrowRight className="h-4 w-4 opacity-30" />
-              </Link>
+              <div className="flex flex-col gap-2">
+                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/partners" onClick={() => setIsMobileMenuOpen(false)}>
+                  Partners <ArrowRight className="h-4 w-4 text-primary" />
+                </Link>
+                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/about" onClick={() => setIsMobileMenuOpen(false)}>
+                  About <ArrowRight className="h-4 w-4 text-primary" />
+                </Link>
+              </div>
               
               <div className="flex flex-col gap-4 mt-8">
-                <Link href="/login" className="w-full py-4 bg-primary text-white text-center rounded-[2px] font-bold text-[13px] transition-all active:scale-[0.98]">
-                  Launch Portal
+                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-5 bg-primary text-white text-center rounded-sm font-black text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-primary/20">
+                  Secure Login
                 </Link>
               </div>
             </nav>
