@@ -62,11 +62,6 @@ export default function StudentLoginPage() {
         <div className="bg-white dark:bg-[#0c0c0c] border border-slate-200 dark:border-white/10 p-10 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none">
           
           <header className="mb-14">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-[3px] w-8 bg-rose-600" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-rose-600">Secure Portal</span>
-            </div>
-            
             <h1 className="font-bebas text-[90px] leading-[0.85] text-slate-900 dark:text-white tracking-[-0.02em] mb-6">
               Student
             </h1>
@@ -125,7 +120,7 @@ export default function StudentLoginPage() {
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
                 <>
-                  Authorize Entry
+                  Continue as Student
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
