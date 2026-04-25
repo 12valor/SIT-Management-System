@@ -70,10 +70,13 @@ export function SmartNavbar() {
                   onMouseEnter={() => setActiveDropdown("portals")}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all duration-300">
+                  <Link 
+                    href="/login"
+                    className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all duration-300"
+                  >
                     Portals 
                     <ChevronDown className={`h-3.5 w-3.5 opacity-50 transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) ${activeDropdown === "portals" ? "rotate-180" : ""}`} />
-                  </button>
+                  </Link>
 
                   <AnimatePresence>
                     {activeDropdown === "portals" && (
@@ -123,13 +126,6 @@ export function SmartNavbar() {
                                 </Link>
                               </motion.div>
                             ))}
-                          </div>
-
-                          <div className="mt-1 px-4 py-3 bg-black/5 dark:bg-white/5 border-t border-slate-200/30 dark:border-white/5 flex items-center justify-between group/footer cursor-pointer">
-                            <Link href="/login" className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.15em] group-hover/footer:text-primary transition-colors">
-                              Full Access Terminal
-                            </Link>
-                            <div className="h-1 w-1 rounded-full bg-primary animate-pulse" />
                           </div>
                         </div>
                       </motion.div>
