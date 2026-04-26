@@ -126,24 +126,8 @@ export default function Home() {
                 <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {/* Student Card */}
                   <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
-                    <div className="h-10 w-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff10_1px,transparent_1px)] border-b border-slate-100 dark:border-white/5 flex items-center px-8">
-                      <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-white/10 group-hover:bg-primary transition-colors" />
-                        <span className="text-[8px] text-slate-400 font-black uppercase tracking-[0.3em] font-mono">
-                          SIT.SECURE_TRANSIT_ST
-                        </span>
-                      </div>
-                    </div>
                     <div className="px-8 pt-8 flex flex-col flex-1">
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] font-mono leading-none">
-                            OFFICIAL_RELEASE
-                          </span>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest font-mono">
-                            REF: SIT-AC-ST-2026
-                          </p>
-                        </div>
+                      <div className="flex items-center justify-end mb-6">
                         <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] rotate-3 group-hover:rotate-0 transition-transform">
                           <GraduationCap className="h-5 w-5" />
                         </div>
@@ -186,24 +170,8 @@ export default function Home() {
 
                   {/* Company Card */}
                   <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
-                    <div className="h-10 w-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff10_1px,transparent_1px)] border-b border-slate-100 dark:border-white/5 flex items-center px-8">
-                      <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-white/10 group-hover:bg-primary transition-colors" />
-                        <span className="text-[8px] text-slate-400 font-black uppercase tracking-[0.3em] font-mono">
-                          SIT.SECURE_TRANSIT_CP
-                        </span>
-                      </div>
-                    </div>
                     <div className="px-8 pt-8 flex flex-col flex-1">
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] font-mono leading-none">
-                            REGISTRY_ACCESS
-                          </span>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest font-mono">
-                            REF: SIT-AC-CP-2026
-                          </p>
-                        </div>
+                      <div className="flex items-center justify-end mb-6">
                         <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] -rotate-3 group-hover:rotate-0 transition-transform">
                           <Building2 className="h-5 w-5" />
                         </div>
