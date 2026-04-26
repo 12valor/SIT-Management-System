@@ -16,10 +16,8 @@ import { useRef } from "react";
 
 function SectionProgressLine({
   scrollYProgress,
-  index,
 }: {
   scrollYProgress: MotionValue<number>;
-  index: number;
 }) {
   const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
 
@@ -29,11 +27,6 @@ function SectionProgressLine({
         className="h-full bg-primary/50 origin-left"
         style={{ scaleX }}
       />
-      <span
-        className="absolute right-6 top-4 text-[8px] font-black text-slate-300 dark:text-white/20 font-mono tracking-[0.3em]"
-      >
-        §{String(index + 1).padStart(2, "0")}
-      </span>
     </div>
   );
 }
@@ -79,7 +72,7 @@ function StickySection({
             willChange: "transform, opacity",
           }}
         >
-          <SectionProgressLine scrollYProgress={scrollYProgress} index={index} />
+          <SectionProgressLine scrollYProgress={scrollYProgress} />
           {children(scrollYProgress)}
         </motion.div>
       </div>
