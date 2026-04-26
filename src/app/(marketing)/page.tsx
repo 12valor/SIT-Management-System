@@ -109,12 +109,6 @@ export default function Home() {
 
               <div className="container mx-auto px-6">
                 <div className="text-center mb-14">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 mb-4">
-                    <Sparkles className="w-3 h-3 text-primary" />
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                      Institutional Access
-                    </span>
-                  </div>
                   <h2 className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
                     Select Your Gateway
                   </h2>
