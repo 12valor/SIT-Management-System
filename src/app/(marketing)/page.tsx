@@ -1,181 +1,302 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, CheckCircle, ArrowRight, Sparkles, Building2, ShieldCheck, Zap } from "lucide-react";
+import {
+  GraduationCap,
+  CheckCircle,
+  ArrowRight,
+  Sparkles,
+  Building2,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { useRef } from "react";
+
+function SectionProgressLine({
+  scrollYProgress,
+  index,
+}: {
+  scrollYProgress: MotionValue<number>;
+  index: number;
+}) {
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
+
+  return (
+    <div className="absolute top-0 left-0 right-0 z-50 flex items-center h-[2px] bg-slate-100 dark:bg-white/[0.06]">
+      <motion.div
+        className="h-full bg-primary/50 origin-left"
+        style={{ scaleX }}
+      />
+      <span
+        className="absolute right-6 top-4 text-[8px] font-black text-slate-300 dark:text-white/20 font-mono tracking-[0.3em]"
+      >
+        §{String(index + 1).padStart(2, "0")}
+      </span>
+    </div>
+  );
+}
+
+function StickySection({
+  children,
+  index,
+  isLast = false,
+  bg = "bg-white dark:bg-[#050505]",
+}: {
+  children: (scrollYProgress: MotionValue<number>) => React.ReactNode;
+  index: number;
+  isLast?: boolean;
+  bg?: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const scaleRaw = useTransform(scrollYProgress, [0.55, 1], [1, 0.93]);
+  const opacityRaw = useTransform(scrollYProgress, [0.55, 0.95], [1, 0.55]);
+  const scale = useSpring(isLast ? 1 : scaleRaw, { stiffness: 120, damping: 30 });
+  const opacity = useSpring(isLast ? 1 : opacityRaw, { stiffness: 120, damping: 30 });
+
+  return (
+    <div
+      ref={containerRef}
+      style={{ height: isLast ? "100vh" : "200vh" }}
+    >
+      <div
+        className="sticky top-0 h-screen overflow-hidden"
+        style={{ zIndex: 10 + index }}
+      >
+        <motion.div
+          className={`relative h-full w-full ${bg}`}
+          style={{
+            scale,
+            opacity,
+            transformOrigin: "top center",
+            willChange: "transform, opacity",
+          }}
+        >
+          <SectionProgressLine scrollYProgress={scrollYProgress} index={index} />
+          {children(scrollYProgress)}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-[#050505]">
-
-      <main className="flex-1">
-        <HeroCarousel />
-        
-        {/* Entry Points Section */}
-        <section className="py-32 relative overflow-hidden bg-white dark:bg-[#050505]">
-          {/* Subtle Background Accents */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10" />
-
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-20">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 mb-4"
-              >
-                <Sparkles className="w-3 h-3 text-primary" />
-                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Institutional Access</span>
-              </motion.div>
-              <h2 className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">Select Your Gateway</h2>
-              <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
-                Connect with the official TUP-V Supervised Industrial Training platform. Designed for excellence, engineered for career growth.
-              </p>
+    <div className="flex flex-col">
+      <main>
+        {/* Section 01 — Hero */}
+        <StickySection index={0} bg="bg-white dark:bg-[#050505]">
+          {() => (
+            <div className="h-full w-full">
+              <HeroCarousel />
             </div>
+          )}
+        </StickySection>
 
-            <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-              {/* Student Card - Technical Manual Style */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="group relative flex flex-col h-full bg-white dark:bg-white/[0.02] border-t-4 border-t-primary border-x border-b border-slate-200 dark:border-white/10 p-10 lg:p-12 transition-all hover:bg-slate-50/50 dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden"
-              >
-                <div className="flex items-center justify-between mb-10">
-                  <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] font-mono">PORTAL_TYPE_01</span>
-                  <div className="w-12 h-12 border border-primary/20 flex items-center justify-center text-primary bg-primary/5 rounded-[5px]">
-                    <GraduationCap className="h-6 w-6" />
+        {/* Section 02 — Gateway Cards */}
+        <StickySection index={1} bg="bg-white dark:bg-[#050505]">
+          {() => (
+            <section className="h-full flex flex-col justify-center overflow-hidden py-20 relative">
+              <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10" />
+              <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10" />
+
+              <div className="container mx-auto px-6">
+                <div className="text-center mb-14">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 mb-4">
+                    <Sparkles className="w-3 h-3 text-primary" />
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
+                      Institutional Access
+                    </span>
                   </div>
-                </div>
-                
-                <div className="space-y-4 mb-10">
-                  <h3 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Student Terminal</h3>
-                  <p className="text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                    Build your professional identity, discover premier internship opportunities, and track your SIT progress with institutional precision.
+                  <h2 className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
+                    Select Your Gateway
+                  </h2>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
+                    Connect with the official TUP-V Supervised Industrial Training platform. Designed for excellence, engineered for career growth.
                   </p>
                 </div>
-                
-                <div className="grid grid-cols-1 gap-4 mb-12 flex-1">
-                  {[
-                    "Institutional Profile Builder", 
-                    "Seamless Internship Applications", 
-                    "Digital Daily Journal Tracking", 
-                    "SIT Document Repository"
-                  ].map((feature, i) => (
-                    <div key={feature} className="flex items-center gap-4 group/item">
-                      <span className="text-[9px] font-bold text-slate-300 dark:text-white/20 font-mono">0{i+1}</span>
-                      <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{feature}</span>
+
+                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                  {/* Student Card */}
+                  <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
+                    <div className="h-10 w-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff10_1px,transparent_1px)] border-b border-slate-100 dark:border-white/5 flex items-center px-8">
+                      <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-white/10 group-hover:bg-primary transition-colors" />
+                        <span className="text-[8px] text-slate-400 font-black uppercase tracking-[0.3em] font-mono">
+                          SIT.SECURE_TRANSIT_ST
+                        </span>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                    <div className="px-8 pt-8 flex flex-col flex-1">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] font-mono leading-none">
+                            OFFICIAL_RELEASE
+                          </span>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest font-mono">
+                            REF: SIT-AC-ST-2026
+                          </p>
+                        </div>
+                        <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] rotate-3 group-hover:rotate-0 transition-transform">
+                          <GraduationCap className="h-5 w-5" />
+                        </div>
+                      </div>
+                      <div className="space-y-3 mb-6">
+                        <h3 className="text-3xl font-medium font-premium text-slate-900 dark:text-white italic leading-tight">
+                          Student Terminal
+                        </h3>
+                        <div className="h-px w-14 bg-slate-200 dark:bg-white/20 group-hover:bg-primary/30 transition-colors" />
+                        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
+                          Certified gateway for TUP-V trainees to document, verify, and accelerate their professional industrial integration.
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 gap-3 mb-6 flex-1">
+                        {[
+                          "Institutional Profile Certification",
+                          "SIT Placement Manifest",
+                          "Digital Logbook Verification",
+                          "Archival Document Repository",
+                        ].map((feature, i) => (
+                          <div key={feature} className="flex items-center gap-4">
+                            <span className="text-[9px] font-bold text-slate-300 dark:text-white/10 font-mono">
+                              § 0{i + 1}
+                            </span>
+                            <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
+                              {feature}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <Link
+                        href="/login/student"
+                        className="w-full inline-flex h-12 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.25em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] mb-8"
+                      >
+                        Access Student Portal
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
 
-                <Link href="/login/student" className="w-full inline-flex h-14 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.2em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px]">
-                  Launch Student Portal
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-
-              {/* Company Card - Registry Terminal Style */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="group relative flex flex-col h-full bg-slate-50 dark:bg-white/[0.01] border border-slate-200 dark:border-white/10 p-10 lg:p-12 transition-all hover:border-slate-400 dark:hover:border-white/20 rounded-[5px] overflow-hidden"
-              >
-                <div className="flex items-center justify-between mb-10">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] font-mono">PORTAL_TYPE_02</span>
-                  <div className="w-12 h-12 border border-slate-300 dark:border-white/20 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-[5px]">
-                    <Building2 className="h-6 w-6" />
+                  {/* Company Card */}
+                  <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
+                    <div className="h-10 w-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff10_1px,transparent_1px)] border-b border-slate-100 dark:border-white/5 flex items-center px-8">
+                      <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-white/10 group-hover:bg-primary transition-colors" />
+                        <span className="text-[8px] text-slate-400 font-black uppercase tracking-[0.3em] font-mono">
+                          SIT.SECURE_TRANSIT_CP
+                        </span>
+                      </div>
+                    </div>
+                    <div className="px-8 pt-8 flex flex-col flex-1">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] font-mono leading-none">
+                            REGISTRY_ACCESS
+                          </span>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest font-mono">
+                            REF: SIT-AC-CP-2026
+                          </p>
+                        </div>
+                        <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] -rotate-3 group-hover:rotate-0 transition-transform">
+                          <Building2 className="h-5 w-5" />
+                        </div>
+                      </div>
+                      <div className="space-y-3 mb-6">
+                        <h3 className="text-3xl font-medium font-premium text-slate-900 dark:text-white italic leading-tight">
+                          Corporate Access
+                        </h3>
+                        <div className="h-px w-14 bg-slate-200 dark:bg-white/20 group-hover:bg-primary/30 transition-colors" />
+                        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
+                          Official portal for industrial partners to authenticate trainee performance and manage university collaboration.
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 gap-3 mb-6 flex-1">
+                        {[
+                          "Partner Verification Registry",
+                          "Industrial Talent Acquisition",
+                          "Performance Evaluation Terminal",
+                          "Collaborative SIT Management",
+                        ].map((feature, i) => (
+                          <div key={feature} className="flex items-center gap-4">
+                            <span className="text-[9px] font-bold text-slate-300 dark:text-white/10 font-mono">
+                              § 0{i + 1}
+                            </span>
+                            <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
+                              {feature}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <Link
+                        href="/login/employer"
+                        className="w-full inline-flex h-12 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.25em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] mb-8"
+                      >
+                        Partner Verification
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="space-y-4 mb-10">
-                  <h3 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Corporate Access</h3>
-                  <p className="text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                    Access high-caliber TUP-V talent, post strategic internship roles, and monitor trainee performance via a secure corporate terminal.
+              </div>
+            </section>
+          )}
+        </StickySection>
+
+        {/* Section 03 — How It Works (final, does not scale out) */}
+        <StickySection index={2} isLast bg="bg-slate-50 dark:bg-[#0b0b0b]">
+          {() => (
+            <section className="h-full flex flex-col justify-center py-24 relative overflow-hidden">
+              <div className="container mx-auto px-6 relative z-10">
+                <div className="max-w-3xl mx-auto text-center mb-20">
+                  <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">
+                    How It Works
+                  </h2>
+                  <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
+                  <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    A procedural journey bridging academic training and industrial excellence.
                   </p>
                 </div>
-                
-                <div className="grid grid-cols-1 gap-4 mb-12 flex-1">
+
+                <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
                   {[
-                    "Premium Talent Acquisition", 
-                    "Automated Applicant Filtering", 
-                    "Digital Evaluation Terminal", 
-                    "Direct Performance Feedback"
-                  ].map((feature, i) => (
-                    <div key={feature} className="flex items-center gap-4 group/item">
-                      <span className="text-[9px] font-bold text-slate-300 dark:text-white/20 font-mono">0{i+1}</span>
-                      <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{feature}</span>
-                    </div>
+                    { step: "01", title: "Profile Setup", desc: "Create your institutional SIT profile with GSFE credentials.", icon: ShieldCheck },
+                    { step: "02", title: "Application", desc: "Apply to pre-vetted industry partners matching your skill set.", icon: Zap },
+                    { step: "03", title: "Evaluation", desc: "Track progress and receive performance audits in real-time.", icon: CheckCircle },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex flex-col items-center text-center"
+                    >
+                      <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 relative group transition-all hover:border-primary/50">
+                        <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-slate-50 dark:border-[#0b0b0b]">
+                          {item.step}
+                        </span>
+                        <item.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
+                      </div>
+                      <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">
+                        {item.title}
+                      </h5>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">
+                        {item.desc}
+                      </p>
+                    </motion.div>
                   ))}
                 </div>
-
-                <Link href="/login/employer" className="w-full inline-flex h-14 items-center justify-center border-2 border-slate-900 dark:border-white text-slate-900 dark:text-white font-black uppercase tracking-[0.2em] text-[10px] hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all gap-3 rounded-[5px]">
-                  Partner Verification
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-            </div>
-
-
-          </div>
-        </section>
-
-        {/* How It Works Section */}
-        <section className="py-32 bg-slate-50/50 dark:bg-white/[0.01] border-y border-slate-100 dark:border-white/5 relative overflow-hidden">
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-24">
-              <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">How It Works</h2>
-              <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
-              <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                A procedural journey bridging academic training and industrial excellence.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
-
-              {[
-                { 
-                  step: "01", 
-                  title: "Profile Setup", 
-                  desc: "Create your institutional SIT profile with GSFE credentials.", 
-                  icon: ShieldCheck 
-                },
-                { 
-                  step: "02", 
-                  title: "Application", 
-                  desc: "Apply to pre-vetted industry partners matching your skill set.", 
-                  icon: Zap 
-                },
-                { 
-                  step: "03", 
-                  title: "Evaluation", 
-                  desc: "Track progress and receive performance audits in real-time.", 
-                  icon: CheckCircle 
-                }
-              ].map((step, i) => (
-                <motion.div 
-                  key={step.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.2 }}
-                  className="flex flex-col items-center text-center"
-                >
-                  <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 shadow-xl shadow-slate-200/20 dark:shadow-none relative group transition-all hover:border-primary/50">
-                    <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-white dark:border-[#050505]">{step.step}</span>
-                    <step.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
-                  </div>
-                  <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">{step.title}</h5>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">{step.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+              </div>
+            </section>
+          )}
+        </StickySection>
       </main>
     </div>
   );
