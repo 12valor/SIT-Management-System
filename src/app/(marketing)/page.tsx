@@ -8,12 +8,65 @@ import {
   Building2,
   ShieldCheck,
   Zap,
+  FileCheck,
+  Clock,
+  FolderOpen,
+  Users,
+  ClipboardList,
+  BadgeCheck,
+  BarChart2,
+  Archive,
 } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const PARTNERS = [
+  { name: "Aboitiz Power Corporation", sector: "Energy" },
+  { name: "MORE Electric and Power", sector: "Utilities" },
+  { name: "Globe Telecom Inc.", sector: "Telecommunications" },
+  { name: "Concentrix Philippines", sector: "Technology Services" },
+  { name: "First Gen Corporation", sector: "Renewable Energy" },
+  { name: "Jollibee Foods Corporation", sector: "Food Technology" },
+  { name: "SM Development Corporation", sector: "Construction" },
+  { name: "DOST Region VI", sector: "Government Research" },
+  { name: "PhilRice Research Center", sector: "Agricultural Engineering" },
+  { name: "BDO Unibank", sector: "Financial Technology" },
+  { name: "Mang Inasal Philippines", sector: "Food Manufacturing" },
+  { name: "Penshoppe Group", sector: "Retail Manufacturing" },
+];
+
+const CAPABILITIES = [
+  {
+    role: "Student Portal",
+    items: [
+      { icon: FileCheck, label: "Digital Logbook with Supervisor Sign-Off" },
+      { icon: Clock, label: "Real-Time Hour Tracking Against Program Units" },
+      { icon: FolderOpen, label: "Document Repository for MOA and Endorsements" },
+      { icon: Archive, label: "Performance Evaluation Receipt and Archive" },
+    ],
+  },
+  {
+    role: "Employer Portal",
+    items: [
+      { icon: BadgeCheck, label: "GSFE-Authenticated Trainee Verification" },
+      { icon: ClipboardList, label: "Evaluation Form Submission and Certification" },
+      { icon: Users, label: "Direct Communication with Coordinator Office" },
+      { icon: BarChart2, label: "Multi-Trainee Progress Monitoring" },
+    ],
+  },
+  {
+    role: "Coordinator Office",
+    items: [
+      { icon: Users, label: "Batch Student Placement Administration" },
+      { icon: BadgeCheck, label: "Industry Partner Accreditation Management" },
+      { icon: BarChart2, label: "Evaluation Aggregation and Grade Computation" },
+      { icon: Archive, label: "Institutional Compliance Audit Trail" },
+    ],
+  },
+];
 
 function Reveal({
   children,
@@ -66,11 +119,45 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
 }
 
 export default function Home() {
+  const partnerTape = [...PARTNERS, ...PARTNERS];
+
   return (
     <div className="flex flex-col">
       <main>
         <HeroCarousel />
 
+        {/* Partner Registry Strip */}
+        <div className="bg-slate-950 border-y border-white/5 py-5 overflow-hidden">
+          <div className="flex items-center gap-10 mb-3 px-6">
+            <span className="text-[9px] font-mono font-bold text-white/30 uppercase tracking-[0.2em] shrink-0">
+              Registered Partners
+            </span>
+            <div className="h-px flex-1 bg-white/10" />
+            <span className="text-[9px] font-mono font-bold text-white/20 uppercase tracking-[0.15em] shrink-0">
+              Academic Year 2024–2025
+            </span>
+          </div>
+          <div className="overflow-hidden">
+            <div className="flex animate-marquee w-max">
+              {partnerTape.map((p, i) => (
+                <div
+                  key={i}
+                  className="flex items-center shrink-0 px-8"
+                >
+                  <span className="text-[10px] font-mono font-bold text-white/60 uppercase tracking-[0.15em] whitespace-nowrap">
+                    {p.name}
+                  </span>
+                  <span className="mx-4 text-white/15 text-[10px] font-mono">·</span>
+                  <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest whitespace-nowrap">
+                    {p.sector}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Gateway Cards */}
         <section className="py-28 relative overflow-hidden bg-white dark:bg-[#050505]">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
@@ -179,6 +266,103 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Platform Capabilities */}
+        <section className="py-24 bg-slate-950 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <Reveal>
+              <div className="flex items-center gap-6 mb-16">
+                <div>
+                  <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.2em] mb-1">
+                    System Reference
+                  </p>
+                  <h2 className="text-3xl md:text-4xl font-bold font-premium text-white uppercase tracking-tight">
+                    Platform Architecture
+                  </h2>
+                </div>
+                <div className="flex-1 h-px bg-white/10" />
+              </div>
+            </Reveal>
+
+            <div className="grid lg:grid-cols-12 gap-12">
+              {/* Capabilities list */}
+              <div className="lg:col-span-7 space-y-0">
+                {CAPABILITIES.map((section, si) => (
+                  <Reveal key={section.role} delay={si * 0.1}>
+                    <div className="border-t border-white/10 py-8">
+                      <p className="text-[9px] font-mono font-bold text-primary/80 uppercase tracking-[0.25em] mb-5">
+                        {section.role}
+                      </p>
+                      <div className="space-y-4">
+                        {section.items.map((item, ii) => (
+                          <div key={item.label} className="flex items-center gap-4">
+                            <span className="text-[9px] font-mono text-white/20 w-5 shrink-0 tabular-nums">
+                              {String(ii + 1).padStart(2, "0")}
+                            </span>
+                            <item.icon className="w-3.5 h-3.5 text-white/30 shrink-0" />
+                            <span className="text-xs font-bold text-white/70 uppercase tracking-widest leading-relaxed">
+                              {item.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+
+              {/* Archive record panel */}
+              <Reveal delay={0.2} className="lg:col-span-5">
+                <div className="border border-white/10 p-8 h-full font-mono">
+                  <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mb-6">
+                    System Record
+                  </p>
+                  <div className="space-y-0">
+                    {[
+                      ["INSTITUTION", "TUP-V"],
+                      ["COLLEGE", "Engineering"],
+                      ["PROGRAM", "Supervised Industrial Training"],
+                      ["CYCLE", "2024–2025"],
+                      ["STATUS", "ACTIVE"],
+                    ].map(([key, val]) => (
+                      <div key={key} className="flex gap-4 py-3 border-b border-white/5">
+                        <span className="text-[9px] text-white/25 uppercase tracking-widest w-28 shrink-0">
+                          {key}
+                        </span>
+                        <span className="text-[10px] text-white/60 uppercase tracking-wide">
+                          {val}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-white/10 space-y-0">
+                    {[
+                      ["Enrolled", "312"],
+                      ["Partners", "24"],
+                      ["Hours Logged", "48,620"],
+                      ["Compliance", "100%"],
+                    ].map(([key, val]) => (
+                      <div key={key} className="flex justify-between items-baseline py-3 border-b border-white/5 last:border-0">
+                        <span className="text-[9px] text-white/25 uppercase tracking-widest">
+                          {key}
+                        </span>
+                        <span className="text-sm font-bold text-white/80 tabular-nums">
+                          {val}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="text-[8px] text-white/15 uppercase tracking-[0.15em] mt-8">
+                    Data as of December 2024
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
         <section className="py-28 relative overflow-hidden bg-slate-50 dark:bg-[#0b0b0b]">
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-20">
@@ -218,6 +402,59 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </section>
+
+        {/* Institutional Voice */}
+        <section className="py-28 bg-white dark:bg-[#050505] border-y border-slate-100 dark:border-white/5">
+          <Reveal className="max-w-3xl mx-auto px-6 text-center">
+            <p className="text-[9px] font-mono text-slate-400 dark:text-white/25 uppercase tracking-[0.25em] mb-10">
+              Field Report · Industrial Training Office
+            </p>
+            <blockquote className="text-2xl md:text-3xl font-medium font-premium italic text-slate-800 dark:text-white/80 leading-relaxed mb-10">
+              "Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a single working day."
+            </blockquote>
+            <div className="h-px w-16 bg-slate-200 dark:bg-white/10 mx-auto mb-8" />
+            <div className="space-y-1">
+              <p className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest">
+                Engr. Carla Reyes
+              </p>
+              <p className="text-[10px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-[0.15em]">
+                Industrial Training Coordinator · College of Engineering, TUP-V · 2024–2025
+              </p>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* Closing CTA */}
+        <section className="py-24 bg-primary relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white opacity-[0.04] pointer-events-none" />
+          <Reveal className="container mx-auto px-6 text-center relative z-10">
+            <p className="text-[9px] font-mono text-white/40 uppercase tracking-[0.25em] mb-6">
+              Official Institutional Gateway
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold font-premium text-white uppercase tracking-tight mb-5 max-w-3xl mx-auto">
+              Begin Your Institutional Registration
+            </h2>
+            <p className="text-white/70 font-medium max-w-xl mx-auto leading-relaxed mb-12">
+              Access the official SIT gateway for the Technological University of the Philippines - Visayas.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/signup/student"
+                className="inline-flex h-13 px-10 items-center justify-center bg-white text-primary font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white/90 transition-colors gap-3 rounded-[5px]"
+              >
+                Student Registration
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/signup/employer"
+                className="inline-flex h-13 px-10 items-center justify-center border border-white/30 text-white font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white/10 transition-colors gap-3 rounded-[5px]"
+              >
+                Partner Enrollment
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </Reveal>
         </section>
       </main>
     </div>
