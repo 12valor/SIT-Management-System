@@ -50,17 +50,20 @@ export function SmartNavbar() {
             
             {/* Left: Logo & Links */}
             <div className="flex items-center gap-10">
-              <Link href="/" className="flex items-center gap-3 group">
+              <Link href="/" className="flex items-center gap-4 group">
                 <Image 
                   src="/Technological_University_of_the_Philippines_Seal.svg.png" 
                   alt="TUP Seal" 
-                  width={32}
-                  height={32}
-                  className="h-8 w-auto object-contain transition-all group-hover:scale-105 grayscale dark:grayscale-0 dark:logo-red-filter" 
+                  width={34}
+                  height={34}
+                  className="h-9 w-auto object-contain transition-all group-hover:scale-105 grayscale dark:grayscale-0 dark:logo-red-filter" 
                 />
-                <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white font-heading">
-                  TUPV SIT
-                </span>
+                <div className="flex flex-col leading-none">
+                  <span className="font-medium text-lg tracking-tight text-slate-900 dark:text-white font-serif italic">
+                    Supervised <span className="font-bold not-italic">Industrial Training</span>
+                  </span>
+                  <span className="text-[9px] font-black uppercase tracking-[0.3em] text-primary/60 mt-0.5">Institutional Platform</span>
+                </div>
               </Link>
 
               <nav className="hidden md:flex items-center gap-6">
@@ -144,10 +147,10 @@ export function SmartNavbar() {
             <div className="flex items-center gap-3">
               <Link 
                 href="/login" 
-                className="hidden sm:inline-flex items-center justify-center bg-primary text-white px-8 py-2.5 rounded-[2px] text-[13px] font-bold transition-all hover:bg-primary/90 active:scale-[0.98] group/btn gap-2"
+                className="hidden sm:inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-2.5 rounded-none text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:bg-primary dark:hover:bg-primary dark:hover:text-white active:scale-[0.98] group/btn gap-3 border border-transparent"
               >
-                Launch Portal
-                <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                Launch Terminal
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
               </Link>
 
               <button 
@@ -172,23 +175,20 @@ export function SmartNavbar() {
           >
             <nav className="flex flex-col gap-4">
               <div className="flex flex-col">
-                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.3em] mb-6">Access Terminals</span>
-                <div className="grid grid-cols-1 gap-3">
+                <span className="text-[9px] font-black text-primary uppercase tracking-[0.4em] mb-6 border-b border-primary/10 pb-2">Institutional Access</span>
+                <div className="grid grid-cols-1 gap-4">
                   {portals.map((portal) => (
                     <Link 
                       key={portal.title}
                       href={portal.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-5 p-4 bg-white/20 dark:bg-white/5 border border-white/20 dark:border-white/10 rounded-sm active:scale-[0.98] transition-transform"
+                      className="flex items-center gap-6 p-5 bg-[#fdfbf7] dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-none active:scale-[0.98] transition-transform"
                     >
-                      <div className="h-12 w-12 flex items-center justify-center bg-white/30 dark:bg-white/10 text-primary rounded-sm shadow-sm">
-                        <portal.icon className="h-6 w-6" />
-                      </div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tighter">
-                          {portal.title} Portal
+                        <span className="text-sm font-medium text-slate-900 dark:text-white font-serif italic mb-1">
+                          {portal.title} <span className="font-bold not-italic">Division</span>
                         </span>
-                        <span className="text-[10px] text-slate-600 dark:text-slate-400 font-bold uppercase tracking-widest opacity-60">
+                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest opacity-60">
                           {portal.description}
                         </span>
                       </div>

@@ -74,90 +74,94 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {/* Student Card */}
               <Reveal delay={0.1}>
-                <div className="group relative flex flex-col h-full bg-white dark:bg-[#050505] border border-slate-200 dark:border-white/10 transition-all hover:border-primary/40 rounded-none overflow-hidden p-12 shadow-2xl shadow-slate-200/50 dark:shadow-none">
-                  {/* Technical Background Texture */}
-                  <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
-                  <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-[40px] font-black select-none group-hover:text-primary/20 transition-colors">01</div>
+                <div className="group relative flex flex-col h-full bg-[#fdfbf7] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:border-primary/40 rounded-none overflow-hidden p-12 md:p-16 shadow-sm hover:shadow-xl transition-all duration-700">
+                  {/* Institutional Ornament */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-12 bg-primary/20" />
                   
-                  <div className="relative z-10 space-y-6 mb-12">
-                    <h3 className="text-5xl font-medium font-serif text-slate-900 dark:text-white leading-tight tracking-tighter">
-                      Student <span className="italic">Terminal</span>
+                  <div className="relative z-10 text-center space-y-8 mb-12">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60 mb-2">Student Division</p>
+                    <h3 className="text-5xl font-medium font-serif text-slate-900 dark:text-white leading-tight">
+                      SIT <span className="italic">Terminal</span>
                     </h3>
-                    <div className="h-px w-24 bg-slate-200 dark:bg-white/20 group-hover:w-full transition-all duration-700 ease-expo" />
-                    <p className="text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic max-w-sm">
-                      Certified gateway for TUP-V trainees to document, verify, and accelerate their professional industrial integration.
+                    <div className="flex items-center justify-center gap-4">
+                      <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                      <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
+                    </div>
+                    <p className="text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic max-w-sm mx-auto">
+                      Official portal for student trainees to document and certify their industrial immersion journey.
                     </p>
                   </div>
 
-                  <div className="relative z-10 grid grid-cols-1 gap-5 mb-14 flex-1">
+                  <div className="relative z-10 space-y-6 mb-16 flex-1">
                     {[
                       "Institutional Profile Certification",
-                      "SIT Placement Manifest",
                       "Digital Logbook Verification",
-                      "Archival Document Repository",
+                      "SIT Placement Manifest",
+                      "Archival Repository Access",
                     ].map((feature, i) => (
-                      <div key={feature} className="flex items-center gap-6 border-l border-slate-100 dark:border-white/5 pl-6 py-1 hover:border-primary/30 transition-colors">
-                        <span className="text-[11px] font-bold text-slate-300 dark:text-white/10 font-mono tabular-nums">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-[12px] font-black text-slate-900 dark:text-slate-300 uppercase tracking-[0.15em]">
+                      <div key={feature} className="flex flex-col items-center text-center gap-2">
+                        <span className="text-[12px] font-black text-slate-900 dark:text-slate-300 uppercase tracking-[0.2em] group-hover:text-primary transition-colors">
                           {feature}
                         </span>
+                        {i < 3 && <div className="w-1 h-1 rounded-full bg-slate-200 dark:bg-white/10" />}
                       </div>
                     ))}
                   </div>
 
                   <Link
                     href="/login/student"
-                    className="relative z-10 w-full inline-flex h-16 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.2em] text-[11px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-4 rounded-none overflow-hidden group/btn"
+                    className="relative z-10 w-full inline-flex h-16 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.3em] text-[10px] border border-transparent hover:bg-transparent hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white transition-all gap-4"
                   >
-                    <span className="relative z-10">Initialize Portal Access</span>
-                    <ArrowRight className="w-4 h-4 relative z-10 group-hover/btn:translate-x-2 transition-transform" />
+                    <span>Begin Verification</span>
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </Reveal>
 
               {/* Company Card */}
               <Reveal delay={0.2}>
-                <div className="group relative flex flex-col h-full bg-white dark:bg-[#050505] border border-slate-200 dark:border-white/10 transition-all hover:border-primary/40 rounded-none overflow-hidden p-12 shadow-2xl shadow-slate-200/50 dark:shadow-none">
-                  {/* Technical Background Texture */}
-                  <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
-                  <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-[40px] font-black select-none group-hover:text-primary/20 transition-colors">02</div>
+                <div className="group relative flex flex-col h-full bg-[#fdfbf7] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:border-primary/40 rounded-none overflow-hidden p-12 md:p-16 shadow-sm hover:shadow-xl transition-all duration-700">
+                  {/* Institutional Ornament */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-12 bg-primary/20" />
 
-                  <div className="relative z-10 space-y-6 mb-12">
-                    <h3 className="text-5xl font-medium font-serif text-slate-900 dark:text-white leading-tight tracking-tighter">
-                      Corporate <span className="italic">Access</span>
+                  <div className="relative z-10 text-center space-y-8 mb-12">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60 mb-2">Partner Division</p>
+                    <h3 className="text-5xl font-medium font-serif text-slate-900 dark:text-white leading-tight">
+                      Corporate <span className="italic">Registry</span>
                     </h3>
-                    <div className="h-px w-24 bg-slate-200 dark:bg-white/20 group-hover:w-full transition-all duration-700 ease-expo" />
-                    <p className="text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic max-w-sm">
-                      Official portal for industrial partners to authenticate trainee performance and manage university collaboration.
+                    <div className="flex items-center justify-center gap-4">
+                      <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                      <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
+                    </div>
+                    <p className="text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic max-w-sm mx-auto">
+                      Dignified access for industrial partners to authenticate trainee performance and academic alignment.
                     </p>
                   </div>
 
-                  <div className="relative z-10 grid grid-cols-1 gap-5 mb-14 flex-1">
+                  <div className="relative z-10 space-y-6 mb-16 flex-1">
                     {[
-                      "Partner Verification Registry",
+                      "Partner Identity Verification",
                       "Industrial Talent Acquisition",
-                      "Performance Evaluation Terminal",
-                      "Collaborative SIT Management",
+                      "Performance Auditing Terminal",
+                      "Institutional Collaboration",
                     ].map((feature, i) => (
-                      <div key={feature} className="flex items-center gap-6 border-l border-slate-100 dark:border-white/5 pl-6 py-1 hover:border-primary/30 transition-colors">
-                        <span className="text-[11px] font-bold text-slate-300 dark:text-white/10 font-mono tabular-nums">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-[12px] font-black text-slate-900 dark:text-slate-300 uppercase tracking-[0.15em]">
+                      <div key={feature} className="flex flex-col items-center text-center gap-2">
+                        <span className="text-[12px] font-black text-slate-900 dark:text-slate-300 uppercase tracking-[0.2em] group-hover:text-primary transition-colors">
                           {feature}
                         </span>
+                        {i < 3 && <div className="w-1 h-1 rounded-full bg-slate-200 dark:bg-white/10" />}
                       </div>
                     ))}
                   </div>
 
                   <Link
                     href="/login/employer"
-                    className="relative z-10 w-full inline-flex h-16 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.2em] text-[11px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-4 rounded-none overflow-hidden group/btn"
+                    className="relative z-10 w-full inline-flex h-16 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.3em] text-[10px] border border-transparent hover:bg-transparent hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white transition-all gap-4"
                   >
-                    <span className="relative z-10">Partner Verification</span>
-                    <ArrowRight className="w-4 h-4 relative z-10 group-hover/btn:translate-x-2 transition-transform" />
+                    <span>Authenticate Credentials</span>
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </Reveal>
