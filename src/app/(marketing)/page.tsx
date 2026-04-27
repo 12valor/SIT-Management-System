@@ -5,6 +5,7 @@ import {
   GraduationCap,
   CheckCircle,
   ArrowRight,
+  Sparkles,
   Building2,
   ShieldCheck,
   Zap,
@@ -12,10 +13,6 @@ import {
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
-
 
 function Reveal({
   children,
@@ -28,6 +25,8 @@ function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
+
+  const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <motion.div
@@ -42,229 +41,164 @@ function Reveal({
   );
 }
 
-
 export default function Home() {
   return (
     <div className="flex flex-col">
       <main>
-        <HeroCarousel />
+        {/* Section 01 — Hero */}
+        <section className="bg-white dark:bg-[#050505]">
+          <HeroCarousel />
+        </section>
 
-        {/* Gateway Cards: Uniform & Refined */}
-        <section className="py-24 bg-white dark:bg-[#050505] transition-colors relative overflow-hidden">
-          <div className="max-w-6xl mx-auto px-6 relative">
-            <div className="grid md:grid-cols-2 gap-8 items-stretch">
-              
-              {/* Student Terminal */}
+        {/* Section 02 — Gateway Cards */}
+        <section className="py-32 relative bg-white dark:bg-[#050505] overflow-hidden border-y border-slate-100 dark:border-white/5">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10" />
+
+          <div className="container mx-auto px-6">
+            <Reveal className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
+                Select Your Gateway
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
+                Connect with the official TUP-V Supervised Industrial Training platform. Designed for excellence, engineered for career growth.
+              </p>
+            </Reveal>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {/* Student Card */}
               <Reveal delay={0.1}>
-                <div className="group relative h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 flex flex-col transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px]">
-                  <div className="flex-1">
-                    <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center mb-8 border border-primary/10 transition-colors">
-                      <GraduationCap className="w-6 h-6 text-primary" />
+                <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
+                  <div className="px-8 pt-8 flex flex-col flex-1">
+                    <div className="flex items-center justify-end mb-6">
+                      <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] rotate-3 group-hover:rotate-0 transition-transform">
+                        <GraduationCap className="h-5 w-5" />
+                      </div>
                     </div>
-                    <h3 className="text-3xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
-                      Student <span className="text-primary italic">Terminal</span>
-                    </h3>
-                    <p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed font-medium mb-10">
-                      Access the official TUP-V Supervised Industrial Training platform to document, verify, and accelerate your professional journey.
-                    </p>
-                    
-                    <div className="space-y-4 mb-10">
+                    <div className="space-y-3 mb-6">
+                      <h3 className="text-3xl font-medium font-premium text-slate-900 dark:text-white italic leading-tight">
+                        Student Terminal
+                      </h3>
+                      <div className="h-px w-14 bg-slate-200 dark:bg-white/20 group-hover:bg-primary/30 transition-colors" />
+                      <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
+                        Certified gateway for TUP-V trainees to document, verify, and accelerate their professional industrial integration.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3 mb-6 flex-1">
                       {[
-                        "Logbook Management",
-                        "Placement Manifest",
-                        "Document Archive"
-                      ].map((item) => (
-                        <div key={item} className="flex items-center gap-3">
-                          <div className="w-1.5 h-1.5 bg-primary/40 rounded-full" />
-                          <span className="text-[10px] font-bold text-slate-600 dark:text-white/60 uppercase tracking-widest">
-                            {item}
+                        "Institutional Profile Certification",
+                        "SIT Placement Manifest",
+                        "Digital Logbook Verification",
+                        "Archival Document Repository",
+                      ].map((feature, i) => (
+                        <div key={feature} className="flex items-center gap-4">
+                          <span className="text-[9px] font-bold text-slate-300 dark:text-white/10 font-mono">
+                            § 0{i + 1}
+                          </span>
+                          <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
+                            {feature}
                           </span>
                         </div>
                       ))}
                     </div>
+                    <Link
+                      href="/login/student"
+                      className="w-full inline-flex h-12 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.25em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] mb-8"
+                    >
+                      Access Student Portal
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
-
-                  <Link
-                    href="/login/student"
-                    className="inline-flex h-12 w-full items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.2em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] group/btn"
-                  >
-                    Enter Portal
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                  </Link>
                 </div>
               </Reveal>
 
-              {/* Partner Registry */}
+              {/* Company Card */}
               <Reveal delay={0.2}>
-                <div className="group relative h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 flex flex-col transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px]">
-                  <div className="flex-1">
-                    <div className="w-12 h-12 bg-slate-100 dark:bg-white/5 rounded-sm flex items-center justify-center mb-8 border border-slate-200 dark:border-white/10 transition-colors">
-                      <Building2 className="w-6 h-6 text-slate-400 dark:text-white/30" />
+                <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
+                  <div className="px-8 pt-8 flex flex-col flex-1">
+                    <div className="flex items-center justify-end mb-6">
+                      <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] -rotate-3 group-hover:rotate-0 transition-transform">
+                        <Building2 className="h-5 w-5" />
+                      </div>
                     </div>
-                    <h3 className="text-3xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
-                      Partner <span className="italic">Registry</span>
-                    </h3>
-                    <p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed font-medium mb-10">
-                      Secure gateway for industrial partners to authenticate student performance and coordinate institutional collaboration.
-                    </p>
-
-                    <div className="space-y-4 mb-10">
+                    <div className="space-y-3 mb-6">
+                      <h3 className="text-3xl font-medium font-premium text-slate-900 dark:text-white italic leading-tight">
+                        Corporate Access
+                      </h3>
+                      <div className="h-px w-14 bg-slate-200 dark:bg-white/20 group-hover:bg-primary/30 transition-colors" />
+                      <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
+                        Official portal for industrial partners to authenticate trainee performance and manage university collaboration.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3 mb-6 flex-1">
                       {[
-                        "Talent Verification",
-                        "Trainee Evaluation",
-                        "SIT Management"
-                      ].map((item) => (
-                        <div key={item} className="flex items-center gap-3">
-                          <div className="w-1.5 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full" />
-                          <span className="text-[10px] font-bold text-slate-600 dark:text-white/60 uppercase tracking-widest">
-                            {item}
+                        "Partner Verification Registry",
+                        "Industrial Talent Acquisition",
+                        "Performance Evaluation Terminal",
+                        "Collaborative SIT Management",
+                      ].map((feature, i) => (
+                        <div key={feature} className="flex items-center gap-4">
+                          <span className="text-[9px] font-bold text-slate-300 dark:text-white/10 font-mono">
+                            § 0{i + 1}
+                          </span>
+                          <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
+                            {feature}
                           </span>
                         </div>
                       ))}
                     </div>
+                    <Link
+                      href="/login/employer"
+                      className="w-full inline-flex h-12 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.25em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] mb-8"
+                    >
+                      Partner Verification
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
-
-                  <Link
-                    href="/login/employer"
-                    className="inline-flex h-12 w-full items-center justify-center border border-slate-900 dark:border-white/20 text-slate-900 dark:text-white font-black uppercase tracking-[0.2em] text-[10px] hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-950 transition-all gap-3 rounded-[5px] group/btn"
-                  >
-                    Partner Access
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                  </Link>
                 </div>
               </Reveal>
             </div>
           </div>
         </section>
 
-
-        {/* How It Works */}
-        <section className="py-28 relative overflow-hidden bg-slate-50 dark:bg-[#0b0b0b]">
+        {/* Section 03 — How It Works */}
+        <section className="py-32 bg-slate-50 dark:bg-[#0b0b0b] relative overflow-hidden">
           <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-20">
-              <Reveal>
-                <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">
-                  How It Works
-                </h2>
-                <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
-              </Reveal>
-              <Reveal delay={0.1}>
-                <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                  A procedural journey bridging academic training and industrial excellence.
-                </p>
-              </Reveal>
-            </div>
+            <Reveal className="max-w-3xl mx-auto text-center mb-24">
+              <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">
+                How It Works
+              </h2>
+              <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
+              <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                A procedural journey bridging academic training and industrial excellence.
+              </p>
+            </Reveal>
 
-            <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
               {[
                 { step: "01", title: "Profile Setup", desc: "Create your institutional SIT profile with GSFE credentials.", icon: ShieldCheck },
                 { step: "02", title: "Application", desc: "Apply to pre-vetted industry partners matching your skill set.", icon: Zap },
                 { step: "03", title: "Evaluation", desc: "Track progress and receive performance audits in real-time.", icon: CheckCircle },
               ].map((item, i) => (
-                <Reveal key={item.title} delay={i * 0.12} className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 relative group transition-all hover:border-primary/50">
-                    <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-slate-50 dark:border-[#0b0b0b]">
-                      {item.step}
-                    </span>
-                    <item.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
+                <Reveal key={item.title} delay={i * 0.15}>
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 relative group transition-all hover:border-primary/50 shadow-sm dark:shadow-none">
+                      <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-slate-50 dark:border-[#0b0b0b]">
+                        {item.step}
+                      </span>
+                      <item.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
+                    </div>
+                    <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">
+                      {item.title}
+                    </h5>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">
+                      {item.desc}
+                    </p>
                   </div>
-                  <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">
-                    {item.title}
-                  </h5>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">
-                    {item.desc}
-                  </p>
                 </Reveal>
               ))}
             </div>
           </div>
-        </section>
-
-        {/* Institutional Voice: Certified Communiqué */}
-        <section className="py-32 relative bg-white dark:bg-[#050505] transition-colors border-y border-slate-100 dark:border-white/5">
-          {/* Subtle blueprint grid for the section */}
-          <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
-          
-          <div className="max-w-4xl mx-auto px-6 relative">
-            <Reveal className="text-center">
-              <div className="inline-flex items-center gap-6 mb-16">
-                <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
-                <p className="text-[10px] font-mono font-bold text-slate-400 dark:text-white/25 uppercase tracking-[0.4em]">
-                  Authenticated Document · REF_ITO_2024
-                </p>
-                <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
-              </div>
-
-              <div className="relative mb-20 max-w-2xl mx-auto">
-                {/* Large Decorative Quote Mark */}
-                <div className="absolute -top-16 left-1/2 -translate-x-1/2 text-[12rem] font-serif text-slate-100 dark:text-white/[0.02] select-none pointer-events-none leading-none">
-                  &ldquo;
-                </div>
-                
-                <blockquote className="relative text-3xl md:text-5xl font-medium font-serif italic text-slate-800 dark:text-white/90 leading-[1.1] transition-colors">
-                  &quot;Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a <span className="text-primary not-italic font-bold tracking-tighter">single working day</span>.&quot;
-                </blockquote>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <div className="h-10 w-px bg-slate-200 dark:bg-white/10 mb-8" />
-                
-                <div className="space-y-3">
-                  <p className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-[0.1em] transition-colors">
-                    Engr. Carla Reyes
-                  </p>
-                  <div className="flex flex-col gap-1">
-                    <p className="text-[10px] font-mono font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">
-                      Industrial Training Coordinator
-                    </p>
-                    <p className="text-[9px] font-mono text-slate-400 dark:text-white/20 uppercase tracking-[0.2em]">
-                      College of Engineering · TUP-V · ARCHIVE_24_01
-                    </p>
-                  </div>
-                </div>
-
-                {/* Technical Verification Stamp (Subtle) */}
-                <div className="mt-16 inline-flex items-center gap-2 px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full opacity-50">
-                  <div className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-pulse" />
-                  <span className="text-[8px] font-mono font-bold text-slate-400 dark:text-white/30 uppercase tracking-widest">
-                    Verified institutional communique
-                  </span>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Closing CTA */}
-        <section className="py-24 bg-primary relative overflow-hidden transition-colors">
-          <div className="absolute inset-0 bg-grid-white opacity-[0.04] pointer-events-none" />
-          <Reveal className="container mx-auto px-6 text-center relative z-10">
-            <p className="text-[9px] font-mono text-white/40 uppercase tracking-[0.25em] mb-6">
-              Official Institutional Gateway
-            </p>
-            <h2 className="text-3xl md:text-5xl font-bold font-premium text-white uppercase tracking-tight mb-5 max-w-3xl mx-auto">
-              Begin Your Institutional Registration
-            </h2>
-            <p className="text-white/70 font-medium max-w-xl mx-auto leading-relaxed mb-12">
-              Access the official SIT gateway for the Technological University of the Philippines - Visayas.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/signup/student"
-                className="inline-flex h-13 px-10 items-center justify-center bg-white text-primary font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white/90 transition-colors gap-3 rounded-[5px]"
-              >
-                Student Registration
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <Link
-                href="/signup/employer"
-                className="inline-flex h-13 px-10 items-center justify-center border border-white/30 text-white font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white/10 transition-colors gap-3 rounded-[5px]"
-              >
-                Partner Enrollment
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </Reveal>
         </section>
       </main>
     </div>
