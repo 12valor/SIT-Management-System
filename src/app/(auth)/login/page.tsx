@@ -51,7 +51,7 @@ export default function LoginGatePage() {
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 font-sans">TUP-Visayas</span>
         </motion.div>
         
-        <h2 className="text-5xl md:text-7xl font-medium font-serif text-center text-slate-900 dark:text-white leading-[0.9] tracking-tighter max-w-4xl italic">
+        <h2 className="text-5xl md:text-7xl font-black text-center text-slate-900 dark:text-white uppercase tracking-tighter max-w-4xl leading-[0.9]">
           Portal Selection
         </h2>
       </div>
@@ -80,7 +80,7 @@ export default function LoginGatePage() {
 
                 {/* Content */}
                 <div className="space-y-4 mb-12 flex-1">
-                  <h3 className="text-3xl font-medium font-serif text-slate-900 dark:text-white italic leading-none group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-primary transition-colors">
                     {role.title}
                   </h3>
                   <div className="h-px w-12 bg-slate-200 dark:bg-white/10 group-hover:w-full transition-all duration-700" />
