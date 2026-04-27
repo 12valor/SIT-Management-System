@@ -176,7 +176,7 @@ export default function Home() {
                   &ldquo;
                 </div>
                 <blockquote className="text-3xl md:text-5xl font-medium font-serif text-slate-900 dark:text-slate-100 leading-[1.3] italic relative z-10 tracking-tight">
-                  Managing student trainees was once a fragmented process. This system provides the <span className="text-slate-950 dark:text-white font-bold underline decoration-primary/20 decoration-8 underline-offset-[12px]">structural rigor</span> required for true industrial-academic integration.
+                  Managing student trainees was once a fragmented process. This system provides the <span className="text-primary font-bold">structural rigor</span> required for true industrial-academic integration.
                 </blockquote>
               </div>
               
