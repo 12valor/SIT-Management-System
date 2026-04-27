@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { GraduationCap, Building2, ShieldCheck, ArrowRight, Bell } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const roles = [

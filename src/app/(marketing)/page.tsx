@@ -8,14 +8,6 @@ import {
   Building2,
   ShieldCheck,
   Zap,
-  FileCheck,
-  Clock,
-  FolderOpen,
-  Users,
-  ClipboardList,
-  BadgeCheck,
-  BarChart2,
-  Archive,
 } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion, useInView } from "framer-motion";
@@ -23,20 +15,6 @@ import { useRef } from "react";
 
 const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const PARTNERS = [
-  { name: "Aboitiz Power Corporation", sector: "Energy" },
-  { name: "MORE Electric and Power", sector: "Utilities" },
-  { name: "Globe Telecom Inc.", sector: "Telecommunications" },
-  { name: "Concentrix Philippines", sector: "Technology Services" },
-  { name: "First Gen Corporation", sector: "Renewable Energy" },
-  { name: "Jollibee Foods Corporation", sector: "Food Technology" },
-  { name: "SM Development Corporation", sector: "Construction" },
-  { name: "DOST Region VI", sector: "Government Research" },
-  { name: "PhilRice Research Center", sector: "Agricultural Engineering" },
-  { name: "BDO Unibank", sector: "Financial Technology" },
-  { name: "Mang Inasal Philippines", sector: "Food Manufacturing" },
-  { name: "Penshoppe Group", sector: "Retail Manufacturing" },
-];
 
 
 function Reveal({
@@ -64,30 +42,6 @@ function Reveal({
   );
 }
 
-function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-  const words = text.split(" ");
-
-  return (
-    <h2
-      ref={ref}
-      className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4 flex flex-wrap justify-center gap-x-3"
-    >
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: delay + i * 0.05, ease: EASE_EXPO }}
-          className="inline-block"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </h2>
-  );
-}
 
 export default function Home() {
   return (
@@ -233,7 +187,7 @@ export default function Home() {
               Field Report · Industrial Training Office
             </p>
             <blockquote className="text-2xl md:text-3xl font-medium font-premium italic text-slate-800 dark:text-white/80 leading-relaxed mb-10 transition-colors">
-              "Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a single working day."
+              &quot;Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a single working day.&quot;
             </blockquote>
             <div className="h-px w-16 bg-slate-200 dark:bg-white/10 mx-auto mb-8 transition-colors" />
             <div className="space-y-1">
