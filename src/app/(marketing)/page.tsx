@@ -127,13 +127,13 @@ export default function Home() {
         <HeroCarousel />
 
         {/* Partner Registry Strip */}
-        <div className="bg-slate-950 border-y border-white/5 py-5 overflow-hidden">
+        <div className="bg-white dark:bg-slate-950 border-y border-slate-100 dark:border-white/5 py-5 overflow-hidden transition-colors">
           <div className="flex items-center gap-10 mb-3 px-6">
-            <span className="text-[9px] font-mono font-bold text-white/30 uppercase tracking-[0.2em] shrink-0">
+            <span className="text-[9px] font-mono font-bold text-slate-400 dark:text-white/30 uppercase tracking-[0.2em] shrink-0">
               Registered Partners
             </span>
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-[9px] font-mono font-bold text-white/20 uppercase tracking-[0.15em] shrink-0">
+            <div className="h-px flex-1 bg-slate-100 dark:bg-white/10" />
+            <span className="text-[9px] font-mono font-bold text-slate-300 dark:text-white/20 uppercase tracking-[0.15em] shrink-0">
               Academic Year 2024–2025
             </span>
           </div>
@@ -144,11 +144,11 @@ export default function Home() {
                   key={i}
                   className="flex items-center shrink-0 px-8"
                 >
-                  <span className="text-[10px] font-mono font-bold text-white/60 uppercase tracking-[0.15em] whitespace-nowrap">
+                  <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-white/60 uppercase tracking-[0.15em] whitespace-nowrap transition-colors">
                     {p.name}
                   </span>
-                  <span className="mx-4 text-white/15 text-[10px] font-mono">·</span>
-                  <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest whitespace-nowrap">
+                  <span className="mx-4 text-slate-200 dark:text-white/15 text-[10px] font-mono">·</span>
+                  <span className="text-[9px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-widest whitespace-nowrap transition-colors">
                     {p.sector}
                   </span>
                 </div>
@@ -267,19 +267,19 @@ export default function Home() {
         </section>
 
         {/* Platform Capabilities */}
-        <section className="py-24 bg-slate-950 relative overflow-hidden">
+        <section className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors border-y border-slate-100 dark:border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <Reveal>
               <div className="flex items-center gap-6 mb-16">
                 <div>
-                  <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.2em] mb-1">
+                  <p className="text-[9px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-[0.2em] mb-1">
                     System Reference
                   </p>
-                  <h2 className="text-3xl md:text-4xl font-bold font-premium text-white uppercase tracking-tight">
+                  <h2 className="text-3xl md:text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight">
                     Platform Architecture
                   </h2>
                 </div>
-                <div className="flex-1 h-px bg-white/10" />
+                <div className="flex-1 h-px bg-slate-200 dark:bg-white/10" />
               </div>
             </Reveal>
 
@@ -288,18 +288,18 @@ export default function Home() {
               <div className="lg:col-span-7 space-y-0">
                 {CAPABILITIES.map((section, si) => (
                   <Reveal key={section.role} delay={si * 0.1}>
-                    <div className="border-t border-white/10 py-8">
+                    <div className="border-t border-slate-200 dark:border-white/10 py-8">
                       <p className="text-[9px] font-mono font-bold text-primary/80 uppercase tracking-[0.25em] mb-5">
                         {section.role}
                       </p>
                       <div className="space-y-4">
                         {section.items.map((item, ii) => (
                           <div key={item.label} className="flex items-center gap-4">
-                            <span className="text-[9px] font-mono text-white/20 w-5 shrink-0 tabular-nums">
+                            <span className="text-[9px] font-mono text-slate-400 dark:text-white/20 w-5 shrink-0 tabular-nums">
                               {String(ii + 1).padStart(2, "0")}
                             </span>
-                            <item.icon className="w-3.5 h-3.5 text-white/30 shrink-0" />
-                            <span className="text-xs font-bold text-white/70 uppercase tracking-widest leading-relaxed">
+                            <item.icon className="w-3.5 h-3.5 text-slate-300 dark:text-white/30 shrink-0" />
+                            <span className="text-xs font-bold text-slate-700 dark:text-white/70 uppercase tracking-widest leading-relaxed transition-colors">
                               {item.label}
                             </span>
                           </div>
@@ -312,8 +312,8 @@ export default function Home() {
 
               {/* Archive record panel */}
               <Reveal delay={0.2} className="lg:col-span-5">
-                <div className="border border-white/10 p-8 h-full font-mono">
-                  <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] mb-6">
+                <div className="bg-white dark:bg-transparent border border-slate-200 dark:border-white/10 p-8 h-full font-mono transition-colors">
+                  <p className="text-[9px] text-slate-400 dark:text-white/30 uppercase tracking-[0.2em] mb-6">
                     System Record
                   </p>
                   <div className="space-y-0">
@@ -324,36 +324,36 @@ export default function Home() {
                       ["CYCLE", "2024–2025"],
                       ["STATUS", "ACTIVE"],
                     ].map(([key, val]) => (
-                      <div key={key} className="flex gap-4 py-3 border-b border-white/5">
-                        <span className="text-[9px] text-white/25 uppercase tracking-widest w-28 shrink-0">
+                      <div key={key} className="flex gap-4 py-3 border-b border-slate-100 dark:border-white/5">
+                        <span className="text-[9px] text-slate-400 dark:text-white/25 uppercase tracking-widest w-28 shrink-0">
                           {key}
                         </span>
-                        <span className="text-[10px] text-white/60 uppercase tracking-wide">
+                        <span className="text-[10px] text-slate-600 dark:text-white/60 uppercase tracking-wide">
                           {val}
                         </span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-white/10 space-y-0">
+                  <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 space-y-0">
                     {[
                       ["Enrolled", "312"],
                       ["Partners", "24"],
                       ["Hours Logged", "48,620"],
                       ["Compliance", "100%"],
                     ].map(([key, val]) => (
-                      <div key={key} className="flex justify-between items-baseline py-3 border-b border-white/5 last:border-0">
-                        <span className="text-[9px] text-white/25 uppercase tracking-widest">
+                      <div key={key} className="flex justify-between items-baseline py-3 border-b border-slate-100 dark:border-white/5 last:border-0">
+                        <span className="text-[9px] text-slate-400 dark:text-white/25 uppercase tracking-widest">
                           {key}
                         </span>
-                        <span className="text-sm font-bold text-white/80 tabular-nums">
+                        <span className="text-sm font-bold text-slate-800 dark:text-white/80 tabular-nums">
                           {val}
                         </span>
                       </div>
                     ))}
                   </div>
 
-                  <p className="text-[8px] text-white/15 uppercase tracking-[0.15em] mt-8">
+                  <p className="text-[8px] text-slate-300 dark:text-white/15 uppercase tracking-[0.15em] mt-8">
                     Data as of December 2024
                   </p>
                 </div>
@@ -405,20 +405,20 @@ export default function Home() {
         </section>
 
         {/* Institutional Voice */}
-        <section className="py-28 bg-white dark:bg-[#050505] border-y border-slate-100 dark:border-white/5">
+        <section className="py-28 bg-white dark:bg-[#050505] border-y border-slate-100 dark:border-white/5 transition-colors">
           <Reveal className="max-w-3xl mx-auto px-6 text-center">
-            <p className="text-[9px] font-mono text-slate-400 dark:text-white/25 uppercase tracking-[0.25em] mb-10">
+            <p className="text-[9px] font-mono text-slate-400 dark:text-white/25 uppercase tracking-[0.25em] mb-10 transition-colors">
               Field Report · Industrial Training Office
             </p>
-            <blockquote className="text-2xl md:text-3xl font-medium font-premium italic text-slate-800 dark:text-white/80 leading-relaxed mb-10">
+            <blockquote className="text-2xl md:text-3xl font-medium font-premium italic text-slate-800 dark:text-white/80 leading-relaxed mb-10 transition-colors">
               "Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a single working day."
             </blockquote>
-            <div className="h-px w-16 bg-slate-200 dark:bg-white/10 mx-auto mb-8" />
+            <div className="h-px w-16 bg-slate-200 dark:bg-white/10 mx-auto mb-8 transition-colors" />
             <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest">
+              <p className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest transition-colors">
                 Engr. Carla Reyes
               </p>
-              <p className="text-[10px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-[0.15em]">
+              <p className="text-[10px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-[0.15em] transition-colors">
                 Industrial Training Coordinator · College of Engineering, TUP-V · 2024–2025
               </p>
             </div>
@@ -426,7 +426,7 @@ export default function Home() {
         </section>
 
         {/* Closing CTA */}
-        <section className="py-24 bg-primary relative overflow-hidden">
+        <section className="py-24 bg-primary relative overflow-hidden transition-colors">
           <div className="absolute inset-0 bg-grid-white opacity-[0.04] pointer-events-none" />
           <Reveal className="container mx-auto px-6 text-center relative z-10">
             <p className="text-[9px] font-mono text-white/40 uppercase tracking-[0.25em] mb-6">
