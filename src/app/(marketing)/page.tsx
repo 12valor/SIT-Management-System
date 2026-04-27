@@ -38,35 +38,6 @@ const PARTNERS = [
   { name: "Penshoppe Group", sector: "Retail Manufacturing" },
 ];
 
-const CAPABILITIES = [
-  {
-    role: "Student Portal",
-    items: [
-      { icon: FileCheck, label: "Digital Logbook with Supervisor Sign-Off" },
-      { icon: Clock, label: "Real-Time Hour Tracking Against Program Units" },
-      { icon: FolderOpen, label: "Document Repository for MOA and Endorsements" },
-      { icon: Archive, label: "Performance Evaluation Receipt and Archive" },
-    ],
-  },
-  {
-    role: "Employer Portal",
-    items: [
-      { icon: BadgeCheck, label: "GSFE-Authenticated Trainee Verification" },
-      { icon: ClipboardList, label: "Evaluation Form Submission and Certification" },
-      { icon: Users, label: "Direct Communication with Coordinator Office" },
-      { icon: BarChart2, label: "Multi-Trainee Progress Monitoring" },
-    ],
-  },
-  {
-    role: "Coordinator Office",
-    items: [
-      { icon: Users, label: "Batch Student Placement Administration" },
-      { icon: BadgeCheck, label: "Industry Partner Accreditation Management" },
-      { icon: BarChart2, label: "Evaluation Aggregation and Grade Computation" },
-      { icon: Archive, label: "Institutional Compliance Audit Trail" },
-    ],
-  },
-];
 
 function Reveal({
   children,
@@ -266,101 +237,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Platform Capabilities */}
-        <section className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors border-y border-slate-100 dark:border-white/5">
-          <div className="max-w-7xl mx-auto px-6">
-            <Reveal>
-              <div className="flex items-center gap-6 mb-16">
-                <div>
-                  <p className="text-[9px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-[0.2em] mb-1">
-                    System Reference
-                  </p>
-                  <h2 className="text-3xl md:text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight">
-                    Platform Architecture
-                  </h2>
-                </div>
-                <div className="flex-1 h-px bg-slate-200 dark:bg-white/10" />
-              </div>
-            </Reveal>
-
-            <div className="grid lg:grid-cols-12 gap-12">
-              {/* Capabilities list */}
-              <div className="lg:col-span-7 space-y-0">
-                {CAPABILITIES.map((section, si) => (
-                  <Reveal key={section.role} delay={si * 0.1}>
-                    <div className="border-t border-slate-200 dark:border-white/10 py-8">
-                      <p className="text-[9px] font-mono font-bold text-primary/80 uppercase tracking-[0.25em] mb-5">
-                        {section.role}
-                      </p>
-                      <div className="space-y-4">
-                        {section.items.map((item, ii) => (
-                          <div key={item.label} className="flex items-center gap-4">
-                            <span className="text-[9px] font-mono text-slate-400 dark:text-white/20 w-5 shrink-0 tabular-nums">
-                              {String(ii + 1).padStart(2, "0")}
-                            </span>
-                            <item.icon className="w-3.5 h-3.5 text-slate-300 dark:text-white/30 shrink-0" />
-                            <span className="text-xs font-bold text-slate-700 dark:text-white/70 uppercase tracking-widest leading-relaxed transition-colors">
-                              {item.label}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-
-              {/* Archive record panel */}
-              <Reveal delay={0.2} className="lg:col-span-5">
-                <div className="bg-white dark:bg-transparent border border-slate-200 dark:border-white/10 p-8 h-full font-mono transition-colors">
-                  <p className="text-[9px] text-slate-400 dark:text-white/30 uppercase tracking-[0.2em] mb-6">
-                    System Record
-                  </p>
-                  <div className="space-y-0">
-                    {[
-                      ["INSTITUTION", "TUP-V"],
-                      ["COLLEGE", "Engineering"],
-                      ["PROGRAM", "Supervised Industrial Training"],
-                      ["CYCLE", "2024–2025"],
-                      ["STATUS", "ACTIVE"],
-                    ].map(([key, val]) => (
-                      <div key={key} className="flex gap-4 py-3 border-b border-slate-100 dark:border-white/5">
-                        <span className="text-[9px] text-slate-400 dark:text-white/25 uppercase tracking-widest w-28 shrink-0">
-                          {key}
-                        </span>
-                        <span className="text-[10px] text-slate-600 dark:text-white/60 uppercase tracking-wide">
-                          {val}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 space-y-0">
-                    {[
-                      ["Enrolled", "312"],
-                      ["Partners", "24"],
-                      ["Hours Logged", "48,620"],
-                      ["Compliance", "100%"],
-                    ].map(([key, val]) => (
-                      <div key={key} className="flex justify-between items-baseline py-3 border-b border-slate-100 dark:border-white/5 last:border-0">
-                        <span className="text-[9px] text-slate-400 dark:text-white/25 uppercase tracking-widest">
-                          {key}
-                        </span>
-                        <span className="text-sm font-bold text-slate-800 dark:text-white/80 tabular-nums">
-                          {val}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className="text-[8px] text-slate-300 dark:text-white/15 uppercase tracking-[0.15em] mt-8">
-                    Data as of December 2024
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </section>
 
         {/* How It Works */}
         <section className="py-28 relative overflow-hidden bg-slate-50 dark:bg-[#0b0b0b]">
