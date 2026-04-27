@@ -90,43 +90,10 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
 }
 
 export default function Home() {
-  const partnerTape = [...PARTNERS, ...PARTNERS];
-
   return (
     <div className="flex flex-col">
       <main>
         <HeroCarousel />
-
-        {/* Partner Registry Strip */}
-        <div className="bg-white dark:bg-slate-950 border-y border-slate-100 dark:border-white/5 py-5 overflow-hidden transition-colors">
-          <div className="flex items-center gap-10 mb-3 px-6">
-            <span className="text-[9px] font-mono font-bold text-slate-400 dark:text-white/30 uppercase tracking-[0.2em] shrink-0">
-              Registered Partners
-            </span>
-            <div className="h-px flex-1 bg-slate-100 dark:bg-white/10" />
-            <span className="text-[9px] font-mono font-bold text-slate-300 dark:text-white/20 uppercase tracking-[0.15em] shrink-0">
-              Academic Year 2024–2025
-            </span>
-          </div>
-          <div className="overflow-hidden">
-            <div className="flex animate-marquee w-max">
-              {partnerTape.map((p, i) => (
-                <div
-                  key={i}
-                  className="flex items-center shrink-0 px-8"
-                >
-                  <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-white/60 uppercase tracking-[0.15em] whitespace-nowrap transition-colors">
-                    {p.name}
-                  </span>
-                  <span className="mx-4 text-slate-200 dark:text-white/15 text-[10px] font-mono">·</span>
-                  <span className="text-[9px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-widest whitespace-nowrap transition-colors">
-                    {p.sector}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
 
         {/* Gateway Cards: Uniform & Refined */}
         <section className="py-24 bg-white dark:bg-[#050505] transition-colors relative overflow-hidden">
