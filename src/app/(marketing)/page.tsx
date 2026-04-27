@@ -128,109 +128,109 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Gateway Cards */}
-        <section className="py-28 relative overflow-hidden bg-white dark:bg-[#050505]">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+        {/* Gateway Cards: Industrial Dossiers */}
+        <section className="py-32 relative overflow-hidden bg-white dark:bg-[#050505] transition-colors">
+          {/* Subtle global blueprint grid */}
+          <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:32px_32px] opacity-20 pointer-events-none" />
 
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <WordReveal text="Select Your Gateway" />
-              <Reveal delay={0.2}>
-                <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
-                  Connect with the official TUP-V Supervised Industrial Training platform. Designed for excellence, engineered for career growth.
-                </p>
-              </Reveal>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <Reveal delay={0.15}>
-                <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
-                  <div className="px-8 pt-8 flex flex-col flex-1">
-                    <div className="flex items-center justify-end mb-6">
-                      <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] rotate-3 group-hover:rotate-0 transition-transform">
-                        <GraduationCap className="h-5 w-5" />
-                      </div>
-                    </div>
-                    <div className="space-y-3 mb-6">
-                      <h3 className="text-3xl font-medium font-premium text-slate-900 dark:text-white italic leading-tight">
-                        Student Terminal
-                      </h3>
-                      <div className="h-px w-14 bg-slate-200 dark:bg-white/20 group-hover:bg-primary/30 transition-colors" />
-                      <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
-                        Certified gateway for TUP-V trainees to document, verify, and accelerate their professional industrial integration.
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-1 gap-3 mb-6 flex-1">
-                      {[
-                        "Institutional Profile Certification",
-                        "SIT Placement Manifest",
-                        "Digital Logbook Verification",
-                        "Archival Document Repository",
-                      ].map((feature, i) => (
-                        <div key={feature} className="flex items-center gap-4">
-                          <span className="text-[9px] font-bold text-slate-300 dark:text-white/10 font-mono">
-                            § 0{i + 1}
-                          </span>
-                          <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <Link
-                      href="/login/student"
-                      className="w-full inline-flex h-12 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.25em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] mb-8"
-                    >
-                      Access Student Portal
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+          <div className="max-w-7xl mx-auto px-6 relative">
+            <div className="grid md:grid-cols-2 gap-16 md:gap-8 items-start">
+              
+              {/* Student Terminal */}
+              <Reveal delay={0.1}>
+                <div className="group relative bg-white dark:bg-slate-900/50 border-l border-slate-200 dark:border-white/10 p-8 md:p-12 transition-all hover:bg-slate-50 dark:hover:bg-white/[0.02]">
+                  {/* Technical Crop Marks */}
+                  <div className="absolute -top-px -left-px w-8 h-8 border-t border-l border-primary/40" />
+                  <div className="absolute top-8 right-8 text-[10px] font-mono text-slate-300 dark:text-white/10 rotate-90 origin-right">
+                    REF_STD_001
                   </div>
+
+                  <div className="mb-12">
+                    <div className="w-10 h-10 bg-primary/5 rounded-sm flex items-center justify-center mb-6 border border-primary/10 transition-colors">
+                      <GraduationCap className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
+                      Student <br /><span className="text-primary italic">Terminal</span>
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed max-w-sm font-medium">
+                      Certified gateway for TUP-V trainees to document, verify, and accelerate their professional industrial integration.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6 mb-12">
+                    {[
+                      "Institutional Profile Certification",
+                      "SIT Placement Manifest",
+                      "Digital Logbook Verification",
+                      "Archival Document Repository"
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-4 group/item">
+                        <span className="text-[9px] font-mono text-primary/40 group-hover/item:text-primary transition-colors">
+                          § 0{i + 1}
+                        </span>
+                        <span className="text-[10px] font-bold text-slate-600 dark:text-white/60 uppercase tracking-[0.15em] border-b border-transparent group-hover/item:border-primary/20 transition-all">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link
+                    href="/login/student"
+                    className="inline-flex h-14 w-full items-center justify-center bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black uppercase tracking-[0.2em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 group/btn"
+                  >
+                    Establish Access
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Link>
                 </div>
               </Reveal>
 
-              <Reveal delay={0.28}>
-                <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
-                  <div className="px-8 pt-8 flex flex-col flex-1">
-                    <div className="flex items-center justify-end mb-6">
-                      <div className="w-10 h-10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-slate-300 bg-white dark:bg-transparent rounded-[5px] -rotate-3 group-hover:rotate-0 transition-transform">
-                        <Building2 className="h-5 w-5" />
-                      </div>
-                    </div>
-                    <div className="space-y-3 mb-6">
-                      <h3 className="text-3xl font-medium font-premium text-slate-900 dark:text-white italic leading-tight">
-                        Corporate Access
-                      </h3>
-                      <div className="h-px w-14 bg-slate-200 dark:bg-white/20 group-hover:bg-primary/30 transition-colors" />
-                      <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
-                        Official portal for industrial partners to authenticate trainee performance and manage university collaboration.
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-1 gap-3 mb-6 flex-1">
-                      {[
-                        "Partner Verification Registry",
-                        "Industrial Talent Acquisition",
-                        "Performance Evaluation Terminal",
-                        "Collaborative SIT Management",
-                      ].map((feature, i) => (
-                        <div key={feature} className="flex items-center gap-4">
-                          <span className="text-[9px] font-bold text-slate-300 dark:text-white/10 font-mono">
-                            § 0{i + 1}
-                          </span>
-                          <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <Link
-                      href="/login/employer"
-                      className="w-full inline-flex h-12 items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-[0.25em] text-[10px] hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all gap-3 rounded-[5px] mb-8"
-                    >
-                      Partner Verification
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+              {/* Corporate Access (Staggered Down) */}
+              <Reveal delay={0.3} className="md:mt-24">
+                <div className="group relative bg-white dark:bg-slate-900/50 border-l border-slate-200 dark:border-white/10 p-8 md:p-12 transition-all hover:bg-slate-50 dark:hover:bg-white/[0.02]">
+                  {/* Technical Crop Marks */}
+                  <div className="absolute -top-px -left-px w-8 h-8 border-t border-l border-slate-400/40" />
+                  <div className="absolute top-8 right-8 text-[10px] font-mono text-slate-300 dark:text-white/10 rotate-90 origin-right">
+                    REF_CORP_002
                   </div>
+
+                  <div className="mb-12">
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-sm flex items-center justify-center mb-6 border border-slate-200 dark:border-white/10 transition-colors">
+                      <Building2 className="w-5 h-5 text-slate-400 dark:text-white/30" />
+                    </div>
+                    <h3 className="text-4xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
+                      Partner <br /><span className="italic">Registry</span>
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed max-w-sm font-medium">
+                      Official portal for industrial partners to authenticate trainee performance and manage university collaboration.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6 mb-12">
+                    {[
+                      "Partner Verification Registry",
+                      "Industrial Talent Acquisition",
+                      "Performance Evaluation Terminal",
+                      "Collaborative SIT Management"
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-4 group/item">
+                        <span className="text-[9px] font-mono text-slate-300 dark:text-white/20 group-hover/item:text-slate-900 dark:group-hover/item:text-white transition-colors">
+                          § 0{i + 1}
+                        </span>
+                        <span className="text-[10px] font-bold text-slate-600 dark:text-white/60 uppercase tracking-[0.15em] border-b border-transparent group-hover/item:border-slate-300 dark:group-hover/item:border-white/20 transition-all">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link
+                    href="/login/employer"
+                    className="inline-flex h-14 w-full items-center justify-center border border-slate-900 dark:border-white/20 text-slate-900 dark:text-white font-black uppercase tracking-[0.2em] text-[10px] hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-950 transition-all gap-3 group/btn"
+                  >
+                    Partner Verification
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Link>
                 </div>
               </Reveal>
             </div>
