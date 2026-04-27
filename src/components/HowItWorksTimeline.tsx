@@ -47,7 +47,7 @@ function TimelineStep({
     <div className="absolute w-full" style={{ top: topPos }}>
       {/* The Node Dot */}
       <motion.div 
-        className="absolute left-[32px] md:left-1/2 w-5 h-5 rounded-full bg-white dark:bg-[#050505] border-4 border-primary -translate-x-1/2 -translate-y-1/2 z-20"
+        className="absolute left-[32px] md:left-1/2 w-4 h-4 bg-white dark:bg-[#050505] border-2 border-primary -translate-x-1/2 -translate-y-1/2 z-20"
         style={{ scale }}
       />
 
@@ -60,21 +60,18 @@ function TimelineStep({
             : "left-[70px] md:left-[calc(50%+60px)] text-left"
         }`}
       >
-        <div className={`bg-white dark:bg-[#050505] p-6 md:p-10 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-200/20 dark:shadow-none flex flex-col ${isLeft ? 'md:items-end' : 'items-start'} items-start transition-all duration-500 group hover:border-primary/30 relative overflow-hidden`}>
+        <div className={`bg-[#fdfdfc] dark:bg-white/[0.02] p-8 md:p-12 rounded-[5px] border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-none flex flex-col ${isLeft ? 'md:items-end' : 'items-start'} items-start transition-all duration-500 group hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] relative overflow-hidden`}>
           
-          {/* Subtle hover gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-          <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest mb-6 relative z-10 shadow-sm">
-            STEP {step.step}
+          <div className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-1 rounded-sm text-[9px] font-black tracking-[0.3em] mb-8 relative z-10 font-mono">
+            REF_STEP_0{step.step}
           </div>
           
-          <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500 relative z-10">
-            <step.icon className="w-7 h-7 text-primary" />
+          <div className="w-16 h-16 rounded-[5px] bg-primary/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 relative z-10 border border-primary/10">
+            <step.icon className="w-8 h-8 text-primary" />
           </div>
           
-          <h3 className="text-2xl md:text-3xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight relative z-10">{step.title}</h3>
-          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed relative z-10">{step.desc}</p>
+          <h3 className="text-3xl md:text-4xl font-medium font-serif text-slate-900 dark:text-white mb-4 italic leading-tight relative z-10">{step.title}</h3>
+          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed relative z-10 italic max-w-sm">{step.desc}</p>
         </div>
       </motion.div>
     </div>
@@ -91,25 +88,25 @@ export function HowItWorksTimeline() {
 
   const steps: Step[] = [
     { 
-      step: "01", 
+      step: "1", 
       title: "Profile Setup", 
-      desc: "Create your institutional SIT profile with GSFE credentials.", 
+      desc: "Initialize your institutional SIT profile through authenticated GSFE credentials.", 
       icon: ShieldCheck,
       align: "left",
       scrollStart: 0.1,
     },
     { 
-      step: "02", 
-      title: "Application", 
-      desc: "Apply to pre-vetted industry partners matching your skill set.", 
+      step: "2", 
+      title: "Active Application", 
+      desc: "Deploy applications to pre-vetted industry partners matching your technical manifest.", 
       icon: Zap,
       align: "right",
       scrollStart: 0.45,
     },
     { 
-      step: "03", 
-      title: "Evaluation", 
-      desc: "Track progress and receive performance audits in real-time.", 
+      step: "3", 
+      title: "Performance Audit", 
+      desc: "Track real-time progress and receive certified performance audits from onsite supervisors.", 
       icon: CheckCircle,
       align: "left",
       scrollStart: 0.8,
@@ -117,28 +114,28 @@ export function HowItWorksTimeline() {
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-[300vh] bg-slate-50/50 dark:bg-[#050505] border-y border-slate-100 dark:border-white/5">
+    <section ref={containerRef} className="relative min-h-[400vh] bg-white dark:bg-[#050505] border-t border-slate-100 dark:border-white/5">
       
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-24 pb-16">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start overflow-hidden pt-24 md:pt-32 pb-16">
         
         {/* Header */}
-        <div className="w-full text-center z-30 px-6 shrink-0 mb-12 md:mb-16">
-          <span className="inline-block font-black text-[10px] uppercase tracking-[0.3em] text-primary mb-2 md:mb-4">Module 01</span>
-          <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">How It Works</h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto text-base md:text-xl leading-relaxed">
-            A procedural journey bridging <strong className="text-slate-900 dark:text-white font-bold">academic training</strong> and <strong className="text-slate-900 dark:text-white font-bold">industrial excellence</strong>. <br className="hidden sm:block"/>Scroll to reveal the timeline.
+        <div className="w-full text-center z-30 px-6 shrink-0 mb-16 md:mb-24">
+          <span className="inline-block font-mono font-black text-[10px] uppercase tracking-[0.4em] text-primary/60 mb-4">Procedural Protocol 01</span>
+          <h2 className="text-4xl md:text-6xl font-medium font-serif text-slate-900 dark:text-white mb-6">How It Works</h2>
+          <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto text-lg md:text-xl leading-relaxed italic">
+            A strategic journey bridging <span className="text-slate-900 dark:text-white">academic theory</span> and <span className="text-slate-900 dark:text-white">industrial command</span>.
           </p>
         </div>
 
         {/* Timeline Area */}
-        <div className="relative w-full max-w-5xl mx-auto flex-1 px-6">
+        <div className="relative w-full max-w-6xl mx-auto flex-1 px-6">
           
           {/* Straight Vertical Line Base */}
-          <div className="absolute left-[32px] md:left-1/2 top-0 bottom-0 w-[2px] bg-slate-200 dark:bg-white/10 -translate-x-1/2 rounded-full" />
+          <div className="absolute left-[32px] md:left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-white/10 -translate-x-1/2" />
           
           {/* Animated Fill Line */}
           <motion.div 
-            className="absolute left-[32px] md:left-1/2 top-0 w-[4px] bg-primary -translate-x-1/2 origin-top rounded-full z-10"
+            className="absolute left-[32px] md:left-1/2 top-0 w-[2px] bg-primary -translate-x-1/2 origin-top z-10 shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]"
             style={{ 
               bottom: 0,
               scaleY: scrollYProgress 
