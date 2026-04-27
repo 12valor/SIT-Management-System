@@ -26,17 +26,20 @@ export const metadata: Metadata = {
   description: "A premium platform for managing Supervised Industrial Training (SIT) at TUP-V. Connecting students and industry partners.",
 };
 
+import { auth } from "@/auth";
 import { AuthProvider } from "@/components/providers/session-provider";
 import { Footer } from "@/components/Footer";
 import { SmartNavbar } from "@/components/SmartNavbar";
 import { FloatingThemeToggle } from "@/components/FloatingThemeToggle";
 import NextTopLoader from "nextjs-toploader";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html
       lang="en"
@@ -49,7 +52,7 @@ export default function RootLayout({
           showSpinner={false}
           shadow="0 0 10px hsl(348 83% 40%),0 0 5px hsl(348 83% 40%)"
         />
-        <AuthProvider>
+        <AuthProvider session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

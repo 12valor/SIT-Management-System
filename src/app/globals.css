@@ -148,4 +148,8 @@
   .animate-marquee:hover {
     animation-play-state: paused;
   }
+
+  .ease-expo {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
 }
