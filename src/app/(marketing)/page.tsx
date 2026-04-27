@@ -195,42 +195,66 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 04 — How It Works */}
-        <section className="py-40 bg-slate-50 dark:bg-[#0b0b0b] relative overflow-hidden border-t border-slate-100 dark:border-white/5">
+        {/* Section 04 — Operational Protocol (How It Works) */}
+        <section className="py-40 bg-white dark:bg-[#050505] relative overflow-hidden border-t border-slate-100 dark:border-white/5">
           <div className="container mx-auto px-6 relative z-10">
-            <Reveal className="max-w-4xl mx-auto text-center mb-32">
-              <h2 className="text-5xl md:text-7xl font-medium font-serif text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-8 italic">
-                How It Works
-              </h2>
-              <div className="w-24 h-px bg-primary/20 mx-auto mb-10" />
-              <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto text-lg md:text-xl leading-relaxed italic">
-                A procedural journey bridging academic training and industrial excellence.
-              </p>
-            </Reveal>
-
-            <div className="grid md:grid-cols-3 gap-20 max-w-7xl mx-auto relative">
-              {[
-                { step: "01", title: "Profile Setup", desc: "Initialize your institutional SIT profile with GSFE credentials.", icon: ShieldCheck },
-                { step: "02", title: "Application", desc: "Deploy applications to pre-vetted industry partners matching your skill set.", icon: Zap },
-                { step: "03", title: "Evaluation", desc: "Track progress and receive performance audits in real-time.", icon: CheckCircle },
-              ].map((item, i) => (
-                <Reveal key={item.title} delay={i * 0.15}>
-                  <div className="flex flex-col items-center text-center group">
-                    <div className="w-24 h-24 rounded-sm bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-12 relative transition-all group-hover:border-primary/40 shadow-sm dark:shadow-none">
-                      <span className="absolute -top-4 -right-4 w-10 h-10 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[11px] font-black flex items-center justify-center border-4 border-slate-50 dark:border-[#0b0b0b] font-mono">
-                        {item.step}
-                      </span>
-                      <item.icon className="w-10 h-10 text-slate-900 dark:text-white group-hover:scale-110 transition-transform duration-700" />
-                    </div>
-                    <h5 className="text-3xl font-medium font-serif text-slate-900 dark:text-white mb-6 italic tracking-tight">
-                      {item.title}
-                    </h5>
-                    <p className="text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-6 italic">
-                      {item.desc}
-                    </p>
-                  </div>
+            <div className="flex flex-col md:flex-row gap-20 items-start max-w-7xl mx-auto">
+              {/* Sticky Header */}
+              <div className="md:w-1/3 md:sticky md:top-40">
+                <Reveal>
+                  <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-6 block">Operational Protocol</span>
+                  <h2 className="text-5xl md:text-7xl font-medium font-serif text-slate-900 dark:text-white leading-[1.1] tracking-tighter mb-8 italic">
+                    How It <br /> Works
+                  </h2>
+                  <div className="h-px w-20 bg-slate-200 dark:bg-white/10 mb-8" />
+                  <p className="text-slate-500 dark:text-slate-400 font-medium text-lg leading-relaxed italic">
+                    A procedural journey bridging academic training and industrial excellence.
+                  </p>
                 </Reveal>
-              ))}
+              </div>
+
+              {/* Procedural List */}
+              <div className="md:w-2/3 space-y-0">
+                {[
+                  { phase: "PHASE_01", title: "Institutional Onboarding", desc: "Initialize your professional dossier. Authentication via university credentials establishes your digital identity within the SIT ecosystem.", icon: ShieldCheck },
+                  { phase: "PHASE_02", title: "Industrial Deployment", desc: "Strategic matching with pre-vetted corporate partners. Trainees are deployed to environments that optimize for their specific technical specialization.", icon: Zap },
+                  { phase: "PHASE_03", title: "Technical Audit", desc: "Real-time performance verification. Continuous logging and periodic institutional audits ensure academic standards are maintained in the field.", icon: CheckCircle },
+                ].map((item, i) => (
+                  <Reveal key={item.phase} delay={i * 0.1}>
+                    <div className="group relative border-l border-slate-200 dark:border-white/10 pl-12 pb-24 last:pb-0">
+                      {/* Technical Phase Label */}
+                      <div className="flex items-center gap-4 mb-6">
+                        <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-white/20 tracking-[0.2em]">{item.phase}</span>
+                        <div className="h-px flex-1 bg-slate-100 dark:bg-white/5" />
+                      </div>
+
+                      {/* Content */}
+                      <div className="relative">
+                        {/* Phase Indicator Dot */}
+                        <div className="absolute -left-[53px] top-2 w-2 h-2 bg-white dark:bg-[#050505] border-2 border-slate-900 dark:border-white z-10" />
+                        
+                        <div className="flex flex-col md:flex-row gap-10">
+                          <div className="flex-1">
+                            <h3 className="text-3xl font-medium font-serif text-slate-900 dark:text-white mb-6 italic tracking-tight group-hover:text-primary transition-colors duration-500">
+                              {item.title}
+                            </h3>
+                            <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed italic max-w-xl">
+                              {item.desc}
+                            </p>
+                          </div>
+                          
+                          <div className="hidden lg:flex shrink-0 w-32 h-32 border border-slate-200 dark:border-white/10 items-center justify-center grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 bg-slate-50/50 dark:bg-white/[0.02]">
+                            <item.icon className="w-10 h-10 text-slate-900 dark:text-white" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Hover Interaction Grid */}
+                      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.03)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
             </div>
           </div>
         </section>
