@@ -180,25 +180,59 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Institutional Voice */}
-        <section className="py-28 bg-white dark:bg-[#050505] border-y border-slate-100 dark:border-white/5 transition-colors">
-          <Reveal className="max-w-3xl mx-auto px-6 text-center">
-            <p className="text-[9px] font-mono text-slate-400 dark:text-white/25 uppercase tracking-[0.25em] mb-10 transition-colors">
-              Field Report · Industrial Training Office
-            </p>
-            <blockquote className="text-2xl md:text-3xl font-medium font-premium italic text-slate-800 dark:text-white/80 leading-relaxed mb-10 transition-colors">
-              &quot;Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a single working day.&quot;
-            </blockquote>
-            <div className="h-px w-16 bg-slate-200 dark:bg-white/10 mx-auto mb-8 transition-colors" />
-            <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest transition-colors">
-                Engr. Carla Reyes
-              </p>
-              <p className="text-[10px] font-mono text-slate-400 dark:text-white/30 uppercase tracking-[0.15em] transition-colors">
-                Industrial Training Coordinator · College of Engineering, TUP-V · 2024–2025
-              </p>
-            </div>
-          </Reveal>
+        {/* Institutional Voice: Certified Communiqué */}
+        <section className="py-32 relative bg-white dark:bg-[#050505] transition-colors border-y border-slate-100 dark:border-white/5">
+          {/* Subtle blueprint grid for the section */}
+          <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
+          
+          <div className="max-w-4xl mx-auto px-6 relative">
+            <Reveal className="text-center">
+              <div className="inline-flex items-center gap-6 mb-16">
+                <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
+                <p className="text-[10px] font-mono font-bold text-slate-400 dark:text-white/25 uppercase tracking-[0.4em]">
+                  Authenticated Document · REF_ITO_2024
+                </p>
+                <div className="h-px w-8 bg-slate-200 dark:bg-white/10" />
+              </div>
+
+              <div className="relative mb-20 max-w-2xl mx-auto">
+                {/* Large Decorative Quote Mark */}
+                <div className="absolute -top-16 left-1/2 -translate-x-1/2 text-[12rem] font-serif text-slate-100 dark:text-white/[0.02] select-none pointer-events-none leading-none">
+                  &ldquo;
+                </div>
+                
+                <blockquote className="relative text-3xl md:text-5xl font-medium font-serif italic text-slate-800 dark:text-white/90 leading-[1.1] transition-colors">
+                  &quot;Managing student placements across dozens of industry partners once required weeks of coordination. The platform reduced our processing cycle to a <span className="text-primary not-italic font-bold tracking-tighter">single working day</span>.&quot;
+                </blockquote>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="h-10 w-px bg-slate-200 dark:bg-white/10 mb-8" />
+                
+                <div className="space-y-3">
+                  <p className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-[0.1em] transition-colors">
+                    Engr. Carla Reyes
+                  </p>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[10px] font-mono font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">
+                      Industrial Training Coordinator
+                    </p>
+                    <p className="text-[9px] font-mono text-slate-400 dark:text-white/20 uppercase tracking-[0.2em]">
+                      College of Engineering · TUP-V · ARCHIVE_24_01
+                    </p>
+                  </div>
+                </div>
+
+                {/* Technical Verification Stamp (Subtle) */}
+                <div className="mt-16 inline-flex items-center gap-2 px-3 py-1 border border-slate-200 dark:border-white/10 rounded-full opacity-50">
+                  <div className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-pulse" />
+                  <span className="text-[8px] font-mono font-bold text-slate-400 dark:text-white/30 uppercase tracking-widest">
+                    Verified institutional communique
+                  </span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         {/* Closing CTA */}
