@@ -10,43 +10,58 @@ import {
   Zap,
 } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-function CurtainSection({
+const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+function Reveal({
   children,
-  index,
-  isFirst = false,
-  bg = "bg-white dark:bg-[#050505]",
+  delay = 0,
+  className,
 }: {
   children: React.ReactNode;
-  index: number;
-  isFirst?: boolean;
-  bg?: string;
+  delay?: number;
+  className?: string;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "start start"],
-  });
-
-  const yRaw = useTransform(scrollYProgress, [0, 1], ["100vh", "0vh"]);
-  const y = useSpring(isFirst ? "0vh" : yRaw, { stiffness: 80, damping: 20, restDelta: 0.001 });
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
 
   return (
-    <div
-      ref={containerRef}
-      className="relative h-screen"
-      style={{ zIndex: 10 + index }}
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay, ease: EASE_EXPO }}
     >
-      <motion.div
-        className={`sticky top-0 h-screen w-full overflow-hidden ${bg}`}
-        style={{ y: isFirst ? 0 : y, willChange: "transform" }}
-      >
-        {children}
-      </motion.div>
-    </div>
+      {children}
+    </motion.div>
+  );
+}
+
+function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
+  const words = text.split(" ");
+
+  return (
+    <h2
+      ref={ref}
+      className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4 flex flex-wrap justify-center gap-x-3"
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: delay + i * 0.05, ease: EASE_EXPO }}
+          className="inline-block"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </h2>
   );
 }
 
@@ -54,28 +69,24 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <main>
-        <CurtainSection index={0} isFirst bg="bg-white dark:bg-[#050505]">
-          <div className="h-full w-full">
-            <HeroCarousel />
-          </div>
-        </CurtainSection>
+        <HeroCarousel />
 
-        <CurtainSection index={1} bg="bg-white dark:bg-[#050505]">
-          <section className="h-full flex flex-col justify-center overflow-hidden py-20 relative">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10" />
+        <section className="py-28 relative overflow-hidden bg-white dark:bg-[#050505]">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
 
-            <div className="container mx-auto px-6">
-              <div className="text-center mb-14">
-                <h2 className="text-4xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-4">
-                  Select Your Gateway
-                </h2>
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <WordReveal text="Select Your Gateway" />
+              <Reveal delay={0.2}>
                 <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
                   Connect with the official TUP-V Supervised Industrial Training platform. Designed for excellence, engineered for career growth.
                 </p>
-              </div>
+              </Reveal>
+            </div>
 
-              <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              <Reveal delay={0.15}>
                 <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
                   <div className="px-8 pt-8 flex flex-col flex-1">
                     <div className="flex items-center justify-end mb-6">
@@ -118,7 +129,9 @@ export default function Home() {
                     </Link>
                   </div>
                 </div>
+              </Reveal>
 
+              <Reveal delay={0.28}>
                 <div className="group relative flex flex-col h-full bg-[#fdfdfc] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 transition-all hover:bg-[#fafaf8] dark:hover:bg-white/[0.04] rounded-[5px] overflow-hidden">
                   <div className="px-8 pt-8 flex flex-col flex-1">
                     <div className="flex items-center justify-end mb-6">
@@ -161,56 +174,51 @@ export default function Home() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             </div>
-          </section>
-        </CurtainSection>
+          </div>
+        </section>
 
-        <CurtainSection index={2} bg="bg-slate-50 dark:bg-[#0b0b0b]">
-          <section className="h-full flex flex-col justify-center py-24 relative overflow-hidden">
-            <div className="container mx-auto px-6 relative z-10">
-              <div className="max-w-3xl mx-auto text-center mb-20">
+        <section className="py-28 relative overflow-hidden bg-slate-50 dark:bg-[#0b0b0b]">
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-20">
+              <Reveal>
                 <h2 className="text-3xl md:text-5xl font-bold font-premium text-slate-900 dark:text-white uppercase tracking-tight mb-6">
                   How It Works
                 </h2>
                 <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-8" />
+              </Reveal>
+              <Reveal delay={0.1}>
                 <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                   A procedural journey bridging academic training and industrial excellence.
                 </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto relative">
-                {[
-                  { step: "01", title: "Profile Setup", desc: "Create your institutional SIT profile with GSFE credentials.", icon: ShieldCheck },
-                  { step: "02", title: "Application", desc: "Apply to pre-vetted industry partners matching your skill set.", icon: Zap },
-                  { step: "03", title: "Evaluation", desc: "Track progress and receive performance audits in real-time.", icon: CheckCircle },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center text-center"
-                  >
-                    <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 relative group transition-all hover:border-primary/50">
-                      <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-slate-50 dark:border-[#0b0b0b]">
-                        {item.step}
-                      </span>
-                      <item.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
-                    </div>
-                    <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">
-                      {item.title}
-                    </h5>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">
-                      {item.desc}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
+              </Reveal>
             </div>
-          </section>
-        </CurtainSection>
+
+            <div className="grid md:grid-cols-3 gap-16 max-w-6xl mx-auto">
+              {[
+                { step: "01", title: "Profile Setup", desc: "Create your institutional SIT profile with GSFE credentials.", icon: ShieldCheck },
+                { step: "02", title: "Application", desc: "Apply to pre-vetted industry partners matching your skill set.", icon: Zap },
+                { step: "03", title: "Evaluation", desc: "Track progress and receive performance audits in real-time.", icon: CheckCircle },
+              ].map((item, i) => (
+                <Reveal key={item.title} delay={i * 0.12} className="flex flex-col items-center text-center">
+                  <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mb-8 relative group transition-all hover:border-primary/50">
+                    <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black flex items-center justify-center border-4 border-slate-50 dark:border-[#0b0b0b]">
+                      {item.step}
+                    </span>
+                    <item.icon className="w-8 h-8 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
+                  </div>
+                  <h5 className="text-xl font-bold font-premium text-slate-900 dark:text-white mb-3 uppercase tracking-tight">
+                    {item.title}
+                  </h5>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed px-4">
+                    {item.desc}
+                  </p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
