@@ -149,7 +149,6 @@ export default function EmployerLayout({
           navItems={navItems}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
           roleTitle="Supervisor"
-          roleInitials="E"
         />
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">
