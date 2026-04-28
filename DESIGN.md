@@ -1,25 +1,28 @@
 # Design
 
-## Theme
-Institutional Minimalist. A high-contrast, professional design system tailored for academic and industrial rigor.
+## Aesthetic: Archival/Editorial
+A high-fidelity, authoritative design system that balances institutional rigor with premium interactivity. The aesthetic avoids generic "SaaS" patterns in favor of a document-driven, archival feel.
 
-## Colors
-Using OKLCH for precision. Neutrals are tinted with TUP Maroon (L: 0.25, C: 0.15, H: 20).
-- **Ink**: oklch(15% 0.01 20) — A deep, slightly warm black.
-- **Paper**: oklch(98% 0.005 20) — A clean, warm white.
-- **Accent**: oklch(45% 0.2 25) — TUP-V Maroon for primary actions and critical markers.
-- **Muted**: oklch(55% 0.01 20) — For secondary metadata.
+## Colors (HSL)
+Primary tokens are centered around TUP Maroon (H: 348, S: 83%).
+- **Ink (Foreground)**: `hsl(348 83% 10%)` — A deep, warm maroon-black.
+- **Paper (Background)**: `hsl(0 0% 100%)` — Pure white for high contrast.
+- **Accent (Crimson)**: `hsl(348 83% 40%)` — Refined TUP Maroon for primary actions.
+- **Deep Crimson Gradient**: From `primary` to `primary/60` for floating interactive components.
 
 ## Typography
-- **Heading**: Instrument Serif — For page titles and high-level branding.
-- **Body**: Geist Sans — For legibility and clarity.
-- **Data/Meta**: Geist Mono — For technical precision and timestamps.
+- **Heading**: Montserrat — For structural clarity and authoritative headers.
+- **Body**: Poppins — For modern, legible interface text.
+- **Premium**: Outfit — For specific high-impact interactive elements.
+- **Serif**: Instrumental Serif — For specialized archival sections.
 
-## Spacing & Layout
-- **Grid**: Strict 8px baseline.
-- **Borders**: Sharp 2px radii or zero radii for an institutional feel. Avoid soft, oversized corners.
-- **Elevation**: Minimal. Use thin borders (1px) over heavy dropshadows.
+## Spacing & Interaction
+- **Grid**: Strict baseline with dot-pattern and grid-line background overlays for a technical/procedural feel.
+- **Borders**: Refined `0.75rem` (12px) radius for cards, providing a modern but structured container.
+- **Motion**: Sophisticated micro-animations via Framer Motion. Floating components use custom deep-crimson gradients to signify interactivity.
+- **Elevation**: Minimal. High-contrast borders and subtle background shifts are preferred over heavy shadows.
 
 ## Components
-- **Buttons**: Square edges, high-contrast backgrounds, uppercase tracking.
-- **Cards**: Technical blocks with clearly defined headers and data areas. No nested cards.
+- **Buttons**: Rounded (0.75rem), high-contrast, with hover states driven by crimson gradients.
+- **Cards**: Document-like blocks with clear typographic hierarchy and grid-based internal layouts.
+- **Floating Islands**: Interactive UI elements that use crimson gradients and spring-based entry animations.

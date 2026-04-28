@@ -4,9 +4,9 @@
   <p><strong>A Next-Generation Enterprise Platform for Supervised Industrial Training</strong></p>
   
   [![Status: In Development](https://img.shields.io/badge/Status-In_Development-orange.svg)]()
-  [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)](https://nextjs.org/)
+  [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
   [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.tupvisayas.edu.ph/)
 </div>
 
@@ -33,7 +33,7 @@ This digital workspace replaces antiquated, paper-based workflows with a highly 
 - **Digital Logbook & DTR:** Seamless, high-precision digital tracking for Daily Time Records and granular task execution.
 - **Supervisor Workflow Automation:** Streamlined review processes allowing industry supervisors to approve or reject logbook entries with a single click.
 - **Secure Document Vault:** Centralized, encrypted storage for mission-critical compliance documents (Waivers, MOAs, Evaluations).
-- **Real-Time Analytics Dashboard:** Interactive, data-driven dashboards providing instant visibility into required hours, completion rates, and pending approvals.
+- **Archival Dashboard Interface:** A refined, document-based layout for University Coordinators, optimized for high-density student and employer data management.
 
 ## Technology Stack
 
@@ -41,18 +41,19 @@ Engineered for performance, scalability, and strict type safety, utilizing the l
 
 | Category | Technology |
 | :--- | :--- |
-| **Core Framework** | [Next.js (App Router)](https://nextjs.org/) |
-| **Language** | [TypeScript](https://www.typescriptlang.org/) |
-| **Styling & UI** | [Tailwind CSS](https://tailwindcss.com/) |
-| **State Management** | React Server Components & Server Actions |
-| **Design Language** | Custom Institutional System (TUP-V Brand Guidelines) |
+| **Core Framework** | [Next.js 15 (App Router)](https://nextjs.org/) |
+| **Language** | [TypeScript 5](https://www.typescriptlang.org/) |
+| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) |
+| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **Database/ORM** | [Prisma](https://www.prisma.io/) & [PostgreSQL](https://www.postgresql.org/) |
+| **Design Language** | Archival/Editorial Aesthetic with Deep-Crimson Gradients |
 
 ## Quick Start
 
 ### Prerequisites
 
 Ensure the following dependencies are installed on your local environment:
-- **Node.js**: `v18.x` or higher
+- **Node.js**: `v20.x` or higher
 - **Package Manager**: `npm` (or `pnpm`/`yarn`)
 
 ### Local Development Setup
@@ -72,9 +73,16 @@ Ensure the following dependencies are installed on your local environment:
    ```bash
    cp .env.example .env.local
    ```
-   *(Ensure all database and authentication secrets are properly set).*
+   *(Ensure `DATABASE_URL` and `AUTH_SECRET` are properly set).*
 
-4. **Launch Development Server**
+4. **Database Setup**
+   Generate the Prisma client and seed the initial administrative data:
+   ```bash
+   npx prisma generate
+   npm run seed
+   ```
+
+5. **Launch Development Server**
    ```bash
    npm run dev
    ```
@@ -85,6 +93,7 @@ Ensure the following dependencies are installed on your local environment:
 This repository strictly enforces the following engineering philosophies:
 
 - **Kaizen (Continuous Improvement):** Every PR must leave the codebase cleaner. We enforce incremental refactoring, code standardization, and uncompromising type safety.
+- **Archival/Editorial Standard:** The UI must maintain an authoritative, professional aesthetic—prioritizing typographic hierarchy, refined micro-animations, and a "themeless" yet premium feel.
 - **Poka-Yoke (Error Proofing):** Leverage advanced TypeScript patterns to make invalid application states unrepresentable. Fail at compile-time, never at runtime.
 - **Next.js Paradigms:** Default to **React Server Components (RSC)** for optimal data fetching. Client Components (`"use client"`) are heavily restricted and reserved exclusively for interactive UI islands.
 
