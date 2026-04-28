@@ -8,77 +8,83 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#fafaf9] pt-40 pb-24 px-6">
-      <div className="max-w-3xl mx-auto">
-        <header className="mb-20 text-center">
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 selection:bg-primary/20 transition-colors duration-300">
+      <div className="container mx-auto max-w-4xl">
+        {/* Header Section */}
+        <header className="mb-24 text-center">
           <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
             Institutional Identity
           </span>
-          <h1 className="text-5xl font-serif font-medium text-slate-900 mb-6">
+          <h1 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
             The Digital Bridge
           </h1>
-          <p className="text-slate-500 text-lg leading-relaxed">
-            The SIT Management System is the official technological gateway for Supervised Industrial Training at TUP-V.
+          <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
+            The official platform for managing Supervised Industrial Training at the Technological University of the Philippines Visayas.
           </p>
         </header>
 
-        <div className="space-y-24">
-          <section className="group">
-            <h2 className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-8">Our Mission</h2>
-            <p className="text-3xl font-serif leading-snug text-slate-800 group-hover:text-slate-900 transition-colors duration-300">
-              To provide a streamlined, transparent, and high-performance digital environment where TUPV students transition seamlessly into their professional careers.
+        {/* Mission and Vision - Large Serif Style */}
+        <div className="grid gap-20 mb-32">
+          <section>
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-8">Our Mission</h2>
+            <p className="text-3xl font-serif leading-snug text-slate-800 dark:text-slate-200">
+              To provide a streamlined, transparent, and high-performance digital environment where TUPV students transition seamlessly into their professional careers by automating the administrative burden of SIT and enhancing industrial engagement.
             </p>
           </section>
 
-          <section className="group">
-            <h2 className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-8">Our Vision</h2>
-            <p className="text-3xl font-serif leading-snug text-slate-800 group-hover:text-slate-900 transition-colors duration-300">
-              To be the benchmark for institutional industrial training management in the Philippines, leveraging technology to foster the next generation of leaders.
-            </p>
-          </section>
-
-          <section className="pt-20 border-t border-slate-200">
-            <h2 className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-12">Core Principles</h2>
-            <div className="grid gap-12">
-              <div>
-                <h3 className="text-2xl font-serif font-medium text-slate-900 mb-4">Precision</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">
-                  Every training hour and document is tracked with institutional accuracy. We eliminate ambiguity in industrial training documentation through rigorous digital verification.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-serif font-medium text-slate-900 mb-4">Synergy</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">
-                  We foster a unified ecosystem where students, coordinators, and partners collaborate. The platform acts as a central node for university-industry integration.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-serif font-medium text-slate-900 mb-4">Excellence</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">
-                  Maintaining the highest standards of professional development. Our goal is to ensure that every SIT placement is a high-value learning experience.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="pt-20 border-t border-slate-200">
-            <h2 className="text-xs font-medium uppercase tracking-[0.3em] text-primary mb-8">Institutional Heritage</h2>
-            <p className="text-slate-600 text-lg leading-relaxed mb-8">
-              Established in 1977, the Technological University of the Philippines Visayas (TUPV) has consistently stood as a premier state university for technological education.
-            </p>
-            <p className="text-slate-600 text-lg leading-relaxed italic border-l-4 border-primary pl-8 py-2">
-              "This platform is the digital extension of our commitment to excellence, bridging the gap between classroom theory and industrial reality."
+          <section>
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-8">Our Vision</h2>
+            <p className="text-3xl font-serif leading-snug text-slate-800 dark:text-slate-200">
+              To be the benchmark for institutional industrial training management in the Philippines, leveraging technology to foster the next generation of Filipino engineering and technology leaders.
             </p>
           </section>
         </div>
 
-        <footer className="mt-24 pt-12 border-t border-slate-200 text-center">
-          <p className="text-slate-500 mb-6">
+        {/* Core Values - 3 Column Grid Layout */}
+        <section className="mb-32">
+          <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-16 text-center">Core Values</h2>
+          <div className="grid md:grid-cols-3 gap-12">
+            <div>
+              <h3 className="text-2xl font-serif font-medium mb-4 text-slate-900 dark:text-white">Precision</h3>
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+                Ensuring every training hour and document is tracked with institutional accuracy and technical rigor.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-2xl font-serif font-medium mb-4 text-slate-900 dark:text-white">Synergy</h3>
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+                Creating a unified ecosystem where students, coordinators, and industry partners collaborate effectively.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-2xl font-serif font-medium mb-4 text-slate-900 dark:text-white">Excellence</h3>
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+                Maintaining the highest standards of industrial engagement and professional development.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Institutional Heritage - Boxed Layout */}
+        <section className="bg-slate-50 dark:bg-white/[0.02] p-12 md:p-16 rounded-2xl border border-slate-100 dark:border-white/5">
+          <h2 className="text-2xl font-serif font-medium mb-8 text-slate-900 dark:text-white">Institutional Heritage</h2>
+          <div className="space-y-6">
+            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+              The Technological University of the Philippines Visayas (TUPV) was established in 1977. As a premier state university, TUPV is committed to providing higher technological education and training in engineering and related fields.
+            </p>
+            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+              The SIT Management System is the digital extension of this commitment, designed to bridge the gap between classroom learning and actual industrial practice in the Visayas region and beyond.
+            </p>
+          </div>
+        </section>
+
+        <footer className="mt-32 pt-12 border-t border-slate-200 dark:border-white/10 text-center">
+          <p className="text-slate-500 dark:text-slate-400 mb-6 font-serif">
             Interested in partnering with TUP-V?
           </p>
           <a 
             href="/partners"
-            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20"
+            className="inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20"
           >
             Explore Partner Registry
           </a>
