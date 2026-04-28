@@ -21,7 +21,6 @@ export default function CrawlerPage() {
       <Link href="/coordinator/companies">Coordinator Companies</Link>
       <Link href="/coordinator/placements">Coordinator Placements</Link>
       <Link href="/coordinator/registrations">Coordinator Registrations</Link>
-      <Link href="/coordinator/reports">Coordinator Reports</Link>
       <Link href="/coordinator/students">Coordinator Students</Link>
     </div>
   );

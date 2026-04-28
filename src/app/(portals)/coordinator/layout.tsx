@@ -43,7 +43,6 @@ export default function CoordinatorLayout({
     { name: "Student Manifest", href: "/coordinator/students", icon: Users },
     { name: "Industrial Partners", href: "/coordinator/companies", icon: Building },
     { name: "SIT Placements", href: "/coordinator/placements", icon: MapPin },
-    { name: "Intelligence Reports", href: "/coordinator/reports", icon: FileSearch },
     { name: "Account Requests", href: "/coordinator/registrations", icon: ShieldAlert },
     { name: "System Control", href: "/coordinator/settings", icon: Settings },
   ];
