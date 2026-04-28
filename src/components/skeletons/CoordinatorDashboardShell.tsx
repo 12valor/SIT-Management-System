@@ -79,20 +79,9 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
             <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Program Control, {userName?.split(" ")[0]}
             </h2>
-            <p className="text-sm text-muted-foreground font-medium mt-1">
+            <p className="text-sm text-foreground font-medium mt-1">
               SIT Administrative Terminal · {new Date().getFullYear()}
             </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex flex-col items-end">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Placement Velocity</p>
-              <p className="text-xl font-bold text-primary">{placementRate}%</p>
-            </div>
-            <div className="h-10 w-px bg-border hidden md:block mx-2" />
-            <div className="hidden sm:flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-widest bg-card px-4 py-2 rounded-lg border border-border">
-              <Calendar className="h-3.5 w-3.5" data-no-skeleton />
-              {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            </div>
           </div>
         </div>
 
@@ -100,7 +89,7 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {statCards.map((s) => (
             <div key={s.label} className="bg-card p-6 rounded-xl border border-border shadow-sm">
-              <p className="text-xs font-medium text-muted-foreground mb-4">{s.label}</p>
+              <p className="text-xs font-medium text-foreground mb-4">{s.label}</p>
               <span className="text-2xl font-bold text-foreground">{s.value}</span>
             </div>
           ))}
@@ -119,8 +108,8 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
 
             <div className="divide-y divide-border">
               {!data?.recentPlacements.length ? (
-                <div className="py-20 flex flex-col items-center gap-2 text-center text-muted-foreground">
-                  <p className="text-sm font-medium">No placement activity recorded in current cycle.</p>
+                <div className="py-20 flex flex-col items-center gap-2 text-center text-foreground">
+                  <p className="text-sm font-bold">No placement activity recorded in current cycle.</p>
                 </div>
               ) : (
                 data.recentPlacements.map((p) => (
@@ -131,14 +120,14 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-foreground">{p.studentName}</p>
-                        <p className="text-[11px] text-muted-foreground font-medium">
+                        <p className="text-[11px] text-foreground font-medium">
                           {p.postingTitle} at <span className="text-foreground font-bold">{p.companyName}</span>
                         </p>
                       </div>
                     </div>
                     <div className="hidden sm:flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
-                      <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active</span>
+                      <span className="text-[10px] font-bold text-foreground uppercase tracking-widest">Active</span>
                     </div>
                   </div>
                 ))
@@ -152,7 +141,7 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
             <div className="bg-card border-border shadow-sm p-6 overflow-hidden relative rounded-xl border">
               <div className="flex items-center justify-between mb-6">
                 <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Program Health</h4>
-                <Award className="h-4 w-4 text-muted-foreground/30" data-no-skeleton />
+                <Award className="h-4 w-4 text-foreground" data-no-skeleton />
               </div>
 
               <div className="space-y-5">
@@ -162,7 +151,7 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                 ].map((item) => (
                   <div key={item.label} className="space-y-2">
                     <div className="flex justify-between text-[11px] font-bold uppercase tracking-tight">
-                      <span className="text-muted-foreground font-medium">{item.label}</span>
+                      <span className="text-foreground font-bold">{item.label}</span>
                       <span className="text-foreground">{item.value}/{item.total}</span>
                     </div>
                     <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">

@@ -44,7 +44,7 @@ export function DashboardHeader({
       </button>
       
       <div className="flex-1">
-        <p className="text-xs font-medium text-muted-foreground">
+        <p className="text-xs font-medium text-foreground">
           {activeItem?.name || "Dashboard"}
         </p>
       </div>
@@ -54,7 +54,7 @@ export function DashboardHeader({
           <p className="text-xs font-medium text-foreground">
             {session?.user?.name || "Unauthorized"}
           </p>
-          <p className="text-[10px] text-muted-foreground lowercase">
+          <p className="text-[10px] text-foreground font-medium uppercase tracking-wider">
             {roleTitle}
           </p>
         </div>
