@@ -10,8 +10,6 @@ import {
   Users, 
   Building, 
   MapPin, 
-  FileSearch,
-  Settings,
   LogOut,
   X,
   ShieldAlert
@@ -133,7 +131,6 @@ export default function CoordinatorLayout({
           navItems={navItems}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
           roleTitle="Office Registrar"
-          roleInitials="C"
         />
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">

@@ -5,7 +5,6 @@ import {
   GraduationCap,
   CheckCircle,
   ArrowRight,
-  Sparkles,
   Building2,
   ShieldCheck,
   Zap,

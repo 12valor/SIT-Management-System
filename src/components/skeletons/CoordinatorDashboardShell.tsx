@@ -3,7 +3,6 @@
 import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Calendar, CheckCircle2, Award } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface RecentPlacement {
@@ -41,13 +40,6 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
   const placementRate = data && data.totalStudents > 0
     ? Math.round((data.hiredStudents / data.totalStudents) * 100)
     : 0;
-
-  const statCards = data ? [
-    { label: "Enrolled Students", value: data.totalStudents },
-    { label: "Active Placements", value: data.hiredStudents },
-    { label: "Hours Complete",    value: data.graduationReady },
-    { label: "Industry Partners", value: data.totalCompanies },
-  ] : [];
 
   return (
     <Skeleton
