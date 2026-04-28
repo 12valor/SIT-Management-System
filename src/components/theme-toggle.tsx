@@ -27,6 +27,7 @@ export function ThemeToggle() {
         aria-label="Toggle theme"
       />
       <span className={styles.slider}></span>
+      <span className={styles.tooltip}>{isDark ? "Light Mode" : "Dark Mode"}</span>
     </label>
   );
 }

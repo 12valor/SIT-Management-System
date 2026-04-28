@@ -53,3 +53,49 @@ input:checked + .slider:before {
   background: #1a1a1a;
   box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
 }
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 12px);
+  transform: translateY(-50%);
+  opacity: 0;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: none;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.switch:hover .tooltip {
+  right: calc(100% + 18px);
+  opacity: 1;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: #1a1a1a;
+  top: 50%;
+  right: -4px;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+:global(.dark) .tooltip {
+  background-color: #2a2a2a;
+}
+
+:global(.dark) .tooltip::before {
+  background-color: #2a2a2a;
+}
