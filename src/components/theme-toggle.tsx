@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon } from "lucide-react";
+import styles from "./theme-toggle.module.css";
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -13,44 +13,20 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="w-[84px] h-[34px] bg-muted border border-border" />;
+    return <div className="w-[3.5em] h-[2em] bg-muted rounded-full animate-pulse" />;
   }
 
   const isDark = resolvedTheme === "dark";
 
   return (
-    <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative flex items-center w-[84px] h-[34px] bg-white border border-white overflow-hidden transition-all group"
-      aria-label="Toggle Theme"
-    >
-      {/* Track Background Color Block */}
-      <div 
-        className={`absolute inset-0 transition-transform duration-300 ease-out ${
-          isDark ? "translate-x-0" : "-translate-x-full"
-        }`}
+    <label className={styles.switch}>
+      <input 
+        type="checkbox" 
+        checked={isDark}
+        onChange={() => setTheme(isDark ? "light" : "dark")}
+        aria-label="Toggle theme"
       />
-      
-      {/* Sliding Knob (Sharp Rect) */}
-      <div 
-        className={`absolute top-0 bottom-0 w-1/2 bg-primary transition-transform duration-300 ease-out z-10 ${
-          isDark ? "translate-x-full" : "translate-x-0"
-        }`}
-      />
-
-      {/* Sun Label */}
-      <div className={`relative z-20 flex-1 flex items-center justify-center transition-colors duration-300 ${
-        isDark ? "text-primary" : "text-white"
-      }`}>
-        <Sun className="w-3.5 h-3.5" />
-      </div>
-
-      {/* Moon Label */}
-      <div className={`relative z-20 flex-1 flex items-center justify-center transition-colors duration-300 ${
-        isDark ? "text-white" : "text-primary"
-      }`}>
-        <Moon className="w-3.5 h-3.5" />
-      </div>
-    </button>
+      <span className={styles.slider}></span>
+    </label>
   );
 }
