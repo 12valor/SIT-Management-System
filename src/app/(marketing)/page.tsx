@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import {
-  GraduationCap,
-  CheckCircle,
-  ArrowRight,
   Building2,
-  ShieldCheck,
-  Zap,
 } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion, useInView } from "framer-motion";

@@ -2,7 +2,6 @@
 
 import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface RecentPlacement {

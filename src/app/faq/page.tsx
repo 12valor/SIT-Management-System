@@ -67,7 +67,7 @@ export default function FAQPage() {
 
         <footer className="mt-24 pt-12 border-t border-slate-200 dark:border-white/10 text-center">
           <p className="text-slate-500 dark:text-slate-400 mb-6">
-            Can't find what you're looking for?
+            Can&apos;t find what you&apos;re looking for?
           </p>
           <a 
             href="mailto:support@tupv-sit.edu.ph"
