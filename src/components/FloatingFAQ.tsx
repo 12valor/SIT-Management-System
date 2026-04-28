@@ -16,7 +16,7 @@ export function FloatingFAQ() {
   if (isPortalRoute) return null;
 
   return (
-    <div className="fixed bottom-8 right-28 z-[100] hidden sm:block">
+    <div className="fixed bottom-8 right-24 z-[100] hidden sm:block">
       <Link 
         href="/faq" 
         className={styles.faqButton} 
