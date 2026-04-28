@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 selection:bg-primary/20 transition-colors duration-300">
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
       <div className="container mx-auto max-w-4xl">
         {/* Header Section */}
         <header className="mb-24 text-center">

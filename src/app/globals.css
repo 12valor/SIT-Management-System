@@ -89,6 +89,14 @@
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  ::selection {
+    @apply bg-primary text-white;
+  }
+
+  ::-moz-selection {
+    @apply bg-primary text-white;
+  }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold tracking-tight;
   }

@@ -51,7 +51,7 @@ export default function StudentLayout({
 
 
   return (
-    <div className="flex min-h-screen w-full bg-background selection:bg-primary/10">
+    <div className="flex min-h-screen w-full bg-background">
       {/* Mobile Backdrop */}
       {isMobileMenuOpen && (
         <div 

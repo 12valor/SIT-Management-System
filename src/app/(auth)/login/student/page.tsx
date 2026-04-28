@@ -50,7 +50,7 @@ export default function StudentLoginPage() {
   };
 
   return (
-    <div className={`${bebas.variable} ${ibmPlex.variable} font-ibm flex-1 flex flex-col items-center bg-white dark:bg-[#080808] min-h-screen pt-40 pb-20 p-6 selection:bg-rose-600 selection:text-white`}>
+    <div className={`${bebas.variable} ${ibmPlex.variable} font-ibm flex-1 flex flex-col items-center bg-white dark:bg-[#080808] min-h-screen pt-40 pb-20 p-6`}>
       
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
