@@ -148,37 +148,6 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
 
           {/* Right: Program Context */}
           <div className="space-y-6">
-            {/* MOU Status Card */}
-            <div className="bg-[#800000] p-6 rounded-xl shadow-lg shadow-red-900/10 text-white space-y-6">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 mb-1">Critical Queue</p>
-                <h3 className="text-lg font-bold">MOU Verification</h3>
-              </div>
-
-              <div className="space-y-3">
-                {!data?.pendingCompanies.length ? (
-                  <div className="flex items-center gap-3 py-2 opacity-80">
-                    <CheckCircle2 className="h-5 w-5" data-no-skeleton />
-                    <span className="text-xs font-medium">All partners verified</span>
-                  </div>
-                ) : (
-                  data.pendingCompanies.map((c) => (
-                    <div key={c.id} className="flex items-center justify-between py-1 px-3 bg-white/10 rounded-lg">
-                      <span className="text-[11px] font-bold truncate max-w-[120px]">{c.name}</span>
-                      <span className="text-[10px] opacity-60 italic">{c.industry}</span>
-                    </div>
-                  ))
-                )}
-              </div>
-
-              <Link
-                href="/coordinator/companies"
-                className="flex h-11 w-full items-center justify-center rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors"
-                >
-                Verify Partners
-              </Link>
-            </div>
-
             {/* Program Health Card */}
             <div className="bg-card border-border shadow-sm p-6 overflow-hidden relative rounded-xl border">
               <div className="flex items-center justify-between mb-6">
