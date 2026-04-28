@@ -13,7 +13,11 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="w-[3.5em] h-[2em] bg-muted rounded-full animate-pulse" />;
+    return (
+      <label className={styles.switch}>
+        <div className="w-full h-full bg-slate-200 dark:bg-white/10 rounded-full animate-pulse" />
+      </label>
+    );
   }
 
   const isDark = resolvedTheme === "dark";
