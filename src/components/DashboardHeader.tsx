@@ -37,10 +37,10 @@ export function DashboardHeader({
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center gap-6 border-b bg-background px-6 lg:px-8">
       <button 
-        className="lg:hidden text-xs hover:underline decoration-1 underline-offset-4"
+        className="lg:hidden text-xs font-medium hover:underline"
         onClick={() => setIsMobileMenuOpen(true)}
       >
-        [MENU]
+        Menu
       </button>
       
       <div className="flex-1">
@@ -50,11 +50,11 @@ export function DashboardHeader({
       </div>
  
       <div className="flex items-center gap-6">
-        <div className="text-right hidden sm:block leading-tight">
+        <div className="text-right hidden sm:block">
           <p className="text-xs font-medium text-foreground">
             {session?.user?.name || "Unauthorized"}
           </p>
-          <p className="text-[10px] text-foreground font-medium uppercase tracking-wider">
+          <p className="text-[10px] text-foreground/70 font-medium">
             {roleTitle}
           </p>
         </div>

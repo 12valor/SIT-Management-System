@@ -72,98 +72,89 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         </div>
       }
     >
-      <div className="flex-1 space-y-8">
+      <div className="flex-1 space-y-12">
         {/* 1. Header Section */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">
-              Program Control, {userName?.split(" ")[0]}
-            </h2>
-            <p className="text-sm text-foreground font-medium mt-1">
-              SIT Administrative Terminal · {new Date().getFullYear()}
-            </p>
+        <div className="pb-6 border-b border-border/50">
+          <h2 className="text-xl font-semibold text-foreground">
+            Program Control, {userName?.split(" ")[0]}
+          </h2>
+          <p className="text-sm text-foreground/80 mt-1">
+            Administrative overview for {new Date().getFullYear()}
+          </p>
+        </div>
+
+        {/* 2. Split Card View */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Students Card */}
+          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-8">
+            <h3 className="text-sm font-semibold text-foreground border-b border-border pb-2">Students</h3>
+            
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <p className="text-xs text-foreground/70 mb-1">Enrolled students</p>
+                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.totalStudents ?? 0}</p>
+              </div>
+              <div>
+                <p className="text-xs text-foreground/70 mb-1">Hours complete</p>
+                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.graduationReady ?? 0}</p>
+              </div>
+            </div>
+
+            <Link href="/coordinator/students" className="text-xs font-medium text-foreground hover:underline inline-flex items-center gap-2">
+              View student manifest <span>→</span>
+            </Link>
+          </div>
+
+          {/* Employers Card */}
+          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-8">
+            <h3 className="text-sm font-semibold text-foreground border-b border-border pb-2">Employers</h3>
+            
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <p className="text-xs text-foreground/70 mb-1">Industry partners</p>
+                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.totalCompanies ?? 0}</p>
+              </div>
+              <div>
+                <p className="text-xs text-foreground/70 mb-1">Pending review</p>
+                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.pendingCompanies.length ?? 0}</p>
+              </div>
+            </div>
+
+            <Link href="/coordinator/companies" className="text-xs font-medium text-foreground hover:underline inline-flex items-center gap-2">
+              View partner registrations <span>→</span>
+            </Link>
           </div>
         </div>
 
-        {/* 2. Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {statCards.map((s) => (
-            <div key={s.label} className="bg-card p-6 rounded-xl border border-border shadow-sm">
-              <p className="text-xs font-medium text-foreground mb-4">{s.label}</p>
-              <span className="text-2xl font-bold text-foreground">{s.value}</span>
+        {/* 3. Placement History Card */}
+        <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
+          <div className="flex items-center justify-between border-b border-border pb-4">
+            <h3 className="text-sm font-semibold text-foreground">Placement History</h3>
+            <div className="text-xs text-foreground/80">
+              Placement rate: <span className="font-semibold text-foreground">{placementRate}%</span>
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* 3. Main Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Recent Placements */}
-          <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-            <div className="px-6 py-5 border-b border-border flex items-center justify-between">
-              <h3 className="text-sm font-bold text-foreground">Recent Placements</h3>
-              <Link href="/coordinator/placements" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline">
-                Audit all
-              </Link>
-            </div>
-
-            <div className="divide-y divide-border">
-              {!data?.recentPlacements.length ? (
-                <div className="py-20 flex flex-col items-center gap-2 text-center text-foreground">
-                  <p className="text-sm font-bold">No placement activity recorded in current cycle.</p>
+          <div className="divide-y divide-border">
+            {!data?.recentPlacements.length ? (
+              <div className="py-12 text-center">
+                <p className="text-sm text-foreground/50 italic">No recent placement activity recorded.</p>
+              </div>
+            ) : (
+              data.recentPlacements.map((p) => (
+                <div key={p.id} className="py-4 flex items-center justify-between first:pt-0 last:pb-0">
+                  <div className="space-y-1">
+                    <p className="text-sm font-semibold text-foreground">{p.studentName}</p>
+                    <p className="text-xs text-foreground/70">
+                      {p.postingTitle} at <span className="font-medium text-foreground">{p.companyName}</span>
+                    </p>
+                  </div>
+                  <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50">
+                    Active
+                  </div>
                 </div>
-              ) : (
-                data.recentPlacements.map((p) => (
-                  <div key={p.id} className="px-6 py-4 flex items-center justify-between hover:bg-muted transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center text-foreground font-bold uppercase">
-                        {p.studentName?.[0]}
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-foreground">{p.studentName}</p>
-                        <p className="text-[11px] text-foreground font-medium">
-                          {p.postingTitle} at <span className="text-foreground font-bold">{p.companyName}</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
-                      <span className="text-[10px] font-bold text-foreground uppercase tracking-widest">Active</span>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-
-          {/* Right: Program Context */}
-          <div className="space-y-6">
-            {/* Program Health Card */}
-            <div className="bg-card border-border shadow-sm p-6 overflow-hidden relative rounded-xl border">
-              <div className="flex items-center justify-between mb-6">
-                <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Program Health</h4>
-                <Award className="h-4 w-4 text-foreground" data-no-skeleton />
-              </div>
-
-              <div className="space-y-5">
-                {[
-                  { label: "Company Network",   value: data?.verifiedCompanies ?? 0, total: data?.totalCompanies ?? 0,  color: "bg-primary" },
-                  { label: "Student Placement", value: data?.hiredStudents ?? 0,      total: data?.totalStudents ?? 0,   color: "bg-foreground" },
-                ].map((item) => (
-                  <div key={item.label} className="space-y-2">
-                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-tight">
-                      <span className="text-foreground font-bold">{item.label}</span>
-                      <span className="text-foreground">{item.value}/{item.total}</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                      <div
-                        className={cn("h-full rounded-full transition-all duration-1000", item.color)}
-                        style={{ width: `${item.total > 0 ? (item.value / item.total) * 100 : 0}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+              ))
+            )}
           </div>
         </div>
       </div>
