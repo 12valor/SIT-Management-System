@@ -2,43 +2,55 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
-  // Avoid hydration mismatch
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return <div className="w-[80px] h-[36px]" />; // Placeholder with same dimensions
+    return <div className="w-[84px] h-[34px] bg-muted border border-border" />;
   }
 
   const isDark = resolvedTheme === "dark";
 
   return (
-    <label className="inline-flex items-center relative cursor-pointer group">
-      <input 
-        className="peer hidden" 
-        id="theme-toggle" 
-        type="checkbox" 
-        checked={isDark}
-        onChange={() => setTheme(isDark ? "light" : "dark")}
+    <button
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="relative flex items-center w-[84px] h-[34px] bg-muted border border-border overflow-hidden transition-colors hover:border-primary group"
+      aria-label="Toggle Theme"
+    >
+      {/* Track Background Color Block */}
+      <div 
+        className={`absolute inset-0 transition-transform duration-300 ease-out ${
+          isDark ? "translate-x-0" : "-translate-x-full"
+        }`}
       />
-      {/* Track & Knob */}
-      <div className="relative w-[80px] h-[36px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[28px] after:h-[28px] after:bg-red-600 peer-checked:after:bg-zinc-900 after:rounded-full after:top-[4px] after:left-[4px] active:after:w-[36px] peer-checked:after:left-[76px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md" />
       
-      {/* Sun Icon */}
-      <svg height={0} width={100} viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="fill-white peer-checked:opacity-40 absolute w-4 h-4 left-[10px] transition-opacity duration-300 pointer-events-none">
-        <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5ZM13,0h-2V5h2V0Zm0,19h-2v5h2v-5ZM5,11H0v2H5v-2Zm19,0h-5v2h5v-2Zm-2.81-6.78l-1.41-1.41-3.54,3.54,1.41,1.41,3.54-3.54ZM7.76,17.66l-1.41-1.41-3.54,3.54,1.41,1.41,3.54-3.54Zm0-11.31l-3.54-3.54-1.41,1.41,3.54,3.54,1.41-1.41Zm13.44,13.44l-3.54-3.54-1.41,1.41,3.54,3.54,1.41-1.41Z" />
-      </svg>
-      
-      {/* Moon Icon */}
-      <svg height={512} width={512} viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="fill-slate-400 opacity-60 peer-checked:opacity-100 peer-checked:fill-white absolute w-4 h-4 right-[10px] transition-all duration-300 pointer-events-none">
-        <path d="M12.009,24A12.067,12.067,0,0,1,.075,10.725,12.121,12.121,0,0,1,10.1.152a13,13,0,0,1,5.03.206,2.5,2.5,0,0,1,1.8,1.8,2.47,2.47,0,0,1-.7,2.425c-4.559,4.168-4.165,10.645.807,14.412h0a2.5,2.5,0,0,1-.7,4.319A13.875,13.875,0,0,1,12.009,24Zm.074-22a10.776,10.776,0,0,0-1.675.127,10.1,10.1,0,0,0-8.344,8.8A9.928,9.928,0,0,0,4.581,18.7a10.473,10.473,0,0,0,11.093,2.734.5.5,0,0,0,.138-.856h0C9.883,16.1,9.417,8.087,14.865,3.124a.459.459,0,0,0,.127-.465.491.491,0,0,0-.356-.362A10.68,10.68,0,0,0,12.083,2ZM20.5,12a1,1,0,0,1-.97-.757l-.358-1.43L17.74,9.428a1,1,0,0,1,.035-1.94l1.4-.325.351-1.406a1,1,0,0,1,1.94,0l.355,1.418,1.418.355a1,1,0,0,1,0,1.94l-1.418.355-.355,1.418A1,1,0,0,1,20.5,12ZM16,14a1,1,0,0,0,2,0A1,1,0,0,0,16,14Zm6,4a1,1,0,0,0,2,0A1,1,0,0,0,22,18Z" />
-      </svg>
-    </label>
+      {/* Sliding Knob (Sharp Rect) */}
+      <div 
+        className={`absolute top-0 bottom-0 w-1/2 bg-primary transition-transform duration-300 ease-out z-10 ${
+          isDark ? "translate-x-full" : "translate-x-0"
+        }`}
+      />
+
+      {/* Sun Label */}
+      <div className={`relative z-20 flex-1 flex items-center justify-center transition-colors duration-300 ${
+        isDark ? "text-muted-foreground" : "text-white"
+      }`}>
+        <Sun className="w-3.5 h-3.5" />
+      </div>
+
+      {/* Moon Label */}
+      <div className={`relative z-20 flex-1 flex items-center justify-center transition-colors duration-300 ${
+        isDark ? "text-white" : "text-muted-foreground"
+      }`}>
+        <Moon className="w-3.5 h-3.5" />
+      </div>
+    </button>
   );
 }

@@ -76,26 +76,32 @@ export function DashboardHeader({
         </h1>
       </div>
  
-      <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2">
-          {/* Notification Icon Placeholder */}
-          <div className="h-8 w-8 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-            <span className="text-lg font-medium leading-none mb-1">-</span>
-          </div>
-          <ThemeToggle />
+      <div className="flex items-center gap-4">
+        {/* System Indicators */}
+        <div className="flex items-center gap-1.5 px-3 py-2 border-x border-border/50 hidden md:flex">
+          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Node Active</span>
         </div>
+
+        <ThemeToggle />
         
-        <div className="flex items-center gap-3">
-           <div className="text-right hidden sm:block leading-none">
-              <p className="text-sm font-bold text-foreground truncate max-w-[150px]">
-                {session?.user?.name || "User"}
+        {/* User Access Block */}
+        <div className="flex items-center border border-border bg-card hover:border-primary/30 transition-colors cursor-default group overflow-hidden">
+           {/* Info Section */}
+           <div className="px-4 py-2 border-r border-border hidden sm:block">
+              <p className="text-[10px] font-black text-foreground uppercase tracking-wider leading-none">
+                {session?.user?.name || "Unauthorized"}
               </p>
-              <p className="text-[10px] text-muted-foreground mt-1 font-medium">
-                {roleTitle}
-              </p>
+              <div className="flex items-center gap-1.5 mt-1">
+                 <div className="h-1 w-1 bg-primary" />
+                 <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-[0.2em]">
+                   {roleTitle}
+                 </p>
+              </div>
            </div>
            
-           <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm border border-primary/20">
+           {/* Avatar Section (Sharp) */}
+           <div className="h-10 w-10 flex items-center justify-center bg-muted text-foreground text-xs font-black group-hover:bg-primary group-hover:text-white transition-all">
             {session?.user?.name?.split(' ').filter(Boolean).map((n: string) => n[0]).join('') || roleInitials}
           </div>
         </div>
