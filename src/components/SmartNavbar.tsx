@@ -133,6 +133,9 @@ export function SmartNavbar() {
                 <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/about">
                   About
                 </Link>
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/faq">
+                  FAQ
+                </Link>
               </nav>
             </div>
 
@@ -201,6 +204,9 @@ export function SmartNavbar() {
                 </Link>
                 <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/about" onClick={() => setIsMobileMenuOpen(false)}>
                   About <ArrowRight className="h-4 w-4 text-primary" />
+                </Link>
+                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/faq" onClick={() => setIsMobileMenuOpen(false)}>
+                  FAQ <ArrowRight className="h-4 w-4 text-primary" />
                 </Link>
               </div>
               

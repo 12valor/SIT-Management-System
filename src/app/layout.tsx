@@ -30,6 +30,7 @@ import { AuthProvider } from "@/components/providers/session-provider";
 import { Footer } from "@/components/Footer";
 import { SmartNavbar } from "@/components/SmartNavbar";
 import { FloatingThemeToggle } from "@/components/FloatingThemeToggle";
+import { FloatingFAQ } from "@/components/FloatingFAQ";
 import NextTopLoader from "nextjs-toploader";
 
 export default function RootLayout({
@@ -61,6 +62,7 @@ export default function RootLayout({
               {children}
             </div>
             <Footer />
+            <FloatingFAQ />
             <FloatingThemeToggle />
           </ThemeProvider>
         </AuthProvider>
