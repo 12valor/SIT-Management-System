@@ -35,16 +35,16 @@ const FAQ_ITEMS = [
 
 export default function FAQPage() {
   return (
-    <main className="min-h-screen bg-[#fafaf9] pt-32 pb-24 px-6">
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
       <div className="max-w-3xl mx-auto">
         <header className="mb-16 text-center">
           <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
             Information Repository
           </span>
-          <h1 className="text-5xl font-serif font-medium text-slate-900 mb-6">
+          <h1 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
             Frequently Asked Questions
           </h1>
-          <p className="text-slate-500 text-lg leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
             Everything you need to know about navigating the SIT ecosystem at TUPV.
           </p>
         </header>
@@ -53,20 +53,20 @@ export default function FAQPage() {
           {FAQ_ITEMS.map((item, index) => (
             <div 
               key={index} 
-              className="group border-b border-slate-200 pb-12 last:border-0"
+              className="group border-b border-slate-200 dark:border-white/10 pb-12 last:border-0"
             >
-              <h2 className="text-2xl font-serif font-medium text-slate-800 mb-4 group-hover:text-primary transition-colors duration-300">
+              <h2 className="text-2xl font-serif font-medium text-slate-800 dark:text-slate-200 mb-4 group-hover:text-primary transition-colors duration-300">
                 {item.question}
               </h2>
-              <p className="text-slate-600 leading-relaxed text-lg">
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
                 {item.answer}
               </p>
             </div>
           ))}
         </section>
 
-        <footer className="mt-24 pt-12 border-t border-slate-200 text-center">
-          <p className="text-slate-500 mb-6">
+        <footer className="mt-24 pt-12 border-t border-slate-200 dark:border-white/10 text-center">
+          <p className="text-slate-500 dark:text-slate-400 mb-6">
             Can't find what you're looking for?
           </p>
           <a 
