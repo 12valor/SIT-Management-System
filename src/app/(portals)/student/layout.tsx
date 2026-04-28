@@ -150,7 +150,6 @@ export default function StudentLayout({
           navItems={navItems}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
           roleTitle="Verified Candidate"
-          roleInitials="S"
         />
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">
