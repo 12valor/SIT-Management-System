@@ -21,7 +21,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative flex items-center w-[84px] h-[34px] bg-muted border border-border overflow-hidden transition-colors hover:border-primary group"
+      className="relative flex items-center w-[84px] h-[34px] bg-white border border-white overflow-hidden transition-all group"
       aria-label="Toggle Theme"
     >
       {/* Track Background Color Block */}
@@ -40,14 +40,14 @@ export function ThemeToggle() {
 
       {/* Sun Label */}
       <div className={`relative z-20 flex-1 flex items-center justify-center transition-colors duration-300 ${
-        isDark ? "text-muted-foreground" : "text-white"
+        isDark ? "text-primary" : "text-white"
       }`}>
         <Sun className="w-3.5 h-3.5" />
       </div>
 
       {/* Moon Label */}
       <div className={`relative z-20 flex-1 flex items-center justify-center transition-colors duration-300 ${
-        isDark ? "text-white" : "text-muted-foreground"
+        isDark ? "text-white" : "text-primary"
       }`}>
         <Moon className="w-3.5 h-3.5" />
       </div>
