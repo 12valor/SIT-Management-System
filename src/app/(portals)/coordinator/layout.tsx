@@ -113,21 +113,7 @@ export default function CoordinatorLayout({
         </div>
 
         {/* Bottom Sidebar Sections */}
-        <div className="p-4 space-y-4">
-          {/* Status Card */}
-          <div className="p-4 rounded-lg bg-muted border border-border">
-             <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-medium text-muted-foreground">Access:</span>
-                <span className="text-[11px] font-bold text-primary">Executive Node</span>
-             </div>
-             {status === "loading" ? (
-                <div className="h-3 w-24 bg-slate-200 animate-pulse rounded" />
-             ) : (
-                <p className="text-[10px] font-medium text-slate-400">
-                   Authorized: {session?.user?.id?.slice(-8).toUpperCase() || "ADM-X-99"}
-                </p>
-             )}
-          </div>
+        <div className="p-4">
 
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
