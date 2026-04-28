@@ -56,7 +56,7 @@ export function SmartNavbar() {
                   alt="TUP Seal" 
                   width={32}
                   height={32}
-                  className="h-8 w-auto object-contain transition-all group-hover:scale-105 grayscale dark:grayscale-0 dark:logo-red-filter" 
+                  className="h-8 w-auto object-contain transition-all group-hover:scale-105" 
                 />
                 <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white font-heading">
                   TUPV SIT
