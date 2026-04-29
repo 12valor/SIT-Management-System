@@ -3,6 +3,8 @@
 import Link from "next/link";
 import {
   Building2,
+  ArrowRight,
+  Quote,
 } from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion, useInView } from "framer-motion";
@@ -18,9 +20,8 @@ function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px 0px" });
+  const inView = useInView(ref, { once: false, margin: "-50px 0px" });
 
-  // Impeccable Motion Law: Exponential Ease-Out
   const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
@@ -43,37 +44,43 @@ function Reveal({
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
-      <main>
+    <div className="flex flex-col relative overflow-hidden bg-[#fafaf9] dark:bg-background transition-colors duration-300">
+      {/* Subtle Institutional Grid Background */}
+      <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
+
+      <main className="relative z-10">
         {/* Section 01 — Hero */}
         <section className="bg-white dark:bg-[#050505]">
           <HeroCarousel />
         </section>
 
         {/* Section 02 — Gateway Cards */}
-        <section className="py-40 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
+        <section className="py-40 relative border-y border-slate-200 dark:border-white/10 overflow-hidden">
           <div className="container mx-auto px-6 max-w-6xl">
             <Reveal className="text-center mb-24">
-              <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
-                Portal Access
+              <span className="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-6 block">
+                Portal Selection
               </span>
-              <h2 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
-                Select Your Gateway
+              <h2 className="text-5xl md:text-7xl font-serif font-medium text-slate-900 dark:text-white mb-8">
+                Institutional Entry Points
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 font-serif max-w-2xl mx-auto text-lg leading-relaxed">
-                The official technological entry point for TUPV students and industrial partners. Designed for academic integrity and professional growth.
+              <p className="text-slate-500 dark:text-slate-400 font-serif italic max-w-2xl mx-auto text-lg leading-relaxed">
+                Access the official digital terminals for Supervised Industrial Training management at TUP-V.
               </p>
             </Reveal>
 
             <div className="grid md:grid-cols-2 gap-12">
               {/* Student Card */}
               <Reveal delay={0.1}>
-                <div className="group relative flex flex-col h-full bg-[#fafaf9] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-12 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 rounded-2xl">
+                <div className="group relative flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-12 transition-all duration-500 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 rounded-2xl">
                   <header className="mb-10">
+                    <span className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-3 block">
+                      Trainee Portal
+                    </span>
                     <h3 className="text-3xl font-serif font-medium text-slate-900 dark:text-white mb-4">
                       Student Terminal
                     </h3>
-                    <p className="text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-400 font-serif italic leading-relaxed">
                       Official gateway for trainees to document performance and manage SIT placements.
                     </p>
                   </header>
@@ -86,7 +93,7 @@ export default function Home() {
                       "Archival Document Repository",
                     ].map((feature) => (
                       <div key={feature} className="flex items-start gap-4">
-                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/40" />
+                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary" />
                         <span className="text-slate-700 dark:text-slate-300 font-serif">
                           {feature}
                         </span>
@@ -105,12 +112,15 @@ export default function Home() {
 
               {/* Company Card */}
               <Reveal delay={0.2}>
-                <div className="group relative flex flex-col h-full bg-[#fafaf9] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-12 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 rounded-2xl">
+                <div className="group relative flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-12 transition-all duration-500 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 rounded-2xl">
                   <header className="mb-10">
+                    <span className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-3 block">
+                      Supervisor Portal
+                    </span>
                     <h3 className="text-3xl font-serif font-medium text-slate-900 dark:text-white mb-4">
                       Partner Verification
                     </h3>
-                    <p className="text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-400 font-serif italic leading-relaxed">
                       Official portal for industrial partners to authenticate trainee performance and records.
                     </p>
                   </header>
@@ -123,7 +133,7 @@ export default function Home() {
                       "Collaborative SIT Management",
                     ].map((feature) => (
                       <div key={feature} className="flex items-start gap-4">
-                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/40" />
+                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary" />
                         <span className="text-slate-700 dark:text-slate-300 font-serif">
                           {feature}
                         </span>
@@ -143,31 +153,35 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 03 — Institutional Voice (Testimonial) */}
-        <section className="py-48 bg-white dark:bg-[#050505] relative overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px]" />
-          
-          <div className="max-w-5xl mx-auto px-6 relative">
-            <Reveal className="text-center">
-              <div className="relative mb-20 max-w-3xl mx-auto">
-                <div className="absolute -top-20 left-1/2 -translate-x-1/2 text-[15rem] font-serif text-slate-100 dark:text-white/[0.02] select-none pointer-events-none leading-none opacity-50">
-                  &ldquo;
+        {/* Section 03 — Institutional Voice (Refined Testimonial) */}
+        <section className="py-48 relative overflow-hidden bg-[#fafaf9] dark:bg-background">
+          <div className="container mx-auto px-6 relative">
+            <Reveal className="max-w-4xl mx-auto text-center">
+              {/* Refined Quotation Icon — Matching Image */}
+              <div className="flex justify-center mb-12">
+                <div className="w-20 h-20 bg-primary/[0.03] dark:bg-primary/10 rounded-full flex items-center justify-center text-primary/20">
+                  <Quote className="w-10 h-10 rotate-180" fill="currentColor" strokeWidth={0} />
                 </div>
-                <blockquote className="text-3xl md:text-5xl font-medium font-serif text-slate-900 dark:text-slate-100 leading-[1.3] italic relative z-10 tracking-tight">
-                  Managing student trainees was once a fragmented process. This system provides the <span className="text-primary font-bold">structural rigor</span> required for true industrial-academic integration.
-                </blockquote>
               </div>
+
+              {/* Quote Text — Matching Image (Non-italic, bold highlight) */}
+              <blockquote className="text-3xl md:text-5xl font-serif font-medium text-slate-900 dark:text-slate-100 leading-[1.2] tracking-tight mb-16">
+                Managing student trainees was once a fragmented process. This system provides the <span className="text-primary font-bold italic">structural rigor</span> required for true industrial-academic integration.
+              </blockquote>
               
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-5 mb-6">
-                  <div className="w-14 h-14 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center overflow-hidden">
-                    <div className="w-full h-full bg-primary/5 flex items-center justify-center">
-                      <Building2 className="w-7 h-7 text-primary/60" />
-                    </div>
+              {/* Author Info — Matching Image (Centered with icon circle) */}
+              <div className="inline-flex flex-col items-center">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-full bg-primary/5 border border-primary/10 flex items-center justify-center text-primary/40 shadow-inner">
+                    <Building2 className="w-8 h-8" strokeWidth={1} />
                   </div>
                   <div className="text-left">
-                    <p className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-normal font-sans">Engr. Roberto M. Garcia</p>
-                    <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">Senior Operations Manager · Industrial Hub</p>
+                    <h4 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight mb-1">
+                      Engr. Roberto M. Garcia
+                    </h4>
+                    <p className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em]">
+                      Senior Operations Manager · Industrial Hub
+                    </p>
                   </div>
                 </div>
               </div>
@@ -175,56 +189,48 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 04 — Operational Protocol (How It Works) */}
-        <section className="py-40 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
-          <div className="container mx-auto px-6 max-w-4xl">
+        {/* Section 04 — Operational Protocol */}
+        <section className="py-40 bg-white dark:bg-[#050505] relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
+          <div className="container mx-auto px-6 max-w-5xl">
             <header className="mb-24 text-center">
-              <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
+              <span className="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-6 block">
                 Operational Protocol
               </span>
-              <h2 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
-                How It Works
+              <h2 className="text-5xl md:text-6xl font-serif font-medium text-slate-900 dark:text-white mb-8">
+                The SIT Lifecycle
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-serif max-w-2xl mx-auto">
+              <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed font-serif italic max-w-2xl mx-auto">
                 The institutional journey from academic training to industrial integration, mapped across three strategic phases.
               </p>
             </header>
 
-            <div className="space-y-24 relative">
-              {/* Vertical Line */}
-              <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-white/10 -translate-x-1/2 hidden md:block" />
-
+            <div className="grid md:grid-cols-3 gap-16 relative">
               {[
-                { phase: "01", title: "Institutional Onboarding", desc: "Initialize your professional dossier. Authentication via university credentials establishes your digital identity within the SIT ecosystem, ensuring all records are tied to your official academic history." },
-                { phase: "02", title: "Industrial Deployment", desc: "Strategic matching with pre-vetted corporate partners. Trainees are deployed to environments that optimize for their specific technical specialization and career trajectory." },
-                { phase: "03", title: "Technical Audit", desc: "Real-time performance verification. Continuous logging and periodic institutional audits ensure academic standards are maintained in the field through a rigorous digital verification process." },
+                { phase: "01", title: "Institutional Onboarding", desc: "Initialize your professional dossier. Authentication via university credentials establishes your digital identity within the SIT ecosystem." },
+                { phase: "02", title: "Industrial Deployment", desc: "Strategic matching with pre-vetted corporate partners. Trainees are deployed to environments that optimize for technical growth." },
+                { phase: "03", title: "Technical Audit", desc: "Real-time performance verification. Continuous logging and periodic institutional audits ensure academic standards are maintained." },
               ].map((item, i) => (
-                <Reveal key={item.phase} delay={i * 0.1} className={`relative flex flex-col md:flex-row gap-12 items-center ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                  {/* Step Number Circle */}
-                  <div className="absolute left-0 md:left-1/2 top-0 -translate-x-1/2 w-10 h-10 rounded-full bg-[#fafaf9] dark:bg-background border border-slate-200 dark:border-white/20 flex items-center justify-center z-10">
-                    <span className="font-serif text-sm font-medium text-slate-900 dark:text-white">{item.phase}</span>
+                <Reveal key={item.phase} delay={i * 0.1} className="relative group">
+                  <div className="text-primary font-black text-5xl mb-8 opacity-20 group-hover:opacity-100 transition-opacity duration-500 font-serif italic">
+                    {item.phase}
                   </div>
-
-                  <div className="md:w-1/2 space-y-4 text-center md:text-left">
-                    <h3 className={`text-3xl font-serif font-medium text-slate-900 dark:text-white ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                      {item.title}
-                    </h3>
-                    <p className={`text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-serif ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                      {item.desc}
-                    </p>
-                  </div>
-                  <div className="md:w-1/2" />
+                  <h3 className="text-2xl font-serif font-medium text-slate-900 dark:text-white mb-4">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+                    {item.desc}
+                  </p>
                 </Reveal>
               ))}
             </div>
 
-            <div className="mt-32 pt-16 border-t border-slate-200 dark:border-white/10 text-center">
-              <p className="text-slate-500 dark:text-slate-400 mb-8 font-serif">
+            <div className="mt-32 pt-16 border-t border-slate-100 dark:border-white/5 text-center">
+              <p className="text-slate-400 dark:text-slate-500 mb-10 font-serif italic">
                 Ready to begin your institutional onboarding?
               </p>
               <Link 
                 href="/login/student"
-                className="inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20"
+                className="inline-flex items-center justify-center px-12 py-5 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-xl shadow-primary/20"
               >
                 Access Student Terminal
               </Link>
@@ -235,3 +241,4 @@ export default function Home() {
     </div>
   );
 }
+
