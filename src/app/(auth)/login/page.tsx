@@ -78,11 +78,19 @@ export default function LoginGatePage() {
                 href={role.href}
                 className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2"
               >
-                {/* Header: ID + Icon */}
-                <div className="flex items-center justify-between mb-10">
-                  <span className="text-[10px] font-mono font-bold text-slate-300 dark:text-white/20 tracking-widest">{role.id}</span>
-                  <div className="w-12 h-12 border border-slate-100 dark:border-white/5 flex items-center justify-center text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-white/5 rounded-2xl transition-all group-hover:bg-primary group-hover:text-white group-hover:border-primary group-hover:rotate-6">
-                    <role.icon className="h-6 w-6" strokeWidth={1.5} />
+                {/* RE-DESIGNED HEADER: CENTERED FLOATING ICON */}
+                <div className="flex justify-center mb-12 relative">
+                  {/* Subtle Background Glow */}
+                  <div className="absolute inset-0 flex items-center justify-center blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-700">
+                    <role.icon className="w-24 h-24 text-primary" />
+                  </div>
+                  
+                  {/* Icon Container */}
+                  <div className="relative w-24 h-24 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-[2rem] flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-700 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/10">
+                    <role.icon className="w-12 h-12" strokeWidth={1} />
+                    
+                    {/* Corner Accent */}
+                    <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-slate-200 dark:bg-white/10 group-hover:bg-primary transition-colors" />
                   </div>
                 </div>
 
