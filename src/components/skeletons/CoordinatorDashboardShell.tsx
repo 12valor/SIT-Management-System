@@ -1,7 +1,6 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
-import Link from "next/link";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface RecentPlacement {
@@ -91,9 +90,6 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
               </div>
             </div>
 
-            <Link href="/coordinator/students" className="text-xs font-medium text-foreground hover:underline inline-flex items-center gap-2">
-              View student manifest <span>→</span>
-            </Link>
           </div>
 
           {/* Employers Card */}
@@ -111,9 +107,6 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
               </div>
             </div>
 
-            <Link href="/coordinator/companies" className="text-xs font-medium text-foreground hover:underline inline-flex items-center gap-2">
-              View partner registrations <span>→</span>
-            </Link>
           </div>
         </div>
 
