@@ -94,7 +94,7 @@ export default function LoginGatePage() {
                 <div className="flex items-center justify-between mb-12">
                   <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-white/20 tracking-widest">{role.id}</span>
                   <div className="w-10 h-10 border border-slate-100 dark:border-white/5 flex items-center justify-center text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-white/5 rounded-full transition-all group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20">
-                    <role.icon className="h-5 w-5" />
+                    <role.icon className="h-5 w-5" strokeWidth={1.5} />
                   </div>
                 </div>
 
