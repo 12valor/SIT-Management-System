@@ -2,7 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Building2, MapPin, Loader2, MapPinned } from "lucide-react";
+import { Building2, MapPin, MapPinned } from "lucide-react";
 import { getPlacements } from "./actions";
 import { PlacementType } from "@prisma/client";
 import { cn } from "@/lib/utils";

@@ -2,7 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Building } from "lucide-react";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2 } from "lucide-react";
 import { getCompanies, setCompanyVerification } from "./actions";
 import { cn } from "@/lib/utils";
 

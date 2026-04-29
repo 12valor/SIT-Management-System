@@ -202,7 +202,7 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                     type="category" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', weight: 'bold' }}
+                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', fontWeight: 'bold' }}
                     width={80}
                   />
                   <Tooltip 

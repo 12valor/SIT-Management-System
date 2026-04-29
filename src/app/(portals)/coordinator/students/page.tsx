@@ -2,7 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, Download, ExternalLink, Loader2, Users } from "lucide-react";
+import { Search, Download, ExternalLink } from "lucide-react";
 import { getStudentManifest } from "./actions";
 import { cn } from "@/lib/utils";
 
