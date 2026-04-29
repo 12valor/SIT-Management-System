@@ -71,7 +71,23 @@ export async function getCoordinatorStats() {
           name: c.name,
           industry: c.industry,
           joinedAt: c.joinedAt.toISOString()
-        }))
+        })),
+        // Mocking trend data for now as specific historical schema might vary, but structured for Recharts
+        placementTrend: [
+          { month: 'Jan', students: 12, placements: 8 },
+          { month: 'Feb', students: 15, placements: 10 },
+          { month: 'Mar', students: 18, placements: 12 },
+          { month: 'Apr', students: 22, placements: 15 },
+          { month: 'May', students: 25, placements: 18 },
+          { month: 'Jun', students: 30, placements: 21 },
+        ],
+        industryStats: [
+          { name: 'Software', count: 12 },
+          { name: 'Manufacturing', count: 8 },
+          { name: 'Finance', count: 5 },
+          { name: 'Education', count: 3 },
+          { name: 'Other', count: 2 },
+        ]
       }
     };
   } catch (error: unknown) {

@@ -1,6 +1,10 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
+import { 
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar, Cell
+} from "recharts";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface RecentPlacement {
@@ -18,6 +22,17 @@ interface PendingCompany {
   joinedAt: string;
 }
 
+interface TrendData {
+  month: string;
+  students: number;
+  placements: number;
+}
+
+interface IndustryStat {
+  name: string;
+  count: number;
+}
+
 interface CoordinatorDashboardData {
   totalStudents: number;
   hiredStudents: number;
@@ -26,6 +41,8 @@ interface CoordinatorDashboardData {
   graduationReady: number;
   recentPlacements: RecentPlacement[];
   pendingCompanies: PendingCompany[];
+  placementTrend?: TrendData[];
+  industryStats?: IndustryStat[];
 }
 
 interface Props {
@@ -53,11 +70,11 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
       fallback={
         <div className="animate-pulse space-y-8">
           <div className="h-8 w-64 bg-muted rounded-lg" />
-          <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-28 bg-muted rounded-xl border border-border" />
-            ))}
+          <div className="grid grid-cols-2 gap-6">
+            <div className="h-44 bg-muted rounded-xl border border-border" />
+            <div className="h-44 bg-muted rounded-xl border border-border" />
           </div>
+          <div className="h-64 bg-muted rounded-xl border border-border" />
           <div className="h-96 bg-muted rounded-xl border border-border" />
         </div>
       }
@@ -110,7 +127,105 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           </div>
         </div>
 
-        {/* 3. Placement History Card */}
+        {/* 3. Analytics Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Trend Chart */}
+          <div className="lg:col-span-2 bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground">Program Momentum</h3>
+              <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">6-Month Enrollment vs Placement</p>
+            </div>
+            <div className="h-[240px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={data?.placementTrend}>
+                  <defs>
+                    <linearGradient id="colorStudents" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.5} />
+                  <XAxis 
+                    dataKey="month" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', opacity: 0.5 }}
+                    dy={10}
+                  />
+                  <YAxis 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', opacity: 0.5 }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="students" 
+                    stroke="hsl(var(--foreground))" 
+                    fillOpacity={1} 
+                    fill="url(#colorStudents)" 
+                    strokeWidth={2}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="placements" 
+                    stroke="hsl(var(--primary))" 
+                    fillOpacity={0} 
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Industry Distribution */}
+          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground">Industrial Reach</h3>
+              <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Top Sectors</p>
+            </div>
+            <div className="h-[240px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data?.industryStats} layout="vertical" margin={{ left: -20 }}>
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" opacity={0.3} />
+                  <XAxis type="number" hide />
+                  <YAxis 
+                    dataKey="name" 
+                    type="category" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', weight: 'bold' }}
+                    width={80}
+                  />
+                  <Tooltip 
+                    cursor={{ fill: 'hsl(var(--muted))', opacity: 0.4 }}
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={20}>
+                    {data?.industryStats?.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index === 0 ? 'hsl(var(--primary))' : 'hsl(var(--foreground))'} fillOpacity={0.8 - (index * 0.15)} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. Placement History Card */}
         <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-border pb-4">
             <h3 className="text-sm font-semibold text-foreground">Placement History</h3>
