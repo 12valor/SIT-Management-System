@@ -55,18 +55,6 @@ export default function LoginGatePage() {
         {/* HEADER */}
         <motion.header className="mb-24 text-center" variants={fadeInUp}>
           <div className="flex flex-col items-center justify-center mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <Image 
-                src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-                alt="TUP Seal" 
-                width={40}
-                height={40}
-                className="h-10 w-auto grayscale dark:grayscale-0 dark:logo-red-filter opacity-80" 
-              />
-              <div className="h-6 w-px bg-slate-200 dark:bg-white/10" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 font-sans">TUP-Visayas</span>
-            </div>
-            
             <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
               Authentication Gateway
             </span>
