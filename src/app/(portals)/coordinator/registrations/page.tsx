@@ -1,7 +1,6 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
-
 import { useState, useEffect } from "react";
 import { 
   UserCheck, 
@@ -11,7 +10,6 @@ import {
   Calendar, 
   Loader2, 
   CheckCircle2, 
-  ShieldAlert,
   GraduationCap,
   Briefcase
 } from "lucide-react";
@@ -57,8 +55,6 @@ export default function CoordinatorRegistrationsPage() {
     setActionId(null);
   }
 
-
-
   const pendingUsers = data?.users || [];
   const pendingCompanies = data?.companies || [];
 
@@ -67,157 +63,159 @@ export default function CoordinatorRegistrationsPage() {
       name="coordinator-registrations" 
       loading={isLoading && !data}
       fallback={
-        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-          <Loader2 className="h-10 w-10 text-[#800000] animate-spin opacity-20" />
+        <div className="animate-pulse space-y-8">
+          <div className="h-8 w-64 bg-muted rounded-lg" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="h-48 bg-muted rounded-xl border border-border" />
+            <div className="h-48 bg-muted rounded-xl border border-border" />
+          </div>
+          <div className="h-96 bg-muted rounded-xl border border-border" />
         </div>
       }
     >
-    <div className="space-y-12 pb-24 animate-in-fade">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 overflow-hidden">
-        <div className="space-y-2">
-          <h1 className="text-5xl font-black tracking-tighter text-foreground uppercase">Account Requests</h1>
-          <p className="text-muted-foreground font-bold text-lg">Validate and approve new industrial trainees and partners.</p>
-        </div>
-        <div className="flex items-center gap-4 px-6 py-4 rounded-[1.5rem] bg-primary/10 border border-primary/20 shadow-xl shadow-primary/5">
-           <ShieldAlert className="h-6 w-6 text-primary" />
-           <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase tracking-widest text-primary">Security Alert</span>
-              <span className="text-sm font-black text-foreground">{pendingUsers.length + pendingCompanies.length} Actions Required</span>
-           </div>
-        </div>
-      </div>
-
-      <div className="grid lg:grid-cols-1 gap-12">
-        {/* User Registrations */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-3 border-b border-border pb-4">
-             <div className="p-2 bg-primary rounded-xl text-primary-foreground shadow-lg shadow-primary/30">
-                <UserCheck className="h-5 w-5" />
-             </div>
-             <h2 className="text-2xl font-black tracking-tight text-foreground uppercase">Pending Users</h2>
+      <div className="flex-1 space-y-12">
+        {/* 1. Header Section */}
+        <div className="pb-6 border-b border-border/50 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-semibold text-foreground uppercase tracking-tight">
+              Account Requests
+            </h2>
+            <p className="text-sm text-foreground/80 mt-1">
+              Validate and approve new industrial trainees and partners
+            </p>
           </div>
+          <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider">
+            {pendingUsers.length + pendingCompanies.length} Actions Required
+          </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pendingUsers.length > 0 ? pendingUsers.map((user: PendingUser) => (
-              <div key={user.id} className="group p-6 rounded-[2.5rem] bg-card border border-border/60 hover:border-primary/30 transition-all relative overflow-hidden flex flex-col h-full shadow-sm hover:shadow-2xl hover:shadow-primary/5">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-lg border border-primary/20">
-                      {user.role === 'STUDENT' ? <GraduationCap className="h-6 w-6" /> : <Briefcase className="h-6 w-6" />}
-                    </div>
-                    <div>
-                      <h4 className="font-black text-foreground tracking-tight leading-none text-lg">{user.name}</h4>
-                      <div className="flex items-center gap-1 mt-1">
+        {/* 2. Main Content Sections */}
+        <div className="space-y-12 pb-24">
+          {/* User Registrations */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Pending User Access</h3>
+              <div className="p-1 bg-primary/10 rounded-lg text-primary">
+                <UserCheck className="h-4 w-4" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pendingUsers.length > 0 ? pendingUsers.map((user: PendingUser) => (
+                <div key={user.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col h-full space-y-6 transition-all hover:border-primary/20">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-foreground/70 border border-border/50">
+                        {user.role === 'STUDENT' ? <GraduationCap className="h-5 w-5" /> : <Briefcase className="h-5 w-5" />}
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-foreground tracking-tight">{user.name}</h4>
                         <span className={cn(
-                          "text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md border",
-                          user.role === 'STUDENT' ? "bg-primary/10 text-primary border-primary/20" : "bg-muted text-muted-foreground border-border"
+                          "text-[9px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded border mt-1 inline-block",
+                          user.role === 'STUDENT' ? "bg-primary/5 text-primary border-primary/10" : "bg-muted text-muted-foreground border-border"
                         )}>
                           {user.role}
                         </span>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-4 flex-1">
-                  <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-                    <Mail className="h-3.5 w-3.5" />
-                    <span className="truncate">{user.email}</span>
-                  </div>
-                  {user.course && (
-                    <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-                      <GraduationCap className="h-3.5 w-3.5" />
-                      {user.course}
+                  <div className="space-y-3 flex-1">
+                    <div className="flex items-center gap-2 text-xs text-foreground/70">
+                      <Mail className="h-3.5 w-3.5 opacity-50" />
+                      <span className="truncate">{user.email}</span>
                     </div>
-                  )}
-                  {user.company && (
-                    <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-                      <Building2 className="h-3.5 w-3.5" />
-                      {user.company.name}
+                    {user.course && (
+                      <div className="flex items-center gap-2 text-xs text-foreground/70">
+                        <GraduationCap className="h-3.5 w-3.5 opacity-50" />
+                        {user.course}
+                      </div>
+                    )}
+                    {user.company && (
+                      <div className="flex items-center gap-2 text-xs text-foreground/70">
+                        <Building2 className="h-3.5 w-3.5 opacity-50" />
+                        {user.company.name}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2 text-[10px] font-medium text-foreground/50 pt-1">
+                      <Calendar className="h-3.5 w-3.5 opacity-50" />
+                      Applied {new Date(user.createdAt).toLocaleDateString()}
                     </div>
-                  )}
-                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground pt-2">
-                    <Calendar className="h-3.5 w-3.5" />
-                    Applied {new Date(user.createdAt).toLocaleDateString()}
+                  </div>
+
+                  <div className="pt-4 flex items-center gap-2">
+                    <button 
+                      onClick={() => handleRejectUser(user.id)}
+                      disabled={actionId === user.id}
+                      className="flex-1 py-2 rounded-lg bg-muted hover:bg-destructive/10 text-muted-foreground hover:text-destructive text-[10px] font-semibold uppercase tracking-wider transition-all border border-transparent hover:border-destructive/20 flex items-center justify-center gap-1.5"
+                    >
+                      <UserX className="h-3.5 w-3.5" /> Reject
+                    </button>
+                    <button 
+                      onClick={() => handleApproveUser(user.id)}
+                      disabled={actionId === user.id}
+                      className="flex-[2] py-2 rounded-lg bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider transition-all shadow-sm hover:opacity-90 active:scale-[0.98] flex items-center justify-center gap-1.5"
+                    >
+                      {actionId === user.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <><CheckCircle2 className="h-3.5 w-3.5" /> Approve</>}
+                    </button>
                   </div>
                 </div>
-
-                <div className="pt-8 flex items-center gap-3">
-                  <button 
-                    onClick={() => handleRejectUser(user.id)}
-                    disabled={actionId === user.id}
-                    className="flex-1 py-4 rounded-2xl bg-muted/50 hover:bg-destructive/10 text-muted-foreground hover:text-destructive text-[10px] font-black uppercase tracking-widest transition-all border border-transparent hover:border-destructive/20 flex items-center justify-center gap-2"
-                  >
-                    <UserX className="h-4 w-4" /> Reject
-                  </button>
-                  <button 
-                    onClick={() => handleApproveUser(user.id)}
-                    disabled={actionId === user.id}
-                    className="flex-[2] py-4 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
-                  >
-                    {actionId === user.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CheckCircle2 className="h-4 w-4" /> Approve Access</>}
-                  </button>
+              )) : (
+                <div className="col-span-full py-16 text-center rounded-xl border border-dashed border-border bg-muted/30">
+                  <p className="text-xs font-semibold text-foreground/40 uppercase tracking-widest">No pending users</p>
                 </div>
-              </div>
-            )) : (
-              <div className="col-span-full p-20 text-center rounded-[3rem] border-2 border-dashed border-border/60 bg-muted/20 opacity-40">
-                <CheckCircle2 className="h-10 w-10 text-muted-foreground mx-auto mb-6" />
-                <p className="font-black text-muted-foreground uppercase tracking-widest text-sm">Clear Manifest</p>
-                <p className="text-xs text-muted-foreground mt-2 font-medium">No new users are currently awaiting validation.</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Company Registrations */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-3 border-b border-border pb-4">
-             <div className="p-2 bg-primary rounded-xl text-primary-foreground shadow-lg shadow-primary/30">
-                <Building2 className="h-5 w-5" />
-             </div>
-             <h2 className="text-2xl font-black tracking-tight text-foreground uppercase">Partner Companies</h2>
+              )}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pendingCompanies.length > 0 ? pendingCompanies.map((company: Company) => (
-              <div key={company.id} className="p-8 rounded-[2.5rem] bg-card border border-border/60 relative overflow-hidden flex flex-col shadow-sm">
-                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
-                       <Building2 className="h-8 w-8" />
+          {/* Company Registrations */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Partner Verifications</h3>
+              <div className="p-1 bg-primary/10 rounded-lg text-primary">
+                <Building2 className="h-4 w-4" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pendingCompanies.length > 0 ? pendingCompanies.map((company: Company) => (
+                <div key={company.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col space-y-6 transition-all hover:border-primary/20">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-foreground/70 border border-border/50">
+                      <Building2 className="h-6 w-6" />
                     </div>
                     <div>
-                       <h4 className="font-black text-xl text-foreground tracking-tight">{company.name}</h4>
-                       <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{company.industry}</span>
+                      <h4 className="text-sm font-semibold text-foreground tracking-tight">{company.name}</h4>
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-foreground/50">{company.industry}</span>
                     </div>
-                 </div>
+                  </div>
 
-                 <div className="flex-1 space-y-3">
-                    <p className="text-sm font-bold text-muted-foreground mb-4">Requesting industrial partnership verification.</p>
-                    <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-                      <Mail className="h-3.5 w-3.5" />
+                  <div className="flex-1 space-y-3">
+                    <p className="text-xs text-foreground/60 leading-relaxed font-medium">Requesting industrial partnership verification for SIT placement program.</p>
+                    <div className="flex items-center gap-2 text-xs text-foreground/70">
+                      <Mail className="h-3.5 w-3.5 opacity-50" />
                       {company.email}
                     </div>
-                 </div>
+                  </div>
 
-                 <button 
-                  onClick={() => handleVerifyCompany(company.id)}
-                  disabled={actionId === company.id}
-                  className="mt-8 w-full py-4 rounded-2xl bg-foreground text-background dark:bg-primary dark:text-primary-foreground text-[10px] font-black uppercase tracking-widest transition-all shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
-                >
-                  {actionId === company.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CheckCircle2 className="h-4 w-4" /> Verify Legal Entity</>}
-                </button>
-              </div>
-            )) : (
-              <div className="col-span-full p-20 text-center rounded-[3rem] border-2 border-dashed border-border/60 bg-muted/20 opacity-40">
-                <ShieldAlert className="h-10 w-10 text-muted-foreground mx-auto mb-6" />
-                <p className="font-black text-muted-foreground uppercase tracking-widest text-sm">Compliance Target Met</p>
-                <p className="text-xs text-muted-foreground mt-2 font-medium">All partner companies are currently verified.</p>
-              </div>
-            )}
+                  <button 
+                    onClick={() => handleVerifyCompany(company.id)}
+                    disabled={actionId === company.id}
+                    className="w-full py-2 rounded-lg bg-foreground text-background dark:bg-primary dark:text-primary-foreground text-[10px] font-semibold uppercase tracking-wider transition-all shadow-sm hover:opacity-90 active:scale-[0.98] flex items-center justify-center gap-1.5"
+                  >
+                    {actionId === company.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <><CheckCircle2 className="h-3.5 w-3.5" /> Verify Entity</>}
+                  </button>
+                </div>
+              )) : (
+                <div className="col-span-full py-16 text-center rounded-xl border border-dashed border-border bg-muted/30">
+                  <p className="text-xs font-semibold text-foreground/40 uppercase tracking-widest">No pending companies</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Skeleton>
   );
 }
+
