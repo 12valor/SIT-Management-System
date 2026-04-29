@@ -104,9 +104,9 @@ export default function LoginGatePage() {
                   </p>
                 </div>
 
-                {/* VISIBLE LOGIN BUTTON */}
+                {/* VISIBLE LOGIN BUTTON — SOLID RED */}
                 <div className="mt-auto pt-8 border-t border-slate-50 dark:border-white/5">
-                   <div className="w-full flex items-center justify-center gap-3 py-4 bg-[#fafaf9] dark:bg-red-500/10 text-slate-900 dark:text-red-400 rounded-2xl font-serif font-medium border border-slate-200 dark:border-red-500/20 transition-all group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20">
+                   <div className="w-full flex items-center justify-center gap-3 py-4 bg-primary text-white rounded-2xl font-serif font-medium border border-transparent transition-all group-hover:bg-primary/90 shadow-lg shadow-primary/20">
                       <span>Log In to Portal</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                    </div>
