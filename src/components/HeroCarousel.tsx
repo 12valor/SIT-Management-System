@@ -44,15 +44,15 @@ export function HeroCarousel() {
   }, []);
 
   return (
-    <section className="relative h-[90vh] min-h-[800px] w-full overflow-hidden bg-[#fafaf9] dark:bg-background transition-colors duration-500">
+    <section className="relative min-h-[90vh] lg:h-screen w-full overflow-hidden bg-[#fafaf9] dark:bg-background transition-colors duration-500 flex flex-col justify-center py-20">
       {/* Institutional Grid Background */}
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
       
-      <div className="container mx-auto px-6 h-full relative z-10 flex flex-col justify-center">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
           {/* Content — Left Side */}
-          <div className="lg:col-span-7 pt-20">
+          <div className="lg:col-span-7">
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
@@ -60,7 +60,7 @@ export function HeroCarousel() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-12"
+                className="space-y-10"
               >
                 <div className="flex items-center gap-6">
                    <div className="flex flex-col">
@@ -73,25 +73,25 @@ export function HeroCarousel() {
                    </div>
                 </div>
 
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif font-medium text-slate-900 dark:text-white leading-[1.05] tracking-tight">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-medium text-slate-900 dark:text-white leading-[1.05] tracking-tight max-w-[15ch] lg:max-w-none">
                   {messages[index].title}
                 </h1>
 
-                <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-serif italic leading-relaxed max-w-2xl">
+                <p className="text-lg md:text-xl lg:text-2xl text-slate-500 dark:text-slate-400 font-serif italic leading-relaxed max-w-2xl">
                   {messages[index].description}
                 </p>
 
-                <div className="flex flex-wrap gap-6 pt-8">
+                <div className="flex flex-wrap gap-4 pt-4">
                   <Link
                     href="/login"
-                    className="group inline-flex items-center justify-center h-16 px-12 bg-primary text-white font-serif font-medium rounded-full hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
+                    className="group inline-flex items-center justify-center h-14 md:h-16 px-8 md:px-12 bg-primary text-white font-serif font-medium rounded-full hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
                   >
                     Enter Portal
                     <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform" />
                   </Link>
                   <Link
                     href="/about"
-                    className="inline-flex items-center justify-center h-16 px-12 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 font-serif font-medium rounded-full hover:bg-slate-50 dark:hover:bg-white/5 transition-all"
+                    className="inline-flex items-center justify-center h-14 md:h-16 px-8 md:px-12 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 font-serif font-medium rounded-full hover:bg-slate-50 dark:hover:bg-white/5 transition-all"
                   >
                     View Mission
                   </Link>
@@ -102,7 +102,7 @@ export function HeroCarousel() {
 
           {/* Image — Right Side / Asymmetric Layout */}
           <div className="lg:col-span-5 relative hidden lg:block">
-             <div className="relative aspect-[4/5] w-full rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl">
+             <div className="relative aspect-[4/5] w-full max-w-[450px] mx-auto rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={index}
@@ -133,7 +133,7 @@ export function HeroCarousel() {
              </div>
              
              {/* Large Decorative Category in Background */}
-             <div className="absolute -bottom-10 -right-10 text-[12rem] font-serif font-black text-slate-200 dark:text-white/[0.02] select-none pointer-events-none italic">
+             <div className="absolute -bottom-10 -right-10 text-[10rem] xl:text-[12rem] font-serif font-black text-slate-200 dark:text-white/[0.02] select-none pointer-events-none italic">
                 {String(index + 1).padStart(2, '0')}
              </div>
           </div>
@@ -141,26 +141,26 @@ export function HeroCarousel() {
       </div>
 
       {/* Archival Pagination Indicator */}
-      <div className="absolute bottom-16 right-12 flex flex-col gap-8 items-end z-20">
-        <div className="flex flex-col gap-2">
+      <div className="absolute bottom-10 md:bottom-16 right-6 md:right-12 flex flex-col gap-6 md:gap-8 items-end z-20">
+        <div className="hidden sm:flex flex-col gap-2">
           {images.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
               className="group flex items-center gap-4 text-right"
             >
-              <span className={`text-[10px] font-mono tracking-widest transition-all duration-500 uppercase ${
+              <span className={`text-[9px] md:text-[10px] font-mono tracking-widest transition-all duration-500 uppercase ${
                 i === index ? "text-primary opacity-100" : "text-slate-400 opacity-0 group-hover:opacity-40"
               }`}>
                 {messages[i].category}
               </span>
               <div className={`h-[2px] transition-all duration-500 rounded-full ${
-                i === index ? "w-12 bg-primary" : "w-6 bg-slate-300 dark:bg-white/10 hover:bg-slate-400"
+                i === index ? "w-8 md:w-12 bg-primary" : "w-4 md:w-6 bg-slate-300 dark:bg-white/10 hover:bg-slate-400"
               }`} />
             </button>
           ))}
         </div>
-        <div className="text-[10px] font-mono text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em]">
+        <div className="text-[9px] md:text-[10px] font-mono text-slate-400 dark:text-slate-600 uppercase tracking-[0.3em]">
            Institutional Record {index + 1} / {images.length}
         </div>
       </div>
