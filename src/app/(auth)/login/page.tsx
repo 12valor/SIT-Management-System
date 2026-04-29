@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { GraduationCap, Building2, ShieldCheck } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const roles = [
@@ -76,32 +76,31 @@ export default function LoginGatePage() {
             >
               <Link 
                 href={role.href}
-                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-12 rounded-2xl transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20"
+                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2"
               >
                 {/* Header: ID + Icon */}
-                <div className="flex items-center justify-between mb-12">
-                  <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-white/20 tracking-widest">{role.id}</span>
-                  <div className="w-10 h-10 border border-slate-100 dark:border-white/5 flex items-center justify-center text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-white/5 rounded-full transition-all group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20">
-                    <role.icon className="h-5 w-5" strokeWidth={1.5} />
+                <div className="flex items-center justify-between mb-10">
+                  <span className="text-[10px] font-mono font-bold text-slate-300 dark:text-white/20 tracking-widest">{role.id}</span>
+                  <div className="w-12 h-12 border border-slate-100 dark:border-white/5 flex items-center justify-center text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-white/5 rounded-2xl transition-all group-hover:bg-primary group-hover:text-white group-hover:border-primary group-hover:rotate-6">
+                    <role.icon className="h-6 w-6" strokeWidth={1.5} />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="space-y-4 mb-12 flex-1">
-                  <h3 className="text-2xl font-serif font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  <h3 className="text-3xl font-serif font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors">
                     {role.title}
                   </h3>
-                  <div className="h-px w-12 bg-slate-100 dark:bg-white/5 group-hover:w-full transition-all duration-700" />
                   <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-serif italic">
                     {role.description}
                   </p>
                 </div>
 
-                {/* Footer: Action */}
-                <div className="flex items-center justify-between pt-6 border-t border-slate-50 dark:border-white/5">
-                   <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 font-sans">Launch Module</span>
-                   <div className="w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-white/20 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all">
-                      <div className="w-1.5 h-1.5 bg-current rounded-full" />
+                {/* VISIBLE LOGIN BUTTON */}
+                <div className="mt-auto pt-8 border-t border-slate-50 dark:border-white/5">
+                   <div className="w-full flex items-center justify-center gap-3 py-4 bg-[#fafaf9] dark:bg-white/5 text-slate-900 dark:text-white rounded-2xl font-serif font-medium border border-slate-200 dark:border-white/10 transition-all group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20">
+                      <span>Log In to Portal</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                    </div>
                 </div>
               </Link>
@@ -118,7 +117,7 @@ export default function LoginGatePage() {
           </p>
           <Link 
             href="/faq"
-            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 font-serif"
+            className="inline-flex items-center justify-center px-8 py-4 bg-primary/5 text-primary border border-primary/20 font-medium rounded-full hover:bg-primary hover:text-white transition-all duration-300 font-serif"
           >
             Consult FAQ Registry
           </Link>
