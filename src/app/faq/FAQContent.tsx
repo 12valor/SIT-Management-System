@@ -50,7 +50,8 @@ export default function FAQContent() {
       <motion.div 
         className="max-w-3xl mx-auto"
         initial="initial"
-        animate="animate"
+        whileInView="animate"
+        viewport={{ once: false, amount: 0.05 }}
         variants={staggerContainer}
       >
         <motion.header className="mb-16 text-center" variants={fadeInUp}>
