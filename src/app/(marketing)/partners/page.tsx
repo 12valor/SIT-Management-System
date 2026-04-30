@@ -1,70 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Building2, MapPin, ArrowRight, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { Skeleton } from "boneyard-js/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
+
+type Partner = {
+  id: string;
+  name: string;
+  industry: string;
+  location: string | null;
+  slots: number;
+  description: string | null;
+  logoUrl: string | null;
+};
 
 export default function PartnersPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const partners = [
-    { 
-      id: "P-001", 
-      name: "Intel Corporation", 
-      industry: "Semiconductors", 
-      loc: "Cavite", 
-      slots: 15, 
-      status: "Active",
-      description: "Leading global manufacturer of semiconductor chips and microprocessor technologies for computing systems."
-    },
-    { 
-      id: "P-002", 
-      name: "Accenture Philippines", 
-      industry: "Technology Services", 
-      loc: "Bacolod", 
-      slots: 25, 
-      status: "Vetted",
-      description: "Professional services company specializing in digital, cloud, and security solutions for global enterprises."
-    },
-    { 
-      id: "P-003", 
-      name: "Globe Telecom", 
-      industry: "Telecommunications", 
-      loc: "National", 
-      slots: 10, 
-      status: "Active",
-      description: "Major telecommunications provider offering wireless and broadband services across the Philippine archipelago."
-    },
-    { 
-      id: "P-004", 
-      name: "Meralco", 
-      industry: "Energy", 
-      loc: "NCR", 
-      slots: 8, 
-      status: "Vetted",
-      description: "The Philippines' largest electric power distribution company serving the National Capital Region and surrounding provinces."
-    },
-    { 
-      id: "P-005", 
-      name: "Petron Corporation", 
-      industry: "Energy / Oil", 
-      loc: "Bataan", 
-      slots: 5, 
-      status: "Active",
-      description: "Leading oil refining and marketing company providing essential energy products for industrial and consumer use."
-    },
-    { 
-      id: "P-006", 
-      name: "Smart Communications", 
-      industry: "Telecommunications", 
-      loc: "National", 
-      slots: 12, 
-      status: "Active",
-      description: "Wholly-owned wireless communications and digital services subsidiary of PLDT, focused on 5G and fiber-tech."
-    },
-  ];
+  const loadPartners = useCallback(async () => {
+    try {
+      const data = await getPublicPartners();
+      setPartners(data as Partner[]);
+    } catch (error) {
+      console.error("Failed to load partners:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadPartners();
+  }, [loadPartners]);
 
   const filteredPartners = partners.filter(p => 
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -74,7 +45,7 @@ export default function PartnersPage() {
   return (
     <Skeleton 
       name="partners-page"
-      loading={false}
+      loading={isLoading}
       animate="shimmer"
       stagger={60}
       transition={400}
@@ -150,8 +121,12 @@ export default function PartnersPage() {
                     
                     <div className="relative z-10 flex flex-col h-full">
                       <header className="flex items-center gap-5 mb-8">
-                        <div className="w-16 h-16 shrink-0 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-100 dark:border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all duration-500">
-                          <Building2 className="w-7 h-7 text-slate-400 group-hover:text-primary transition-colors duration-500" />
+                        <div className="w-16 h-16 shrink-0 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-100 dark:border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all duration-500 overflow-hidden">
+                          {partner.logoUrl ? (
+                            <img src={partner.logoUrl} alt={partner.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <Building2 className="w-7 h-7 text-slate-400 group-hover:text-primary transition-colors duration-500" />
+                          )}
                         </div>
                         <div>
                           <h3 className="text-xl font-serif font-medium text-slate-900 dark:text-white leading-tight mb-1 group-hover:text-primary transition-colors">
@@ -165,7 +140,7 @@ export default function PartnersPage() {
 
                       <div className="flex-1">
                         <p className="text-slate-600 dark:text-slate-400 font-serif italic leading-relaxed text-lg mb-8">
-                          "{partner.description}"
+                          "{partner.description || "Partner of Technological University of the Philippines Visayas for the SIT program."}"
                         </p>
                       </div>
 
@@ -173,7 +148,7 @@ export default function PartnersPage() {
                         <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
                           <div className="flex items-center gap-1.5">
                             <MapPin className="w-4 h-4 text-primary/70" />
-                            <span className="font-medium">{partner.loc}</span>
+                            <span className="font-medium">{partner.location || "N/A"}</span>
                           </div>
                           <div className="flex items-center gap-1.5">
                             <Users className="w-4 h-4 text-primary/70" />

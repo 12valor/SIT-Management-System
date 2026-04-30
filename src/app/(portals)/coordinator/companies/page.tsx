@@ -2,8 +2,8 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2 } from "lucide-react";
-import { getCompanies, setCompanyVerification } from "./actions";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X } from "lucide-react";
+import { getCompanies, setCompanyVerification, addCompany } from "./actions";
 import { cn } from "@/lib/utils";
 
 type Company = {
@@ -11,6 +11,9 @@ type Company = {
   name: string;
   email: string;
   industry: string;
+  location?: string | null;
+  slots: number;
+  description?: string | null;
   isVerified: boolean;
   joinedAt: Date;
   _count: { employers: number; postings: number };
@@ -21,6 +24,18 @@ export default function CoordinatorCompaniesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [processing, setProcessing] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  
+  // Add Partner Modal State
+  const [isAdding, setIsAdding] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    industry: "",
+    location: "",
+    description: "",
+    slots: 0,
+  });
 
   const load = useCallback(async () => {
     const res = await getCompanies();
@@ -35,6 +50,21 @@ export default function CoordinatorCompaniesPage() {
     await setCompanyVerification(id, status);
     await load();
     setProcessing(null);
+  };
+
+  const handleAddSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await addCompany(formData);
+      setIsAdding(false);
+      setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0 });
+      await load();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const filtered = companies.filter((c) =>
@@ -61,7 +91,56 @@ export default function CoordinatorCompaniesPage() {
         </div>
       }
     >
-      <div className="flex-1 space-y-12">
+      <div className="flex-1 space-y-12 relative">
+        {/* Add Modal */}
+        {isAdding && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
+            <div className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+              <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-muted/30">
+                <h3 className="font-semibold text-foreground uppercase tracking-wider text-sm">Add New Partner</h3>
+                <button onClick={() => setIsAdding(false)} className="text-foreground/50 hover:text-foreground">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <form onSubmit={handleAddSubmit} className="p-6 overflow-y-auto flex flex-col gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1 col-span-2">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Company Name</label>
+                    <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                  </div>
+                  <div className="space-y-1 col-span-2">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Email Address</label>
+                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Industry</label>
+                    <input required value={formData.industry} onChange={e => setFormData({...formData, industry: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Location</label>
+                    <input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                  </div>
+                  <div className="space-y-1 col-span-2">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Available Slots</label>
+                    <input required type="number" min="0" value={formData.slots} onChange={e => setFormData({...formData, slots: parseInt(e.target.value) || 0})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                  </div>
+                  <div className="space-y-1 col-span-2">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Description</label>
+                    <textarea required rows={3} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full p-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary resize-none" />
+                  </div>
+                </div>
+                <div className="pt-4 flex justify-end gap-3 mt-4 border-t border-border/50">
+                  <button type="button" onClick={() => setIsAdding(false)} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-foreground/60 hover:text-foreground">Cancel</button>
+                  <button type="submit" disabled={isSubmitting} className="px-6 py-2 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider rounded-md hover:opacity-90 disabled:opacity-50 flex items-center gap-2">
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+                    Add Partner
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {/* 1. Header Section */}
         <div className="pb-6 border-b border-border/50 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
@@ -72,8 +151,14 @@ export default function CoordinatorCompaniesPage() {
               Management of institutional industrial affiliations and MOU status
             </p>
           </div>
-          <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider">
-            {companies.length} Registered Entities
+          <div className="flex items-center gap-4">
+            <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider hidden md:block">
+              {companies.length} Registered Entities
+            </div>
+            <button onClick={() => setIsAdding(true)} className="h-9 px-4 bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider rounded-md hover:opacity-90 transition-all flex items-center gap-2">
+              <Plus className="h-3.5 w-3.5" />
+              Add Partner
+            </button>
           </div>
         </div>
 
@@ -95,8 +180,8 @@ export default function CoordinatorCompaniesPage() {
         <div className="space-y-6 pb-24">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-4">
             <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Partner Registry</h3>
-            <div className="flex items-center gap-3">
-              <div className="relative w-64">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <div className="relative w-full sm:w-64">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-foreground/30" />
                 <input
                   type="text"
@@ -146,10 +231,10 @@ export default function CoordinatorCompaniesPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 hidden lg:table-cell">
-                          <span className="text-sm font-semibold tabular-nums text-foreground/80">{c._count.employers}</span>
+                          <span className="text-sm font-semibold tabular-nums text-foreground/80">{c._count?.employers ?? 0}</span>
                         </td>
                         <td className="px-6 py-4 hidden lg:table-cell">
-                          <span className="text-sm font-semibold tabular-nums text-foreground/80">{c._count.postings}</span>
+                          <span className="text-sm font-semibold tabular-nums text-foreground/80">{c._count?.postings ?? 0}</span>
                         </td>
                         <td className="px-6 py-4">
                           <span className={cn(

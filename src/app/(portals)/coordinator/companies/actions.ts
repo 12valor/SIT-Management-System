@@ -20,3 +20,30 @@ export async function setCompanyVerification(companyId: string, isVerified: bool
   revalidatePath("/coordinator/companies");
   return { success: true };
 }
+
+export async function addCompany(data: {
+  name: string;
+  email: string;
+  industry: string;
+  location: string;
+  description: string;
+  slots: number;
+  logoUrl?: string;
+}) {
+  await prisma.company.create({
+    data: {
+      ...data,
+      isVerified: true, // Auto-verified if added by coordinator
+    },
+  });
+  revalidatePath("/coordinator/companies");
+  revalidatePath("/partners");
+  return { success: true };
+}
+
+export async function getPublicPartners() {
+  return await prisma.company.findMany({
+    where: { isVerified: true },
+    orderBy: { joinedAt: "desc" },
+  });
+}
