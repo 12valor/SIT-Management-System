@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function getCompanies() {
@@ -48,19 +49,20 @@ export async function addCompany(data: {
     revalidatePath("/partners");
     return { success: true };
   } catch (error) {
-    const err = error as Error;
-    console.error("Failed to add company:", err);
+    console.error("Failed to add company:", error);
     
-    // Handle Prisma specific errors
-    if ((err as any).code === 'P2002') {
-      throw new Error("A company with this email already exists.");
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        throw new Error("A company with this email already exists.");
+      }
     }
     
-    if (err.name === 'PrismaClientValidationError') {
+    if (error instanceof Error && error.name === 'PrismaClientValidationError') {
       throw new Error("Database schema mismatch. Please restart your development server (npm run dev) to apply changes.");
     }
 
-    throw new Error(err.message || "An unexpected error occurred while adding the company.");
+    const message = error instanceof Error ? error.message : "An unexpected error occurred";
+    throw new Error(message);
   }
 }
 
