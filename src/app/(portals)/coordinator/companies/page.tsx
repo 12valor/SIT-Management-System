@@ -35,6 +35,7 @@ export default function CoordinatorCompaniesPage() {
     location: "",
     description: "",
     slots: 0,
+    logoUrl: "",
   });
 
   const load = useCallback(async () => {
@@ -58,7 +59,7 @@ export default function CoordinatorCompaniesPage() {
     try {
       await addCompany(formData);
       setIsAdding(false);
-      setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0 });
+      setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "" });
       await load();
     } catch (error) {
       console.error(error);
@@ -111,6 +112,10 @@ export default function CoordinatorCompaniesPage() {
                   <div className="space-y-1 col-span-2">
                     <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Email Address</label>
                     <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                  </div>
+                  <div className="space-y-1 col-span-2">
+                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Logo URL (Optional)</label>
+                    <input value={formData.logoUrl} onChange={e => setFormData({...formData, logoUrl: e.target.value})} placeholder="https://example.com/logo.png" className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Industry</label>
