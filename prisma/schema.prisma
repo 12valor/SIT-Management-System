@@ -113,8 +113,8 @@ model Company {
   name        String
   email       String   @unique
   industry    String
-  location    String?
   description String?  @db.Text
+  location    String?
   logoUrl     String?
   slots       Int      @default(0)
   isVerified  Boolean  @default(false)
