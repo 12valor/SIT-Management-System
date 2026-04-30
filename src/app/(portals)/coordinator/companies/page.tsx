@@ -53,6 +53,17 @@ export default function CoordinatorCompaniesPage() {
     setProcessing(null);
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData(prev => ({ ...prev, logoUrl: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -103,7 +114,37 @@ export default function CoordinatorCompaniesPage() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <form onSubmit={handleAddSubmit} className="p-6 overflow-y-auto flex flex-col gap-4">
+              <form onSubmit={handleAddSubmit} className="p-6 overflow-y-auto flex flex-col gap-6">
+                
+                {/* Logo Upload Section */}
+                <div className="flex flex-col items-center justify-center gap-4 py-4 border-2 border-dashed border-border rounded-xl bg-muted/10">
+                  {formData.logoUrl ? (
+                    <div className="relative group">
+                      <img src={formData.logoUrl} alt="Preview" className="w-24 h-24 rounded-full object-cover border-2 border-primary" />
+                      <button 
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
+                        className="absolute -top-2 -right-2 bg-destructive text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center text-foreground/30">
+                        <Building2 className="h-8 w-8" />
+                      </div>
+                      <p className="text-xs font-medium text-foreground/50">No logo uploaded</p>
+                    </div>
+                  )}
+                  <label className="cursor-pointer">
+                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                    <div className="px-4 py-2 bg-muted hover:bg-muted/80 text-foreground text-xs font-bold uppercase tracking-widest rounded-lg border border-border transition-colors">
+                      {formData.logoUrl ? "Change Logo" : "Upload Company Logo"}
+                    </div>
+                  </label>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1 col-span-2">
                     <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Company Name</label>
@@ -112,10 +153,6 @@ export default function CoordinatorCompaniesPage() {
                   <div className="space-y-1 col-span-2">
                     <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Email Address</label>
                     <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
-                  </div>
-                  <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Logo URL (Optional)</label>
-                    <input value={formData.logoUrl} onChange={e => setFormData({...formData, logoUrl: e.target.value})} placeholder="https://example.com/logo.png" className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Industry</label>
