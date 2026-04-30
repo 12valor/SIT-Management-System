@@ -47,9 +47,19 @@ export async function addCompany(data: {
     revalidatePath("/coordinator/companies");
     revalidatePath("/partners");
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to add company:", error);
-    throw new Error("Failed to add company. Please ensure the email is unique and all fields are valid.");
+    
+    // Handle Prisma specific errors
+    if (error.code === 'P2002') {
+      throw new Error("A company with this email already exists.");
+    }
+    
+    if (error.name === 'PrismaClientValidationError') {
+      throw new Error("Database schema mismatch. Please restart your development server (npm run dev) to apply changes.");
+    }
+
+    throw new Error(error.message || "An unexpected error occurred while adding the company.");
   }
 }
 
