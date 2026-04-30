@@ -30,15 +30,28 @@ export async function addCompany(data: {
   slots: number;
   logoUrl?: string;
 }) {
-  await prisma.company.create({
-    data: {
-      ...data,
-      isVerified: true, // Auto-verified if added by coordinator
-    },
-  });
-  revalidatePath("/coordinator/companies");
-  revalidatePath("/partners");
-  return { success: true };
+  console.log("DEBUG: addCompany data:", JSON.stringify({ ...data, logoUrl: data.logoUrl ? data.logoUrl.substring(0, 50) + "..." : "none" }, null, 2));
+  
+  try {
+    await prisma.company.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        industry: data.industry,
+        location: data.location,
+        description: data.description,
+        slots: data.slots,
+        logoUrl: data.logoUrl,
+        isVerified: true,
+      },
+    });
+    revalidatePath("/coordinator/companies");
+    revalidatePath("/partners");
+    return { success: true };
+  } catch (error) {
+    console.error("DEBUG: Prisma error details:", error);
+    throw error;
+  }
 }
 
 export async function getPublicPartners() {
