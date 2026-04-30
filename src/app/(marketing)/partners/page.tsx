@@ -123,6 +123,7 @@ export default function PartnersPage() {
                       <header className="flex items-center gap-5 mb-8">
                         <div className="w-16 h-16 shrink-0 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-100 dark:border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all duration-500 overflow-hidden">
                           {partner.logoUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img src={partner.logoUrl} alt={partner.name} className="w-full h-full object-cover" />
                           ) : (
                             <Building2 className="w-7 h-7 text-slate-400 group-hover:text-primary transition-colors duration-500" />
@@ -140,7 +141,7 @@ export default function PartnersPage() {
 
                       <div className="flex-1">
                         <p className="text-slate-600 dark:text-slate-400 font-serif italic leading-relaxed text-lg mb-8">
-                          "{partner.description || "Partner of Technological University of the Philippines Visayas for the SIT program."}"
+                          &quot;{partner.description || "Partner of Technological University of the Philippines Visayas for the SIT program."}&quot;
                         </p>
                       </div>
 
@@ -178,7 +179,7 @@ export default function PartnersPage() {
                   </div>
                   <h3 className="text-2xl font-serif font-medium text-slate-900 dark:text-white mb-2">No partners found</h3>
                   <p className="text-slate-500 dark:text-slate-400 max-w-md">
-                    We couldn't find any partners matching "{searchQuery}". Try adjusting your search terms.
+                    We couldn&apos;t find any partners matching &quot;{searchQuery}&quot;. Try adjusting your search terms.
                   </p>
                 </motion.div>
               )}

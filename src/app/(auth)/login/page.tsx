@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { GraduationCap, Building2, ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -68,7 +67,7 @@ export default function LoginGatePage() {
         </motion.header>
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {roles.map((role, idx) => (
+          {roles.map((role) => (
             <motion.div
               key={role.title}
               variants={fadeInUp}
