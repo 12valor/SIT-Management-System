@@ -105,22 +105,6 @@ export function HeroCarousel() {
           </AnimatePresence>
         </div>
 
-        {/* Right Side / Bottom: Pagination */}
-        <div className="flex items-center gap-3 md:pb-4">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
-              className="relative py-4 group"
-              aria-label={`Go to slide ${i + 1}`}
-            >
-              <div className={`h-[2px] transition-all duration-500 ${
-                i === index ? "w-16 bg-white" : "w-8 bg-white/30 group-hover:bg-white/60"
-              }`} />
-            </button>
-          ))}
-        </div>
-
       </div>
     </section>
   );
