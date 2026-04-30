@@ -30,8 +30,6 @@ export async function addCompany(data: {
   slots: number;
   logoUrl?: string;
 }) {
-  console.log("DEBUG: addCompany data:", JSON.stringify({ ...data, logoUrl: data.logoUrl ? data.logoUrl.substring(0, 50) + "..." : "none" }, null, 2));
-  
   try {
     await prisma.company.create({
       data: {
@@ -45,12 +43,13 @@ export async function addCompany(data: {
         isVerified: true,
       },
     });
+
     revalidatePath("/coordinator/companies");
     revalidatePath("/partners");
     return { success: true };
   } catch (error) {
-    console.error("DEBUG: Prisma error details:", error);
-    throw error;
+    console.error("Failed to add company:", error);
+    throw new Error("Failed to add company. Please ensure the email is unique and all fields are valid.");
   }
 }
 
