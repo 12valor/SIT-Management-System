@@ -59,7 +59,7 @@ export default function PartnersPage() {
         <div className="container mx-auto px-6 lg:px-12 max-w-6xl relative z-10">
           
           {/* Header Section */}
-          <div className="flex flex-col items-center text-center mb-24 max-w-3xl mx-auto">
+          <div className={`flex flex-col items-center text-center max-w-3xl mx-auto ${filteredPartners.length <= 2 ? 'mb-16' : 'mb-24'}`}>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -101,10 +101,24 @@ export default function PartnersPage() {
                 />
               </div>
             </motion.div>
+            <motion.div
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ duration: 0.8, delay: 0.2 }}
+               className="mt-6 text-sm text-slate-500 font-medium"
+            >
+               {partners.length} verified {partners.length === 1 ? 'partner' : 'partners'} currently active
+            </motion.div>
           </div>
 
           {/* Partners Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className={`grid gap-8 ${
+            filteredPartners.length === 1 
+              ? "grid-cols-1 max-w-2xl mx-auto" 
+              : filteredPartners.length === 2
+                ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto"
+                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          }`}>
             <AnimatePresence mode="popLayout">
               {filteredPartners.length > 0 ? (
                 filteredPartners.map((partner, i) => (
@@ -142,7 +156,7 @@ export default function PartnersPage() {
                         <h3 className="font-serif font-medium text-slate-900 dark:text-white text-xl leading-tight truncate group-hover:text-primary transition-colors">
                           {partner.name}
                         </h3>
-                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1.5 uppercase tracking-wider truncate">
+                        <p className="inline-block px-2.5 py-1 bg-slate-100 dark:bg-white/5 rounded-md text-[10px] font-semibold text-slate-600 dark:text-slate-300 mt-2.5 uppercase tracking-wider truncate">
                           {partner.industry}
                         </p>
                       </div>
@@ -200,7 +214,7 @@ export default function PartnersPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-32 max-w-4xl mx-auto"
+            className={`max-w-4xl mx-auto ${filteredPartners.length <= 2 ? 'mt-16' : 'mt-32'}`}
           >
             <div className="relative bg-white dark:bg-[#0f0f0f] rounded-[2.5rem] p-12 md:p-16 text-center border border-slate-200 dark:border-white/5 shadow-2xl shadow-black/5 overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
