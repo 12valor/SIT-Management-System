@@ -66,37 +66,39 @@ export default function LoginGatePage() {
           </div>
         </motion.header>
 
-        <section className="max-w-4xl mx-auto border-t border-slate-200 dark:border-white/10 mt-12">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {roles.map((role) => (
             <motion.div
               key={role.title}
               variants={fadeInUp}
-              className="group border-b border-slate-200 dark:border-white/10"
+              className="h-full"
             >
               <Link 
                 href={role.href}
-                className="flex flex-col md:flex-row md:items-center justify-between py-10 md:py-12 px-4 hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors duration-500"
+                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 rounded-2xl transition-all duration-300 hover:border-primary/40 hover:bg-slate-50/50 dark:hover:bg-white/[0.04]"
               >
-                <div className="flex items-start gap-6 md:gap-8">
-                  <div className="mt-1.5 flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors duration-500">
-                    <role.icon className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.25} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-3xl md:text-4xl font-serif font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-500 mb-3">
-                      {role.title}
-                    </h3>
-                    <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-serif max-w-2xl">
-                      {role.description}
-                    </p>
-                  </div>
+                {/* Clean, unboxed icon */}
+                <div className="mb-8 text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors duration-300">
+                  <role.icon className="w-10 h-10" strokeWidth={1.25} />
                 </div>
 
-                <div className="flex items-center gap-4 text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors duration-500 mt-8 md:mt-0 ml-14 md:ml-8">
-                  <span className="font-serif font-medium text-sm tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden lg:block">
-                    Access Portal
+                {/* Content */}
+                <div className="flex-1 mb-12">
+                  <h3 className="text-2xl font-serif font-medium text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors duration-300">
+                    {role.title}
+                  </h3>
+                  <p className="text-slate-500 dark:text-slate-400 font-serif leading-relaxed text-[15px]">
+                    {role.description}
+                  </p>
+                </div>
+
+                {/* Understated Editorial CTA */}
+                <div className="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-white/10 pt-6">
+                  <span className="text-[10px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors duration-300">
+                    Enter Gateway
                   </span>
-                  <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-white/10 group-hover:border-primary/30 flex items-center justify-center transition-colors duration-500 bg-white dark:bg-transparent">
-                    <ArrowRight className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.5} />
+                  <div className="w-8 h-8 rounded-full border border-transparent group-hover:border-primary/20 flex items-center justify-center transition-all duration-300 bg-slate-50 dark:bg-white/5 group-hover:bg-primary/5">
+                    <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-primary transition-transform duration-300 group-hover:translate-x-0.5" strokeWidth={1.5} />
                   </div>
                 </div>
               </Link>
