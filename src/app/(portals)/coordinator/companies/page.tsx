@@ -110,19 +110,19 @@ export default function CoordinatorCompaniesPage() {
       <div className="flex-1 space-y-12 relative">
         {/* Add Modal */}
         {isAdding && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-            <div className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="fixed inset-0 z-50 flex items-start justify-center bg-background/80 backdrop-blur-sm p-4 md:pt-16">
+            <div className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
               <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-muted/30">
                 <h3 className="font-semibold text-foreground uppercase tracking-wider text-sm">Add New Partner</h3>
                 <button onClick={() => setIsAdding(false)} className="text-foreground/50 hover:text-foreground">
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <form onSubmit={handleAddSubmit} className="p-6 overflow-y-auto flex flex-col gap-6">
+              <form onSubmit={handleAddSubmit} className="p-5 overflow-y-auto flex flex-col gap-5">
                 
                 {/* Media Upload Section */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex flex-col items-center justify-center gap-4 py-4 border-2 border-dashed border-border rounded-xl bg-muted/10">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.logoUrl ? (
                       <div className="relative group">
                         <img src={formData.logoUrl} alt="Preview" className="w-16 h-16 rounded-xl object-cover border border-border" />
@@ -148,7 +148,7 @@ export default function CoordinatorCompaniesPage() {
                     </label>
                   </div>
 
-                  <div className="flex flex-col items-center justify-center gap-4 py-4 border-2 border-dashed border-border rounded-xl bg-muted/10">
+                  <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.bannerUrl ? (
                       <div className="relative group w-full px-4">
                         <img src={formData.bannerUrl} alt="Preview" className="w-full h-16 rounded-lg object-cover border border-border" />
@@ -175,30 +175,30 @@ export default function CoordinatorCompaniesPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Company Name</label>
-                    <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Company Name</label>
+                    <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Email Address</label>
-                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Email Address</label>
+                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Industry</label>
-                    <input required value={formData.industry} onChange={e => setFormData({...formData, industry: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Industry</label>
+                    <input required value={formData.industry} onChange={e => setFormData({...formData, industry: e.target.value})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Location</label>
-                    <input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Available Slots</label>
+                    <input required type="number" min="0" value={formData.slots} onChange={e => setFormData({...formData, slots: parseInt(e.target.value) || 0})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Available Slots</label>
-                    <input required type="number" min="0" value={formData.slots} onChange={e => setFormData({...formData, slots: parseInt(e.target.value) || 0})} className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Location</label>
+                    <input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-semibold text-foreground/70 uppercase tracking-widest">Description</label>
-                    <textarea required rows={3} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full p-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary resize-none" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Description</label>
+                    <textarea required rows={2} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full p-2.5 rounded-md border border-border bg-background text-sm outline-none focus:border-primary resize-none" />
                   </div>
                 </div>
                 <div className="pt-4 flex justify-end gap-3 mt-4 border-t border-border/50">
