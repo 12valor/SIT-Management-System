@@ -142,7 +142,7 @@ model SITPosting {
   // Relations
   employer     User          @relation("EmployerPostings", fields: [employerId], references: [id])
   employerId   String
-  company      Company       @relation(fields: [companyId], references: [id])
+  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String
   applications Application[]
 }
@@ -155,7 +155,7 @@ model Application {
   updatedAt DateTime          @updatedAt
 
   // Relations
-  posting   SITPosting @relation(fields: [postingId], references: [id])
+  posting   SITPosting @relation(fields: [postingId], references: [id], onDelete: Cascade)
   postingId String
   student   User       @relation(fields: [studentId], references: [id])
   studentId String
