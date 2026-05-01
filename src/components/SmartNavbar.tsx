@@ -124,9 +124,6 @@ export function SmartNavbar() {
                   </AnimatePresence>
                 </div>
 
-                <Link className="flex items-center gap-1 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/login">
-                  Programs <ChevronDown className="h-3.5 w-3.5 opacity-50" />
-                </Link>
                 <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/partners">
                   Partners
                 </Link>
