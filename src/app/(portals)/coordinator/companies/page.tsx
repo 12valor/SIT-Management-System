@@ -2,8 +2,8 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit } from "lucide-react";
-import { getCompanies, setCompanyVerification, addCompany, updateCompany } from "./actions";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2 } from "lucide-react";
+import { getCompanies, setCompanyVerification, addCompany, updateCompany, deleteCompany } from "./actions";
 import { cn } from "@/lib/utils";
 
 type Company = {
@@ -55,6 +55,19 @@ export default function CoordinatorCompaniesPage() {
     await setCompanyVerification(id, status);
     await load();
     setProcessing(null);
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to remove ${name}? This action cannot be undone.`)) return;
+    setProcessing(id);
+    try {
+      await deleteCompany(id);
+      await load();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setProcessing(null);
+    }
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
@@ -395,10 +408,20 @@ export default function CoordinatorCompaniesPage() {
                       <div className="mt-4 flex gap-2">
                         <button
                           onClick={() => handleEdit(c)}
-                          className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-primary hover:border-primary/30 transition-all flex items-center justify-center"
+                          disabled={processing === c.id}
+                          className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-primary hover:border-primary/30 transition-all flex items-center justify-center disabled:opacity-50"
                           title="Edit Partner"
                         >
                           <Edit className="h-3.5 w-3.5" />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(c.id, c.name)}
+                          disabled={processing === c.id}
+                          className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-destructive hover:border-destructive/30 transition-all flex items-center justify-center disabled:opacity-50"
+                          title="Remove Partner"
+                        >
+                          {processing === c.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
                         </button>
 
                         {!c.isVerified ? (
