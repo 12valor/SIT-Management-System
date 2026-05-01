@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2, AlertTriangle } from "lucide-react";
 import { getCompanies, setCompanyVerification, addCompany, updateCompany, deleteCompany } from "./actions";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Company = {
   id: string;
@@ -183,35 +184,41 @@ export default function CoordinatorCompaniesPage() {
     >
       <div className="flex-1 space-y-12 relative">
         {/* Delete Confirmation Modal */}
-        {showDeleteConfirm && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-            <div className="bg-card w-full max-w-sm rounded-2xl border border-border shadow-2xl overflow-hidden p-6 text-center space-y-6">
-              <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
-                <AlertTriangle className="h-8 w-8 text-destructive" />
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-lg font-bold text-foreground">Remove Partner?</h3>
-                <p className="text-sm text-foreground/60 leading-relaxed">
-                  Are you sure you want to remove <span className="font-semibold text-foreground">{itemToDelete?.name}</span>? This action is permanent and cannot be undone.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <button 
-                  onClick={() => { setShowDeleteConfirm(false); setItemToDelete(null); }}
-                  className="h-10 px-4 bg-muted hover:bg-muted/80 text-foreground text-xs font-semibold uppercase tracking-wider rounded-lg border border-border transition-colors"
-                >
-                  Cancel
-                </button>
-                <button 
-                  onClick={confirmDelete}
-                  className="h-10 px-4 bg-destructive hover:bg-destructive/90 text-white text-xs font-semibold uppercase tracking-wider rounded-lg shadow-lg shadow-destructive/20 transition-colors"
-                >
-                  Delete
-                </button>
-              </div>
+        {/* Delete Confirmation Modal (Neutral/Standard) */}
+        <AnimatePresence>
+          {showDeleteConfirm && (
+            <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-card w-full max-w-md rounded-xl border border-border shadow-xl overflow-hidden p-6 space-y-6"
+              >
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-foreground">Remove Partner</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Are you sure you want to remove <span className="font-semibold text-foreground">{itemToDelete?.name}</span>? This action will permanently delete the partner and all associated data.
+                  </p>
+                </div>
+
+                <div className="flex gap-3 justify-end">
+                  <button 
+                    onClick={() => { setShowDeleteConfirm(false); setItemToDelete(null); }}
+                    className="px-4 py-2 bg-muted hover:bg-muted/80 text-foreground text-sm font-medium rounded-lg transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={confirmDelete}
+                    className="px-4 py-2 bg-[#800000] hover:bg-[#600000] text-white text-sm font-medium rounded-lg shadow-sm transition-colors"
+                  >
+                    Delete Partner
+                  </button>
+                </div>
+              </motion.div>
             </div>
-          </div>
-        )}
+          )}
+        </AnimatePresence>
 
         {/* Add Modal */}
         {isAdding && (
