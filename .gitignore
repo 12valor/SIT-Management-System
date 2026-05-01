@@ -15,7 +15,7 @@
 /dist
 
 # Prisma
-/prisma/
+/prisma/migrations/
 *.db
 *.db-journal
 /src/generated/prisma
@@ -51,9 +51,13 @@ ehthumbs.db
 .idea/
 *.swp
 *.swo
+.eslintcache
 
 # Testing
 /coverage/
+
+# Scratch & Temporary
+/scratch/
 
 # TypeScript
 *.tsbuildinfo
@@ -61,4 +65,3 @@ next-env.d.ts
 
 # Vercel
 .vercel
-.env
