@@ -129,7 +129,7 @@ export default function PartnersPage() {
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                     key={partner.id}
-                    className="group flex flex-col bg-white dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1"
+                    className="group flex flex-col bg-white dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 active:scale-[0.98]"
                   >
                     {/* Banner */}
                     <div className="h-32 w-full relative bg-slate-100 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">

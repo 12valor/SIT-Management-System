@@ -52,7 +52,7 @@ export default function ResourcesContent() {
                 <a 
                   key={idx}
                   href={`#${item.toLowerCase().replace(' ', '-')}`}
-                  className="flex items-center justify-between group py-2 border-b border-slate-100 dark:border-white/5"
+                  className="flex items-center justify-between group py-3 px-4 -mx-4 rounded-sm border-b border-slate-100 dark:border-white/5 hover:bg-slate-100/50 dark:hover:bg-white/5 transition-all duration-300 active:scale-[0.98]"
                 >
                   <span className="font-serif text-lg text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">
                     0{idx + 1}. {item}
@@ -91,16 +91,16 @@ export default function ResourcesContent() {
                   <BookOpen className="h-6 w-6 text-primary mb-6" strokeWidth={1} />
                   <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Training Manual</h4>
                   <p className="text-sm text-slate-500 mb-6 font-serif">The foundational guide for all SIT procedures.</p>
-                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group">
-                    Download Archive <Download className="h-3 w-3 group-hover:translate-y-0.5 transition-transform" />
+                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group/btn hover:opacity-80 transition-all active:scale-95">
+                    Download Archive <Download className="h-3 w-3 group-hover/btn:translate-y-0.5 transition-transform" />
                   </button>
                 </div>
                 <div className="p-8 bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/10">
                   <ShieldCheck className="h-6 w-6 text-primary mb-6" strokeWidth={1} />
                   <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Code of Conduct</h4>
                   <p className="text-sm text-slate-500 mb-6 font-serif">Professional expectations for trainees in the field.</p>
-                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group">
-                    Download Archive <Download className="h-3 w-3 group-hover:translate-y-0.5 transition-transform" />
+                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group/btn hover:opacity-80 transition-all active:scale-95">
+                    Download Archive <Download className="h-3 w-3 group-hover/btn:translate-y-0.5 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function ResourcesContent() {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{doc.format}</span>
-                    <button className="h-10 w-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-white/10 group-hover/item:bg-primary group-hover/item:border-primary group-hover/item:text-white transition-all duration-300">
+                    <button className="h-10 w-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-white/10 group-hover/item:bg-primary group-hover/item:border-primary group-hover/item:text-white transition-all duration-300 active:scale-90 hover:shadow-lg hover:shadow-primary/20">
                       <Download className="h-4 w-4" />
                     </button>
                   </div>
@@ -159,10 +159,13 @@ export default function ResourcesContent() {
                   The SIT Platform uses a unified terminal architecture. Trainees are required to synchronize their digital logbooks daily. Failure to synchronize may result in data loss or non-validation of hours.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <button className="px-8 py-3 bg-white text-slate-900 font-medium rounded-sm hover:bg-primary hover:text-white transition-all flex items-center gap-2">
+                  <a 
+                    href="mailto:support@tupv-sit.edu.ph"
+                    className="px-8 py-3 bg-white text-slate-900 font-medium rounded-sm hover:bg-primary hover:text-white transition-all flex items-center gap-2 active:scale-95 shadow-lg shadow-black/10"
+                  >
                     Open Setup Guide <ExternalLink className="h-4 w-4" />
-                  </button>
-                  <button className="px-8 py-3 border border-white/20 hover:bg-white/5 font-medium rounded-sm transition-all">
+                  </a>
+                  <button className="px-8 py-3 border border-white/20 hover:bg-white/5 font-medium rounded-sm transition-all active:scale-95">
                     System Requirements
                   </button>
                 </div>

@@ -75,7 +75,7 @@ export default function LoginGatePage() {
             >
               <Link 
                 href={role.href}
-                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 rounded-2xl transition-all duration-300 hover:border-primary/40 hover:bg-slate-50/50 dark:hover:bg-white/[0.04]"
+                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 rounded-2xl transition-all duration-300 hover:border-primary/40 hover:bg-slate-50/50 dark:hover:bg-white/[0.04] active:scale-[0.98] hover:shadow-2xl hover:shadow-primary/5"
               >
                 {/* Clean, unboxed icon */}
                 <div className="mb-8 text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors duration-300">

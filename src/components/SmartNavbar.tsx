@@ -124,17 +124,17 @@ export function SmartNavbar() {
                   </AnimatePresence>
                 </div>
 
-                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/resources">
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all active:scale-95" href="/resources">
                   Resources
                 </Link>
 
-                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/partners">
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all active:scale-95" href="/partners">
                   Partners
                 </Link>
-                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/about">
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all active:scale-95" href="/about">
                   About
                 </Link>
-                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/faq">
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all active:scale-95" href="/faq">
                   FAQ
                 </Link>
               </nav>
