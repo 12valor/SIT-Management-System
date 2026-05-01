@@ -48,7 +48,7 @@ export default function ResourcesContent() {
           <div>
             <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 mb-8">Navigation Registry</h2>
             <nav className="space-y-4">
-              {['Program Framework', 'Legal Templates', 'Technical Protocols', 'Evaluation Rubrics'].map((item, idx) => (
+              {['Program Framework', 'Legal Templates', 'Evaluation Rubrics'].map((item, idx) => (
                 <a 
                   key={idx}
                   href={`#${item.toLowerCase().replace(' ', '-')}`}
@@ -145,34 +145,7 @@ export default function ResourcesContent() {
             </div>
           </motion.section>
 
-          {/* Section 03: Technical Protocols */}
-          <motion.section id="technical-protocols" variants={fadeInUp}>
-            <div className="flex items-baseline gap-4 mb-12">
-              <span className="text-4xl font-serif text-primary/20 italic">03</span>
-              <h2 className="text-4xl font-serif font-medium text-slate-900 dark:text-white">Technical Protocols</h2>
-            </div>
-            
-            <div className="bg-slate-900 text-white p-12 md:p-16 rounded-sm relative overflow-hidden">
-              <div className="relative z-10">
-                <h3 className="text-3xl font-serif mb-6">Digital Terminal Navigation</h3>
-                <p className="text-slate-400 font-serif leading-relaxed mb-10 max-w-2xl">
-                  The SIT Platform uses a unified terminal architecture. Trainees are required to synchronize their digital logbooks daily. Failure to synchronize may result in data loss or non-validation of hours.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a 
-                    href="mailto:support@tupv-sit.edu.ph"
-                    className="px-8 py-3 bg-white text-slate-900 font-medium rounded-sm hover:bg-primary hover:text-white transition-all flex items-center gap-2 active:scale-95 shadow-lg shadow-black/10"
-                  >
-                    Open Setup Guide <ExternalLink className="h-4 w-4" />
-                  </a>
-                  <button className="px-8 py-3 border border-white/20 hover:bg-white/5 font-medium rounded-sm transition-all active:scale-95">
-                    System Requirements
-                  </button>
-                </div>
-              </div>
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
-            </div>
-          </motion.section>
+
 
         </div>
 
