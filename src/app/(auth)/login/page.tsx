@@ -66,49 +66,38 @@ export default function LoginGatePage() {
           </div>
         </motion.header>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="max-w-4xl mx-auto border-t border-slate-200 dark:border-white/10 mt-12">
           {roles.map((role) => (
             <motion.div
               key={role.title}
               variants={fadeInUp}
-              className="relative"
+              className="group border-b border-slate-200 dark:border-white/10"
             >
               <Link 
                 href={role.href}
-                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2"
+                className="flex flex-col md:flex-row md:items-center justify-between py-10 md:py-12 px-4 hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors duration-500"
               >
-                {/* RE-DESIGNED HEADER: CENTERED FLOATING ICON */}
-                <div className="flex justify-center mb-12 relative">
-                  {/* Subtle Background Glow */}
-                  <div className="absolute inset-0 flex items-center justify-center blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-700">
-                    <role.icon className="w-24 h-24 text-primary" />
+                <div className="flex items-start gap-6 md:gap-8">
+                  <div className="mt-1.5 flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors duration-500">
+                    <role.icon className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.25} />
                   </div>
-                  
-                  {/* Icon Container */}
-                  <div className="relative w-24 h-24 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-[2rem] flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-700 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/10">
-                    <role.icon className="w-12 h-12" strokeWidth={1} />
-                    
-                    {/* Corner Accent */}
-                    <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-slate-200 dark:bg-white/10 group-hover:bg-primary transition-colors" />
+                  <div className="flex-1">
+                    <h3 className="text-3xl md:text-4xl font-serif font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-500 mb-3">
+                      {role.title}
+                    </h3>
+                    <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-serif max-w-2xl">
+                      {role.description}
+                    </p>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="space-y-4 mb-12 flex-1">
-                  <h3 className="text-3xl font-serif font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                    {role.title}
-                  </h3>
-                  <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-serif italic">
-                    {role.description}
-                  </p>
-                </div>
-
-                {/* VISIBLE LOGIN BUTTON — SOLID RED */}
-                <div className="mt-auto pt-8 border-t border-slate-50 dark:border-white/5">
-                   <div className="w-full flex items-center justify-center gap-3 py-4 bg-primary text-white rounded-2xl font-serif font-medium border border-transparent transition-all group-hover:bg-primary/90 shadow-lg shadow-primary/20">
-                      <span>Log In to Portal</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                   </div>
+                <div className="flex items-center gap-4 text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors duration-500 mt-8 md:mt-0 ml-14 md:ml-8">
+                  <span className="font-serif font-medium text-sm tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden lg:block">
+                    Access Portal
+                  </span>
+                  <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-white/10 group-hover:border-primary/30 flex items-center justify-center transition-colors duration-500 bg-white dark:bg-transparent">
+                    <ArrowRight className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.5} />
+                  </div>
                 </div>
               </Link>
             </motion.div>
