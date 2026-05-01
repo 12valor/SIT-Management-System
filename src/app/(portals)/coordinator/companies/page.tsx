@@ -2,7 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2 } from "lucide-react";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2, AlertTriangle } from "lucide-react";
 import { getCompanies, setCompanyVerification, addCompany, updateCompany, deleteCompany } from "./actions";
 import { cn } from "@/lib/utils";
 
@@ -41,6 +41,10 @@ export default function CoordinatorCompaniesPage() {
     bannerUrl: "",
   });
   const [editingId, setEditingId] = useState<string | null>(null);
+  
+  // Delete Confirmation State
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<{id: string, name: string} | null>(null);
 
   const load = useCallback(async () => {
     const res = await getCompanies();
@@ -57,9 +61,17 @@ export default function CoordinatorCompaniesPage() {
     setProcessing(null);
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!window.confirm(`Are you sure you want to remove ${name}? This action cannot be undone.`)) return;
+  const handleDelete = (id: string, name: string) => {
+    setItemToDelete({ id, name });
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    const { id } = itemToDelete;
+    
     setProcessing(id);
+    setShowDeleteConfirm(false);
     try {
       await deleteCompany(id);
       await load();
@@ -67,6 +79,7 @@ export default function CoordinatorCompaniesPage() {
       console.error(error);
     } finally {
       setProcessing(null);
+      setItemToDelete(null);
     }
   };
 
@@ -169,6 +182,37 @@ export default function CoordinatorCompaniesPage() {
       }
     >
       <div className="flex-1 space-y-12 relative">
+        {/* Delete Confirmation Modal */}
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
+            <div className="bg-card w-full max-w-sm rounded-2xl border border-border shadow-2xl overflow-hidden p-6 text-center space-y-6">
+              <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
+                <AlertTriangle className="h-8 w-8 text-destructive" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-foreground">Remove Partner?</h3>
+                <p className="text-sm text-foreground/60 leading-relaxed">
+                  Are you sure you want to remove <span className="font-semibold text-foreground">{itemToDelete?.name}</span>? This action is permanent and cannot be undone.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button 
+                  onClick={() => { setShowDeleteConfirm(false); setItemToDelete(null); }}
+                  className="h-10 px-4 bg-muted hover:bg-muted/80 text-foreground text-xs font-semibold uppercase tracking-wider rounded-lg border border-border transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={confirmDelete}
+                  className="h-10 px-4 bg-destructive hover:bg-destructive/90 text-white text-xs font-semibold uppercase tracking-wider rounded-lg shadow-lg shadow-destructive/20 transition-colors"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Add Modal */}
         {isAdding && (
           <div className="fixed inset-0 z-50 flex items-start justify-center bg-background/80 backdrop-blur-sm p-4 md:pt-16">

@@ -23,7 +23,7 @@ export async function setCompanyVerification(companyId: string, isVerified: bool
 }
 
 export async function deleteCompany(id: string) {
-  await prisma.company.delete({
+  await prisma.company.deleteMany({
     where: { id },
   });
   revalidatePath("/coordinator/companies");
