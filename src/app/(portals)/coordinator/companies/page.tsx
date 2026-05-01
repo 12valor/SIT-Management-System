@@ -57,16 +57,43 @@ export default function CoordinatorCompaniesPage() {
     setProcessing(null);
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      if (type === "logo") setFormData(prev => ({ ...prev, logoUrl: reader.result as string }));
-      else setFormData(prev => ({ ...prev, bannerUrl: reader.result as string }));
+    reader.onloadend = async () => {
+      const dataUrl = reader.result as string;
+      const compressed = await compressImage(dataUrl, type === "logo" ? 400 : 1200, 0.8);
+      
+      if (type === "logo") setFormData(prev => ({ ...prev, logoUrl: compressed }));
+      else setFormData(prev => ({ ...prev, bannerUrl: compressed }));
     };
     reader.readAsDataURL(file);
+  };
+
+  // Helper to compress and convert to WebP
+  const compressImage = (dataUrl: string, maxWidth: number, quality: number): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = dataUrl;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = (maxWidth / width) * height;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/webp", quality));
+      };
+    });
   };
 
   const handleEdit = (company: Company) => {
