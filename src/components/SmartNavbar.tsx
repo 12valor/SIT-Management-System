@@ -124,61 +124,9 @@ export function SmartNavbar() {
                   </AnimatePresence>
                 </div>
 
-                {/* Resources Dropdown */}
-                <div 
-                  className="relative h-16 flex items-center"
-                  onMouseEnter={() => setActiveDropdown("resources")}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
-                  <Link 
-                    href="/resources"
-                    className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all duration-300"
-                  >
-                    Resources
-                    <ChevronDown className={`h-3.5 w-3.5 opacity-50 transition-transform duration-500 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
-                  </Link>
-
-                  <AnimatePresence>
-                    {activeDropdown === "resources" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                        className="absolute top-full left-[-20px] w-[260px] z-50 pt-2"
-                      >
-                        <div className="relative overflow-hidden rounded-sm border border-slate-200 dark:border-white/10 shadow-2xl bg-white dark:bg-[#0c0c0c]">
-                          <div className="p-1.5 flex flex-col gap-0.5">
-                            {[
-                              { title: "Archival Docs", href: "/resources#ARCHIVAL", icon: BookOpen },
-                              { title: "Legal Templates", href: "/resources#LEGAL", icon: Gavel },
-                              { title: "Technical Guides", href: "/resources#TECHNICAL", icon: ShieldCheck },
-                            ].map((item, idx) => (
-                              <motion.div
-                                key={item.title}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: idx * 0.05 }}
-                              >
-                                <Link 
-                                  href={item.href}
-                                  className="group/item flex items-center gap-4 p-3 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 rounded-sm"
-                                >
-                                  <div className="h-8 w-8 flex items-center justify-center bg-black/5 dark:bg-white/5 text-slate-500 group-hover/item:text-primary transition-colors rounded-sm">
-                                    <item.icon className="h-4 w-4" />
-                                  </div>
-                                  <span className="text-[11px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-                                    {item.title}
-                                  </span>
-                                </Link>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/resources">
+                  Resources
+                </Link>
 
                 <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="/partners">
                   Partners

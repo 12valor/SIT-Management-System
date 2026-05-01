@@ -2,45 +2,12 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { FileText, Download, Gavel, BookOpen, ShieldCheck, ArrowRight } from "lucide-react";
-
-const RESOURCE_CATEGORIES = [
-  {
-    id: "ARCHIVAL",
-    title: "Archival Documents",
-    description: "Official institutional manuals and grading rubrics for the SIT program.",
-    items: [
-      { name: "SIT Training Manual 2024", type: "PDF", size: "2.4 MB" },
-      { name: "Grading & Evaluation Rubric", type: "PDF", size: "1.1 MB" },
-      { name: "Code of Conduct for Trainees", type: "PDF", size: "850 KB" }
-    ]
-  },
-  {
-    id: "LEGAL",
-    title: "Legal & Partnerships",
-    description: "Standardized templates for MOU registration and confidentiality agreements.",
-    items: [
-      { name: "Standard MOU Template", type: "DOCX", size: "120 KB" },
-      { name: "Confidentiality Agreement", type: "PDF", size: "440 KB" },
-      { name: "Liability Waiver Form", type: "PDF", size: "310 KB" }
-    ]
-  },
-  {
-    id: "TECHNICAL",
-    title: "Technical Guides",
-    description: "Step-by-step instructions for navigating the digital logbook terminal.",
-    items: [
-      { name: "Logbook Entry Guide", type: "PDF", size: "3.2 MB" },
-      { name: "Coordinator Portal Overview", type: "PDF", size: "2.1 MB" },
-      { name: "Mobile App PWA Setup", type: "PDF", size: "1.4 MB" }
-    ]
-  }
-];
+import { FileText, Download, Gavel, BookOpen, ShieldCheck, ArrowRight, Info, ExternalLink } from "lucide-react";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 15 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
 };
 
 const staggerContainer = {
@@ -53,101 +20,182 @@ const staggerContainer = {
 
 export default function ResourcesContent() {
   return (
-    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-48 pb-24 px-6 transition-colors duration-300">
       <motion.div 
-        className="container mx-auto max-w-5xl"
+        className="container mx-auto max-w-4xl"
         initial="initial"
-        whileInView="animate"
-        viewport={{ once: false, amount: 0.05 }}
+        animate="animate"
         variants={staggerContainer}
       >
-        {/* Header Section */}
-        <motion.header className="mb-24 text-center" variants={fadeInUp}>
-          <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
-            Information Repository
-          </span>
-          <h1 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
-            Institutional Resources
+        {/* Archival Header */}
+        <motion.header className="mb-24 border-b border-slate-200 dark:border-white/10 pb-16" variants={fadeInUp}>
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-8 bg-primary/40" />
+            <span className="text-primary font-medium tracking-[0.2em] uppercase text-[10px]">
+              SIT STRATEGIC OFFICE • DOCUMENT REPOSITORY
+            </span>
+          </div>
+          <h1 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-8 leading-tight">
+            Institutional Handbook & Resources
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto font-serif">
-            Access the official documentation and standardized templates required for the Supervised Industrial Training program at TUPV.
+          <p className="text-xl text-slate-600 dark:text-slate-400 font-serif leading-relaxed max-w-3xl italic">
+            A comprehensive terminal for the Supervised Industrial Training program. This repository contains all regulatory frameworks, legal templates, and technical protocols required for institutional compliance.
           </p>
         </motion.header>
 
-        {/* Resources Grid */}
-        <div className="grid gap-24 mb-32">
-          {RESOURCE_CATEGORIES.map((category) => (
-            <motion.section key={category.id} variants={fadeInUp} className="group">
-              <div className="flex flex-col md:flex-row gap-8 md:gap-16">
-                {/* Category Sidebar */}
-                <div className="md:w-1/3">
-                  <div className="sticky top-40">
-                    <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-6">
-                      {category.id}
-                    </h2>
-                    <h3 className="text-3xl font-serif font-medium text-slate-900 dark:text-white mb-4">
-                      {category.title}
-                    </h3>
-                    <p className="text-slate-500 dark:text-slate-400 font-serif italic leading-relaxed">
-                      {category.description}
-                    </p>
-                  </div>
-                </div>
+        {/* Table of Contents - Clean & Document-like */}
+        <motion.section className="mb-32 grid md:grid-cols-2 gap-16" variants={fadeInUp}>
+          <div>
+            <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 mb-8">Navigation Registry</h2>
+            <nav className="space-y-4">
+              {['Program Framework', 'Legal Templates', 'Technical Protocols', 'Evaluation Rubrics'].map((item, idx) => (
+                <a 
+                  key={idx}
+                  href={`#${item.toLowerCase().replace(' ', '-')}`}
+                  className="flex items-center justify-between group py-2 border-b border-slate-100 dark:border-white/5"
+                >
+                  <span className="font-serif text-lg text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">
+                    0{idx + 1}. {item}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary transition-all opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0" />
+                </a>
+              ))}
+            </nav>
+          </div>
+          <div className="bg-slate-100/50 dark:bg-white/[0.02] p-8 rounded-sm border border-slate-200/60 dark:border-white/5">
+            <Info className="h-6 w-6 text-primary mb-6" strokeWidth={1.5} />
+            <h3 className="font-serif font-medium text-slate-900 dark:text-white text-lg mb-4">Registry Compliance</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-serif">
+              All documents listed herein are the intellectual property of TUPV. Redistribution without official authorization is strictly prohibited under institutional policy.
+            </p>
+          </div>
+        </motion.section>
 
-                {/* Items List */}
-                <div className="md:w-2/3 space-y-4">
-                  {category.items.map((item, idx) => (
-                    <div 
-                      key={idx}
-                      className="group/item flex items-center justify-between p-6 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-sm hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
-                    >
-                      <div className="flex items-center gap-5">
-                        <div className="h-12 w-12 flex items-center justify-center bg-slate-50 dark:bg-white/5 rounded-sm text-slate-400 group-hover/item:text-primary transition-colors">
-                          <FileText className="h-5 w-5" strokeWidth={1.5} />
-                        </div>
-                        <div>
-                          <h4 className="font-serif font-medium text-slate-900 dark:text-white text-lg">
-                            {item.name}
-                          </h4>
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            {item.type} • {item.size}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <button className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-white/5 text-slate-400 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300">
-                        <Download className="h-4 w-4" strokeWidth={2} />
-                      </button>
-                    </div>
-                  ))}
+        {/* Content Sections - Editorial Flow */}
+        <div className="space-y-40">
+          
+          {/* Section 01: Program Framework */}
+          <motion.section id="program-framework" variants={fadeInUp}>
+            <div className="flex items-baseline gap-4 mb-12">
+              <span className="text-4xl font-serif text-primary/20 italic">01</span>
+              <h2 className="text-4xl font-serif font-medium text-slate-900 dark:text-white">Program Framework</h2>
+            </div>
+            
+            <div className="prose prose-slate dark:prose-invert max-w-none font-serif text-lg leading-relaxed text-slate-600 dark:text-slate-400 space-y-8">
+              <p>
+                The Supervised Industrial Training (SIT) program at TUPV is designed as a bridge between theoretical academic rigor and the demands of the modern industrial landscape. Students are required to complete a minimum of 600 hours of field experience.
+              </p>
+              
+              <div className="grid sm:grid-cols-2 gap-8 mt-12 not-prose">
+                <div className="p-8 bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/10">
+                  <BookOpen className="h-6 w-6 text-primary mb-6" strokeWidth={1} />
+                  <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Training Manual</h4>
+                  <p className="text-sm text-slate-500 mb-6 font-serif">The foundational guide for all SIT procedures.</p>
+                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group">
+                    Download Archive <Download className="h-3 w-3 group-hover:translate-y-0.5 transition-transform" />
+                  </button>
+                </div>
+                <div className="p-8 bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/10">
+                  <ShieldCheck className="h-6 w-6 text-primary mb-6" strokeWidth={1} />
+                  <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Code of Conduct</h4>
+                  <p className="text-sm text-slate-500 mb-6 font-serif">Professional expectations for trainees in the field.</p>
+                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group">
+                    Download Archive <Download className="h-3 w-3 group-hover:translate-y-0.5 transition-transform" />
+                  </button>
                 </div>
               </div>
-            </motion.section>
-          ))}
+            </div>
+          </motion.section>
+
+          {/* Section 02: Legal Templates */}
+          <motion.section id="legal-templates" variants={fadeInUp}>
+            <div className="flex items-baseline gap-4 mb-12">
+              <span className="text-4xl font-serif text-primary/20 italic">02</span>
+              <h2 className="text-4xl font-serif font-medium text-slate-900 dark:text-white">Legal & Partnership Templates</h2>
+            </div>
+            
+            <div className="space-y-6">
+              {[
+                { name: "Memorandum of Understanding (MOU)", desc: "Standard agreement between TUPV and Industry Partners.", format: "DOCX" },
+                { name: "Non-Disclosure Agreement (NDA)", desc: "Confidentiality protocol for proprietary information.", format: "PDF" },
+                { name: "Liability Waiver Form", desc: "Institutional release for off-campus field training.", format: "PDF" }
+              ].map((doc, idx) => (
+                <div key={idx} className="flex items-center justify-between py-8 border-b border-slate-200 dark:border-white/10 group/item">
+                  <div className="flex items-start gap-6">
+                    <div className="mt-1 text-slate-300 group-hover/item:text-primary transition-colors">
+                      <Gavel className="h-6 w-6" strokeWidth={1} />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-serif font-medium text-slate-900 dark:text-white group-hover/item:text-primary transition-colors">
+                        {doc.name}
+                      </h4>
+                      <p className="text-slate-500 dark:text-slate-400 font-serif italic text-sm">
+                        {doc.desc}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{doc.format}</span>
+                    <button className="h-10 w-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-white/10 group-hover/item:bg-primary group-hover/item:border-primary group-hover/item:text-white transition-all duration-300">
+                      <Download className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Section 03: Technical Protocols */}
+          <motion.section id="technical-protocols" variants={fadeInUp}>
+            <div className="flex items-baseline gap-4 mb-12">
+              <span className="text-4xl font-serif text-primary/20 italic">03</span>
+              <h2 className="text-4xl font-serif font-medium text-slate-900 dark:text-white">Technical Protocols</h2>
+            </div>
+            
+            <div className="bg-slate-900 text-white p-12 md:p-16 rounded-sm relative overflow-hidden">
+              <div className="relative z-10">
+                <h3 className="text-3xl font-serif mb-6">Digital Terminal Navigation</h3>
+                <p className="text-slate-400 font-serif leading-relaxed mb-10 max-w-2xl">
+                  The SIT Platform uses a unified terminal architecture. Trainees are required to synchronize their digital logbooks daily. Failure to synchronize may result in data loss or non-validation of hours.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <button className="px-8 py-3 bg-white text-slate-900 font-medium rounded-sm hover:bg-primary hover:text-white transition-all flex items-center gap-2">
+                    Open Setup Guide <ExternalLink className="h-4 w-4" />
+                  </button>
+                  <button className="px-8 py-3 border border-white/20 hover:bg-white/5 font-medium rounded-sm transition-all">
+                    System Requirements
+                  </button>
+                </div>
+              </div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+            </div>
+          </motion.section>
+
         </div>
 
-        {/* Footer Guidance */}
+        {/* Institutional Footer */}
         <motion.footer 
-          className="mt-32 pt-16 border-t border-slate-200 dark:border-white/10 text-center"
+          className="mt-40 pt-20 border-t border-slate-900/10 dark:border-white/10"
           variants={fadeInUp}
         >
-          <div className="max-w-2xl mx-auto">
-            <BookOpen className="h-10 w-10 text-primary mx-auto mb-8" strokeWidth={1} />
-            <h2 className="text-2xl font-serif font-medium text-slate-900 dark:text-white mb-6">
-              Need a Custom Document?
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-10 font-serif">
-              If you require a specific institutional form not listed in this repository, please contact the SIT Strategic Office for archival assistance.
-            </p>
-            <a 
-              href="mailto:support@tupv-sit.edu.ph"
-              className="inline-flex items-center justify-center px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium rounded-full hover:bg-primary hover:text-white transition-all duration-300 shadow-lg"
-            >
-              Request Official Document
-              <ArrowRight className="ml-3 h-4 w-4" />
-            </a>
+          <div className="grid md:grid-cols-3 gap-12 text-sm text-slate-500 dark:text-slate-400 font-serif">
+            <div>
+              <h5 className="text-slate-900 dark:text-white font-medium mb-4 uppercase tracking-widest text-[10px]">Strategic Office</h5>
+              <p>Technological University of the Philippines Visayas</p>
+              <p>City of Talisay, Negros Occidental</p>
+            </div>
+            <div>
+              <h5 className="text-slate-900 dark:text-white font-medium mb-4 uppercase tracking-widest text-[10px]">Archival Support</h5>
+              <p>Email: sit.archives@tupv.edu.ph</p>
+              <p>Phone: (034) 495-3480</p>
+            </div>
+            <div className="flex flex-col items-end justify-center">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30">EST. 1977</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30">OFFICIAL REPOSITORY</p>
+            </div>
           </div>
         </motion.footer>
+
       </motion.div>
     </main>
   );
