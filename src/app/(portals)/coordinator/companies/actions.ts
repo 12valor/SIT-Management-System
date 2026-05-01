@@ -22,6 +22,40 @@ export async function setCompanyVerification(companyId: string, isVerified: bool
   return { success: true };
 }
 
+export async function updateCompany(id: string, data: {
+  name: string;
+  email: string;
+  industry: string;
+  location: string;
+  description: string;
+  slots: number;
+  logoUrl?: string;
+  bannerUrl?: string;
+}) {
+  try {
+    await prisma.company.update({
+      where: { id },
+      data: {
+        name: data.name,
+        email: data.email,
+        industry: data.industry,
+        location: data.location,
+        description: data.description,
+        slots: data.slots,
+        logoUrl: data.logoUrl,
+        bannerUrl: data.bannerUrl,
+      },
+    });
+
+    revalidatePath("/coordinator/companies");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update company:", error);
+    const message = error instanceof Error ? error.message : "An unexpected error occurred";
+    throw new Error(message);
+  }
+}
+
 export async function addCompany(data: {
   name: string;
   email: string;

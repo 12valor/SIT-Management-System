@@ -2,8 +2,8 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2 } from "lucide-react";
-import { getCompanies, setCompanyVerification, addCompany } from "./actions";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit } from "lucide-react";
+import { getCompanies, setCompanyVerification, addCompany, updateCompany } from "./actions";
 import { cn } from "@/lib/utils";
 
 type Company = {
@@ -40,6 +40,7 @@ export default function CoordinatorCompaniesPage() {
     logoUrl: "",
     bannerUrl: "",
   });
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const res = await getCompanies();
@@ -68,12 +69,32 @@ export default function CoordinatorCompaniesPage() {
     reader.readAsDataURL(file);
   };
 
+  const handleEdit = (company: Company) => {
+    setFormData({
+      name: company.name,
+      email: company.email,
+      industry: company.industry,
+      location: company.location || "",
+      description: company.description || "",
+      slots: company.slots,
+      logoUrl: company.logoUrl || "",
+      bannerUrl: company.bannerUrl || "",
+    });
+    setEditingId(company.id);
+    setIsAdding(true);
+  };
+
   const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await addCompany(formData);
+      if (editingId) {
+        await updateCompany(editingId, formData);
+      } else {
+        await addCompany(formData);
+      }
       setIsAdding(false);
+      setEditingId(null);
       setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "", bannerUrl: "" });
       await load();
     } catch (error) {
@@ -113,8 +134,8 @@ export default function CoordinatorCompaniesPage() {
           <div className="fixed inset-0 z-50 flex items-start justify-center bg-background/80 backdrop-blur-sm p-4 md:pt-16">
             <div className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
               <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-muted/30">
-                <h3 className="font-semibold text-foreground uppercase tracking-wider text-sm">Add New Partner</h3>
-                <button onClick={() => setIsAdding(false)} className="text-foreground/50 hover:text-foreground">
+                <h3 className="font-semibold text-foreground uppercase tracking-wider text-sm">{editingId ? "Edit Partner" : "Add New Partner"}</h3>
+                <button onClick={() => { setIsAdding(false); setEditingId(null); }} className="text-foreground/50 hover:text-foreground">
                   <X className="h-5 w-5" />
                 </button>
               </div>
@@ -202,10 +223,10 @@ export default function CoordinatorCompaniesPage() {
                   </div>
                 </div>
                 <div className="pt-4 flex justify-end gap-3 mt-4 border-t border-border/50">
-                  <button type="button" onClick={() => setIsAdding(false)} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-foreground/60 hover:text-foreground">Cancel</button>
+                  <button type="button" onClick={() => { setIsAdding(false); setEditingId(null); }} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-foreground/60 hover:text-foreground">Cancel</button>
                   <button type="submit" disabled={isSubmitting} className="px-6 py-2 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider rounded-md hover:opacity-90 disabled:opacity-50 flex items-center gap-2">
-                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
-                    Add Partner
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : (editingId ? <Edit className="h-4 w-4" /> : <Plus className="h-4 w-4" />)}
+                    {editingId ? "Update Partner" : "Add Partner"}
                   </button>
                 </div>
               </form>
@@ -345,6 +366,14 @@ export default function CoordinatorCompaniesPage() {
 
                       {/* Actions */}
                       <div className="mt-4 flex gap-2">
+                        <button
+                          onClick={() => handleEdit(c)}
+                          className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-primary hover:border-primary/30 transition-all flex items-center justify-center"
+                          title="Edit Partner"
+                        >
+                          <Edit className="h-3.5 w-3.5" />
+                        </button>
+
                         {!c.isVerified ? (
                           <button
                             onClick={() => handleVerify(c.id, true)}
