@@ -15,6 +15,7 @@ type Partner = {
   slots: number;
   description: string | null;
   logoUrl: string | null;
+  bannerUrl: string | null;
 };
 
 export default function PartnersPage() {
@@ -114,46 +115,53 @@ export default function PartnersPage() {
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                     key={partner.id}
-                    className="group flex flex-col bg-white dark:bg-[#0f0f0f] border border-slate-100 dark:border-white/5 rounded-3xl p-8 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 relative overflow-hidden"
+                    className="group flex flex-col bg-white dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1"
                   >
-                    {/* Soft background hover effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Banner */}
+                    <div className="h-32 w-full relative bg-slate-100 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
+                      {partner.bannerUrl ? (
+                        <img src={partner.bannerUrl} alt="Banner" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-white/5 dark:to-white/10" />
+                      )}
+                    </div>
                     
-                    <div className="relative z-10 flex flex-col h-full">
-                      <header className="flex items-center gap-5 mb-8">
-                        <div className="w-16 h-16 shrink-0 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-100 dark:border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all duration-500 overflow-hidden">
-                          {partner.logoUrl ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={partner.logoUrl} alt={partner.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <Building2 className="w-7 h-7 text-slate-400 group-hover:text-primary transition-colors duration-500" />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-serif font-medium text-slate-900 dark:text-white leading-tight mb-1 group-hover:text-primary transition-colors">
-                            {partner.name}
-                          </h3>
-                          <span className="inline-block px-3 py-1 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-full">
-                            {partner.industry}
-                          </span>
-                        </div>
-                      </header>
+                    {/* Profile Body */}
+                    <div className="px-6 pb-6 flex-1 flex flex-col relative pt-14">
+                      {/* Logo (Overlapping) */}
+                      <div className="absolute -top-12 left-6 h-24 w-24 rounded-2xl bg-white dark:bg-[#0f0f0f] border-4 border-white dark:border-[#0f0f0f] shadow-md flex items-center justify-center overflow-hidden">
+                        {partner.logoUrl ? (
+                          <img src={partner.logoUrl} alt={partner.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <Building2 className="h-10 w-10 text-slate-300 dark:text-slate-600" />
+                        )}
+                      </div>
 
-                      <div className="flex-1">
-                        <p className="text-slate-600 dark:text-slate-400 font-serif italic leading-relaxed text-lg mb-8">
+                      {/* Info */}
+                      <div>
+                        <h3 className="font-serif font-medium text-slate-900 dark:text-white text-xl leading-tight truncate group-hover:text-primary transition-colors">
+                          {partner.name}
+                        </h3>
+                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1.5 uppercase tracking-wider truncate">
+                          {partner.industry}
+                        </p>
+                      </div>
+
+                      <div className="flex-1 mt-6">
+                        <p className="text-slate-600 dark:text-slate-400 font-serif italic leading-relaxed text-sm line-clamp-3">
                           &quot;{partner.description || "Partner of Technological University of the Philippines Visayas for the SIT program."}&quot;
                         </p>
                       </div>
 
-                      <footer className="mt-auto pt-6 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
-                          <div className="flex items-center gap-1.5">
-                            <MapPin className="w-4 h-4 text-primary/70" />
-                            <span className="font-medium">{partner.location || "N/A"}</span>
+                      <footer className="mt-8 pt-5 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-sm">
+                        <div className="flex flex-col gap-2 text-slate-500 dark:text-slate-400">
+                          <div className="flex items-center gap-2">
+                            <MapPin className="w-3.5 h-3.5 text-primary/70" />
+                            <span className="font-medium text-xs">{partner.location || "Multiple Locations"}</span>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Users className="w-4 h-4 text-primary/70" />
-                            <span className="font-medium">{partner.slots} Openings</span>
+                          <div className="flex items-center gap-2">
+                            <Users className="w-3.5 h-3.5 text-primary/70" />
+                            <span className="font-medium text-xs">{partner.slots} Openings</span>
                           </div>
                         </div>
                         
