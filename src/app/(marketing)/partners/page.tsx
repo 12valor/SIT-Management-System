@@ -51,10 +51,10 @@ export default function PartnersPage() {
       stagger={60}
       transition={400}
     >
-      <main className="min-h-screen bg-[#fafaf9] dark:bg-[#050505] text-slate-900 dark:text-slate-100 pt-32 md:pt-40 pb-32 transition-colors duration-500 overflow-hidden">
+      <main className="min-h-screen bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 pt-32 md:pt-40 pb-32 transition-colors duration-500 overflow-hidden">
         
         {/* Decorative ambient background */}
-        <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-slate-100/50 to-transparent pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 max-w-6xl relative z-10">
           
