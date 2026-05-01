@@ -116,6 +116,7 @@ model Company {
   description String?  @db.Text
   location    String?
   logoUrl     String?
+  bannerUrl   String?
   slots       Int      @default(0)
   isVerified  Boolean  @default(false)
   joinedAt    DateTime @default(now())

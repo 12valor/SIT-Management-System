@@ -30,6 +30,7 @@ export async function addCompany(data: {
   description: string;
   slots: number;
   logoUrl?: string;
+  bannerUrl?: string;
 }) {
   try {
     await prisma.company.create({
@@ -41,6 +42,7 @@ export async function addCompany(data: {
         description: data.description,
         slots: data.slots,
         logoUrl: data.logoUrl,
+        bannerUrl: data.bannerUrl,
         isVerified: true,
       },
     });

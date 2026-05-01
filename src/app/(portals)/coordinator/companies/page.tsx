@@ -14,6 +14,8 @@ type Company = {
   location?: string | null;
   slots: number;
   description?: string | null;
+  logoUrl?: string | null;
+  bannerUrl?: string | null;
   isVerified: boolean;
   joinedAt: Date;
   _count: { employers: number; postings: number };
@@ -36,6 +38,7 @@ export default function CoordinatorCompaniesPage() {
     description: "",
     slots: 0,
     logoUrl: "",
+    bannerUrl: "",
   });
 
   const load = useCallback(async () => {
@@ -53,13 +56,14 @@ export default function CoordinatorCompaniesPage() {
     setProcessing(null);
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setFormData(prev => ({ ...prev, logoUrl: reader.result as string }));
+      if (type === "logo") setFormData(prev => ({ ...prev, logoUrl: reader.result as string }));
+      else setFormData(prev => ({ ...prev, bannerUrl: reader.result as string }));
     };
     reader.readAsDataURL(file);
   };
@@ -70,7 +74,7 @@ export default function CoordinatorCompaniesPage() {
     try {
       await addCompany(formData);
       setIsAdding(false);
-      setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "" });
+      setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "", bannerUrl: "" });
       await load();
     } catch (error) {
       console.error(error);
@@ -116,33 +120,59 @@ export default function CoordinatorCompaniesPage() {
               </div>
               <form onSubmit={handleAddSubmit} className="p-6 overflow-y-auto flex flex-col gap-6">
                 
-                {/* Logo Upload Section */}
-                <div className="flex flex-col items-center justify-center gap-4 py-4 border-2 border-dashed border-border rounded-xl bg-muted/10">
-                  {formData.logoUrl ? (
-                    <div className="relative group">
-                      <img src={formData.logoUrl} alt="Preview" className="w-24 h-24 rounded-full object-cover border-2 border-primary" />
-                      <button 
-                        type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
-                        className="absolute -top-2 -right-2 bg-destructive text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center text-foreground/30">
-                        <Building2 className="h-8 w-8" />
+                {/* Media Upload Section */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex flex-col items-center justify-center gap-4 py-4 border-2 border-dashed border-border rounded-xl bg-muted/10">
+                    {formData.logoUrl ? (
+                      <div className="relative group">
+                        <img src={formData.logoUrl} alt="Preview" className="w-16 h-16 rounded-xl object-cover border border-border" />
+                        <button 
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
+                          className="absolute -top-2 -right-2 bg-destructive text-white p-1 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
                       </div>
-                      <p className="text-xs font-medium text-foreground/50">No logo uploaded</p>
-                    </div>
-                  )}
-                  <label className="cursor-pointer">
-                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                    <div className="px-4 py-2 bg-muted hover:bg-muted/80 text-foreground text-xs font-bold uppercase tracking-widest rounded-lg border border-border transition-colors">
-                      {formData.logoUrl ? "Change Logo" : "Upload Company Logo"}
-                    </div>
-                  </label>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 text-center">
+                        <Building2 className="h-6 w-6 text-foreground/30" />
+                        <p className="text-[10px] font-medium text-foreground/50 uppercase tracking-widest">Logo</p>
+                      </div>
+                    )}
+                    <label className="cursor-pointer">
+                      <input type="file" accept="image/*" onChange={e => handleImageUpload(e, "logo")} className="hidden" />
+                      <div className="px-3 py-1.5 bg-muted hover:bg-muted/80 text-foreground text-[10px] font-bold uppercase tracking-widest rounded-md border border-border transition-colors">
+                        Upload Logo
+                      </div>
+                    </label>
+                  </div>
+
+                  <div className="flex flex-col items-center justify-center gap-4 py-4 border-2 border-dashed border-border rounded-xl bg-muted/10">
+                    {formData.bannerUrl ? (
+                      <div className="relative group w-full px-4">
+                        <img src={formData.bannerUrl} alt="Preview" className="w-full h-16 rounded-lg object-cover border border-border" />
+                        <button 
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, bannerUrl: "" }))}
+                          className="absolute top-0 right-2 bg-destructive text-white p-1 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 text-center">
+                        <div className="w-16 h-6 bg-foreground/10 rounded" />
+                        <p className="text-[10px] font-medium text-foreground/50 uppercase tracking-widest">Banner</p>
+                      </div>
+                    )}
+                    <label className="cursor-pointer">
+                      <input type="file" accept="image/*" onChange={e => handleImageUpload(e, "banner")} className="hidden" />
+                      <div className="px-3 py-1.5 bg-muted hover:bg-muted/80 text-foreground text-[10px] font-bold uppercase tracking-widest rounded-md border border-border transition-colors">
+                        Upload Banner
+                      </div>
+                    </label>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -236,91 +266,118 @@ export default function CoordinatorCompaniesPage() {
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-muted/50 border-b border-border">
-                    <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left">Company Entity</th>
-                    <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left hidden md:table-cell">Industry Focus</th>
-                    <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left hidden lg:table-cell">Personnel</th>
-                    <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left hidden lg:table-cell">Postings</th>
-                    <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left">MOU Status</th>
-                    <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/40">
-                  {filtered.length === 0 && !isLoading ? (
-                    <tr>
-                      <td colSpan={6} className="py-32 text-center">
-                        <p className="text-xs font-semibold text-foreground/30 uppercase tracking-widest">
-                          {companies.length === 0 ? "No partners registered" : "No results found"}
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filtered.length === 0 && !isLoading ? (
+                <div className="col-span-full py-24 flex flex-col items-center justify-center border border-border border-dashed rounded-xl bg-card">
+                  <Building2 className="h-12 w-12 text-muted-foreground mb-4 opacity-20" />
+                  <p className="text-sm font-medium text-foreground/50 uppercase tracking-widest">
+                    {companies.length === 0 ? "No partners registered" : "No results found"}
+                  </p>
+                </div>
+              ) : (
+                filtered.map((c) => (
+                  <div key={c.id} className="group flex flex-col bg-card rounded-xl border border-border shadow-sm overflow-hidden hover:border-primary/30 transition-all duration-300">
+                    {/* Banner */}
+                    <div className="h-28 w-full relative bg-muted border-b border-border">
+                      {c.bannerUrl ? (
+                        <img src={c.bannerUrl} alt="Banner" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-tr from-muted to-muted/50" />
+                      )}
+                      {/* Status Badge Top Right */}
+                      <div className="absolute top-3 right-3">
+                        <span className={cn(
+                          "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border shadow-sm backdrop-blur-md",
+                          c.isVerified
+                            ? "bg-primary/90 text-primary-foreground border-primary"
+                            : "bg-amber-500/90 text-white border-amber-600"
+                        )}>
+                          {c.isVerified ? <ShieldCheck className="h-3 w-3" /> : <ShieldAlert className="h-3 w-3" />}
+                          {c.isVerified ? "Verified" : "Pending"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Profile Body */}
+                    <div className="px-5 pb-5 flex-1 flex flex-col relative pt-12">
+                      {/* Logo (Overlapping) */}
+                      <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-card border-4 border-card shadow-sm flex items-center justify-center overflow-hidden">
+                        {c.logoUrl ? (
+                          <img src={c.logoUrl} alt={c.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <Building2 className="h-8 w-8 text-foreground/20" />
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div>
+                        <h3 className="font-bold text-foreground text-base leading-tight truncate">{c.name}</h3>
+                        <p className="text-[10px] font-medium text-foreground/60 mt-1 uppercase tracking-wider truncate">
+                          {c.industry}
                         </p>
-                      </td>
-                    </tr>
-                  ) : (
-                    filtered.map((c) => (
-                      <tr key={c.id} className="hover:bg-muted/30 transition-colors group">
-                        <td className="px-6 py-4">
-                          <p className="font-semibold text-foreground tracking-tight leading-none">{c.name}</p>
-                          <div className="flex items-center gap-1 mt-1 text-[10px] text-foreground/50 font-medium">
-                            <Mail className="h-2.5 w-2.5 opacity-50" /> {c.email}
+                        
+                        <div className="mt-3 space-y-1.5">
+                          <div className="flex items-center gap-2 text-[11px] text-foreground/70">
+                            <Mail className="h-3 w-3 opacity-50" />
+                            <span className="truncate">{c.email}</span>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 hidden md:table-cell">
-                          <div className="flex items-center gap-1 text-xs text-foreground/70 font-medium">
-                            <Globe className="h-3 w-3 opacity-50" /> {c.industry}
+                          <div className="flex items-center gap-2 text-[11px] text-foreground/70">
+                            <Globe className="h-3 w-3 opacity-50" />
+                            <span className="truncate">{c.location || "Multiple Locations"}</span>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 hidden lg:table-cell">
-                          <span className="text-sm font-semibold tabular-nums text-foreground/80">{c._count?.employers ?? 0}</span>
-                        </td>
-                        <td className="px-6 py-4 hidden lg:table-cell">
-                          <span className="text-sm font-semibold tabular-nums text-foreground/80">{c._count?.postings ?? 0}</span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={cn(
-                            "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border shadow-sm",
-                            c.isVerified
-                              ? "bg-primary/5 text-primary border-primary/10"
-                              : "bg-amber-500/5 text-amber-600 border-amber-500/10"
-                          )}>
-                            {c.isVerified ? <ShieldCheck className="h-3 w-3" /> : <ShieldAlert className="h-3 w-3" />}
-                            {c.isVerified ? "Verified" : "Pending"}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          {!c.isVerified ? (
-                            <button
-                              onClick={() => handleVerify(c.id, true)}
-                              disabled={processing === c.id}
-                              className="h-8 px-3 rounded-lg border border-primary bg-primary text-primary-foreground text-[9px] font-semibold uppercase tracking-wider hover:opacity-90 transition-all disabled:opacity-50 flex items-center gap-1.5 ml-auto"
-                            >
-                              {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <ShieldCheck className="h-3 w-3" />}
-                              Verify
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => handleVerify(c.id, false)}
-                              disabled={processing === c.id}
-                              className="h-8 px-3 rounded-lg border border-border bg-muted text-foreground/60 text-[9px] font-semibold uppercase tracking-wider hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all disabled:opacity-50 flex items-center gap-1.5 ml-auto"
-                            >
-                              {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Clock className="h-3 w-3" />}
-                              Revoke
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                        </div>
+                      </div>
+
+                      <div className="flex-1" /> {/* Spacer */}
+
+                      {/* Stats */}
+                      <div className="grid grid-cols-2 gap-2 mt-5 pt-4 border-t border-border/50">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-semibold text-foreground/50 uppercase tracking-wider">Personnel</span>
+                          <span className="text-sm font-bold text-foreground">{c._count?.employers ?? 0}</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-semibold text-foreground/50 uppercase tracking-wider">Postings</span>
+                          <span className="text-sm font-bold text-foreground">{c._count?.postings ?? 0}</span>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="mt-4 flex gap-2">
+                        {!c.isVerified ? (
+                          <button
+                            onClick={() => handleVerify(c.id, true)}
+                            disabled={processing === c.id}
+                            className="flex-1 h-8 rounded-lg border border-primary bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+                          >
+                            {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <ShieldCheck className="h-3 w-3" />}
+                            Verify
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleVerify(c.id, false)}
+                            disabled={processing === c.id}
+                            className="flex-1 h-8 rounded-lg border border-border bg-muted text-foreground/60 text-[10px] font-semibold uppercase tracking-wider hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+                          >
+                            {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Clock className="h-3 w-3" />}
+                            Revoke
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
-            <div className="px-6 py-3 border-t border-border/40 bg-muted/20">
-              <p className="text-[9px] font-medium text-foreground/40 uppercase tracking-widest">
-                Partner Entities: {filtered.length} of {companies.length}
-              </p>
-            </div>
+            
+            {filtered.length > 0 && (
+              <div className="mt-6 flex justify-center">
+                <p className="text-[10px] font-medium text-foreground/40 uppercase tracking-widest bg-muted/50 px-4 py-1.5 rounded-full border border-border/50">
+                  Showing {filtered.length} of {companies.length} Partners
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
