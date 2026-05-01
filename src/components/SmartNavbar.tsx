@@ -128,6 +128,10 @@ export function SmartNavbar() {
                   News
                 </Link>
 
+                <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all active:scale-95" href="/placements">
+                  Placements
+                </Link>
+
                 <Link className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all active:scale-95" href="/resources">
                   Resources
                 </Link>
@@ -206,6 +210,9 @@ export function SmartNavbar() {
               <div className="flex flex-col gap-2">
                 <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/news" onClick={() => setIsMobileMenuOpen(false)}>
                   News <ArrowRight className="h-4 w-4 text-primary" />
+                </Link>
+                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/placements" onClick={() => setIsMobileMenuOpen(false)}>
+                  Placements <ArrowRight className="h-4 w-4 text-primary" />
                 </Link>
                 <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/resources" onClick={() => setIsMobileMenuOpen(false)}>
                   Resources <ArrowRight className="h-4 w-4 text-primary" />
