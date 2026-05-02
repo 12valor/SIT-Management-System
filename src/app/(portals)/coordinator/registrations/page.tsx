@@ -168,7 +168,7 @@ export default function CoordinatorRegistrationsPage() {
             </p>
           </div>
           <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider">
-            {pendingUsers.length + pendingCompanies.length} Actions Required
+            {pendingUsers.length + (data?.companies?.length || 0)} Actions Required
           </div>
         </div>
 
