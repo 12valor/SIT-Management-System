@@ -183,10 +183,13 @@ export default function PartnersPage() {
                         
                         <Link 
                           href="#" 
-                          className="w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all duration-300"
+                          className="group/btn relative w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 overflow-hidden transition-all duration-300 shadow-sm active:scale-90"
                           aria-label={`View details for ${partner.name}`}
                         >
-                          <ArrowRight className="w-4 h-4" />
+                          <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300">
+                            <ArrowRight className="w-4 h-4" />
+                          </span>
+                          <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                         </Link>
                       </footer>
                     </div>
@@ -232,13 +235,13 @@ export default function PartnersPage() {
                 
                 <Link
                   href="#"
-                  className="group relative inline-flex items-center justify-center h-14 px-10 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium rounded-full overflow-hidden transition-transform active:scale-95 shadow-lg"
+                  className="group relative inline-flex items-center justify-center h-14 px-10 bg-primary text-white font-medium rounded-full overflow-hidden transition-transform active:scale-95 shadow-lg shadow-primary/20"
                 >
                   <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
                     Apply to Join
                     <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </span>
-                  <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                  <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                 </Link>
               </div>
             </div>
