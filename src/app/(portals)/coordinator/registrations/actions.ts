@@ -55,3 +55,22 @@ export async function verifyCompany(companyId: string) {
     return { success: false, error: "Failed to verify company." };
   }
 }
+
+export async function verifyPartnership(userId: string, companyId: string) {
+  try {
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: userId },
+        data: { isApproved: true },
+      }),
+      prisma.company.update({
+        where: { id: companyId },
+        data: { isVerified: true },
+      }),
+    ]);
+    revalidatePath("/coordinator/registrations");
+    return { success: true };
+  } catch {
+    return { success: false, error: "Failed to verify partnership." };
+  }
+}

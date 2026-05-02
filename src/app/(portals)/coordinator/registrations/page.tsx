@@ -13,7 +13,7 @@ import {
   GraduationCap,
   Briefcase
 } from "lucide-react";
-import { getPendingRegistrations, approveUser, rejectUser, verifyCompany } from "./actions";
+import { getPendingRegistrations, approveUser, rejectUser, verifyCompany, verifyPartnership } from "./actions";
 import { cn } from "@/lib/utils";
 import { RegistrationData, PendingUser } from "./types";
 import { Company } from "@prisma/client";
@@ -55,10 +55,30 @@ export default function CoordinatorRegistrationsPage() {
     setActionId(null);
   }
 
+  async function handleVerifyPartnership(userId: string, companyId: string) {
+    setActionId(userId);
+    await verifyPartnership(userId, companyId);
+    await loadData();
+    setActionId(null);
+  }
+
   const pendingUsers = data?.users || [];
   const pendingStudents = pendingUsers.filter(u => u.role === 'STUDENT');
-  const pendingEmployers = pendingUsers.filter(u => u.role === 'EMPLOYER');
-  const pendingCompanies = data?.companies || [];
+  
+  // Partner Applications: Employer + Unverified Company
+  const partnerApplications = pendingUsers.filter(u => 
+    u.role === 'EMPLOYER' && u.company && !u.company.isVerified
+  );
+  
+  // Staff Access: Employer joining an already Verified Company
+  const staffAccessRequests = pendingUsers.filter(u => 
+    u.role === 'EMPLOYER' && (u.company?.isVerified)
+  );
+
+  // Orphaned companies (manually added but not verified, or user deleted)
+  const orphanedCompanies = data?.companies.filter(c => 
+    !partnerApplications.some(app => app.companyId === c.id)
+  ) || [];
 
   const renderUserCard = (user: PendingUser) => (
     <div key={user.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col h-full space-y-6 transition-all hover:border-primary/20">
@@ -172,35 +192,106 @@ export default function CoordinatorRegistrationsPage() {
             </div>
           </div>
 
-          {/* Employer Registrations */}
+          {/* Partner Applications (Employer + New Company) */}
           <div className="space-y-6">
             <div className="flex items-center justify-between border-b border-border pb-4">
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Pending Employer Access</h3>
-              <div className="p-1 bg-muted rounded-lg text-foreground/70">
-                <Briefcase className="h-4 w-4" />
+              <div className="flex items-center gap-3">
+                <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">New Partner Applications</h3>
+                <span className="text-[10px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded border border-primary/10 uppercase tracking-widest">Priority</span>
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {pendingEmployers.length > 0 ? pendingEmployers.map(renderUserCard) : (
-                <div className="col-span-full py-16 text-center rounded-xl border border-dashed border-border bg-muted/30">
-                  <p className="text-xs font-semibold text-foreground/40 uppercase tracking-widest">No pending employers</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Company Registrations */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Partner Verifications</h3>
               <div className="p-1 bg-primary/10 rounded-lg text-primary">
                 <Building2 className="h-4 w-4" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {pendingCompanies.length > 0 ? pendingCompanies.map((company: Company) => (
+              {partnerApplications.length > 0 ? partnerApplications.map((user: PendingUser) => (
+                <div key={user.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col h-full space-y-6 transition-all hover:border-primary/20 ring-1 ring-primary/5">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center text-primary border border-primary/10">
+                        <Building2 className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-foreground tracking-tight">{user.company?.name}</h4>
+                        <span className="text-[9px] font-semibold uppercase tracking-widest text-primary/60">New Entity Registration</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 flex-1">
+                    <div className="p-3 bg-muted/30 rounded-lg border border-border/50">
+                      <p className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest mb-2">Requesting Employer</p>
+                      <div className="flex items-center gap-2 mb-1">
+                        <User className="h-3 w-3 text-primary/60" />
+                        <span className="text-xs font-semibold text-foreground">{user.name}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-3 w-3 text-foreground/40" />
+                        <span className="text-[10px] text-foreground/60">{user.email}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-[10px] font-medium text-foreground/50">
+                      <Calendar className="h-3.5 w-3.5 opacity-50" />
+                      Submitted {new Date(user.createdAt).toLocaleDateString()}
+                    </div>
+                  </div>
+
+                  <div className="pt-4 flex items-center gap-2">
+                    <button 
+                      onClick={() => handleRejectUser(user.id)}
+                      disabled={actionId === user.id}
+                      className="flex-1 py-2 rounded-lg bg-muted hover:bg-destructive/10 text-muted-foreground hover:text-destructive text-[10px] font-semibold uppercase tracking-wider transition-all border border-transparent hover:border-destructive/20 flex items-center justify-center gap-1.5"
+                    >
+                      <UserX className="h-3.5 w-3.5" /> Reject
+                    </button>
+                    <button 
+                      onClick={() => handleVerifyPartnership(user.id, user.companyId!)}
+                      disabled={actionId === user.id}
+                      className="flex-[2] py-2 rounded-lg bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider transition-all shadow-sm hover:opacity-90 active:scale-[0.98] flex items-center justify-center gap-1.5"
+                    >
+                      {actionId === user.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <><CheckCircle2 className="h-3.5 w-3.5" /> Verify Partnership</>}
+                    </button>
+                  </div>
+                </div>
+              )) : (
+                <div className="col-span-full py-16 text-center rounded-xl border border-dashed border-border bg-muted/30">
+                  <p className="text-xs font-semibold text-foreground/40 uppercase tracking-widest">No new partner applications</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Staff Access (Employer for Existing Company) */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Staff Access Requests</h3>
+              <div className="p-1 bg-muted rounded-lg text-foreground/70">
+                <Briefcase className="h-4 w-4" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {staffAccessRequests.length > 0 ? staffAccessRequests.map(renderUserCard) : (
+                <div className="col-span-full py-16 text-center rounded-xl border border-dashed border-border bg-muted/30">
+                  <p className="text-xs font-semibold text-foreground/40 uppercase tracking-widest">No pending staff requests</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Orphaned Company Registrations */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Other Partner Verifications</h3>
+              <div className="p-1 bg-primary/10 rounded-lg text-primary">
+                <Building2 className="h-4 w-4" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {orphanedCompanies.length > 0 ? orphanedCompanies.map((company: Company) => (
                 <div key={company.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col space-y-6 transition-all hover:border-primary/20">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-foreground/70 border border-border/50">
