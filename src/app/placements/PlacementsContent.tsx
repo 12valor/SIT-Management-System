@@ -234,8 +234,7 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
               </p>
             </div>
             <div className="flex flex-col md:items-end justify-center">
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30">EST. 1977</p>
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mt-1">OFFICIAL REPOSITORY</p>
+              {/* Institutional markers removed per request */}
             </div>
           </div>
         </motion.footer>
