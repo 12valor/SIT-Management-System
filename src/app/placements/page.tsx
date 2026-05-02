@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PlacementsPage() {
-  // Fetch only OPEN postings from verified companies (assuming company has isVerified, but let's just use status OPEN for now)
+  // Fetch only OPEN postings from verified companies
   const postings = await prisma.sITPosting.findMany({
     where: { 
       status: "OPEN",
@@ -18,7 +18,12 @@ export default async function PlacementsPage() {
     },
     include: {
       company: {
-        select: { name: true, logoUrl: true, industry: true },
+        select: { 
+          name: true, 
+          logoUrl: true, 
+          industry: true,
+          location: true
+        },
       },
     },
     orderBy: { postedAt: "desc" },

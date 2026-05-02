@@ -182,11 +182,14 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                         </div>
                         
                         <Link 
-                          href="/login" 
-                          className="inline-flex items-center justify-center w-full md:w-auto px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold uppercase tracking-widest rounded-sm hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all active:scale-[0.98] group/btn"
+                          href={`/login/student?redirect=/student/opportunities/${post.id}`} 
+                          className="group/btn relative inline-flex items-center justify-center w-full md:w-auto px-8 py-3 bg-primary text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-sm overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/10"
                         >
-                          Apply via Portal
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                          <span className="relative z-10 flex items-center">
+                            Initialize Application
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                          </span>
+                          <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                         </Link>
                       </div>
 
