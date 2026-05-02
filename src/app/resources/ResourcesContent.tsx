@@ -91,16 +91,22 @@ export default function ResourcesContent() {
                   <BookOpen className="h-6 w-6 text-primary mb-6" strokeWidth={1} />
                   <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Training Manual</h4>
                   <p className="text-sm text-slate-500 mb-6 font-serif">The foundational guide for all SIT procedures.</p>
-                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group/btn hover:opacity-80 transition-all active:scale-95">
-                    Download Archive <Download className="h-3 w-3 group-hover/btn:translate-y-0.5 transition-transform" />
+                  <button className="group relative px-6 py-2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full overflow-hidden transition-all active:scale-95 shadow-md shadow-primary/10">
+                    <span className="relative z-10 flex items-center gap-2">
+                      Download Archive <Download className="h-3 w-3" />
+                    </span>
+                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                   </button>
                 </div>
                 <div className="p-8 bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/10">
                   <ShieldCheck className="h-6 w-6 text-primary mb-6" strokeWidth={1} />
                   <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Code of Conduct</h4>
                   <p className="text-sm text-slate-500 mb-6 font-serif">Professional expectations for trainees in the field.</p>
-                  <button className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2 group/btn hover:opacity-80 transition-all active:scale-95">
-                    Download Archive <Download className="h-3 w-3 group-hover/btn:translate-y-0.5 transition-transform" />
+                  <button className="group relative px-6 py-2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full overflow-hidden transition-all active:scale-95 shadow-md shadow-primary/10">
+                    <span className="relative z-10 flex items-center gap-2">
+                      Download Archive <Download className="h-3 w-3" />
+                    </span>
+                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                   </button>
                 </div>
               </div>
@@ -136,8 +142,11 @@ export default function ResourcesContent() {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{doc.format}</span>
-                    <button className="h-10 w-10 flex items-center justify-center rounded-full border border-slate-200 dark:border-white/10 group-hover/item:bg-primary group-hover/item:border-primary group-hover/item:text-white transition-all duration-300 active:scale-90 hover:shadow-lg hover:shadow-primary/20">
-                      <Download className="h-4 w-4" />
+                    <button className="group relative h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white overflow-hidden transition-all duration-300 active:scale-90 shadow-lg shadow-primary/20">
+                      <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                        <Download className="h-4 w-4" />
+                      </span>
+                      <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                     </button>
                   </div>
                 </div>
