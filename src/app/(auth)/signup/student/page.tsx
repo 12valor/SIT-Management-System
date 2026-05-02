@@ -86,18 +86,25 @@ export default function StudentSignupPage() {
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Course / Program
                 </label>
-                <select
-                  name="course"
-                  required
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none"
-                >
-                  <option value="">Select program</option>
-                  <option value="BS in Computer Engineering">BS in Computer Engineering</option>
-                  <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
-                  <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
-                  <option value="BS in Information Technology">BS in Information Technology</option>
-                  <option value="BS in Chemical Engineering">BS in Chemical Engineering</option>
-                </select>
+                <div className="relative">
+                  <select
+                    name="course"
+                    required
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
+                  >
+                    <option value="" className="text-slate-400">Select program</option>
+                    <option value="BS in Computer Engineering">BS in Computer Engineering</option>
+                    <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
+                    <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
+                    <option value="BS in Information Technology">BS in Information Technology</option>
+                    <option value="BS in Chemical Engineering">BS in Chemical Engineering</option>
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
 
