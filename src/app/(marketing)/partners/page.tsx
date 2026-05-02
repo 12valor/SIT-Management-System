@@ -183,7 +183,7 @@ export default function PartnersPage() {
                         
                         <Link 
                           href="#" 
-                          className="group/btn relative w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 overflow-hidden transition-all duration-300 shadow-sm active:scale-90"
+                          className="group/btn relative w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden transition-all duration-300 shadow-sm active:scale-90"
                           aria-label={`View details for ${partner.name}`}
                         >
                           <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300">
