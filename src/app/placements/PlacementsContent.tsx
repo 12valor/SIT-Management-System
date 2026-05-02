@@ -124,94 +124,75 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.4 }}
-                    className="group relative bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 md:p-10 rounded-sm hover:border-primary/40 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
+                    className="group bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-6 md:p-8 rounded-xl hover:border-primary/40 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500"
                   >
-                    {/* Archival Reference Line */}
-                    <div className="absolute top-0 right-0 p-4 opacity-[0.03] pointer-events-none select-none overflow-hidden">
-                      <span className="text-8xl font-black font-serif tracking-tighter">SIT</span>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-10 relative z-10">
-                      
-                      {/* Left: Metadata & Core Details */}
-                      <div className="flex-1">
-                        <div className="flex flex-wrap items-center gap-4 mb-6">
-                          <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-white/5 px-2 py-1 border border-slate-100 dark:border-white/5 rounded-sm tracking-widest uppercase">
-                            DOC-ID: {post.id.slice(0, 8).toUpperCase()}
-                          </span>
-                          <span className="h-1 w-1 rounded-full bg-slate-300" />
-                          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary italic">
-                            Published: {format(new Date(post.postedAt), 'MMM dd, yyyy')}
-                          </span>
-                        </div>
-                        
-                        <h3 className="text-3xl md:text-4xl font-serif font-medium text-slate-900 dark:text-white mb-4 leading-tight group-hover:text-primary transition-colors">
-                          {post.title}
-                        </h3>
-                        
-                        <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400 font-serif mb-8">
-                          <div className="p-2 bg-primary/5 rounded-full border border-primary/10">
-                            <Building2 className="h-4 w-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-bold text-slate-900 dark:text-slate-200 tracking-tight">{post.company.name}</span>
-                              <span className="text-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded-sm border border-emerald-500/20 font-bold uppercase tracking-tighter">Verified</span>
-                            </div>
-                            <p className="text-xs text-slate-500 italic">{post.company.industry}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                          <div className="space-y-1">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Deployment</p>
-                            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-serif">
-                              <MapPin className="h-3.5 w-3.5 text-primary/40" />
-                              {post.location}
-                            </div>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Environment</p>
-                            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-serif">
-                              <Briefcase className="h-3.5 w-3.5 text-primary/40" />
-                              {post.type.replace('_', '-')}
-                            </div>
-                          </div>
-                          <div className="space-y-1 hidden md:block">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Hours</p>
-                            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-serif">
-                              <Clock className="h-3.5 w-3.5 text-primary/40" />
-                              {post.requiredHours} Required
-                            </div>
-                          </div>
+                    <div className="flex flex-col md:flex-row gap-6">
+                      {/* Company Logo Section */}
+                      <div className="flex-shrink-0">
+                        <div className="w-16 h-16 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden">
+                          {post.company.logoUrl ? (
+                            <img src={post.company.logoUrl} alt={post.company.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <Building2 className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
+                          )}
                         </div>
                       </div>
 
-                      {/* Right: Technical Requirements & Action */}
-                      <div className="flex flex-col items-stretch md:items-end justify-between md:min-h-[220px] md:pl-10 md:border-l border-slate-100 dark:border-white/5 mt-6 md:mt-0">
-                        <div className="mb-10">
-                          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 md:text-right">Technical Focus</p>
-                          <div className="flex flex-wrap gap-2 md:justify-end">
-                            {post.tags.slice(0, 4).map(tag => (
-                              <span key={tag} className="text-[9px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-white/5 px-2.5 py-1.5 rounded-sm border border-slate-200 dark:border-white/10 hover:border-primary/30 transition-colors">
+                      {/* Content Section */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                          <div>
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors leading-tight mb-1">
+                              {post.title}
+                            </h3>
+                            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                              <span className="font-semibold hover:underline cursor-pointer">{post.company.name}</span>
+                              <span className="text-slate-300 dark:text-slate-700">•</span>
+                              <span className="flex items-center gap-1">
+                                <MapPin className="h-3 w-3" />
+                                {post.location}
+                              </span>
+                              <span className="text-slate-300 dark:text-slate-700">•</span>
+                              <span className="text-emerald-600 dark:text-emerald-400 font-medium">{post.type.replace('_', '-')}</span>
+                            </div>
+                          </div>
+                          
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-full border border-slate-100 dark:border-white/5 h-fit">
+                            {format(new Date(post.postedAt), 'MMM dd')}
+                          </span>
+                        </div>
+
+                        {/* Description Snippet */}
+                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 font-serif">
+                          {post.description}
+                        </p>
+
+                        {/* Footer / Meta Tags */}
+                        <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-slate-100 dark:border-white/5">
+                          <div className="flex flex-wrap gap-2">
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-white/5 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-tight border border-slate-100 dark:border-white/10">
+                              <Clock className="h-3 w-3 text-primary/60" />
+                              {post.requiredHours}h Req.
+                            </div>
+                            {post.tags.slice(0, 3).map(tag => (
+                              <span key={tag} className="px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-full text-[10px] font-bold text-primary uppercase tracking-tight border border-primary/10">
                                 {tag}
                               </span>
                             ))}
                           </div>
-                        </div>
-                        
-                        <Link 
-                          href={`/login/student?redirect=/student/opportunities/${post.id}`} 
-                          className="group/btn relative inline-flex items-center justify-center w-full md:w-auto px-10 py-4 bg-primary text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-sm overflow-hidden transition-all active:scale-[0.98] shadow-xl shadow-primary/20"
-                        >
-                          <span className="relative z-10 flex items-center">
-                            Initialize Application
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </span>
-                          <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-                        </Link>
-                      </div>
 
+                          <Link 
+                            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
+                            className="group/btn relative inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
+                          >
+                            <span className="relative z-10 flex items-center">
+                              Apply Now
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                            </span>
+                            <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </motion.article>
                 ))}
