@@ -4,22 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { ArrowRight } from "lucide-react";
 import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
 import { motion } from "framer-motion";
-import { Bebas_Neue, IBM_Plex_Sans } from "next/font/google";
-
-const bebas = Bebas_Neue({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-bebas",
-});
-
-const ibmPlex = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm",
-});
 
 export default function CoordinatorLoginPage() {
   const [email, setEmail] = useState("");
@@ -60,7 +46,7 @@ export default function CoordinatorLoginPage() {
   };
 
   return (
-    <div className={`${bebas.variable} ${ibmPlex.variable} font-ibm flex-1 flex flex-col items-center bg-white dark:bg-[#080808] min-h-screen pt-40 pb-20 p-6`}>
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
       <AuthStatusModal 
         status={authStatus} 
         message={authMessage} 
@@ -68,80 +54,74 @@ export default function CoordinatorLoginPage() {
       />
       
       <motion.div 
-        initial={{ opacity: 0, y: 10 }}
+        className="max-w-md mx-auto"
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
-        className="max-w-[480px] w-full"
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* SHARP CARD CONTAINER */}
-        <div className="bg-white dark:bg-[#0c0c0c] border border-slate-200 dark:border-white/10 p-10 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-none">
-          
-          <header className="mb-14">
-            <h1 className="font-bebas text-[60px] leading-[0.85] text-slate-900 dark:text-white tracking-[-0.02em] mb-6">
-              Coordinator
-            </h1>
-            
-            <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-[0.05em] leading-relaxed">
-              Administrative access terminal. <br />
-              All credentials audited per session.
-            </p>
-          </header>
+        <header className="mb-12 text-center">
+          <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
+            Administrative Gateway
+          </span>
+          <h1 className="text-4xl font-serif font-medium text-slate-900 dark:text-white mb-4">
+            Coordinator
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-serif">
+            Institutional access terminal. All credentials audited per session.
+          </p>
+        </header>
 
-          <form onSubmit={handleLogin} className="space-y-10">
-
-
-            <div className="space-y-8">
-              <div className="space-y-3">
-                <label htmlFor="email" className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em]">
+        <div className="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 rounded-2xl">
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div className="space-y-2">
+               <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Admin Identifier
-                </label>
-                <input
+               </label>
+               <input
                   id="email"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="coordinator@tupv.edu.ph"
-                  className="w-full h-12 bg-transparent border-b-2 border-slate-100 dark:border-white/5 text-[15px] font-medium text-slate-900 dark:text-white outline-none focus:border-rose-600 transition-all placeholder:text-slate-200 dark:placeholder:text-slate-800"
-                />
-              </div>
-
-              <div className="space-y-3">
-                <label htmlFor="password" className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em]">
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+               />
+            </div>
+            
+            <div className="space-y-2">
+               <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Secure Passkey
-                </label>
-                <input
+               </label>
+               <input
                   id="password"
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full h-12 bg-transparent border-b-2 border-slate-100 dark:border-white/5 text-[15px] font-medium text-slate-900 dark:text-white outline-none focus:border-rose-600 transition-all placeholder:text-slate-200 dark:placeholder:text-slate-800"
-                />
-              </div>
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+               />
             </div>
 
             <button
               type="submit"
               disabled={authStatus === "loading" || authStatus === "success"}
-              className="w-full h-16 bg-slate-900 dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.3em] transition-all hover:bg-rose-600 dark:hover:bg-rose-600 hover:text-white active:scale-[0.98] disabled:opacity-50 text-[12px] flex items-center justify-center gap-4"
+              className="w-full flex items-center justify-center h-12 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 disabled:opacity-50 mt-4 font-serif"
             >
               Authorize Entry
-              <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
-          <footer className="mt-16 pt-10 border-t border-slate-50 dark:border-white/5 flex flex-col gap-8">
-            <Link 
-              href="/login" 
-              className="inline-flex items-center gap-3 text-slate-400 hover:text-rose-600 transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
-            >
-              Switch Terminal
-            </Link>
-          </footer>
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/10 flex flex-col gap-4 text-center">
+             <Link 
+               href="/login" 
+               className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-serif"
+             >
+               ← Return to Gateway
+             </Link>
+          </div>
         </div>
       </motion.div>
-    </div>
+    </main>
   );
 }
