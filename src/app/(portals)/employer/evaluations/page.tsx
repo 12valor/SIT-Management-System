@@ -352,32 +352,6 @@ export default function EmployerEvaluationsPage() {
         )}
       </div>
 
-      {/* Info Card */}
-      <div className="p-10 lg:p-12 rounded-xl bg-foreground text-background shadow-xl relative overflow-hidden group">
-         <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[100px] rounded-full" />
-         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
-            <div className="space-y-4 text-center lg:text-left">
-               <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="p-3 bg-primary rounded-xl shadow-lg shadow-primary/20">
-                    <Award className="h-7 w-7 text-primary-foreground" />
-                  </div>
-                  <h3 className="text-2xl font-bold tracking-tight">Institutional Certification Policy</h3>
-               </div>
-               <p className="text-muted-foreground font-medium max-w-3xl leading-relaxed text-sm">
-                 Industrial assessments are required for all students reaching the **280-hour milestone**. Your professional vetting directly impacts the synchronization of academic records and future placement eligibility.
-               </p>
-            </div>
-            <div className="flex items-center gap-5 bg-background/5 p-6 rounded-xl border border-background/10 backdrop-blur-md min-w-[300px]">
-               <div className="text-right flex-1 space-y-1">
-                  <p className="text-[9px] font-bold uppercase tracking-wider text-primary">Technical Support</p>
-                  <p className="text-xs font-bold text-muted-foreground">coordinator.sit@tupv.edu.ph</p>
-               </div>
-               <div className="w-11 h-11 rounded-lg bg-background/10 flex items-center justify-center border border-background/10">
-                  <AlertCircle className="h-5 w-5 text-muted-foreground/40" />
-               </div>
-            </div>
-         </div>
-      </div>
     </div>
     </Skeleton>
   );
