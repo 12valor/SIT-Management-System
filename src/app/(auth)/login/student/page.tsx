@@ -115,6 +115,12 @@ export default function StudentLoginPage() {
 
           <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/10 flex flex-col gap-4 text-center">
              <Link 
+               href="/signup/student" 
+               className="text-sm font-medium text-primary hover:text-primary/80 transition-colors font-serif"
+             >
+               Register New Student Account
+             </Link>
+             <Link 
                href="/login" 
                className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-serif"
              >

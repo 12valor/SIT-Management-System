@@ -3,15 +3,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Building2, Loader2, Mail, Lock, User, CheckCircle2, ArrowLeft, Briefcase, Factory } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { registerEmployer, getCompanies } from "./actions";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
+import { motion } from "framer-motion";
 
 export default function EmployerSignupPage() {
   const [error, setError] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>("idle");
+  const [authMessage, setAuthMessage] = useState("");
   const [companyMode, setCompanyMode] = useState<"existing" | "new">("existing");
   const [companies, setCompanies] = useState<{ id: string; name: string }[]>([]);
   const router = useRouter();
@@ -26,7 +27,8 @@ export default function EmployerSignupPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsLoading(true);
+    setAuthStatus("loading");
+    setAuthMessage("Establishing institutional partnership...");
     setError("");
 
     const formData = new FormData(e.currentTarget);
@@ -35,228 +37,183 @@ export default function EmployerSignupPage() {
     const result = await registerEmployer(formData);
 
     if (result.success) {
-      setIsSuccess(true);
-      setTimeout(() => router.push("/login/employer"), 3000);
+      setAuthStatus("success");
+      setAuthMessage("Partnership request submitted. Redirecting to terminal...");
+      setTimeout(() => router.push("/login/employer"), 2000);
     } else {
+      setAuthStatus("error");
+      setAuthMessage(result.error || "System encountered a partnership conflict.");
       setError(result.error || "Something went wrong");
     }
-    setIsLoading(false);
-  }
-
-  if (isSuccess) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white p-6">
-        <div className="text-center space-y-6 max-w-sm animate-in-fade">
-          <div className="mx-auto w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-6 ring-8 ring-emerald-50/50">
-            <CheckCircle2 className="h-12 w-12 text-emerald-500" />
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900 font-heading">Success!</h1>
-          <p className="text-slate-600 font-medium font-sans">
-            Your partnership request has been submitted. The <span className="text-primary font-bold">SIT Coordinator</span> will review your credentials and company details.
-          </p>
-          <div className="pt-8">
-             <Link href="/login/employer" className="inline-flex h-14 items-center justify-center px-8 rounded-xl bg-primary text-white font-bold text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:-translate-y-0.5">
-               Return to Login
-             </Link>
-          </div>
-        </div>
-      </div>
-    );
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-white">
-      {/* Left side - Institutional Branding */}
-      <div className="relative hidden lg:flex lg:w-1/2 bg-slate-50 flex-col justify-center p-12 overflow-hidden border-r border-slate-200 min-w-0 h-full">
-        <div className="absolute inset-0 pointer-events-none select-none">
-          <Image 
-            src="/images/auth/employer.png" 
-            alt="Corporate Environment" 
-            fill
-            className="object-cover transition-opacity duration-1000"
-            style={{ opacity: 0.4, filter: 'grayscale(100%) brightness(0.9)' }}
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/40 to-transparent" />
-        </div>
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
+      <AuthStatusModal 
+        status={authStatus} 
+        message={authMessage} 
+        onClose={() => setAuthStatus("idle")} 
+      />
+      
+      <motion.div 
+        className="max-w-xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <header className="mb-12 text-center">
+          <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
+            Partner Onboarding
+          </span>
+          <h1 className="text-4xl font-serif font-medium text-slate-900 dark:text-white mb-4">
+            Employer Registration
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-serif">
+            Collaborate with TUP-V to manage supervised industrial training and acquire emerging technical talent.
+          </p>
+        </header>
 
-        <div className="absolute top-12 left-12 z-20">
-          <Image 
-            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
-            alt="TUP Seal" 
-            width={56}
-            height={56}
-            className="h-14 w-auto object-contain" 
-          />
-        </div>
-
-        <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
-          <p className="text-xs font-black text-primary uppercase tracking-[0.5em] mb-12 font-heading">Partner Intake</p>
-          <div className="relative w-full aspect-square max-w-lg animate-in fade-in zoom-in duration-1000">
-            <Image 
-              src="/images/auth/employer_guide.png" 
-              alt="How to Register Guide" 
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-        </div>
-
-      </div>
-
-      {/* Right side - Registration Form */}
-      <div className="flex-1 flex flex-col bg-white relative z-20 overflow-y-auto">
-        <div className="flex-1 flex flex-col p-8 sm:p-12 lg:p-20 lg:pt-20 lg:pb-20">
-          <div className="max-w-md w-full lg:ml-12 xl:ml-20">
-            <div className="mb-10 text-left">
-            <Link href="/login/employer" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors mb-10 font-heading group">
-              <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" /> Back to Login
-            </Link>
-            <h2 className="text-4xl font-bold tracking-tight text-slate-900 mb-3 font-heading uppercase">Employer Registration</h2>
-            <p className="text-base text-slate-500 font-medium font-sans">Partner with TUP-V for industrial training.</p>
+        <div className="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-10 rounded-2xl shadow-sm">
+          <div className="bg-slate-50 dark:bg-white/5 p-1 rounded-xl flex gap-1 border border-slate-200 dark:border-white/10 mb-8">
+            <button
+              type="button"
+              onClick={() => setCompanyMode("existing")}
+              className={cn(
+                "flex-1 h-10 rounded-lg text-xs font-medium transition-all font-serif",
+                companyMode === "existing" ? "bg-white dark:bg-white/10 text-primary shadow-sm" : "text-slate-400 hover:text-slate-600"
+              )}
+            >
+              Existing Partner
+            </button>
+            <button
+              type="button"
+              onClick={() => setCompanyMode("new")}
+              className={cn(
+                "flex-1 h-10 rounded-lg text-xs font-medium transition-all font-serif",
+                companyMode === "new" ? "bg-white dark:bg-white/10 text-primary shadow-sm" : "text-slate-400 hover:text-slate-600"
+              )}
+            >
+              New Company
+            </button>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="p-4 text-xs font-bold text-red-600 bg-red-50 border border-red-100 rounded-xl uppercase tracking-wider font-heading">
+              <div className="p-4 text-xs font-medium text-red-600 bg-red-50/50 border border-red-100 rounded-xl font-serif">
                 {error}
               </div>
             )}
 
-            <div className="bg-slate-50 p-1 rounded-xl flex gap-1 border border-slate-100 mb-6">
-              <button
-                type="button"
-                onClick={() => setCompanyMode("existing")}
-                className={cn(
-                  "flex-1 h-12 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all font-heading",
-                  companyMode === "existing" ? "bg-white text-primary shadow-sm" : "text-slate-400 hover:text-slate-600"
-                )}
-              >
-                Existing Partner
-              </button>
-              <button
-                type="button"
-                onClick={() => setCompanyMode("new")}
-                className={cn(
-                  "flex-1 h-12 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all font-heading",
-                  companyMode === "new" ? "bg-white text-primary shadow-sm" : "text-slate-400 hover:text-slate-600"
-                )}
-              >
-                New Company
-              </button>
-            </div>
-            
             <div className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Full Name</label>
-                <div className="relative group">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                    Full Name
+                  </label>
                   <input
                     name="name"
                     required
                     placeholder="Jane Smith"
-                    className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Institutional Email</label>
-                <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                    Corporate Email
+                  </label>
                   <input
                     name="email"
                     type="email"
                     required
                     placeholder="jane@company.com"
-                    className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
               {companyMode === "existing" ? (
                 <div className="space-y-2 animate-in-fade">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Associated Company</label>
-                  <div className="relative group">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                    <select
-                      name="companyId"
-                      required
-                      className="w-full h-14 pl-12 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900 appearance-none"
-                    >
-                      <option value="">Select partner company</option>
-                      {companies.map(c => (
-                        <option key={c.id} value={c.id}>{c.name}</option>
-                      ))}
-                    </select>
-                  </div>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                    Associated Company
+                  </label>
+                  <select
+                    name="companyId"
+                    required
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none"
+                  >
+                    <option value="">Select partner company</option>
+                    {companies.map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
                 </div>
               ) : (
-                <div className="space-y-6 animate-in-slide-up">
+                <div className="grid md:grid-cols-2 gap-6 animate-in-slide-up">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Company Name</label>
-                    <div className="relative group">
-                      <Factory className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                      <input
-                        name="newCompanyName"
-                        required={companyMode === "new"}
-                        placeholder="TechCorp Solutions Inc."
-                        className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900"
-                      />
-                    </div>
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                      Company Name
+                    </label>
+                    <input
+                      name="newCompanyName"
+                      required={companyMode === "new"}
+                      placeholder="TechCorp Solutions Inc."
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Industry Sector</label>
-                    <div className="relative group">
-                      <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                      <input
-                        name="industry"
-                        required={companyMode === "new"}
-                        placeholder="Manufacturing / IT"
-                        className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900"
-                      />
-                    </div>
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                      Industry Sector
+                    </label>
+                    <input
+                      name="industry"
+                      required={companyMode === "new"}
+                      placeholder="Manufacturing / IT"
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                    />
                   </div>
                 </div>
               )}
 
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-heading ml-1">Security Password</label>
-                <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                  <input
-                    name="password"
-                    type="password"
-                    required
-                    placeholder="••••••••"
-                    className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-white text-sm font-medium font-sans outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900"
-                  />
-                </div>
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  Security Password
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                />
               </div>
             </div>
 
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full h-14 bg-primary text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-heading mt-4 active:scale-[0.98]"
+              disabled={authStatus === "loading"}
+              className="group relative w-full flex items-center justify-center h-12 bg-primary text-white font-medium rounded-xl overflow-hidden transition-transform active:scale-[0.98] shadow-lg shadow-primary/20 disabled:opacity-50 mt-4 font-serif"
             >
-              {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                "Establish Partnership"
-              )}
+              <span className="relative z-10 flex items-center gap-2">
+                {authStatus === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : "Establish Partnership"}
+              </span>
+              <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             </button>
           </form>
 
-          <footer className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-heading">Already Enrolled?</span>
-            <Link href="/login/employer" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline underline-offset-4 font-heading">
-              Partner Access
-            </Link>
-          </footer>
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/10 flex flex-col gap-4 text-center">
+             <Link 
+               href="/login/employer" 
+               className="text-sm font-medium text-slate-500 hover:text-primary transition-colors font-serif"
+             >
+               ← Back to Portal Access
+             </Link>
+          </div>
         </div>
-      </div>
+      </motion.div>
+    </main>
+  );
+}v>
     </div>
   </div>
   );
