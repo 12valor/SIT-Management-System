@@ -45,7 +45,10 @@ export default function EmployerLoginPage() {
       if (session?.user?.role === "EMPLOYER") {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Partner Dashboard...");
-        setTimeout(() => router.push("/employer/dashboard"), 800);
+        setTimeout(() => {
+          router.refresh();
+          router.push("/employer/dashboard");
+        }, 800);
       } else {
         setAuthStatus("error");
         setAuthMessage("Restricted Access: Corporate privileges required.");

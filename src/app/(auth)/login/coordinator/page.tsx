@@ -45,7 +45,10 @@ export default function CoordinatorLoginPage() {
       if (session?.user?.role === "COORDINATOR") {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Strategic Overview...");
-        setTimeout(() => router.push("/coordinator/dashboard"), 800);
+        setTimeout(() => {
+          router.refresh();
+          router.push("/coordinator/dashboard");
+        }, 800);
       } else {
         setAuthStatus("error");
         setAuthMessage("Restricted Access: Coordinator privilege required.");

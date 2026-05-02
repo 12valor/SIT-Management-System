@@ -45,7 +45,10 @@ export default function StudentLoginPage() {
       if (session?.user?.role === "STUDENT") {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Student Portal...");
-        setTimeout(() => router.push("/student/dashboard"), 800);
+        setTimeout(() => {
+          router.refresh();
+          router.push("/student/dashboard");
+        }, 800);
       } else {
         setAuthStatus("error");
         setAuthMessage("Restricted Access: Valid GSFE identity required.");
