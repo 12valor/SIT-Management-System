@@ -36,7 +36,7 @@ type Placement = {
   };
 };
 
-export default function PlacementsContent({ initialPostings }: { initialPostings: any[] }) {
+export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<string>("ALL");
 
@@ -116,7 +116,7 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
           <AnimatePresence mode="popLayout">
             {filteredPostings.length > 0 ? (
               <div className="space-y-4">
-                {filteredPostings.map((post, idx) => (
+                {filteredPostings.map((post) => (
                   <motion.article 
                     key={post.id}
                     layout

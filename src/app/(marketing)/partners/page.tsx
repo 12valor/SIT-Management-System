@@ -134,6 +134,7 @@ export default function PartnersPage() {
                     {/* Banner */}
                     <div className="h-32 w-full relative bg-slate-100 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
                       {partner.bannerUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={partner.bannerUrl} alt="Banner" className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-white/5 dark:to-white/10" />
@@ -145,6 +146,7 @@ export default function PartnersPage() {
                       {/* Logo (Overlapping) */}
                       <div className="absolute -top-12 left-6 h-24 w-24 rounded-2xl bg-white dark:bg-[#0f0f0f] border-4 border-white dark:border-[#0f0f0f] shadow-md flex items-center justify-center overflow-hidden">
                         {partner.logoUrl ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
                           <img src={partner.logoUrl} alt={partner.name} className="w-full h-full object-cover" />
                         ) : (
                           <Building2 className="h-10 w-10 text-slate-300 dark:text-slate-600" />

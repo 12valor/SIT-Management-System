@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown, ArrowRight, GraduationCap, Building2, ShieldCheck, BookOpen, Gavel } from "lucide-react";
+import { Menu, X, ChevronDown, ArrowRight, GraduationCap, Building2, ShieldCheck } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export function SmartNavbar() {

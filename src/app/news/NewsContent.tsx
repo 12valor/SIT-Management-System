@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Bell, Calendar, Newspaper, ExternalLink, ChevronRight } from "lucide-react";
+import { ArrowRight, Bell, ChevronRight } from "lucide-react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -109,7 +109,7 @@ export default function NewsContent() {
           </motion.h3>
           
           <div className="relative border-l border-slate-200 dark:border-white/10 ml-4 md:ml-0 md:pl-0">
-            {ANNOUNCEMENTS.map((news, idx) => (
+            {ANNOUNCEMENTS.map((news) => (
               <motion.article 
                 key={news.id} 
                 className="relative pl-12 pb-24 last:pb-0"

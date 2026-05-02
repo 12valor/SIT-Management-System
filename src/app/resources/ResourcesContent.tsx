@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { FileText, Download, Gavel, BookOpen, ShieldCheck, ArrowRight, Info, ExternalLink } from "lucide-react";
+import { Download, Gavel, BookOpen, ShieldCheck, ArrowRight, Info } from "lucide-react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 15 },

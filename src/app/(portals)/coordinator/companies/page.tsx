@@ -2,7 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2, AlertTriangle } from "lucide-react";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2 } from "lucide-react";
 import { getCompanies, setCompanyVerification, addCompany, updateCompany, deleteCompany } from "./actions";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -237,6 +237,7 @@ export default function CoordinatorCompaniesPage() {
                   <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.logoUrl ? (
                       <div className="relative group">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={formData.logoUrl} alt="Preview" className="w-16 h-16 rounded-xl object-cover border border-border" />
                         <button 
                           type="button"
@@ -263,6 +264,7 @@ export default function CoordinatorCompaniesPage() {
                   <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.bannerUrl ? (
                       <div className="relative group w-full px-4">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={formData.bannerUrl} alt="Preview" className="w-full h-16 rounded-lg object-cover border border-border" />
                         <button 
                           type="button"
@@ -393,6 +395,7 @@ export default function CoordinatorCompaniesPage() {
                     {/* Banner */}
                     <div className="h-28 w-full relative bg-muted border-b border-border">
                       {c.bannerUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={c.bannerUrl} alt="Banner" className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-tr from-muted to-muted/50" />
@@ -416,6 +419,7 @@ export default function CoordinatorCompaniesPage() {
                       {/* Logo (Overlapping) */}
                       <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-card border-4 border-card shadow-sm flex items-center justify-center overflow-hidden">
                         {c.logoUrl ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
                           <img src={c.logoUrl} alt={c.name} className="w-full h-full object-cover" />
                         ) : (
                           <Building2 className="h-8 w-8 text-foreground/20" />
