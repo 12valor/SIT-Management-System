@@ -106,9 +106,10 @@ export default function CoordinatorLoginPage() {
             <button
               type="submit"
               disabled={authStatus === "loading" || authStatus === "success"}
-              className="w-full flex items-center justify-center h-12 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 disabled:opacity-50 mt-4 font-serif"
+              className="group relative w-full flex items-center justify-center h-12 bg-primary text-white font-medium rounded-xl overflow-hidden transition-transform active:scale-[0.98] shadow-lg shadow-primary/20 disabled:opacity-50 mt-4 font-serif"
             >
-              Authorize Entry
+              <span className="relative z-10">Authorize Entry</span>
+              <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             </button>
           </form>
 

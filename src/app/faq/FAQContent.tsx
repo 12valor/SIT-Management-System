@@ -92,9 +92,10 @@ export default function FAQContent() {
           </p>
           <a 
             href="mailto:support@tupv-sit.edu.ph"
-            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20"
+            className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full overflow-hidden transition-transform active:scale-95 shadow-lg shadow-primary/20"
           >
-            Contact Support Registry
+            <span className="relative z-10">Contact Support Registry</span>
+            <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
           </a>
         </motion.footer>
       </motion.div>
