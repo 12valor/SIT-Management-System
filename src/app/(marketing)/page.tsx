@@ -96,10 +96,10 @@ export default function Home() {
 
                   <Link
                     href="/login/student"
-                    className="group relative w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full overflow-hidden transition-all shadow-lg shadow-primary/20"
+                    className="group/btn relative w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full overflow-hidden transition-all shadow-lg shadow-primary/20"
                   >
                     <span className="relative z-10">Access Student Portal</span>
-                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                   </Link>
                 </div>
               </Reveal>
@@ -134,10 +134,10 @@ export default function Home() {
 
                   <Link
                     href="/login/employer"
-                    className="group relative w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full overflow-hidden transition-all shadow-lg shadow-primary/20"
+                    className="group/btn relative w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full overflow-hidden transition-all shadow-lg shadow-primary/20"
                   >
                     <span className="relative z-10">Authenticate Access</span>
-                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                   </Link>
                 </div>
               </Reveal>
@@ -225,10 +225,10 @@ export default function Home() {
               </p>
               <Link 
                 href="/login/student"
-                className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full overflow-hidden transition-all duration-300 shadow-lg shadow-primary/20"
+                className="group/btn relative inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full overflow-hidden transition-all duration-300 shadow-lg shadow-primary/20"
               >
                 <span className="relative z-10">Access Student Terminal</span>
-                <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
               </Link>
             </div>
           </div>

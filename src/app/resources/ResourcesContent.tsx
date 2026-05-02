@@ -142,11 +142,11 @@ export default function ResourcesContent() {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{doc.format}</span>
-                    <button className="group relative h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white overflow-hidden transition-all duration-300 active:scale-90 shadow-lg shadow-primary/20">
-                      <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                    <button className="group/btn relative h-10 w-10 flex items-center justify-center rounded-full bg-primary text-white overflow-hidden transition-all duration-300 active:scale-90 shadow-lg shadow-primary/20">
+                      <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300">
                         <Download className="h-4 w-4" />
                       </span>
-                      <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                      <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                     </button>
                   </div>
                 </div>
