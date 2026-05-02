@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Loader2, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
 import { motion } from "framer-motion";
 import { Bebas_Neue, IBM_Plex_Sans } from "next/font/google";
 
@@ -23,34 +24,45 @@ const ibmPlex = IBM_Plex_Sans({
 export default function StudentLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>("idle");
+  const [authMessage, setAuthMessage] = useState("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    setAuthStatus("loading");
+    setAuthMessage("Validating GSFE credentials...");
 
     try {
       const result = await signIn("credentials", { email, password, redirect: false });
       if (result?.error) {
-        setError("Invalid GSFE credentials.");
-        setIsLoading(false);
+        setAuthStatus("error");
+        setAuthMessage("Invalid GSFE credentials.");
         return;
       }
       const res = await fetch("/api/auth/session");
       const session = await res.json();
-      if (session?.user?.role === "STUDENT") router.push("/student/dashboard");
-      else router.push("/");
+      if (session?.user?.role === "STUDENT") {
+        setAuthStatus("success");
+        setAuthMessage("Redirecting to Student Portal...");
+        setTimeout(() => router.push("/student/dashboard"), 800);
+      } else {
+        setAuthStatus("error");
+        setAuthMessage("Restricted Access: Valid GSFE identity required.");
+      }
     } catch {
-      setError("Connectivity error.");
-      setIsLoading(false);
+      setAuthStatus("error");
+      setAuthMessage("Connectivity error.");
     }
   };
 
   return (
     <div className={`${bebas.variable} ${ibmPlex.variable} font-ibm flex-1 flex flex-col items-center bg-white dark:bg-[#080808] min-h-screen pt-40 pb-20 p-6`}>
+      <AuthStatusModal 
+        status={authStatus} 
+        message={authMessage} 
+        onClose={() => setAuthStatus("idle")} 
+      />
       
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
@@ -73,11 +85,7 @@ export default function StudentLoginPage() {
           </header>
 
           <form onSubmit={handleLogin} className="space-y-10">
-            {error && (
-              <div className="text-rose-600 text-[10px] font-black uppercase tracking-[0.2em] py-3 border-y border-rose-600/20">
-                {error}
-              </div>
-            )}
+
 
             <div className="space-y-8">
               <div className="space-y-3">
@@ -113,17 +121,11 @@ export default function StudentLoginPage() {
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={authStatus === "loading" || authStatus === "success"}
               className="w-full h-16 bg-slate-900 dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.3em] transition-all hover:bg-rose-600 dark:hover:bg-rose-600 hover:text-white active:scale-[0.98] disabled:opacity-50 text-[12px] flex items-center justify-center gap-4"
             >
-              {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <>
-                  Continue as Student
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
+              Continue as Student
+              <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
