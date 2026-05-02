@@ -96,9 +96,10 @@ export default function Home() {
 
                   <Link
                     href="/login/student"
-                    className="w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                    className="group relative w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full overflow-hidden transition-all shadow-lg shadow-primary/20"
                   >
-                    Access Student Portal
+                    <span className="relative z-10">Access Student Portal</span>
+                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                   </Link>
                 </div>
               </Reveal>
@@ -133,9 +134,10 @@ export default function Home() {
 
                   <Link
                     href="/login/employer"
-                    className="w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                    className="group relative w-full inline-flex h-14 items-center justify-center bg-primary text-white font-serif font-medium rounded-full overflow-hidden transition-all shadow-lg shadow-primary/20"
                   >
-                    Authenticate Access
+                    <span className="relative z-10">Authenticate Access</span>
+                    <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
                   </Link>
                 </div>
               </Reveal>
@@ -223,9 +225,10 @@ export default function Home() {
               </p>
               <Link 
                 href="/login/student"
-                className="inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20"
+                className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-white font-medium rounded-full overflow-hidden transition-all duration-300 shadow-lg shadow-primary/20"
               >
-                Access Student Terminal
+                <span className="relative z-10">Access Student Terminal</span>
+                <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
               </Link>
             </div>
           </div>
