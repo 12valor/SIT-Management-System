@@ -3,7 +3,6 @@
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect } from "react";
 import { 
-  UserCheck, 
   UserX, 
   Building2, 
   Mail, 
@@ -11,7 +10,8 @@ import {
   Loader2, 
   CheckCircle2, 
   GraduationCap,
-  Briefcase
+  Briefcase,
+  User
 } from "lucide-react";
 import { getPendingRegistrations, approveUser, rejectUser, verifyCompany, verifyPartnership } from "./actions";
 import { cn } from "@/lib/utils";
