@@ -42,10 +42,7 @@ export default function EmployerLayout({
     { name: "Executive Analytics", href: "/employer/dashboard", icon: BarChart3 },
     { name: "Industrial Postings", href: "/employer/postings", icon: ClipboardList },
     { name: "Trainee Applicants", href: "/employer/applicants", icon: Users },
-    { name: "Logbook Approvals", href: "/employer/logbooks", icon: ClipboardCheck },
     { name: "Performance Audit", href: "/employer/evaluations", icon: Star },
-    { name: "Partner Profile", href: "/employer/profile", icon: Building2 },
-    { name: "Office Settings", href: "/employer/settings", icon: Settings },
   ];
 
 
@@ -116,20 +113,6 @@ export default function EmployerLayout({
 
         {/* Bottom Sidebar Sections */}
         <div className="p-4 space-y-4">
-          {/* Status Card */}
-          <div className="p-4 rounded-lg bg-muted border border-border">
-             <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-medium text-muted-foreground">Industry:</span>
-                <span className="text-[11px] font-bold text-primary">Active Partner</span>
-             </div>
-             {status === "loading" ? (
-                <div className="h-3 w-24 bg-slate-200 animate-pulse rounded" />
-             ) : (
-                <p className="text-[10px] font-medium text-slate-400">
-                   Authorized Node: {session?.user?.id?.slice(-8).toUpperCase() || "SYST-B-04"}
-                </p>
-             )}
-          </div>
 
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
