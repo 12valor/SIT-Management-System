@@ -151,8 +151,5 @@ export default function StudentSignupPage() {
       </motion.div>
     </main>
   );
-}v>
-    </div>
-  </div>
-  );
 }
+

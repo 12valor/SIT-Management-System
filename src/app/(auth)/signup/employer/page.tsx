@@ -213,8 +213,4 @@ export default function EmployerSignupPage() {
       </motion.div>
     </main>
   );
-}v>
-    </div>
-  </div>
-  );
 }
