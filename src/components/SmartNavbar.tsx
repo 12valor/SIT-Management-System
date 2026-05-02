@@ -152,10 +152,13 @@ export function SmartNavbar() {
             <div className="flex items-center gap-3">
               <Link 
                 href="/login" 
-                className="hidden sm:inline-flex items-center justify-center bg-primary text-white px-8 py-2.5 rounded-[2px] text-[13px] font-bold transition-all hover:bg-primary/90 active:scale-[0.98] group/btn gap-2"
+                className="group relative hidden sm:inline-flex items-center justify-center bg-primary text-white px-8 py-2.5 rounded-[4px] text-[13px] font-bold overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
               >
-                Launch Portal
-                <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors duration-300">
+                  Launch Portal
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+                <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
               </Link>
 
               <button 
