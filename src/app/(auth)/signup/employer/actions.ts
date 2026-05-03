@@ -34,6 +34,9 @@ export async function registerEmployer(formData: FormData) {
     if (companyMode === "new") {
       const companyName = formData.get("newCompanyName") as string;
       const industry = formData.get("industry") as string;
+      
+      const sanitizedName = companyName.toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
+      const companyEmail = `${sanitizedName}@partner.sit`;
 
       await prisma.user.create({
         data: {
@@ -45,7 +48,7 @@ export async function registerEmployer(formData: FormData) {
           company: {
               create: {
                 name: companyName,
-                email: `${companyName.toLowerCase().replace(/\s+/g, '.')}@partner.sit`,
+                email: companyEmail,
                 industry,
                 location: location,
                 logoUrl: logo,
@@ -77,9 +80,22 @@ export async function registerEmployer(formData: FormData) {
     return { success: true };
   } catch (error) {
     console.error("Registration error:", error);
-    if (error instanceof Error && error.message.includes("Unique constraint")) {
-      return { success: false, error: "An account with this email already exists." };
+    
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
+      const target = (error as any).meta?.target;
+      
+      if (Array.isArray(target)) {
+        if (target.includes('email') && (error as any).meta?.modelName === 'User') {
+          return { success: false, error: "An account with this corporate email already exists." };
+        }
+        if (target.includes('email') && (error as any).meta?.modelName === 'Company') {
+          return { success: false, error: "A company with this name (or a very similar one) is already registered." };
+        }
+      }
+      
+      return { success: false, error: "A registration conflict occurred. This email or company name may already be in use." };
     }
-    return { success: false, error: "System encountered a registration conflict. Please try again." };
+
+    return { success: false, error: "System encountered an unexpected registration error. Please try again." };
   }
 }
