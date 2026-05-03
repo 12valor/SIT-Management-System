@@ -37,6 +37,10 @@ export default function EmployerSignupPage() {
     const formData = new FormData(e.currentTarget);
     formData.append("companyMode", companyMode);
     
+    // Send Base64 strings instead of raw files to ensure portability on Vercel
+    if (logoPreview) formData.set("logo", logoPreview);
+    if (bannerPreview) formData.set("banner", bannerPreview);
+    
     const result = await registerEmployer(formData);
 
     if (result.success) {

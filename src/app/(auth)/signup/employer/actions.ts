@@ -3,9 +3,6 @@
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
 import { z } from "zod";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import crypto from "crypto";
 import { revalidatePath } from "next/cache";
 
 const employerSchema = z.object({
@@ -18,34 +15,6 @@ const employerSchema = z.object({
   industry: z.string().optional(),
 });
 
-async function saveFile(file: File | null, prefix: string): Promise<string | null> {
-  if (!file || file.size === 0) return null;
-  
-  const MAX_SIZE = 2 * 1024 * 1024; // 2MB
-  if (file.size > MAX_SIZE) {
-    throw new Error(`${prefix.charAt(0).toUpperCase() + prefix.slice(1)} file exceeds the 2MB limit.`);
-  }
-  
-  try {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    
-    const extension = file.name.split('.').pop() || 'png';
-    const fileName = `${prefix}_${crypto.randomUUID()}.${extension}`;
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    const publicPath = path.join(uploadsDir, fileName);
-    
-    // Ensure directory exists
-    await mkdir(uploadsDir, { recursive: true });
-    
-    await writeFile(publicPath, buffer);
-    return `/uploads/${fileName}`;
-  } catch (error) {
-    console.error(`Error saving ${prefix}:`, error);
-    throw new Error(`Failed to save ${prefix} image. Please try again.`);
-  }
-}
-
 export async function getCompanies() {
   return await prisma.company.findMany({
     orderBy: { name: "asc" },
@@ -55,77 +24,72 @@ export async function getCompanies() {
 
 export async function registerEmployer(formData: FormData) {
   try {
-    const rawData = Object.fromEntries(formData.entries());
-    const validatedData = employerSchema.parse(rawData);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const companyMode = formData.get("companyMode") as "existing" | "new";
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email: validatedData.email },
-    });
+    // These are now Base64 strings sent from the client
+    const logo = formData.get("logo") as string | null;
+    const banner = formData.get("banner") as string | null;
 
-    if (existingUser) {
-      return { success: false, error: "Email already registered." };
-    }
+    if (companyMode === "new") {
+      const companyName = formData.get("newCompanyName") as string;
+      const industry = formData.get("industry") as string;
 
-    const hashedPassword = await bcrypt.hash(validatedData.password, 12);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    let finalCompanyId = validatedData.companyId;
-
-    // Handle new company creation
-    if (validatedData.companyMode === "new") {
-      if (!validatedData.newCompanyName || !validatedData.industry) {
-        return { success: false, error: "Company details are required for new registrations." };
-      }
-
-      try {
-        const logoFile = formData.get("logo") as File | null;
-        const bannerFile = formData.get("banner") as File | null;
-        
-        const logoUrl = await saveFile(logoFile, "logo");
-        const bannerUrl = await saveFile(bannerFile, "banner");
-
-        const newCompany = await prisma.company.create({
-          data: {
-            name: validatedData.newCompanyName,
-            email: `${validatedData.newCompanyName.toLowerCase().replace(/\s+/g, '.')}@partner.v1`, // Placeholder
-            industry: validatedData.industry,
-            logoUrl,
-            bannerUrl,
-            isVerified: false,
+      await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+          role: "EMPLOYER",
+          employer: {
+            create: {
+              company: {
+                create: {
+                  name: companyName,
+                  email: `${companyName.toLowerCase().replace(/\s+/g, '.')}@partner.sit`,
+                  industry,
+                  logoUrl: logo,
+                  bannerUrl: banner,
+                  isVerified: false,
+                },
+              },
+            },
           },
-        });
-        finalCompanyId = newCompany.id;
-        
-        // Revalidate coordinator paths to show new company/registration
-        revalidatePath("/coordinator/registrations");
-        revalidatePath("/coordinator/companies");
-      } catch (fileError) {
-        const message = fileError instanceof Error ? fileError.message : "File upload failed.";
-        return { success: false, error: message };
-      }
+        },
+      });
+    } else {
+      const companyId = formData.get("companyId") as string;
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+          role: "EMPLOYER",
+          employer: {
+            create: {
+              company: {
+                connect: { id: companyId },
+              },
+            },
+          },
+        },
+      });
     }
 
-    if (!finalCompanyId) {
-      return { success: false, error: "Company selection is required." };
-    }
-
-    await prisma.user.create({
-      data: {
-        name: validatedData.name,
-        email: validatedData.email,
-        password: hashedPassword,
-        role: "EMPLOYER",
-        isApproved: false,
-        companyId: finalCompanyId,
-      },
-    });
-
+    revalidatePath("/coordinator/registrations");
+    revalidatePath("/coordinator/companies");
     return { success: true };
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { success: false, error: error.issues[0].message };
+    console.error("Registration error:", error);
+    if (error instanceof Error && error.message.includes("Unique constraint")) {
+      return { success: false, error: "An account with this email already exists." };
     }
-    console.error("Employer Registration Error:", error);
-    return { success: false, error: "Registration failed. Please check company details." };
+    return { success: false, error: "System encountered a registration conflict. Please try again." };
   }
 }
