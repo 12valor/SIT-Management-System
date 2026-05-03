@@ -29,5 +29,12 @@ export default async function PlacementsPage() {
     orderBy: { postedAt: "desc" },
   });
 
-  return <PlacementsContent initialPostings={postings} />;
+  const normalized = postings.map(p => ({
+    ...p,
+    requirements: p.requirements || [],
+    responsibilities: p.responsibilities || [],
+    tags: p.tags || []
+  }));
+
+  return <PlacementsContent initialPostings={normalized} />;
 }

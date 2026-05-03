@@ -18,7 +18,15 @@ export async function getEmployerPostings() {
     orderBy: { postedAt: "desc" },
   });
 
-  return { success: true, data: postings };
+  return { 
+    success: true, 
+    data: postings.map(p => ({
+      ...p,
+      requirements: p.requirements || [],
+      responsibilities: p.responsibilities || [],
+      tags: p.tags || []
+    }))
+  };
 }
 
 export async function createSITPosting(formData: FormData) {

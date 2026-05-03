@@ -259,9 +259,9 @@ export default function EmployerPostingsPage() {
                   </div>
 
                   {/* Bulleted Lists Section */}
-                  {(p.responsibilities.length > 0 || p.requirements.length > 0) && (
+                  {((p.responsibilities?.length || 0) > 0 || (p.requirements?.length || 0) > 0) && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6 p-5 bg-muted/30 rounded-xl border border-border/50 flex-1">
-                      {p.responsibilities.length > 0 && (
+                      {(p.responsibilities?.length || 0) > 0 && (
                         <div className="space-y-2.5">
                           <p className="text-[9px] font-black uppercase tracking-[0.15em] text-primary/70">Strategic Role</p>
                           <ul className="space-y-1.5">
@@ -270,13 +270,13 @@ export default function EmployerPostingsPage() {
                                 <span className="text-primary mt-0.5">•</span> {r}
                               </li>
                             ))}
-                            {p.responsibilities.length > 3 && (
+                            {(p.responsibilities?.length || 0) > 3 && (
                               <li className="text-[9px] font-bold text-muted-foreground/40 italic ml-3">+ {p.responsibilities.length - 3} more</li>
                             )}
                           </ul>
                         </div>
                       )}
-                      {p.requirements.length > 0 && (
+                      {(p.requirements?.length || 0) > 0 && (
                         <div className="space-y-2.5">
                           <p className="text-[9px] font-black uppercase tracking-[0.15em] text-muted-foreground/60">Candidate Prerequisites</p>
                           <ul className="space-y-1.5">
@@ -285,7 +285,7 @@ export default function EmployerPostingsPage() {
                                 <span className="text-muted-foreground/30 mt-0.5">•</span> {r}
                               </li>
                             ))}
-                            {p.requirements.length > 3 && (
+                            {(p.requirements?.length || 0) > 3 && (
                               <li className="text-[9px] font-bold text-muted-foreground/40 italic ml-3">+ {p.requirements.length - 3} more</li>
                             )}
                           </ul>

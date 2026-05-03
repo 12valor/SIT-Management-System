@@ -27,7 +27,15 @@ export async function getSITOpportunities() {
       orderBy: { postedAt: 'desc' }
     });
 
-    return { success: true, data: postings };
+    return { 
+      success: true, 
+      data: postings.map(p => ({
+        ...p,
+        requirements: p.requirements || [],
+        responsibilities: p.responsibilities || [],
+        tags: p.tags || []
+      }))
+    };
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
     return { success: false, error: message };
