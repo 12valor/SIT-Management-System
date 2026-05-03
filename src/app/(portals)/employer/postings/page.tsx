@@ -194,24 +194,24 @@ export default function EmployerPostingsPage() {
       {/* Create Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
-          <div className="relative w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-muted/30">
+          <div className="relative w-full max-w-4xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="px-8 py-5 border-b border-border flex items-center justify-between bg-muted/30">
               <div className="space-y-1">
-                <h3 className="text-lg font-bold text-foreground">Post New SIT Opportunity</h3>
-                <p className="text-xs text-muted-foreground font-medium">Define parameters for student internships.</p>
+                <h3 className="text-lg font-bold text-foreground leading-none">Post New SIT Opportunity</h3>
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Industrial Training Registry</p>
               </div>
               <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors text-muted-foreground/40 hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="p-8 space-y-5">
               {error && (
                 <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-xs text-red-600 font-bold">
                   {error}
                 </div>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div className="md:col-span-2 space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Opportunity Title *</label>
                   <input name="title" required placeholder="e.g. Software Systems Intern"
                     className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
@@ -222,6 +222,11 @@ export default function EmployerPostingsPage() {
                     className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
                 <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Clock Requirement</label>
+                  <input name="requiredHours" type="number" defaultValue={300} min={1}
+                    className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+                </div>
+                <div className="md:col-span-2 space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Training Modality</label>
                   <div className="relative">
                     <select name="type" defaultValue="ON_SITE"
@@ -233,63 +238,55 @@ export default function EmployerPostingsPage() {
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Clock Requirement</label>
-                  <input name="requiredHours" type="number" defaultValue={300} min={1}
-                    className="w-full h-11 px-4 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+                <div className="md:col-span-2 space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Scope *</label>
+                  <textarea name="description" required rows={2} placeholder="Define duties, technical expectations, and academic requirements..."
+                    className="w-full p-3 h-20 rounded-lg border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
                 </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Scope *</label>
-                <textarea name="description" required rows={3} placeholder="Define duties, technical expectations, and academic requirements..."
-                  className="w-full p-4 h-32 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Key Responsibilities</label>
-                  <textarea name="responsibilities" rows={4} placeholder="• Develop software modules&#10;• Maintain system records&#10;• Coordinate with team leads..."
-                    className="w-full p-4 h-40 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
-                  <p className="text-[9px] text-muted-foreground/60 italic ml-1">Enter each responsibility on a new line.</p>
+                  <textarea name="responsibilities" rows={3} placeholder="• Develop software modules&#10;• Maintain system records..."
+                    className="w-full p-4 h-28 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
+                  <p className="text-[8px] text-muted-foreground/60 italic ml-1 uppercase tracking-widest">Newline separation for list items</p>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Academic / Technical Requirements</label>
-                  <textarea name="requirements" rows={4} placeholder="• Enrolled in BSIT / BSCS&#10;• Proficient in TypeScript&#10;• Basic Git knowledge..."
-                    className="w-full p-4 h-40 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
-                  <p className="text-[9px] text-muted-foreground/60 italic ml-1">Enter each requirement on a new line.</p>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Candidate Prerequisites</label>
+                  <textarea name="requirements" rows={3} placeholder="• Enrolled in BSIT / BSCS&#10;• Proficient in TypeScript..."
+                    className="w-full p-4 h-28 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
+                  <p className="text-[8px] text-muted-foreground/60 italic ml-1 uppercase tracking-widest">Newline separation for list items</p>
                 </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
-                <div className="min-h-[44px] border border-border rounded-xl bg-muted/30 p-2.5 flex flex-wrap gap-2 transition-all">
-                  {tags.map((t) => (
-                    <span key={t} className="flex items-center gap-1.5 px-2.5 py-1 bg-card text-muted-foreground text-[10px] font-bold rounded-lg border border-border shadow-sm">
-                      {t} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setTags(tags.filter(x => x !== t))} />
-                    </span>
-                  ))}
-                  <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
-                    placeholder={tags.length === 0 ? "e.g. React, Logistics, CAD..." : ""} className="flex-1 bg-transparent outline-none text-sm text-foreground min-w-[120px] ml-2" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-end">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
+                  <div className="min-h-[44px] border border-border rounded-xl bg-muted/30 p-2 flex flex-wrap gap-2 transition-all">
+                    {tags.map((t) => (
+                      <span key={t} className="flex items-center gap-1.5 px-2 py-0.5 bg-card text-muted-foreground text-[9px] font-bold rounded border border-border shadow-sm">
+                        {t} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setTags(tags.filter(x => x !== t))} />
+                      </span>
+                    ))}
+                    <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
+                      placeholder={tags.length === 0 ? "e.g. React, CAD..." : ""} className="flex-1 bg-transparent outline-none text-xs text-foreground min-w-[100px] ml-1" />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Visual Job Poster (Optional)</label>
-                <div className="flex items-center gap-4">
-                  <div className="relative w-full h-32 rounded-xl border-2 border-dashed border-border bg-muted/20 overflow-hidden flex items-center justify-center group/poster hover:border-primary/50 transition-all">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Visual Job Poster (Optional)</label>
+                  <div className="relative h-[44px] rounded-xl border border-dashed border-border bg-muted/20 overflow-hidden flex items-center px-4 group/poster hover:border-primary/50 transition-all">
                     {posterPreview ? (
-                      <div className="relative w-full h-full">
-                        <img 
-                          src={posterPreview} 
-                          alt="Poster preview" 
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 flex items-center justify-center transition-opacity">
-                           <p className="text-[10px] font-bold text-white uppercase tracking-widest">Change Image</p>
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
+                           <img src={posterPreview} className="w-4 h-4 object-cover rounded-[1px]" />
                         </div>
+                        <p className="text-[9px] font-bold text-primary uppercase tracking-widest">Poster Attached</p>
+                        <button type="button" onClick={() => setPosterPreview(null)} className="ml-2 text-destructive hover:scale-110 transition-transform"><X className="h-3 w-3" /></button>
                       </div>
                     ) : (
-                      <div className="flex flex-col items-center gap-2 text-muted-foreground/40 group-hover/poster:text-primary transition-colors">
-                        <Plus className="h-6 w-6" />
-                        <p className="text-[10px] font-bold uppercase tracking-widest">Upload Marketing Poster</p>
+                      <div className="flex items-center gap-2 text-muted-foreground/40 group-hover/poster:text-primary transition-colors">
+                        <Plus className="h-3.5 w-3.5" />
+                        <p className="text-[9px] font-bold uppercase tracking-widest">Attach Marketing Visual</p>
                       </div>
                     )}
                     <input
@@ -298,20 +295,6 @@ export default function EmployerPostingsPage() {
                       onChange={handleFileChange}
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
-                  </div>
-                  <div className="max-w-[200px] space-y-1">
-                    <p className="text-[9px] text-muted-foreground leading-relaxed font-medium">
-                      An industrial-grade visual representation of the role. PNG, JPG recommended. Max 3MB.
-                    </p>
-                    {posterPreview && (
-                      <button 
-                        type="button" 
-                        onClick={() => setPosterPreview(null)}
-                        className="text-[9px] font-bold text-destructive uppercase tracking-widest hover:underline"
-                      >
-                        Remove Poster
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
