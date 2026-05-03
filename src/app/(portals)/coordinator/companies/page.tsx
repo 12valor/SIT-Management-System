@@ -6,7 +6,7 @@ import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X,
 import { getCompanies, setCompanyVerification, addCompany, updateCompany, deleteCompany } from "./actions";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import NextImage from "next/image";
 
 type Company = {
   id: string;
@@ -276,7 +276,7 @@ export default function CoordinatorCompaniesPage() {
                   <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.logoUrl ? (
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-border group">
-                        <Image 
+                        <NextImage 
                           src={formData.logoUrl} 
                           alt="Preview" 
                           fill 
@@ -309,7 +309,7 @@ export default function CoordinatorCompaniesPage() {
                   <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.bannerUrl ? (
                       <div className="relative w-full h-16 rounded-lg overflow-hidden border border-border group">
-                        <Image 
+                        <NextImage 
                           src={formData.bannerUrl} 
                           alt="Preview" 
                           fill 
@@ -445,7 +445,7 @@ export default function CoordinatorCompaniesPage() {
                     {/* Banner */}
                     <div className="h-28 w-full relative bg-muted border-b border-border">
                       {c.bannerUrl ? (
-                        <Image 
+                        <NextImage 
                           src={c.bannerUrl} 
                           alt="Banner" 
                           fill 
@@ -474,7 +474,7 @@ export default function CoordinatorCompaniesPage() {
                       {/* Logo (Overlapping) */}
                       <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-card border-4 border-card shadow-sm flex items-center justify-center overflow-hidden">
                         {c.logoUrl ? (
-                          <Image 
+                          <NextImage 
                             src={c.logoUrl} 
                             alt={c.name} 
                             fill 
