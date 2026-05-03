@@ -44,11 +44,11 @@ export async function updateCompany(id: string, data: {
     await prisma.company.update({
       where: { id },
       data: {
-        name: data.name,
-        email: data.email,
-        industry: data.industry,
-        location: data.location,
-        description: data.description,
+        name: data.name.trim(),
+        email: data.email.trim().toLowerCase(),
+        industry: data.industry.trim(),
+        location: data.location.trim(),
+        description: data.description.trim(),
         slots: data.slots,
         logoUrl: data.logoUrl,
         bannerUrl: data.bannerUrl,
@@ -59,6 +59,16 @@ export async function updateCompany(id: string, data: {
     return { success: true };
   } catch (error) {
     console.error("Failed to update company:", error);
+    
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        const target = error.meta?.target;
+        if (Array.isArray(target) && target.includes('email')) {
+          throw new Error("This email address is already assigned to another company.");
+        }
+      }
+    }
+
     const message = error instanceof Error ? error.message : "An unexpected error occurred";
     throw new Error(message);
   }
@@ -77,11 +87,11 @@ export async function addCompany(data: {
   try {
     await prisma.company.create({
       data: {
-        name: data.name,
-        email: data.email,
-        industry: data.industry,
-        location: data.location,
-        description: data.description,
+        name: data.name.trim(),
+        email: data.email.trim().toLowerCase(),
+        industry: data.industry.trim(),
+        location: data.location.trim(),
+        description: data.description.trim(),
         slots: data.slots,
         logoUrl: data.logoUrl,
         bannerUrl: data.bannerUrl,
@@ -97,7 +107,16 @@ export async function addCompany(data: {
     
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {
-        throw new Error("A company with this email already exists.");
+        const target = error.meta?.target;
+        const modelName = error.meta?.modelName;
+        
+        // If it's a company model conflict on email
+        if (Array.isArray(target) && target.includes('email')) {
+          throw new Error("A company with this email address already exists in the registry.");
+        }
+        
+        // Handle potential name conflict if it were unique, or other constraints
+        throw new Error("A registration conflict occurred. Please check if the company email or name is already in use.");
       }
     }
     

@@ -35,7 +35,7 @@ export async function registerEmployer(formData: FormData) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const companyName = formData.get("newCompanyName") as string;
     const industry = formData.get("industry") as string;
-    const sanitizedName = companyName?.toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
+    const sanitizedName = companyName?.trim().toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
     const companyEmail = `${sanitizedName}@partner.sit`;
 
     const registrationData = {
@@ -79,10 +79,10 @@ export async function registerEmployer(formData: FormData) {
         
         if (Array.isArray(target) && target.includes('email')) {
           if (modelName === 'User') {
-            return { success: false, error: "An account with this corporate email already exists." };
+            return { success: false, error: "An account with this email address already exists. Please use a different email or log in." };
           }
           if (modelName === 'Company') {
-            return { success: false, error: "A company with this name (or a very similar one) is already registered." };
+            return { success: false, error: "This company name results in a duplicate system email. Please use a more specific name or join the existing company." };
           }
         }
         return { success: false, error: "A registration conflict occurred. This email or company name may already be in use." };
