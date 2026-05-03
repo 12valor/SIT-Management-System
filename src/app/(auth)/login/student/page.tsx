@@ -32,8 +32,7 @@ export default function StudentLoginPage() {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Student Portal...");
         setTimeout(() => {
-          router.refresh();
-          router.push("/student/dashboard");
+          window.location.href = "/student/dashboard";
         }, 800);
       } else {
         setAuthStatus("error");

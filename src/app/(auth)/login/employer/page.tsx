@@ -32,8 +32,7 @@ export default function EmployerLoginPage() {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Partner Dashboard...");
         setTimeout(() => {
-          router.refresh();
-          router.push("/employer/dashboard");
+          window.location.href = "/employer/dashboard";
         }, 800);
       } else {
         setAuthStatus("error");

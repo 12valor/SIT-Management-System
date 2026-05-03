@@ -32,8 +32,7 @@ export default function CoordinatorLoginPage() {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Strategic Overview...");
         setTimeout(() => {
-          router.refresh();
-          router.push("/coordinator/dashboard");
+          window.location.href = "/coordinator/dashboard";
         }, 800);
       } else {
         setAuthStatus("error");
