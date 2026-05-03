@@ -228,15 +228,15 @@ export default function EmployerSignupPage() {
               </div>
 
               {companyMode === "existing" ? (
-                <div className="space-y-2 animate-in-fade">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <div className="space-y-1.5 animate-in-fade">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                     Associated Company
                   </label>
                   <div className="relative group/select">
                     <select
                       name="companyId"
                       required
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none cursor-pointer"
+                      className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white appearance-none cursor-pointer"
                     >
                       <option value="" disabled className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Select partner company</option>
                       {companies.map(c => (
