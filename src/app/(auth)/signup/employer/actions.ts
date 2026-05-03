@@ -80,24 +80,33 @@ export async function registerEmployer(formData: FormData) {
     revalidatePath("/coordinator/companies");
     return { success: true };
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error("Registration error details:", error);
     
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-      const target = error.meta?.target;
-      const modelName = error.meta?.modelName;
-      
-      if (Array.isArray(target) && target.includes('email')) {
-        if (modelName === 'User') {
-          return { success: false, error: "An account with this corporate email already exists." };
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        const target = error.meta?.target;
+        const modelName = error.meta?.modelName;
+        
+        if (Array.isArray(target) && target.includes('email')) {
+          if (modelName === 'User') {
+            return { success: false, error: "An account with this corporate email already exists." };
+          }
+          if (modelName === 'Company') {
+            return { success: false, error: "A company with this name (or a very similar one) is already registered." };
+          }
         }
-        if (modelName === 'Company') {
-          return { success: false, error: "A company with this name (or a very similar one) is already registered." };
-        }
+        return { success: false, error: "A registration conflict occurred. This email or company name may already be in use." };
       }
-      
-      return { success: false, error: "A registration conflict occurred. This email or company name may already be in use." };
     }
 
-    return { success: false, error: "System encountered an unexpected registration error. Please try again." };
+    if (error instanceof Error) {
+      if (error.message.includes("timed out") || error.message.includes("connection")) {
+        return { success: false, error: "The system is having trouble connecting to the registry. Please try again in a moment." };
+      }
+      // Return the actual error message in a sanitized way if possible, or a more descriptive fallback
+      return { success: false, error: `System encountered a registration error: ${error.message.substring(0, 50)}...` };
+    }
+
+    return { success: false, error: "System encountered an unexpected registration error. Please contact administration." };
   }
 }
