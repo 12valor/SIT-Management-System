@@ -357,8 +357,15 @@ export default function CoordinatorCompaniesPage() {
                     <input required type="number" min="0" value={formData.slots} onChange={e => setFormData({...formData, slots: parseInt(e.target.value) || 0})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
                   </div>
                   <div className="space-y-1 col-span-2">
-                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Location</label>
-                    <input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full h-9 px-3 rounded-md border border-border bg-background text-sm outline-none focus:border-primary" />
+                    <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Locations (One per line)</label>
+                    <textarea 
+                      required 
+                      rows={3}
+                      value={formData.location} 
+                      onChange={e => setFormData({...formData, location: e.target.value})} 
+                      className="w-full p-2.5 rounded-md border border-border bg-background text-sm outline-none focus:border-primary resize-none" 
+                      placeholder="Enter each branch or office location on a new line..."
+                    />
                   </div>
                   <div className="space-y-1 col-span-2">
                     <label className="text-[10px] font-semibold text-foreground/70 uppercase tracking-widest">Description</label>
@@ -498,9 +505,24 @@ export default function CoordinatorCompaniesPage() {
                             <Mail className="h-3 w-3 opacity-50" />
                             <span className="truncate">{c.email}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-[11px] text-foreground/70">
-                            <Globe className="h-3 w-3 opacity-50" />
-                            <span className="truncate">{c.location || "Multiple Locations"}</span>
+                          <div className="flex flex-col gap-1.5 mt-3 pt-3 border-t border-border/30">
+                            {c.location?.split('\n').filter(l => l.trim() !== '').slice(0, 2).map((loc, i) => (
+                              <div key={i} className="flex items-center gap-2 text-[10px] text-foreground/60">
+                                <Globe className="h-2.5 w-2.5 opacity-40 shrink-0" />
+                                <span className="truncate">{loc}</span>
+                              </div>
+                            ))}
+                            {(c.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) > 2 && (
+                              <p className="text-[9px] font-bold text-primary/60 uppercase tracking-tighter pl-4">
+                                + {(c.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) - 2} more branches
+                              </p>
+                            )}
+                            {(!c.location || c.location.trim() === '') && (
+                              <div className="flex items-center gap-2 text-[10px] text-foreground/40 italic">
+                                <Globe className="h-2.5 w-2.5 opacity-40 shrink-0" />
+                                <span>No locations listed</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

@@ -170,10 +170,27 @@ export default function PartnersPage() {
                       </div>
 
                       <footer className="mt-8 pt-5 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-sm">
-                        <div className="flex flex-col gap-2 text-slate-500 dark:text-slate-400">
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-3.5 h-3.5 text-primary/70" />
-                            <span className="font-medium text-xs">{partner.location || "Multiple Locations"}</span>
+                        <div className="flex flex-col gap-3 text-slate-500 dark:text-slate-400">
+                          <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-3.5 h-3.5 text-primary/70" />
+                              <span className="font-bold text-[10px] uppercase tracking-wider">Operational Sites</span>
+                            </div>
+                            <div className="pl-5 space-y-1.5">
+                              {partner.location?.split('\n').filter(l => l.trim() !== '').slice(0, 3).map((loc, i) => (
+                                <p key={i} className="text-xs font-serif italic text-slate-600 dark:text-slate-400 leading-tight">
+                                  {loc}
+                                </p>
+                              ))}
+                              {(partner.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) > 3 && (
+                                <p className="text-[10px] font-bold text-primary/50 uppercase tracking-tighter">
+                                  + {(partner.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) - 3} additional branches
+                                </p>
+                              )}
+                              {(!partner.location || partner.location.trim() === '') && (
+                                <p className="text-xs font-serif italic text-slate-400">Institutional site data pending.</p>
+                              )}
+                            </div>
                           </div>
                           <div className="flex items-center gap-2">
                             <Users className="w-3.5 h-3.5 text-primary/70" />
