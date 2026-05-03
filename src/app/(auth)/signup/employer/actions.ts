@@ -16,6 +16,12 @@ export async function registerEmployer(formData: FormData) {
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (password !== confirmPassword) {
+      return { success: false, error: "Security validation failed: Passwords do not match." };
+    }
+
     const companyMode = formData.get("companyMode") as "existing" | "new";
     const location = formData.get("location") as string | null;
 

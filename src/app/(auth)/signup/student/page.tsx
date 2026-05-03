@@ -21,6 +21,16 @@ export default function StudentSignupPage() {
     setError("");
 
     const formData = new FormData(e.currentTarget);
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (password !== confirmPassword) {
+      setAuthStatus("error");
+      setAuthMessage("Security verification failed: Passwords do not match.");
+      setError("Passwords do not match");
+      return;
+    }
+
     const result = await registerStudent(formData);
 
     if (result.success) {
@@ -121,17 +131,32 @@ export default function StudentSignupPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
-                Security Password
-              </label>
-              <input
-                name="password"
-                type="password"
-                required
-                placeholder="••••••••"
-                className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
-              />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  Security Password
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  Confirm Password
+                </label>
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                />
+              </div>
             </div>
 
             <button
