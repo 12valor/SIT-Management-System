@@ -179,7 +179,7 @@ export default function EmployerSignupPage() {
                     name="name"
                     required
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                   />
                 </div>
 
@@ -306,7 +306,7 @@ export default function EmployerSignupPage() {
                       name="industry"
                       required={companyMode === "new"}
                       placeholder="e.g. Manufacturing, Technology, IT"
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                     />
                   </div>
                   
@@ -318,7 +318,7 @@ export default function EmployerSignupPage() {
                       name="description"
                       required={companyMode === "new"}
                       placeholder="Describe the company's core operations, specialization, and student training environment..."
-                      className="w-full h-32 px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white resize-none font-serif"
+                      className="w-full h-32 px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white resize-none font-serif text-sm"
                     />
                   </div>
 
@@ -330,7 +330,7 @@ export default function EmployerSignupPage() {
                       name="location"
                       required={companyMode === "new"}
                       placeholder="Enter each location on a new line..."
-                      className="w-full h-32 px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white resize-none font-serif"
+                      className="w-full h-32 px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white resize-none font-serif text-sm"
                       onChange={(e) => {
                         const lines = e.target.value.split('\n').filter(l => l.trim() !== "");
                         setLocationLines(lines);
@@ -467,7 +467,7 @@ export default function EmployerSignupPage() {
                     type="password"
                     required
                     placeholder="Create a secure password"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                   />
                 </div>
 
@@ -480,7 +480,7 @@ export default function EmployerSignupPage() {
                     type="password"
                     required
                     placeholder="Re-enter your password"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                   />
                 </div>
               </div>

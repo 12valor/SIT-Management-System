@@ -80,7 +80,7 @@ export default function StudentSignupPage() {
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Full Name
                 </label>
                 <input
@@ -88,19 +88,19 @@ export default function StudentSignupPage() {
                   type="text"
                   required
                   placeholder="Enter your full name"
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Course / Program
                 </label>
                 <div className="relative">
                   <select
                     name="course"
                     required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
                   >
                     <option value="" className="text-slate-400">Select program</option>
                     <option value="BS in Computer Engineering">BS in Computer Engineering</option>
@@ -119,7 +119,7 @@ export default function StudentSignupPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+              <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
                 Institutional Email
               </label>
               <input
@@ -127,13 +127,13 @@ export default function StudentSignupPage() {
                 type="email"
                 required
                 placeholder="e.g. 2024-12345-V-0@tupv.edu.ph"
-                className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
               />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Security Password
                 </label>
                 <input
@@ -141,12 +141,12 @@ export default function StudentSignupPage() {
                   type="password"
                   required
                   placeholder="Create a secure password"
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
                   Confirm Password
                 </label>
                 <input
@@ -154,7 +154,7 @@ export default function StudentSignupPage() {
                   type="password"
                   required
                   placeholder="Re-enter your password"
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
                 />
               </div>
             </div>
