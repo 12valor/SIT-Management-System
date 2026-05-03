@@ -27,6 +27,10 @@ export default function EmployerPostingsPage() {
   const [showModal, setShowModal] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [respInput, setRespInput] = useState("");
+  const [resps, setResps] = useState<string[]>([]);
+  const [reqInput, setReqInput] = useState("");
+  const [reqs, setReqs] = useState<string[]>([]);
   const [posterPreview, setPosterPreview] = useState<string | null>(null);
   const [error, setError] = useState("");
 
@@ -43,6 +47,22 @@ export default function EmployerPostingsPage() {
       e.preventDefault();
       if (!tags.includes(tagInput.trim())) setTags([...tags, tagInput.trim()]);
       setTagInput("");
+    }
+  };
+
+  const handleRespKey = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && respInput.trim()) {
+      e.preventDefault();
+      if (!resps.includes(respInput.trim())) setResps([...resps, respInput.trim()]);
+      setRespInput("");
+    }
+  };
+
+  const handleReqKey = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && reqInput.trim()) {
+      e.preventDefault();
+      if (!reqs.includes(reqInput.trim())) setReqs([...reqs, reqInput.trim()]);
+      setReqInput("");
     }
   };
 
@@ -67,11 +87,15 @@ export default function EmployerPostingsPage() {
     setError("");
     const fd = new FormData(e.currentTarget);
     fd.append("tags", tags.join(","));
+    fd.append("responsibilities", resps.join("\n"));
+    fd.append("requirements", reqs.join("\n"));
     if (posterPreview) fd.append("poster", posterPreview);
     const res = await createSITPosting(fd);
     if (res.success) {
       setShowModal(false);
       setTags([]);
+      setResps([]);
+      setReqs([]);
       setPosterPreview(null);
       await loadPostings();
     } else {
@@ -246,16 +270,32 @@ export default function EmployerPostingsPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Key Responsibilities</label>
-                  <textarea name="responsibilities" rows={3} placeholder="• Develop software modules&#10;• Maintain system records..."
-                    className="w-full p-4 h-28 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
-                  <p className="text-[8px] text-muted-foreground/60 italic ml-1 uppercase tracking-widest">Newline separation for list items</p>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Key Responsibilities (Press Enter)</label>
+                  <div className="min-h-[112px] border border-border rounded-xl bg-muted/30 p-2.5 flex flex-col transition-all">
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {resps.map((r) => (
+                        <span key={r} className="flex items-center gap-1.5 px-2 py-1 bg-card text-muted-foreground text-[9px] font-bold rounded border border-border shadow-sm">
+                          {r} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setResps(resps.filter(x => x !== r))} />
+                        </span>
+                      ))}
+                    </div>
+                    <input value={respInput} onChange={(e) => setRespInput(e.target.value)} onKeyDown={handleRespKey}
+                      placeholder="e.g. System maintenance..." className="bg-transparent outline-none text-xs text-foreground w-full" />
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Candidate Prerequisites</label>
-                  <textarea name="requirements" rows={3} placeholder="• Enrolled in BSIT / BSCS&#10;• Proficient in TypeScript..."
-                    className="w-full p-4 h-28 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
-                  <p className="text-[8px] text-muted-foreground/60 italic ml-1 uppercase tracking-widest">Newline separation for list items</p>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Candidate Prerequisites (Press Enter)</label>
+                  <div className="min-h-[112px] border border-border rounded-xl bg-muted/30 p-2.5 flex flex-col transition-all">
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {reqs.map((r) => (
+                        <span key={r} className="flex items-center gap-1.5 px-2 py-1 bg-card text-muted-foreground text-[9px] font-bold rounded border border-border shadow-sm">
+                          {r} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setReqs(reqs.filter(x => x !== r))} />
+                        </span>
+                      ))}
+                    </div>
+                    <input value={reqInput} onChange={(e) => setReqInput(e.target.value)} onKeyDown={handleReqKey}
+                      placeholder="e.g. BSCS Student..." className="bg-transparent outline-none text-xs text-foreground w-full" />
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-end">
