@@ -145,36 +145,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 03 — Institutional Voice (Refined Testimonial) */}
-        <section className="py-48 bg-white dark:bg-[#050505] relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
-          
-          <div className="max-w-5xl mx-auto px-6 relative">
-            <Reveal className="text-center">
-              <span className="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-12 block">
-                Institutional Voice
-              </span>
-              
-              <div className="max-w-4xl mx-auto">
-                <blockquote className="text-3xl md:text-5xl font-serif leading-[1.2] text-slate-900 dark:text-slate-100 mb-16 tracking-tight">
-                  &ldquo;Managing student trainees was once a fragmented process. This system provides the <span className="text-primary font-bold italic">structural rigor</span> required for true industrial-academic integration.&rdquo;
-                </blockquote>
-                
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-primary/5 border border-primary/10 flex items-center justify-center text-primary/40 mb-6">
-                    <Building2 className="w-6 h-6" strokeWidth={1} />
-                  </div>
-                  <h4 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight mb-1">
-                    Engr. Roberto M. Garcia
-                  </h4>
-                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em]">
-                    Senior Operations Manager · Industrial Hub
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
+
 
         {/* Section 04 — Operational Protocol (How It Works) */}
         <section className="py-40 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
