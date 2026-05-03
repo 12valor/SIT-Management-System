@@ -18,6 +18,7 @@ export default function EmployerSignupPage() {
   const [companies, setCompanies] = useState<{ id: string; name: string }[]>([]);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [bannerPreview, setBannerPreview] = useState<string | null>(null);
+  const [locationLines, setLocationLines] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -205,6 +206,60 @@ export default function EmployerSignupPage() {
                       placeholder="Manufacturing / IT"
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                     />
+                  </div>
+
+                  <div className="md:col-span-2 space-y-2 relative group/location">
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                      Corporate Locations
+                    </label>
+                    <textarea
+                      name="location"
+                      required={companyMode === "new"}
+                      placeholder="Enter each location on a new line..."
+                      className="w-full h-32 px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white resize-none font-serif"
+                      onChange={(e) => {
+                        const lines = e.target.value.split('\n').filter(l => l.trim() !== "");
+                        setLocationLines(lines);
+                      }}
+                    />
+                    
+                    {/* Floating Location Manifest */}
+                    <AnimatePresence>
+                      {locationLines.length > 0 && (
+                        <motion.div 
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 20 }}
+                          className="absolute -right-72 top-0 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-2xl shadow-primary/10 hidden xl:block"
+                        >
+                          <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                            Location Manifest
+                          </h4>
+                          <div className="space-y-3">
+                            <ul className="space-y-3">
+                              {locationLines.map((line, idx) => (
+                                <motion.li 
+                                  key={idx}
+                                  initial={{ opacity: 0, y: 5 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: idx * 0.05 }}
+                                  className="flex items-start gap-3 group"
+                                >
+                                  <div className="mt-1 w-4 h-4 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center text-[8px] font-bold text-slate-400 border border-slate-200 dark:border-white/10 group-hover:border-primary/30 group-hover:text-primary transition-colors">
+                                    {idx + 1}
+                                  </div>
+                                  <p className="text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                                    {line}
+                                  </p>
+                                </motion.li>
+                              ))}
+                            </ul>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    <p className="text-[10px] text-slate-400 italic">Press Enter for each additional branch or office location.</p>
                   </div>
 
                   {/* Logo and Banner Upload */}

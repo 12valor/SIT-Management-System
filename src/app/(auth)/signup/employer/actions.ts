@@ -17,6 +17,7 @@ export async function registerEmployer(formData: FormData) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const companyMode = formData.get("companyMode") as "existing" | "new";
+    const location = formData.get("location") as string | null;
 
     // Base64 strings sent from the client
     const logo = formData.get("logo") as string | null;
@@ -36,14 +37,15 @@ export async function registerEmployer(formData: FormData) {
           role: "EMPLOYER",
           isApproved: false,
           company: {
-            create: {
-              name: companyName,
-              email: `${companyName.toLowerCase().replace(/\s+/g, '.')}@partner.sit`,
-              industry,
-              logoUrl: logo,
-              bannerUrl: banner,
-              isVerified: false,
-            },
+              create: {
+                name: companyName,
+                email: `${companyName.toLowerCase().replace(/\s+/g, '.')}@partner.sit`,
+                industry,
+                location: location,
+                logoUrl: logo,
+                bannerUrl: banner,
+                isVerified: false,
+              },
           },
         },
       });
