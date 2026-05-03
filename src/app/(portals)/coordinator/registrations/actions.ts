@@ -33,12 +33,46 @@ export async function approveUser(userId: string) {
 
 export async function rejectUser(userId: string) {
   try {
-    await prisma.user.delete({
+    const user = await prisma.user.findUnique({
       where: { id: userId },
+      select: { 
+        role: true, 
+        companyId: true, 
+        company: {
+          select: { isVerified: true }
+        } 
+      }
     });
+
+    if (user?.role === "EMPLOYER" && user.companyId && !user.company?.isVerified) {
+      // Check if any other users are associated with this company
+      const otherUsers = await prisma.user.count({
+        where: { 
+          companyId: user.companyId,
+          id: { not: userId }
+        }
+      });
+
+      // If no other users, delete the company too
+      if (otherUsers === 0) {
+        await prisma.$transaction([
+          prisma.user.delete({ where: { id: userId } }),
+          prisma.company.delete({ where: { id: user.companyId } })
+        ]);
+      } else {
+        await prisma.user.delete({ where: { id: userId } });
+      }
+    } else {
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+    }
+
     revalidatePath("/coordinator/registrations");
+    revalidatePath("/coordinator/companies");
     return { success: true };
-  } catch {
+  } catch (error) {
+    console.error("Reject user error:", error);
     return { success: false, error: "Failed to reject user." };
   }
 }
@@ -50,6 +84,7 @@ export async function verifyCompany(companyId: string) {
       data: { isVerified: true },
     });
     revalidatePath("/coordinator/registrations");
+    revalidatePath("/coordinator/companies");
     return { success: true };
   } catch {
     return { success: false, error: "Failed to verify company." };
@@ -69,6 +104,7 @@ export async function verifyPartnership(userId: string, companyId: string) {
       }),
     ]);
     revalidatePath("/coordinator/registrations");
+    revalidatePath("/coordinator/companies");
     return { success: true };
   } catch {
     return { success: false, error: "Failed to verify partnership." };
