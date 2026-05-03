@@ -32,11 +32,11 @@
 
 .dark {
   color-scheme: dark;
-  --background: hsl(0 0% 0%); /* Pure Black as requested */
+  --background: hsl(348 10% 3%); /* Warm Archival Ink */
   --foreground: hsl(0 0% 100%);
-  --card: hsl(0 0% 4%);
+  --card: hsl(348 10% 5%);
   --card-foreground: hsl(0 0% 100%);
-  --popover: hsl(0 0% 3%);
+  --popover: hsl(348 10% 4%);
   --popover-foreground: hsl(0 0% 100%);
   --primary: hsl(348 83% 50%);
   --primary-foreground: hsl(0 0% 100%);
