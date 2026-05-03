@@ -40,6 +40,8 @@ export async function createSITPosting(formData: FormData) {
   const type = (formData.get("type") as string).toUpperCase().replace("-", "_") as PlacementType;
   const requiredHours = parseInt(formData.get("requiredHours") as string) || 300;
   const tags = (formData.get("tags") as string || "").split(",").map(t => t.trim()).filter(Boolean);
+  const requirements = (formData.get("requirements") as string || "").split("\n").map(t => t.trim()).filter(Boolean);
+  const responsibilities = (formData.get("responsibilities") as string || "").split("\n").map(t => t.trim()).filter(Boolean);
   const posterUrl = formData.get("poster") as string | null;
 
   if (!title || !description || !location) {
@@ -54,6 +56,8 @@ export async function createSITPosting(formData: FormData) {
       type,
       requiredHours,
       tags,
+      requirements,
+      responsibilities,
       posterUrl,
       status: PostingStatus.OPEN,
       employerId: session.user.id,

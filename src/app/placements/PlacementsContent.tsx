@@ -29,6 +29,8 @@ type Placement = {
   location: string;
   type: 'ON_SITE' | 'REMOTE' | 'HYBRID';
   tags: string[];
+  requirements: string[];
+  responsibilities: string[];
   posterUrl: string | null;
   postedAt: Date;
   company: {
@@ -182,9 +184,40 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                         </div>
 
                         {/* Description Snippet */}
-                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 font-serif">
+                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 font-serif">
                           {post.description}
                         </p>
+
+                        {(post.requirements.length > 0 || post.responsibilities.length > 0) && (
+                          <div className="grid md:grid-cols-2 gap-8 mb-8 p-6 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5">
+                            {post.responsibilities.length > 0 && (
+                              <div className="space-y-3">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/70">Strategic Responsibilities</h4>
+                                <ul className="space-y-2">
+                                  {post.responsibilities.map((res, i) => (
+                                    <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                                      <span className="text-primary mt-1">•</span>
+                                      {res}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {post.requirements.length > 0 && (
+                              <div className="space-y-3">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Candidate Prerequisites</h4>
+                                <ul className="space-y-2">
+                                  {post.requirements.map((req, i) => (
+                                    <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                                      <span className="text-slate-300 dark:text-slate-700 mt-1">•</span>
+                                      {req}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* Footer / Meta Tags */}
                         <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-slate-100 dark:border-white/5">

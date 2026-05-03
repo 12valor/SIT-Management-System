@@ -244,6 +244,20 @@ export default function EmployerPostingsPage() {
                 <textarea name="description" required rows={3} placeholder="Define duties, technical expectations, and academic requirements..."
                   className="w-full p-4 h-32 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Key Responsibilities</label>
+                  <textarea name="responsibilities" rows={4} placeholder="• Develop software modules&#10;• Maintain system records&#10;• Coordinate with team leads..."
+                    className="w-full p-4 h-40 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
+                  <p className="text-[9px] text-muted-foreground/60 italic ml-1">Enter each responsibility on a new line.</p>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Academic / Technical Requirements</label>
+                  <textarea name="requirements" rows={4} placeholder="• Enrolled in BSIT / BSCS&#10;• Proficient in TypeScript&#10;• Basic Git knowledge..."
+                    className="w-full p-4 h-40 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none shadow-sm transition-all" />
+                  <p className="text-[9px] text-muted-foreground/60 italic ml-1">Enter each requirement on a new line.</p>
+                </div>
+              </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
                 <div className="min-h-[44px] border border-border rounded-xl bg-muted/30 p-2.5 flex flex-wrap gap-2 transition-all">
