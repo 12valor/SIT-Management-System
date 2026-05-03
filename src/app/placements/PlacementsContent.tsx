@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Clock, ArrowRight, Building2, Filter, X } from "lucide-react";
+import { Search, MapPin, Clock, ArrowRight, Building2, Filter, X, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -231,6 +231,14 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                                 {tag}
                               </span>
                             ))}
+                            {post.posterUrl && (
+                              <button 
+                                onClick={() => setSelectedPoster(post.posterUrl)}
+                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-white/5 rounded-full text-[10px] font-black text-slate-500 uppercase tracking-widest border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-white/10 transition-all active:scale-95"
+                              >
+                                <ImageIcon className="h-3 w-3" /> Visual Poster
+                              </button>
+                            )}
                           </div>
 
                           <Link 

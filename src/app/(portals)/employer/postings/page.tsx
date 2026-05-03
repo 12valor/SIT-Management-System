@@ -383,43 +383,47 @@ export default function EmployerPostingsPage() {
       {/* Create Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
-          <div className="relative w-full max-w-6xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="px-8 py-5 border-b border-border flex items-center justify-between bg-muted/30">
-              <div className="space-y-1">
-                <h3 className="text-lg font-bold text-foreground leading-none">Broadcast SIT Opportunity</h3>
-                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Industrial Training Registry</p>
+          <div className="relative w-full max-w-[1400px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="px-8 py-4 border-b border-border flex items-center justify-between bg-muted/30">
+              <div className="space-y-0.5">
+                <h3 className="text-base font-bold text-foreground leading-none">Broadcast SIT Opportunity</h3>
+                <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider">Industrial Training Registry</p>
               </div>
               <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors text-muted-foreground/40 hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-5 space-y-4">
               {error && (
-                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-xs text-red-500 font-bold flex items-center gap-2">
-                  <X className="h-4 w-4" /> {error}
+                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-[10px] text-red-500 font-bold flex items-center gap-2">
+                  <X className="h-3.5 w-3.5" /> {error}
                 </div>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="md:col-span-2 space-y-2">
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="md:col-span-2 space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Opportunity Title *</label>
-                  <input name="title" required placeholder="e.g. Software Systems Intern"
-                    className="w-full h-12 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+                  <input name="title" required type="text" placeholder="e.g. Software Engineering Intern"
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Site Location *</label>
-                  <input name="location" required placeholder="e.g. Metro Manila"
-                    className="w-full h-12 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Training Hours *</label>
+                  <input name="requiredHours" required type="number" defaultValue={300}
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Clock Requirement</label>
-                  <input name="requiredHours" type="number" defaultValue={300} min={1}
-                    className="w-full h-12 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Placement Location *</label>
+                  <input name="location" required type="text" placeholder="e.g. Bacolod City"
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
                 </div>
-                <div className="md:col-span-2 space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Training Modality</label>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Modality *</label>
                   <div className="relative">
                     <select name="type" defaultValue="ON_SITE"
-                      className="w-full h-12 pl-4 pr-10 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary appearance-none cursor-pointer transition-all">
+                      className="w-full h-11 pl-4 pr-10 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary appearance-none cursor-pointer transition-all">
                       <option value="ON_SITE">On-site Presence</option>
                       <option value="REMOTE">Remote Operations</option>
                       <option value="HYBRID">Hybrid Engagement</option>
@@ -427,34 +431,35 @@ export default function EmployerPostingsPage() {
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
                   </div>
                 </div>
-                <div className="md:col-span-2 space-y-2">
+                <div className="md:col-span-3 space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Scope *</label>
-                  <textarea name="description" required rows={2} placeholder="Define duties, technical expectations, and academic requirements..."
-                    className="w-full p-4 h-20 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none transition-all" />
+                  <textarea name="description" required rows={1} placeholder="Define duties, technical expectations, and academic requirements..."
+                    className="w-full p-3 h-11 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none transition-all" />
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Strategic Responsibilities (Press Enter)</label>
-                  <div className="min-h-[100px] border border-border rounded-2xl bg-muted/20 p-3 flex flex-col transition-all">
-                    <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="min-h-[80px] border border-border rounded-2xl bg-muted/20 p-2 flex flex-col transition-all">
+                    <div className="flex flex-wrap gap-1.5 mb-2">
                       {resps.map((r) => (
-                        <span key={r} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-card text-muted-foreground text-[10px] font-bold rounded-lg border border-border shadow-sm">
-                          {r} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setResps(resps.filter(x => x !== r))} />
+                        <span key={r} className="flex items-center gap-1.5 px-2 py-1 bg-card text-muted-foreground text-[9px] font-bold rounded-lg border border-border shadow-sm">
+                          {r} <X className="h-2.5 w-2.5 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setResps(resps.filter(x => x !== r))} />
                         </span>
                       ))}
                     </div>
                     <input value={respInput} onChange={(e) => setRespInput(e.target.value)} onKeyDown={handleRespKey}
-                      placeholder="e.g. System maintenance..." className="bg-transparent outline-none text-xs text-foreground w-full px-2" />
+                      placeholder="e.g. System maintenance..." className="bg-transparent outline-none text-[11px] text-foreground w-full px-2" />
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Candidate Prerequisites (Press Enter)</label>
-                  <div className="min-h-[100px] border border-border rounded-2xl bg-muted/20 p-3 flex flex-col transition-all">
-                    <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="min-h-[80px] border border-border rounded-2xl bg-muted/20 p-2 flex flex-col transition-all">
+                    <div className="flex flex-wrap gap-1.5 mb-2">
                       {reqs.map((r) => (
-                        <span key={r} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-card text-muted-foreground text-[10px] font-bold rounded-lg border border-border shadow-sm">
-                          {r} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setReqs(reqs.filter(x => x !== r))} />
+                        <span key={r} className="flex items-center gap-1.5 px-2 py-1 bg-card text-muted-foreground text-[9px] font-bold rounded-lg border border-border shadow-sm">
+                          {r} <X className="h-2.5 w-2.5 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setReqs(reqs.filter(x => x !== r))} />
                         </span>
                       ))}
                     </div>
@@ -463,7 +468,6 @@ export default function EmployerPostingsPage() {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
                   <div className="min-h-[52px] border border-border rounded-xl bg-muted/20 p-2.5 flex flex-wrap gap-2 transition-all">
@@ -502,7 +506,6 @@ export default function EmployerPostingsPage() {
                     />
                   </div>
                 </div>
-              </div>
               <div className="pt-4">
                 <button type="submit" disabled={isSubmitting}
                   className="w-full h-12 rounded-2xl bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/10 hover:brightness-110 transition-all disabled:opacity-50 active:scale-[0.98] flex items-center justify-center gap-3">
