@@ -3,6 +3,9 @@
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
 import { z } from "zod";
+import { writeFile } from "fs/promises";
+import path from "path";
+import crypto from "crypto";
 
 const employerSchema = z.object({
   name: z.string().min(2, "Name is too short"),
@@ -13,6 +16,25 @@ const employerSchema = z.object({
   newCompanyName: z.string().optional(),
   industry: z.string().optional(),
 });
+
+async function saveFile(file: File | null, prefix: string): Promise<string | null> {
+  if (!file || file.size === 0) return null;
+  
+  try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    
+    const extension = file.name.split('.').pop();
+    const fileName = `${prefix}_${crypto.randomUUID()}.${extension}`;
+    const publicPath = path.join(process.cwd(), "public", "uploads", fileName);
+    
+    await writeFile(publicPath, buffer);
+    return `/uploads/${fileName}`;
+  } catch (error) {
+    console.error(`Error saving ${prefix}:`, error);
+    return null;
+  }
+}
 
 export async function getCompanies() {
   return await prisma.company.findMany({
@@ -45,14 +67,19 @@ export async function registerEmployer(formData: FormData) {
         return { success: false, error: "Company details are required for new registrations." };
       }
 
-      // Check if company email (placeholder) or name already exists? 
-      // For simplicity, we'll just create it. 
-      // In a real app we'd need a company email too.
+      const logoFile = formData.get("logo") as File;
+      const bannerFile = formData.get("banner") as File;
+      
+      const logoUrl = await saveFile(logoFile, "logo");
+      const bannerUrl = await saveFile(bannerFile, "banner");
+
       const newCompany = await prisma.company.create({
         data: {
           name: validatedData.newCompanyName,
           email: `${validatedData.newCompanyName.toLowerCase().replace(/\s+/g, '.')}@partner.v1`, // Placeholder
           industry: validatedData.industry,
+          logoUrl,
+          bannerUrl,
           isVerified: false,
         },
       });
