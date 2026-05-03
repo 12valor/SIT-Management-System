@@ -16,6 +16,7 @@ import {
   SlidersHorizontal
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 import { applyForOpportunity } from "@/app/(portals)/student/opportunities/actions";
 import { SITOpportunity } from "@/app/(portals)/student/opportunities/types";
 
@@ -293,12 +294,18 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
         {/* Poster Modal */}
         <AnimatePresence>
           {selectedPoster && (
-            <div 
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setSelectedPoster(null)}
-              className="fixed inset-0 z-[200] bg-background/90 backdrop-blur-md flex items-center justify-center p-6 cursor-zoom-out animate-in fade-in transition-all"
+              className="fixed inset-0 z-[200] bg-background/90 backdrop-blur-md flex items-center justify-center p-6 cursor-zoom-out"
             >
-              <div 
-                className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center animate-in zoom-in-95 duration-200"
+              <motion.div 
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
                 <img 
@@ -313,8 +320,8 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
                 >
                   <X className="h-6 w-6" />
                 </button>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
