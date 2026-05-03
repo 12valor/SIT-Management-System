@@ -33,50 +33,37 @@ export async function registerEmployer(formData: FormData) {
     const banner = formData.get("banner") as string | null;
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const companyName = formData.get("newCompanyName") as string;
+    const industry = formData.get("industry") as string;
+    const sanitizedName = companyName?.toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
+    const companyEmail = `${sanitizedName}@partner.sit`;
 
-    if (companyMode === "new") {
-      const companyName = formData.get("newCompanyName") as string;
-      const industry = formData.get("industry") as string;
-      
-      const sanitizedName = companyName.toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
-      const companyEmail = `${sanitizedName}@partner.sit`;
-
-      await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-          role: "EMPLOYER",
-          isApproved: false,
-          company: {
-              create: {
-                name: companyName,
-                email: companyEmail,
-                industry,
-                location: location,
-                logoUrl: logo,
-                bannerUrl: banner,
-                isVerified: false,
-              },
-          },
+    const registrationData = {
+      name,
+      email,
+      password: hashedPassword,
+      role: "EMPLOYER",
+      isApproved: false,
+      company: companyMode === "new" ? {
+        create: {
+          name: companyName,
+          email: companyEmail,
+          industry,
+          location: location,
+          logoUrl: logo instanceof File ? null : logo,
+          bannerUrl: banner instanceof File ? null : banner,
+          isVerified: false,
         },
-      });
-    } else {
-      const companyId = formData.get("companyId") as string;
+      } : {
+        connect: { id: formData.get("companyId") as string },
+      },
+    };
 
-      await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-          role: "EMPLOYER",
-          isApproved: false,
-          company: {
-            connect: { id: companyId },
-          },
-        },
-      });
-    }
+    console.log("[Registration] Executing database creation with data:", JSON.stringify({ ...registrationData, password: "[REDACTED]" }, null, 2));
+    
+    await prisma.user.create({
+      data: registrationData,
+    });
 
     revalidatePath("/coordinator/registrations");
     revalidatePath("/coordinator/companies");
