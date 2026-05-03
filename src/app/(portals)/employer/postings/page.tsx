@@ -383,7 +383,7 @@ export default function EmployerPostingsPage() {
       {/* Create Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
-          <div className="relative w-full max-w-4xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-6xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             <div className="px-8 py-5 border-b border-border flex items-center justify-between bg-muted/30">
               <div className="space-y-1">
                 <h3 className="text-lg font-bold text-foreground leading-none">Broadcast SIT Opportunity</h3>
@@ -393,7 +393,7 @@ export default function EmployerPostingsPage() {
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {error && (
                 <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-xs text-red-500 font-bold flex items-center gap-2">
                   <X className="h-4 w-4" /> {error}
@@ -430,13 +430,13 @@ export default function EmployerPostingsPage() {
                 <div className="md:col-span-2 space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Scope *</label>
                   <textarea name="description" required rows={2} placeholder="Define duties, technical expectations, and academic requirements..."
-                    className="w-full p-4 h-24 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none transition-all" />
+                    className="w-full p-4 h-20 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none transition-all" />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Strategic Responsibilities (Press Enter)</label>
-                  <div className="min-h-[140px] border border-border rounded-2xl bg-muted/20 p-3 flex flex-col transition-all">
+                  <div className="min-h-[100px] border border-border rounded-2xl bg-muted/20 p-3 flex flex-col transition-all">
                     <div className="flex flex-wrap gap-2 mb-3">
                       {resps.map((r) => (
                         <span key={r} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-card text-muted-foreground text-[10px] font-bold rounded-lg border border-border shadow-sm">
@@ -450,7 +450,7 @@ export default function EmployerPostingsPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Candidate Prerequisites (Press Enter)</label>
-                  <div className="min-h-[140px] border border-border rounded-2xl bg-muted/20 p-3 flex flex-col transition-all">
+                  <div className="min-h-[100px] border border-border rounded-2xl bg-muted/20 p-3 flex flex-col transition-all">
                     <div className="flex flex-wrap gap-2 mb-3">
                       {reqs.map((r) => (
                         <span key={r} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-card text-muted-foreground text-[10px] font-bold rounded-lg border border-border shadow-sm">
@@ -505,7 +505,7 @@ export default function EmployerPostingsPage() {
               </div>
               <div className="pt-4">
                 <button type="submit" disabled={isSubmitting}
-                  className="w-full h-14 rounded-2xl bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/10 hover:brightness-110 transition-all disabled:opacity-50 active:scale-[0.98] flex items-center justify-center gap-3">
+                  className="w-full h-12 rounded-2xl bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/10 hover:brightness-110 transition-all disabled:opacity-50 active:scale-[0.98] flex items-center justify-center gap-3">
                   {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Broadcast Opportunity <Plus className="h-4 w-4" /></>}
                 </button>
               </div>
