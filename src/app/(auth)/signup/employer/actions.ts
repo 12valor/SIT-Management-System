@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma, UserRole } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 
@@ -42,7 +42,7 @@ export async function registerEmployer(formData: FormData) {
       name,
       email,
       password: hashedPassword,
-      role: "EMPLOYER",
+      role: UserRole.EMPLOYER,
       isApproved: false,
       company: companyMode === "new" ? {
         create: {
