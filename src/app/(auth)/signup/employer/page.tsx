@@ -151,16 +151,23 @@ export default function EmployerSignupPage() {
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
                     Associated Company
                   </label>
-                  <select
-                    name="companyId"
-                    required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none"
-                  >
-                    <option value="">Select partner company</option>
-                    {companies.map(c => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
-                    ))}
-                  </select>
+                  <div className="relative group/select">
+                    <select
+                      name="companyId"
+                      required
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white appearance-none cursor-pointer"
+                    >
+                      <option value="" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Select partner company</option>
+                      {companies.map(c => (
+                        <option key={c.id} value={c.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">{c.name}</option>
+                      ))}
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within/select:text-primary transition-colors">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 gap-6 animate-in-slide-up">
