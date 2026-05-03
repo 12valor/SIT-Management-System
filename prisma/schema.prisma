@@ -133,12 +133,14 @@ model SITPosting {
   description   String        @db.Text
   requiredHours Int           @default(300)
   status        PostingStatus @default(OPEN)
-  location      String
-  type          PlacementType @default(ON_SITE)
-  tags          String[]      @default([])
-  posterUrl     String?       @db.Text
-  postedAt      DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  location         String
+  type             PlacementType @default(ON_SITE)
+  tags             String[]      @default([])
+  requirements     String[]      @default([])
+  responsibilities String[]      @default([])
+  posterUrl        String?       @db.Text
+  postedAt         DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
   // Relations
   employer     User          @relation("EmployerPostings", fields: [employerId], references: [id])
