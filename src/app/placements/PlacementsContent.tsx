@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Clock, ArrowRight, Building2, Filter } from "lucide-react";
+import { Search, MapPin, Clock, ArrowRight, Building2, Filter, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -311,14 +311,21 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                 <img 
                   src={selectedPoster} 
                   alt="Job Poster" 
-                  className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                  className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-sm border border-white/10"
                 />
+                
+                {/* Close Button Overlay */}
                 <button 
                   onClick={() => setSelectedPoster(null)}
-                  className="absolute -top-12 right-0 text-white/60 hover:text-white transition-colors flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
+                  className="fixed top-6 right-6 h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 z-[210] border border-white/20"
+                  title="Close Archive"
                 >
-                  Close Archive <ArrowRight className="h-4 w-4 rotate-45" />
+                  <X className="h-6 w-6" />
                 </button>
+
+                <p className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-white/40 text-[9px] font-bold uppercase tracking-[0.3em] pointer-events-none">
+                  Registry Document View
+                </p>
               </motion.div>
             </motion.div>
           )}
