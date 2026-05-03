@@ -316,10 +316,13 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                 className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <img 
+                <Image 
                   src={selectedPoster} 
                   alt="Job Poster" 
+                  width={800}
+                  height={1200}
                   className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-sm border border-white/10"
+                  unoptimized
                 />
                 
                 {/* Close Button Overlay */}

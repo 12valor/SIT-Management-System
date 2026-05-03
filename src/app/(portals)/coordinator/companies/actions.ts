@@ -108,7 +108,6 @@ export async function addCompany(data: {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {
         const target = error.meta?.target;
-        const modelName = error.meta?.modelName;
         
         // If it's a company model conflict on email
         if (Array.isArray(target) && target.includes('email')) {

@@ -209,7 +209,7 @@ export default function EmployerSignupPage() {
                       type="email"
                       required
                       placeholder="e.g. name@corporate.com"
-                      onChange={(e) => {
+                      onChange={() => {
                         setEmailStatus("idle");
                       }}
                       onBlur={(e) => checkUserEmail(e.target.value)}
@@ -277,7 +277,7 @@ export default function EmployerSignupPage() {
                         name="newCompanyName"
                         required={companyMode === "new"}
                         placeholder="Official registered company name"
-                        onChange={(e) => {
+                        onChange={() => {
                           setCompanyStatus("idle");
                         }}
                         onBlur={(e) => checkCompanyName(e.target.value)}

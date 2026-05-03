@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { 
   Search, 
@@ -308,10 +309,13 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
                 className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <img 
+                <Image 
                   src={selectedPoster} 
                   alt="Job Poster" 
+                  width={800}
+                  height={1200}
                   className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-xl border border-white/10"
+                  unoptimized
                 />
                 
                 <button 

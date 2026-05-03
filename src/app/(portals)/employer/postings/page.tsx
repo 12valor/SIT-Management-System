@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
+import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { 
   Plus, 
@@ -486,8 +487,14 @@ export default function EmployerPostingsPage() {
                   <div className="relative h-[52px] rounded-xl border border-dashed border-border bg-muted/10 overflow-hidden flex items-center px-4 group/poster hover:border-primary/50 transition-all">
                     {posterPreview ? (
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden">
-                           <img src={posterPreview} className="w-full h-full object-cover" />
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden relative">
+                           <Image 
+                             src={posterPreview} 
+                             alt="Poster Preview"
+                             fill
+                             className="object-cover" 
+                             unoptimized
+                           />
                         </div>
                         <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Poster Attached</p>
                         <button type="button" onClick={() => setPosterPreview(null)} className="ml-2 text-destructive hover:scale-110 transition-transform"><X className="h-4 w-4" /></button>
@@ -534,10 +541,13 @@ export default function EmployerPostingsPage() {
               className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img 
+              <Image 
                 src={selectedPoster} 
                 alt="Job Poster" 
+                width={800}
+                height={1200}
                 className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-2xl border border-white/10"
+                unoptimized
               />
               
               <button 

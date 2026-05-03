@@ -76,7 +76,6 @@ export async function registerEmployer(formData: FormData) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {
         const target = error.meta?.target;
-        const modelName = error.meta?.modelName;
         
         if (Array.isArray(target) && target.includes('email')) {
           // Prisma often reports 'User' even for nested 'Company' collisions
