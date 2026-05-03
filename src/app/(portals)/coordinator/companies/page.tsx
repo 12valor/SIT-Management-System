@@ -272,6 +272,8 @@ export default function CoordinatorCompaniesPage() {
                 
                 {/* Media Upload Section */}
                 <div className="grid grid-cols-2 gap-3">
+                  {/* Logo Section */}
+                  <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.logoUrl ? (
                       <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-border group">
                         <Image 
@@ -303,6 +305,7 @@ export default function CoordinatorCompaniesPage() {
                     </label>
                   </div>
 
+                  {/* Banner Section */}
                   <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
                     {formData.bannerUrl ? (
                       <div className="relative w-full h-16 rounded-lg overflow-hidden border border-border group">
