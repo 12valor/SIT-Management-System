@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 
@@ -81,14 +82,15 @@ export async function registerEmployer(formData: FormData) {
   } catch (error) {
     console.error("Registration error:", error);
     
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
-      const target = (error as any).meta?.target;
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      const target = error.meta?.target;
+      const modelName = error.meta?.modelName;
       
-      if (Array.isArray(target)) {
-        if (target.includes('email') && (error as any).meta?.modelName === 'User') {
+      if (Array.isArray(target) && target.includes('email')) {
+        if (modelName === 'User') {
           return { success: false, error: "An account with this corporate email already exists." };
         }
-        if (target.includes('email') && (error as any).meta?.modelName === 'Company') {
+        if (modelName === 'Company') {
           return { success: false, error: "A company with this name (or a very similar one) is already registered." };
         }
       }
