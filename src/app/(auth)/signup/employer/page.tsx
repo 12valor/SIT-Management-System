@@ -19,6 +19,9 @@ export default function EmployerSignupPage() {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [bannerPreview, setBannerPreview] = useState<string | null>(null);
   const [locationLines, setLocationLines] = useState<string[]>([]);
+  const [emailStatus, setEmailStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
+  const [companyStatus, setCompanyStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
+  const [generatedEmail, setGeneratedEmail] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,6 +31,30 @@ export default function EmployerSignupPage() {
     }
     fetchCompanies();
   }, []);
+
+  const checkUserEmail = async (email: string) => {
+    if (!email || !email.includes("@")) {
+      setEmailStatus("idle");
+      return;
+    }
+    setEmailStatus("checking");
+    const { checkAvailability } = await import("./actions");
+    const result = await checkAvailability("user", email);
+    setEmailStatus(result.available ? "available" : "taken");
+  };
+
+  const checkCompanyName = async (name: string) => {
+    if (!name || name.length < 3) {
+      setCompanyStatus("idle");
+      setGeneratedEmail(null);
+      return;
+    }
+    setCompanyStatus("checking");
+    const { checkAvailability } = await import("./actions");
+    const result = await checkAvailability("company", name);
+    setCompanyStatus(result.available ? "available" : "taken");
+    setGeneratedEmail(result.generatedEmail || null);
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -160,13 +187,40 @@ export default function EmployerSignupPage() {
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
                     Corporate Email
                   </label>
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="jane@company.com"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
-                  />
+                  <div className="relative">
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="jane@company.com"
+                      onChange={(e) => {
+                        setEmailStatus("idle");
+                        // Debounce could be added here, but for now we'll check on blur
+                      }}
+                      onBlur={(e) => checkUserEmail(e.target.value)}
+                      className={cn(
+                        "w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border rounded-xl outline-none transition-all text-slate-900 dark:text-white",
+                        emailStatus === "available" ? "border-green-500/50 focus:ring-green-500/20" : 
+                        emailStatus === "taken" ? "border-red-500/50 focus:ring-red-500/20" : 
+                        "border-slate-200 dark:border-white/10 focus:border-primary/50 focus:ring-primary/20"
+                      )}
+                    />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                      {emailStatus === "checking" && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
+                      {emailStatus === "available" && (
+                        <div className="flex items-center gap-1.5 text-green-600 font-serif text-[10px] font-bold uppercase tracking-wider">
+                          <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                          Available
+                        </div>
+                      )}
+                      {emailStatus === "taken" && (
+                        <div className="flex items-center gap-1.5 text-red-600 font-serif text-[10px] font-bold uppercase tracking-wider">
+                          <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                          Email Taken
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -199,12 +253,43 @@ export default function EmployerSignupPage() {
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
                       Company Name
                     </label>
-                    <input
-                      name="newCompanyName"
-                      required={companyMode === "new"}
-                      placeholder="TechCorp Solutions Inc."
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
-                    />
+                    <div className="relative">
+                      <input
+                        name="newCompanyName"
+                        required={companyMode === "new"}
+                        placeholder="TechCorp Solutions Inc."
+                        onChange={(e) => {
+                          setCompanyStatus("idle");
+                        }}
+                        onBlur={(e) => checkCompanyName(e.target.value)}
+                        className={cn(
+                          "w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border rounded-xl outline-none transition-all text-slate-900 dark:text-white",
+                          companyStatus === "available" ? "border-green-500/50 focus:ring-green-500/20" : 
+                          companyStatus === "taken" ? "border-red-500/50 focus:ring-red-500/20" : 
+                          "border-slate-200 dark:border-white/10 focus:border-primary/50 focus:ring-primary/20"
+                        )}
+                      />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                        {companyStatus === "checking" && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
+                        {companyStatus === "available" && (
+                          <div className="flex items-center gap-1.5 text-green-600 font-serif text-[10px] font-bold uppercase tracking-wider">
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                            Ready
+                          </div>
+                        )}
+                        {companyStatus === "taken" && (
+                          <div className="flex items-center gap-1.5 text-red-600 font-serif text-[10px] font-bold uppercase tracking-wider">
+                            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                            Registered
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {generatedEmail && companyStatus === "available" && (
+                      <p className="mt-1.5 text-[9px] text-slate-400 font-serif italic">
+                        System Identity: <span className="text-primary/70">{generatedEmail}</span>
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
@@ -384,7 +469,7 @@ export default function EmployerSignupPage() {
 
             <button
               type="submit"
-              disabled={authStatus === "loading"}
+              disabled={authStatus === "loading" || emailStatus === "taken" || (companyMode === "new" && companyStatus === "taken")}
               className="group relative w-full flex items-center justify-center h-12 bg-primary text-white font-medium rounded-xl overflow-hidden transition-transform active:scale-[0.98] shadow-lg shadow-primary/20 disabled:opacity-50 mt-4 font-serif"
             >
               <span className="relative z-10 flex items-center gap-2">

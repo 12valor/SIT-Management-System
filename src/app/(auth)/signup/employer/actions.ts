@@ -78,10 +78,13 @@ export async function registerEmployer(formData: FormData) {
         const modelName = error.meta?.modelName;
         
         if (Array.isArray(target) && target.includes('email')) {
-          if (modelName === 'User') {
+          // Prisma often reports 'User' even for nested 'Company' collisions
+          // We manually verify the user existence to be certain of the collision source
+          const userExists = await prisma.user.findUnique({ where: { email } });
+          
+          if (userExists) {
             return { success: false, error: "An account with this email address already exists. Please use a different email or log in." };
-          }
-          if (modelName === 'Company') {
+          } else {
             return { success: false, error: "This company name results in a duplicate system email. Please use a more specific name or join the existing company." };
           }
         }
@@ -98,5 +101,26 @@ export async function registerEmployer(formData: FormData) {
     }
 
     return { success: false, error: "System encountered an unexpected registration error. Please contact administration." };
+  }
+}
+
+export async function checkAvailability(type: "user" | "company", value: string) {
+  try {
+    if (type === "user") {
+      const existing = await prisma.user.findUnique({
+        where: { email: value.trim().toLowerCase() }
+      });
+      return { available: !existing };
+    } else {
+      const sanitized = value.trim().toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
+      const email = `${sanitized}@partner.sit`;
+      const existing = await prisma.company.findUnique({
+        where: { email }
+      });
+      return { available: !existing, generatedEmail: email };
+    }
+  } catch (error) {
+    console.error("Availability check failed:", error);
+    return { available: true }; // Fallback to avoid blocking if check fails
   }
 }
