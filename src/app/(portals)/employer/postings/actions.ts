@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { PlacementType, PostingStatus } from "@prisma/client";
+import { PlacementType, PostingStatus } from "@/generated/client";
 
 export async function getEmployerPostings() {
   const session = await auth();
@@ -79,6 +79,19 @@ export async function togglePostingStatus(postingId: string, currentStatus: Post
   await prisma.sITPosting.update({
     where: { id: postingId, employerId: session.user.id },
     data: { status: newStatus },
+  });
+
+  revalidatePath("/employer/postings");
+  revalidatePath("/placements");
+  return { success: true };
+}
+
+export async function deleteSITPosting(postingId: string) {
+  const session = await auth();
+  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+
+  await prisma.sITPosting.delete({
+    where: { id: postingId, employerId: session.user.id },
   });
 
   revalidatePath("/employer/postings");

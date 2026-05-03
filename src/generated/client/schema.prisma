@@ -129,11 +129,11 @@ model Company {
 }
 
 model SITPosting {
-  id            String        @id @default(cuid())
-  title         String
-  description   String        @db.Text
-  requiredHours Int           @default(300)
-  status        PostingStatus @default(OPEN)
+  id               String        @id @default(cuid())
+  title            String
+  description      String        @db.Text
+  requiredHours    Int           @default(300)
+  status           PostingStatus @default(OPEN)
   location         String
   type             PlacementType @default(ON_SITE)
   tags             String[]      @default([])
