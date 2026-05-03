@@ -20,6 +20,11 @@ const employerSchema = z.object({
 async function saveFile(file: File | null, prefix: string): Promise<string | null> {
   if (!file || file.size === 0) return null;
   
+  const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+  if (file.size > MAX_SIZE) {
+    throw new Error(`${prefix.charAt(0).toUpperCase() + prefix.slice(1)} file exceeds the 2MB limit.`);
+  }
+  
   try {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
@@ -67,23 +72,27 @@ export async function registerEmployer(formData: FormData) {
         return { success: false, error: "Company details are required for new registrations." };
       }
 
-      const logoFile = formData.get("logo") as File;
-      const bannerFile = formData.get("banner") as File;
-      
-      const logoUrl = await saveFile(logoFile, "logo");
-      const bannerUrl = await saveFile(bannerFile, "banner");
+      try {
+        const logoFile = formData.get("logo") as File;
+        const bannerFile = formData.get("banner") as File;
+        
+        const logoUrl = await saveFile(logoFile, "logo");
+        const bannerUrl = await saveFile(bannerFile, "banner");
 
-      const newCompany = await prisma.company.create({
-        data: {
-          name: validatedData.newCompanyName,
-          email: `${validatedData.newCompanyName.toLowerCase().replace(/\s+/g, '.')}@partner.v1`, // Placeholder
-          industry: validatedData.industry,
-          logoUrl,
-          bannerUrl,
-          isVerified: false,
-        },
-      });
-      finalCompanyId = newCompany.id;
+        const newCompany = await prisma.company.create({
+          data: {
+            name: validatedData.newCompanyName,
+            email: `${validatedData.newCompanyName.toLowerCase().replace(/\s+/g, '.')}@partner.v1`, // Placeholder
+            industry: validatedData.industry,
+            logoUrl,
+            bannerUrl,
+            isVerified: false,
+          },
+        });
+        finalCompanyId = newCompany.id;
+      } catch (fileError: any) {
+        return { success: false, error: fileError.message || "File upload failed." };
+      }
     }
 
     if (!finalCompanyId) {

@@ -52,6 +52,14 @@ export default function EmployerSignupPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
     const file = e.target.files?.[0];
     if (file) {
+      const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+      if (file.size > MAX_SIZE) {
+        setAuthStatus("error");
+        setAuthMessage(`The selected ${type} exceeds the 2MB industrial limit. Please optimize the file.`);
+        e.target.value = "";
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         if (type === "logo") setLogoPreview(reader.result as string);
