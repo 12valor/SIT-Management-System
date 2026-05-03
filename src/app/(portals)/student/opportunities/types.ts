@@ -17,6 +17,9 @@ export interface SITOpportunity {
   requiredHours: number;
   location: string;
   type: string;
+  requirements: string[];
+  responsibilities: string[];
+  posterUrl: string | null;
   postedAt: Date;
   companyId: string;
   company: OpportunityCompany;

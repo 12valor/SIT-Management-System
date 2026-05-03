@@ -23,6 +23,7 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
   const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [applyingTo, setApplyingTo] = useState<SITOpportunity | null>(null);
+  const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -139,16 +140,49 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
                     </div>
                  </div>
 
-                 <div className="flex items-center justify-between border-t border-border pt-4 mb-6 relative z-10">
+                 <div className="flex items-center justify-between border-t border-border pt-4 mb-4 relative z-10">
                     <div className="space-y-0.5">
                        <p className="text-[10px] font-bold uppercase text-muted-foreground/50">Duration</p>
                        <p className="text-base font-bold text-foreground">{posting.requiredHours} <span className="text-[10px] text-muted-foreground/40 font-medium tracking-tight">HRS</span></p>
                     </div>
-                    <div className="space-y-0.5 text-right">
-                       <p className="text-[10px] font-bold uppercase text-muted-foreground/50">Slots</p>
-                       <p className="text-base font-bold text-foreground">05 <span className="text-[10px] text-muted-foreground/40 font-medium tracking-tight">INT</span></p>
-                    </div>
+                    {posting.posterUrl && (
+                      <button 
+                        onClick={() => setSelectedPoster(posting.posterUrl)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-primary/5 hover:bg-primary/10 text-primary text-[9px] font-bold uppercase tracking-widest rounded-lg transition-all active:scale-95 border border-primary/10"
+                      >
+                        Visual Poster
+                      </button>
+                    )}
                  </div>
+
+                  {(posting.responsibilities?.length > 0 || posting.requirements?.length > 0) && (
+                    <div className="space-y-4 mb-6 pt-4 border-t border-border">
+                      {posting.responsibilities?.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-[9px] font-black uppercase tracking-widest text-primary/70">Strategic Role</p>
+                          <ul className="space-y-1.5">
+                            {posting.responsibilities.slice(0, 3).map((r, i) => (
+                              <li key={i} className="flex gap-2 text-[10px] text-muted-foreground leading-tight">
+                                <span className="text-primary">•</span> {r}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {posting.requirements?.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">Prerequisites</p>
+                          <ul className="space-y-1.5">
+                            {posting.requirements.slice(0, 3).map((r, i) => (
+                              <li key={i} className="flex gap-2 text-[10px] text-muted-foreground leading-tight">
+                                <span className="text-muted-foreground/40">•</span> {r}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                  <button 
                   onClick={() => setApplyingTo(posting)}
@@ -256,6 +290,33 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
             </div>
           </div>
         )}
+        {/* Poster Modal */}
+        <AnimatePresence>
+          {selectedPoster && (
+            <div 
+              onClick={() => setSelectedPoster(null)}
+              className="fixed inset-0 z-[200] bg-background/90 backdrop-blur-md flex items-center justify-center p-6 cursor-zoom-out animate-in fade-in transition-all"
+            >
+              <div 
+                className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center animate-in zoom-in-95 duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img 
+                  src={selectedPoster} 
+                  alt="Job Poster" 
+                  className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-xl border border-white/10"
+                />
+                
+                <button 
+                  onClick={() => setSelectedPoster(null)}
+                  className="fixed top-8 right-8 h-12 w-12 rounded-full bg-primary/10 hover:bg-primary/20 backdrop-blur-md flex items-center justify-center text-primary transition-all hover:scale-110 active:scale-95 z-[210] border border-primary/20"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </Skeleton>
   );
