@@ -223,38 +223,50 @@ export default function EmployerSignupPage() {
                       }}
                     />
                     
-                    {/* Floating Location Manifest */}
+                    {/* Institutional Location Registry (Side Panel) */}
                     <AnimatePresence>
                       {locationLines.length > 0 && (
                         <motion.div 
-                          initial={{ opacity: 0, x: 20 }}
+                          initial={{ opacity: 0, x: 10 }}
                           animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 20 }}
-                          className="absolute -right-72 top-0 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-2xl shadow-primary/10 hidden xl:block"
+                          exit={{ opacity: 0, x: 10 }}
+                          className="absolute -right-72 top-0 w-64 bg-[#f8f7f4] dark:bg-[#121212] border-l-2 border-primary p-0 shadow-[20px_0_60px_-15px_rgba(0,0,0,0.1)] hidden xl:block overflow-hidden"
                         >
-                          <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                            Location Manifest
-                          </h4>
-                          <div className="space-y-3">
-                            <ul className="space-y-3">
+                          <div className="px-5 py-3 border-b border-slate-200 dark:border-white/10 bg-white dark:bg-white/5">
+                            <h4 className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Registry Index</h4>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-serif font-medium text-slate-900 dark:text-white">Active Branches</span>
+                              <span className="text-[10px] font-mono text-primary bg-primary/5 px-1.5 py-0.5 rounded uppercase">{locationLines.length} Entries</span>
+                            </div>
+                          </div>
+                          
+                          <div className="p-5 max-h-[300px] overflow-y-auto custom-scrollbar">
+                            <ul className="space-y-4">
                               {locationLines.map((line, idx) => (
                                 <motion.li 
                                   key={idx}
-                                  initial={{ opacity: 0, y: 5 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ delay: idx * 0.05 }}
-                                  className="flex items-start gap-3 group"
+                                  initial={{ opacity: 0, x: -5 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: idx * 0.03 }}
+                                  className="relative pl-6 pb-4 border-b border-slate-100 dark:border-white/5 last:border-0"
                                 >
-                                  <div className="mt-1 w-4 h-4 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center text-[8px] font-bold text-slate-400 border border-slate-200 dark:border-white/10 group-hover:border-primary/30 group-hover:text-primary transition-colors">
-                                    {idx + 1}
+                                  {/* Archival Index Marker */}
+                                  <div className="absolute left-0 top-0.5 text-[9px] font-mono text-slate-300 dark:text-slate-600">
+                                    {(idx + 1).toString().padStart(2, '0')}
                                   </div>
-                                  <p className="text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                                    {line}
+                                  <p className="text-[11px] text-slate-700 dark:text-slate-300 font-serif leading-relaxed tracking-tight italic">
+                                    "{line}"
                                   </p>
                                 </motion.li>
                               ))}
                             </ul>
+                          </div>
+                          
+                          <div className="px-5 py-3 bg-slate-50 dark:bg-white/5 border-t border-slate-200 dark:border-white/10">
+                            <div className="flex items-center gap-2 opacity-50">
+                              <div className="w-1 h-1 bg-primary rounded-full" />
+                              <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Awaiting Verification</span>
+                            </div>
                           </div>
                         </motion.div>
                       )}
