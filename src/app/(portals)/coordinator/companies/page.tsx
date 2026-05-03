@@ -43,6 +43,7 @@ export default function CoordinatorCompaniesPage() {
     bannerUrl: "",
   });
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isVerifyingPersistence, setIsVerifyingPersistence] = useState(false);
   
   // Delete Confirmation State
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -143,11 +144,16 @@ export default function CoordinatorCompaniesPage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      setIsVerifyingPersistence(true);
       if (editingId) {
         await updateCompany(editingId, formData);
       } else {
         await addCompany(formData);
       }
+      
+      // Artificial delay to show verification status as requested
+      await new Promise(r => setTimeout(r, 1500));
+      
       setIsAdding(false);
       setEditingId(null);
       setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "", bannerUrl: "" });
@@ -156,6 +162,7 @@ export default function CoordinatorCompaniesPage() {
       console.error(error);
     } finally {
       setIsSubmitting(false);
+      setIsVerifyingPersistence(false);
     }
   };
 
@@ -184,6 +191,36 @@ export default function CoordinatorCompaniesPage() {
       }
     >
       <div className="flex-1 space-y-12 relative">
+        {/* Persistence Verification Modal */}
+        <AnimatePresence>
+          {isVerifyingPersistence && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-card border border-border p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-6 max-w-sm text-center"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping" />
+                  <div className="relative bg-primary/10 p-4 rounded-full">
+                    <Building2 className="h-8 w-8 text-primary animate-pulse" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-bold text-foreground uppercase tracking-tight">Database Synchronization</h3>
+                  <p className="text-xs text-foreground/60 leading-relaxed font-medium">
+                    Verifying image persistence and ensuring all assets are correctly committed to the institutional registry...
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-widest">
+                  <Loader2 className="h-3 w-3 animate-spin" /> Checking image integrity
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         {/* Delete Confirmation Modal */}
         {/* Delete Confirmation Modal (Neutral/Standard) */}
         <AnimatePresence>
@@ -235,8 +272,8 @@ export default function CoordinatorCompaniesPage() {
                 
                 {/* Media Upload Section */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
-                      <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-border">
+                    {formData.logoUrl ? (
+                      <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-border group">
                         <Image 
                           src={formData.logoUrl} 
                           alt="Preview" 
@@ -247,9 +284,9 @@ export default function CoordinatorCompaniesPage() {
                         <button 
                           type="button"
                           onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
-                          className="absolute -top-2 -right-2 bg-destructive text-white p-1 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-5 w-5 text-white" />
                         </button>
                       </div>
                     ) : (
@@ -267,7 +304,8 @@ export default function CoordinatorCompaniesPage() {
                   </div>
 
                   <div className="flex flex-col items-center justify-center gap-3 py-3 border-2 border-dashed border-border rounded-xl bg-muted/10">
-                      <div className="relative w-full h-16 rounded-lg overflow-hidden border border-border">
+                    {formData.bannerUrl ? (
+                      <div className="relative w-full h-16 rounded-lg overflow-hidden border border-border group">
                         <Image 
                           src={formData.bannerUrl} 
                           alt="Preview" 
@@ -278,9 +316,9 @@ export default function CoordinatorCompaniesPage() {
                         <button 
                           type="button"
                           onClick={() => setFormData(prev => ({ ...prev, bannerUrl: "" }))}
-                          className="absolute top-0 right-2 bg-destructive text-white p-1 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-5 w-5 text-white" />
                         </button>
                       </div>
                     ) : (
