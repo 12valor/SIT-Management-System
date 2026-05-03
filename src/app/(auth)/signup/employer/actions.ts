@@ -50,8 +50,8 @@ export async function registerEmployer(formData: FormData) {
           email: companyEmail,
           industry,
           location: location,
-          logoUrl: logo instanceof File ? null : logo,
-          bannerUrl: banner instanceof File ? null : banner,
+          logoUrl: (logo as unknown) instanceof File ? null : logo,
+          bannerUrl: (banner as unknown) instanceof File ? null : banner,
           isVerified: false,
         },
       } : {
