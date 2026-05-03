@@ -174,76 +174,6 @@ export default function CoordinatorCompaniesPage() {
   const verifiedCount  = companies.filter((c) => c.isVerified).length;
   const pendingCount   = companies.filter((c) => !c.isVerified).length;
 
-  return (
-    <Skeleton 
-      name="coordinator-companies" 
-      loading={isLoading}
-      fallback={
-        <div className="animate-pulse space-y-12">
-          {/* Header Skeleton */}
-          <div className="pb-6 border-b border-border/50 flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div className="space-y-2">
-              <div className="h-8 w-64 bg-muted rounded-lg" />
-              <div className="h-4 w-96 bg-muted/60 rounded-md" />
-            </div>
-            <div className="h-9 w-32 bg-muted rounded-md" />
-          </div>
-
-          {/* Summary Grid Skeleton */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-card border border-border p-6 rounded-xl space-y-3">
-                <div className="h-3 w-24 bg-muted/50 rounded" />
-                <div className="h-10 w-16 bg-muted rounded-lg" />
-              </div>
-            ))}
-          </div>
-
-          {/* Table Toolbar Skeleton */}
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-4">
-              <div className="h-5 w-32 bg-muted rounded" />
-              <div className="h-9 w-full sm:w-64 bg-muted rounded-lg" />
-            </div>
-
-            {/* Cards Grid Skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <div key={i} className="flex flex-col bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                  <div className="h-28 w-full bg-muted border-b border-border" />
-                  <div className="px-5 pb-5 flex-1 flex flex-col relative pt-12">
-                    <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-muted border-4 border-card shadow-sm" />
-                    <div className="space-y-2">
-                      <div className="h-5 w-3/4 bg-muted rounded" />
-                      <div className="h-3 w-1/4 bg-muted/60 rounded" />
-                    </div>
-                    <div className="mt-4 space-y-2">
-                      <div className="h-3 w-full bg-muted/40 rounded" />
-                      <div className="h-3 w-2/3 bg-muted/40 rounded" />
-                    </div>
-                    <div className="mt-6 pt-4 border-t border-border/50 grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <div className="h-2 w-12 bg-muted/50 rounded" />
-                        <div className="h-4 w-8 bg-muted rounded" />
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-2 w-12 bg-muted/50 rounded" />
-                        <div className="h-4 w-8 bg-muted rounded" />
-                      </div>
-                    </div>
-                    <div className="mt-5 flex gap-2">
-                      <div className="h-8 w-8 bg-muted rounded-lg" />
-                      <div className="h-8 w-8 bg-muted rounded-lg" />
-                      <div className="h-8 flex-1 bg-muted rounded-lg" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      }
-    >
       <div className="flex-1 space-y-12 relative">
         {/* Persistence Verification Modal */}
         <AnimatePresence>
@@ -276,7 +206,6 @@ export default function CoordinatorCompaniesPage() {
         </AnimatePresence>
 
         {/* Delete Confirmation Modal */}
-        {/* Delete Confirmation Modal (Neutral/Standard) */}
         <AnimatePresence>
           {showDeleteConfirm && (
             <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
@@ -438,7 +367,7 @@ export default function CoordinatorCompaniesPage() {
           </div>
         )}
 
-        {/* 1. Header Section */}
+        {/* 1. Header Section (Always Visible) */}
         <div className="pb-6 border-b border-border/50 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h2 className="text-xl font-semibold text-foreground uppercase tracking-tight">
@@ -449,9 +378,11 @@ export default function CoordinatorCompaniesPage() {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider hidden md:block">
-              {companies.length} Registered Entities
-            </div>
+            {!isLoading && (
+              <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider hidden md:block">
+                {companies.length} Registered Entities
+              </div>
+            )}
             <button onClick={() => setIsAdding(true)} className="h-9 px-4 bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider rounded-md hover:opacity-90 transition-all flex items-center gap-2">
               <Plus className="h-3.5 w-3.5" />
               Add Partner
@@ -459,12 +390,12 @@ export default function CoordinatorCompaniesPage() {
           </div>
         </div>
 
-        {/* 2. Summary Grid */}
+        {/* 2. Summary Grid (Always Visible) */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
-            { label: "Total Partners",  value: companies.length },
-            { label: "MOU Verified",    value: verifiedCount },
-            { label: "Pending Review",  value: pendingCount },
+            { label: "Total Partners",  value: isLoading ? "..." : companies.length },
+            { label: "MOU Verified",    value: isLoading ? "..." : verifiedCount },
+            { label: "Pending Review",  value: isLoading ? "..." : pendingCount },
           ].map((s) => (
             <div key={s.label} className="bg-card border border-border p-6 rounded-xl shadow-sm space-y-2">
               <p className="text-[10px] font-semibold uppercase text-foreground/50 tracking-wider">{s.label}</p>
@@ -473,184 +404,230 @@ export default function CoordinatorCompaniesPage() {
           ))}
         </div>
 
-        {/* 3. Table & Toolbar Section */}
-        <div className="space-y-6 pb-24">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-4">
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Partner Registry</h3>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <div className="relative w-full sm:w-64">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-foreground/30" />
-                <input
-                  type="text"
-                  placeholder="Search partners..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 h-9 rounded-lg border border-border bg-card text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
-                />
+        {/* 3. Table & Toolbar Section (Skeletonized) */}
+        <Skeleton 
+          name="coordinator-companies-registry" 
+          loading={isLoading}
+          fallback={
+            <div className="space-y-6 animate-pulse">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-4">
+                <div className="h-5 w-32 bg-muted rounded" />
+                <div className="h-9 w-full sm:w-64 bg-muted rounded-lg" />
               </div>
-            </div>
-          </div>
 
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filtered.length === 0 && !isLoading ? (
-                <div className="col-span-full py-24 flex flex-col items-center justify-center border border-border border-dashed rounded-xl bg-card">
-                  <Building2 className="h-12 w-12 text-muted-foreground mb-4 opacity-20" />
-                  <p className="text-sm font-medium text-foreground/50 uppercase tracking-widest">
-                    {companies.length === 0 ? "No partners registered" : "No results found"}
-                  </p>
-                </div>
-              ) : (
-                filtered.map((c) => (
-                  <div key={c.id} className="group flex flex-col bg-card rounded-xl border border-border shadow-sm overflow-hidden hover:border-primary/30 transition-all duration-300">
-                    {/* Banner */}
-                    <div className="h-28 w-full relative bg-muted border-b border-border">
-                      {c.bannerUrl ? (
-                        <NextImage 
-                          src={c.bannerUrl} 
-                          alt="Banner" 
-                          fill 
-                          className="object-cover" 
-                          unoptimized={c.bannerUrl.startsWith('data:')}
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-tr from-muted to-muted/50" />
-                      )}
-                      {/* Status Badge Top Right */}
-                      <div className="absolute top-3 right-3">
-                        <span className={cn(
-                          "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border shadow-sm backdrop-blur-md",
-                          c.isVerified
-                            ? "bg-primary/90 text-primary-foreground border-primary"
-                            : "bg-amber-500/90 text-white border-amber-600"
-                        )}>
-                          {c.isVerified ? <ShieldCheck className="h-3 w-3" /> : <ShieldAlert className="h-3 w-3" />}
-                          {c.isVerified ? "Verified" : "Pending"}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Profile Body */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <div key={i} className="flex flex-col bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                    <div className="h-28 w-full bg-muted border-b border-border" />
                     <div className="px-5 pb-5 flex-1 flex flex-col relative pt-12">
-                      {/* Logo (Overlapping) */}
-                      <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-card border-4 border-card shadow-sm flex items-center justify-center overflow-hidden">
-                        {c.logoUrl ? (
-                          <NextImage 
-                            src={c.logoUrl} 
-                            alt={c.name} 
-                            fill 
-                            className="object-cover" 
-                            unoptimized={c.logoUrl.startsWith('data:')}
-                          />
-                        ) : (
-                          <Building2 className="h-8 w-8 text-foreground/20" />
-                        )}
+                      <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-muted border-4 border-card shadow-sm" />
+                      <div className="space-y-2">
+                        <div className="h-5 w-3/4 bg-muted rounded" />
+                        <div className="h-3 w-1/4 bg-muted/60 rounded" />
                       </div>
-
-                      {/* Info */}
-                      <div>
-                        <h3 className="font-bold text-foreground text-base leading-tight truncate">{c.name}</h3>
-                        <p className="text-[10px] font-medium text-foreground/60 mt-1 uppercase tracking-wider truncate">
-                          {c.industry}
-                        </p>
-                        
-                        <div className="mt-3 space-y-1.5">
-                          <div className="flex items-center gap-2 text-[11px] text-foreground/70">
-                            <Mail className="h-3 w-3 opacity-50" />
-                            <span className="truncate">{c.email}</span>
-                          </div>
-                          <div className="flex flex-col gap-1.5 mt-3 pt-3 border-t border-border/30">
-                            {c.location?.split('\n').filter(l => l.trim() !== '').slice(0, 2).map((loc, i) => (
-                              <div key={i} className="flex items-center gap-2 text-[10px] text-foreground/60">
-                                <Globe className="h-2.5 w-2.5 opacity-40 shrink-0" />
-                                <span className="truncate">{loc}</span>
-                              </div>
-                            ))}
-                            {(c.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) > 2 && (
-                              <p className="text-[9px] font-bold text-primary/60 uppercase tracking-tighter pl-4">
-                                + {(c.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) - 2} more branches
-                              </p>
-                            )}
-                            {(!c.location || c.location.trim() === '') && (
-                              <div className="flex items-center gap-2 text-[10px] text-foreground/40 italic">
-                                <Globe className="h-2.5 w-2.5 opacity-40 shrink-0" />
-                                <span>No locations listed</span>
-                              </div>
-                            )}
-                          </div>
+                      <div className="mt-4 space-y-2">
+                        <div className="h-3 w-full bg-muted/40 rounded" />
+                        <div className="h-3 w-2/3 bg-muted/40 rounded" />
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-border/50 grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <div className="h-2 w-12 bg-muted/50 rounded" />
+                          <div className="h-4 w-8 bg-muted rounded" />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="h-2 w-12 bg-muted/50 rounded" />
+                          <div className="h-4 w-8 bg-muted rounded" />
                         </div>
                       </div>
-
-                      <div className="flex-1" /> {/* Spacer */}
-
-                      {/* Stats */}
-                      <div className="grid grid-cols-2 gap-2 mt-5 pt-4 border-t border-border/50">
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-semibold text-foreground/50 uppercase tracking-wider">Personnel</span>
-                          <span className="text-sm font-bold text-foreground">{c._count?.employers ?? 0}</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-semibold text-foreground/50 uppercase tracking-wider">Postings</span>
-                          <span className="text-sm font-bold text-foreground">{c._count?.postings ?? 0}</span>
-                        </div>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="mt-4 flex gap-2">
-                        <button
-                          onClick={() => handleEdit(c)}
-                          disabled={processing === c.id}
-                          className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-primary hover:border-primary/30 transition-all flex items-center justify-center disabled:opacity-50"
-                          title="Edit Partner"
-                        >
-                          <Edit className="h-3.5 w-3.5" />
-                        </button>
-
-                        <button
-                          onClick={() => handleDelete(c.id, c.name)}
-                          disabled={processing === c.id}
-                          className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-destructive hover:border-destructive/30 transition-all flex items-center justify-center disabled:opacity-50"
-                          title="Remove Partner"
-                        >
-                          {processing === c.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
-                        </button>
-
-                        {!c.isVerified ? (
-                          <button
-                            onClick={() => handleVerify(c.id, true)}
-                            disabled={processing === c.id}
-                            className="flex-1 h-8 rounded-lg border border-primary bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
-                          >
-                            {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <ShieldCheck className="h-3 w-3" />}
-                            Verify
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleVerify(c.id, false)}
-                            disabled={processing === c.id}
-                            className="flex-1 h-8 rounded-lg border border-border bg-muted text-foreground/60 text-[10px] font-semibold uppercase tracking-wider hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
-                          >
-                            {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Clock className="h-3 w-3" />}
-                            Revoke
-                          </button>
-                        )}
+                      <div className="mt-5 flex gap-2">
+                        <div className="h-8 w-8 bg-muted rounded-lg" />
+                        <div className="h-8 w-8 bg-muted rounded-lg" />
+                        <div className="h-8 flex-1 bg-muted rounded-lg" />
                       </div>
                     </div>
                   </div>
-                ))
+                ))}
+              </div>
+            </div>
+          }
+        >
+          <div className="space-y-6 pb-24">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Partner Registry</h3>
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <div className="relative w-full sm:w-64">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-foreground/30" />
+                  <input
+                    type="text"
+                    placeholder="Search partners..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-4 h-9 rounded-lg border border-border bg-card text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filtered.length === 0 ? (
+                  <div className="col-span-full py-24 flex flex-col items-center justify-center border border-border border-dashed rounded-xl bg-card">
+                    <Building2 className="h-12 w-12 text-muted-foreground mb-4 opacity-20" />
+                    <p className="text-sm font-medium text-foreground/50 uppercase tracking-widest">
+                      {companies.length === 0 ? "No partners registered" : "No results found"}
+                    </p>
+                  </div>
+                ) : (
+                  filtered.map((c) => (
+                    <div key={c.id} className="group flex flex-col bg-card rounded-xl border border-border shadow-sm overflow-hidden hover:border-primary/30 transition-all duration-300">
+                      {/* Banner */}
+                      <div className="h-28 w-full relative bg-muted border-b border-border">
+                        {c.bannerUrl ? (
+                          <NextImage 
+                            src={c.bannerUrl} 
+                            alt="Banner" 
+                            fill 
+                            className="object-cover" 
+                            unoptimized={c.bannerUrl.startsWith('data:')}
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-tr from-muted to-muted/50" />
+                        )}
+                        {/* Status Badge Top Right */}
+                        <div className="absolute top-3 right-3">
+                          <span className={cn(
+                            "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border shadow-sm backdrop-blur-md",
+                            c.isVerified
+                              ? "bg-primary/90 text-primary-foreground border-primary"
+                              : "bg-amber-500/90 text-white border-amber-600"
+                          )}>
+                            {c.isVerified ? <ShieldCheck className="h-3 w-3" /> : <ShieldAlert className="h-3 w-3" />}
+                            {c.isVerified ? "Verified" : "Pending"}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Profile Body */}
+                      <div className="px-5 pb-5 flex-1 flex flex-col relative pt-12">
+                        {/* Logo (Overlapping) */}
+                        <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-card border-4 border-card shadow-sm flex items-center justify-center overflow-hidden">
+                          {c.logoUrl ? (
+                            <NextImage 
+                              src={c.logoUrl} 
+                              alt={c.name} 
+                              fill 
+                              className="object-cover" 
+                              unoptimized={c.logoUrl.startsWith('data:')}
+                            />
+                          ) : (
+                            <Building2 className="h-8 w-8 text-foreground/20" />
+                          )}
+                        </div>
+
+                        {/* Info */}
+                        <div>
+                          <h3 className="font-bold text-foreground text-base leading-tight truncate">{c.name}</h3>
+                          <p className="text-[10px] font-medium text-foreground/60 mt-1 uppercase tracking-wider truncate">
+                            {c.industry}
+                          </p>
+                          
+                          <div className="mt-3 space-y-1.5">
+                            <div className="flex items-center gap-2 text-[11px] text-foreground/70">
+                              <Mail className="h-3 w-3 opacity-50" />
+                              <span className="truncate">{c.email}</span>
+                            </div>
+                            <div className="flex flex-col gap-1.5 mt-3 pt-3 border-t border-border/30">
+                              {c.location?.split('\n').filter(l => l.trim() !== '').slice(0, 2).map((loc, i) => (
+                                <div key={i} className="flex items-center gap-2 text-[10px] text-foreground/60">
+                                  <Globe className="h-2.5 w-2.5 opacity-40 shrink-0" />
+                                  <span className="truncate">{loc}</span>
+                                </div>
+                              ))}
+                              {(c.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) > 2 && (
+                                <p className="text-[9px] font-bold text-primary/60 uppercase tracking-tighter pl-4">
+                                  + {(c.location?.split('\n').filter(l => l.trim() !== '').length ?? 0) - 2} more branches
+                                </p>
+                              )}
+                              {(!c.location || c.location.trim() === '') && (
+                                <div className="flex items-center gap-2 text-[10px] text-foreground/40 italic">
+                                  <Globe className="h-2.5 w-2.5 opacity-40 shrink-0" />
+                                  <span>No locations listed</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex-1" /> {/* Spacer */}
+
+                        {/* Stats */}
+                        <div className="grid grid-cols-2 gap-2 mt-5 pt-4 border-t border-border/50">
+                          <div className="flex flex-col">
+                            <span className="text-[10px] font-semibold text-foreground/50 uppercase tracking-wider">Personnel</span>
+                            <span className="text-sm font-bold text-foreground">{c._count?.employers ?? 0}</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-[10px] font-semibold text-foreground/50 uppercase tracking-wider">Postings</span>
+                            <span className="text-sm font-bold text-foreground">{c._count?.postings ?? 0}</span>
+                          </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="mt-4 flex gap-2">
+                          <button
+                            onClick={() => handleEdit(c)}
+                            disabled={processing === c.id}
+                            className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-primary hover:border-primary/30 transition-all flex items-center justify-center disabled:opacity-50"
+                            title="Edit Partner"
+                          >
+                            <Edit className="h-3.5 w-3.5" />
+                          </button>
+
+                          <button
+                            onClick={() => handleDelete(c.id, c.name)}
+                            disabled={processing === c.id}
+                            className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-destructive hover:border-destructive/30 transition-all flex items-center justify-center disabled:opacity-50"
+                            title="Remove Partner"
+                          >
+                            {processing === c.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+                          </button>
+
+                          {!c.isVerified ? (
+                            <button
+                              onClick={() => handleVerify(c.id, true)}
+                              disabled={processing === c.id}
+                              className="flex-1 h-8 rounded-lg border border-primary bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-wider hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+                            >
+                              {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <ShieldCheck className="h-3 w-3" />}
+                              Verify
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleVerify(c.id, false)}
+                              disabled={processing === c.id}
+                              className="flex-1 h-8 rounded-lg border border-border bg-muted text-foreground/60 text-[10px] font-semibold uppercase tracking-wider hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+                            >
+                              {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Clock className="h-3 w-3" />}
+                              Revoke
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+              
+              {filtered.length > 0 && (
+                <div className="mt-6 flex justify-center">
+                  <p className="text-[10px] font-medium text-foreground/40 uppercase tracking-widest bg-muted/50 px-4 py-1.5 rounded-full border border-border/50">
+                    Showing {filtered.length} of {companies.length} Partners
+                  </p>
+                </div>
               )}
             </div>
-            
-            {filtered.length > 0 && (
-              <div className="mt-6 flex justify-center">
-                <p className="text-[10px] font-medium text-foreground/40 uppercase tracking-widest bg-muted/50 px-4 py-1.5 rounded-full border border-border/50">
-                  Showing {filtered.length} of {companies.length} Partners
-                </p>
-              </div>
-            )}
           </div>
-        </div>
+        </Skeleton>
       </div>
-    </Skeleton>
-  );
+    );
 }
