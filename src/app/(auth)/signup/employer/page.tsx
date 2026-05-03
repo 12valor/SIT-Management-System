@@ -309,6 +309,18 @@ export default function EmployerSignupPage() {
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                     />
                   </div>
+                  
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                      Company Description
+                    </label>
+                    <textarea
+                      name="description"
+                      required={companyMode === "new"}
+                      placeholder="Describe the company's core operations, specialization, and student training environment..."
+                      className="w-full h-32 px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white resize-none font-serif"
+                    />
+                  </div>
 
                   <div className="md:col-span-2 space-y-2 relative group/location">
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
