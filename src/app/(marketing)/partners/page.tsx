@@ -50,6 +50,50 @@ export default function PartnersPage() {
       animate="shimmer"
       stagger={60}
       transition={400}
+      fallback={
+        <div className="min-h-screen bg-white dark:bg-[#050505] pt-32 md:pt-40 pb-32">
+          <div className="container mx-auto px-6 lg:px-12 max-w-6xl">
+            {/* Header Skeleton */}
+            <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-24 space-y-8 animate-pulse">
+              <div className="h-4 w-32 bg-slate-100 dark:bg-white/5 rounded-full mx-auto" />
+              <div className="h-16 w-full max-w-lg bg-slate-100 dark:bg-white/5 rounded-2xl mx-auto" />
+              <div className="h-20 w-full bg-slate-50 dark:bg-white/5 rounded-2xl mx-auto" />
+              <div className="h-16 w-full max-w-xl bg-slate-50 dark:bg-white/5 rounded-full mx-auto" />
+            </div>
+
+            {/* Partners Grid Skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="flex flex-col bg-white dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden animate-pulse">
+                  <div className="h-32 w-full bg-slate-100 dark:bg-white/5" />
+                  <div className="px-6 pb-6 flex-1 flex flex-col relative pt-14">
+                    <div className="absolute -top-12 left-6 h-24 w-24 rounded-2xl bg-white dark:bg-[#0f0f0f] border-4 border-white dark:border-[#0f0f0f] shadow-md" />
+                    <div className="space-y-3">
+                      <div className="h-6 w-3/4 bg-slate-100 dark:bg-white/5 rounded" />
+                      <div className="h-5 w-24 bg-slate-50 dark:bg-white/5 rounded-md" />
+                    </div>
+                    <div className="mt-8 space-y-2 flex-1">
+                      <div className="h-4 w-full bg-slate-50/50 dark:bg-white/5 rounded" />
+                      <div className="h-4 w-full bg-slate-50/50 dark:bg-white/5 rounded" />
+                      <div className="h-4 w-2/3 bg-slate-50/50 dark:bg-white/5 rounded" />
+                    </div>
+                    <div className="mt-10 pt-6 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
+                      <div className="space-y-4 flex-1">
+                        <div className="space-y-2">
+                          <div className="h-3 w-20 bg-slate-100 dark:bg-white/5 rounded" />
+                          <div className="h-3 w-32 bg-slate-50 dark:bg-white/5 rounded" />
+                        </div>
+                        <div className="h-3 w-24 bg-slate-100 dark:bg-white/5 rounded" />
+                      </div>
+                      <div className="h-10 w-10 rounded-full bg-slate-100 dark:bg-white/5" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      }
     >
       <main className="min-h-screen bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 pt-32 md:pt-40 pb-32 transition-colors duration-500 overflow-hidden">
         

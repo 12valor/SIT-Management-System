@@ -179,14 +179,68 @@ export default function CoordinatorCompaniesPage() {
       name="coordinator-companies" 
       loading={isLoading}
       fallback={
-        <div className="animate-pulse space-y-8">
-          <div className="h-8 w-64 bg-muted rounded-lg" />
-          <div className="grid grid-cols-3 gap-4">
+        <div className="animate-pulse space-y-12">
+          {/* Header Skeleton */}
+          <div className="pb-6 border-b border-border/50 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-2">
+              <div className="h-8 w-64 bg-muted rounded-lg" />
+              <div className="h-4 w-96 bg-muted/60 rounded-md" />
+            </div>
+            <div className="h-9 w-32 bg-muted rounded-md" />
+          </div>
+
+          {/* Summary Grid Skeleton */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-28 bg-muted rounded-xl border border-border" />
+              <div key={i} className="bg-card border border-border p-6 rounded-xl space-y-3">
+                <div className="h-3 w-24 bg-muted/50 rounded" />
+                <div className="h-10 w-16 bg-muted rounded-lg" />
+              </div>
             ))}
           </div>
-          <div className="h-96 bg-muted rounded-xl border border-border" />
+
+          {/* Table Toolbar Skeleton */}
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-4">
+              <div className="h-5 w-32 bg-muted rounded" />
+              <div className="h-9 w-full sm:w-64 bg-muted rounded-lg" />
+            </div>
+
+            {/* Cards Grid Skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <div key={i} className="flex flex-col bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                  <div className="h-28 w-full bg-muted border-b border-border" />
+                  <div className="px-5 pb-5 flex-1 flex flex-col relative pt-12">
+                    <div className="absolute -top-10 left-5 h-20 w-20 rounded-xl bg-muted border-4 border-card shadow-sm" />
+                    <div className="space-y-2">
+                      <div className="h-5 w-3/4 bg-muted rounded" />
+                      <div className="h-3 w-1/4 bg-muted/60 rounded" />
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      <div className="h-3 w-full bg-muted/40 rounded" />
+                      <div className="h-3 w-2/3 bg-muted/40 rounded" />
+                    </div>
+                    <div className="mt-6 pt-4 border-t border-border/50 grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <div className="h-2 w-12 bg-muted/50 rounded" />
+                        <div className="h-4 w-8 bg-muted rounded" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-2 w-12 bg-muted/50 rounded" />
+                        <div className="h-4 w-8 bg-muted rounded" />
+                      </div>
+                    </div>
+                    <div className="mt-5 flex gap-2">
+                      <div className="h-8 w-8 bg-muted rounded-lg" />
+                      <div className="h-8 w-8 bg-muted rounded-lg" />
+                      <div className="h-8 flex-1 bg-muted rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       }
     >
