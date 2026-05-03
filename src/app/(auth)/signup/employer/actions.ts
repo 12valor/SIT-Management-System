@@ -13,9 +13,11 @@ export async function getCompanies() {
 }
 
 export async function registerEmployer(formData: FormData) {
+  const email = formData.get("email") as string;
+  const name = formData.get("name") as string;
+  console.log(`[Registration] Initializing partnership request for ${name} (${email})`);
+
   try {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
 
@@ -80,6 +82,7 @@ export async function registerEmployer(formData: FormData) {
     revalidatePath("/coordinator/companies");
     return { success: true };
   } catch (error) {
+    console.log("[Registration] Detailed Error Log:", error);
     console.error("Registration error details:", error);
     
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
