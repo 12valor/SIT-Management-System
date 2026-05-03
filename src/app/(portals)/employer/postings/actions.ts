@@ -40,6 +40,7 @@ export async function createSITPosting(formData: FormData) {
   const type = (formData.get("type") as string).toUpperCase().replace("-", "_") as PlacementType;
   const requiredHours = parseInt(formData.get("requiredHours") as string) || 300;
   const tags = (formData.get("tags") as string || "").split(",").map(t => t.trim()).filter(Boolean);
+  const posterUrl = formData.get("poster") as string | null;
 
   if (!title || !description || !location) {
     return { success: false, error: "Title, description, and location are required." };
@@ -53,6 +54,7 @@ export async function createSITPosting(formData: FormData) {
       type,
       requiredHours,
       tags,
+      posterUrl,
       status: PostingStatus.OPEN,
       employerId: session.user.id,
       companyId: user.companyId,
@@ -60,6 +62,7 @@ export async function createSITPosting(formData: FormData) {
   });
 
   revalidatePath("/employer/postings");
+  revalidatePath("/placements");
   return { success: true };
 }
 
@@ -75,5 +78,6 @@ export async function togglePostingStatus(postingId: string, currentStatus: Post
   });
 
   revalidatePath("/employer/postings");
+  revalidatePath("/placements");
   return { success: true };
 }

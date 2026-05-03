@@ -27,6 +27,7 @@ export default function EmployerPostingsPage() {
   const [showModal, setShowModal] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [posterPreview, setPosterPreview] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   const loadPostings = useCallback(async () => {
@@ -45,16 +46,33 @@ export default function EmployerPostingsPage() {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const MAX_SIZE = 3 * 1024 * 1024; // 3MB limit for posters
+      if (file.size > MAX_SIZE) {
+        setError("Poster file exceeds 3MB industrial limit.");
+        e.target.value = "";
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => setPosterPreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
     const fd = new FormData(e.currentTarget);
     fd.append("tags", tags.join(","));
+    if (posterPreview) fd.append("poster", posterPreview);
     const res = await createSITPosting(fd);
     if (res.success) {
       setShowModal(false);
       setTags([]);
+      setPosterPreview(null);
       await loadPostings();
     } else {
       setError(res.error || "Failed to create posting.");
@@ -138,6 +156,9 @@ export default function EmployerPostingsPage() {
                       <p className="font-bold text-foreground leading-tight">{p.title}</p>
                       <div className="flex items-center gap-1.5 mt-1 text-[10px] font-medium text-muted-foreground/60">
                         <MapPin className="h-3 w-3" /> {p.location}
+                        {p.posterUrl && (
+                          <span className="ml-2 px-1.5 py-0.5 bg-primary/5 text-primary border border-primary/10 rounded uppercase tracking-tighter text-[8px] font-black">Poster attached</span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 hidden md:table-cell">
@@ -233,6 +254,51 @@ export default function EmployerPostingsPage() {
                   ))}
                   <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
                     placeholder={tags.length === 0 ? "e.g. React, Logistics, CAD..." : ""} className="flex-1 bg-transparent outline-none text-sm text-foreground min-w-[120px] ml-2" />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Visual Job Poster (Optional)</label>
+                <div className="flex items-center gap-4">
+                  <div className="relative w-full h-32 rounded-xl border-2 border-dashed border-border bg-muted/20 overflow-hidden flex items-center justify-center group/poster hover:border-primary/50 transition-all">
+                    {posterPreview ? (
+                      <div className="relative w-full h-full">
+                        <img 
+                          src={posterPreview} 
+                          alt="Poster preview" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 flex items-center justify-center transition-opacity">
+                           <p className="text-[10px] font-bold text-white uppercase tracking-widest">Change Image</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 text-muted-foreground/40 group-hover/poster:text-primary transition-colors">
+                        <Plus className="h-6 w-6" />
+                        <p className="text-[10px] font-bold uppercase tracking-widest">Upload Marketing Poster</p>
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                    />
+                  </div>
+                  <div className="max-w-[200px] space-y-1">
+                    <p className="text-[9px] text-muted-foreground leading-relaxed font-medium">
+                      An industrial-grade visual representation of the role. PNG, JPG recommended. Max 3MB.
+                    </p>
+                    {posterPreview && (
+                      <button 
+                        type="button" 
+                        onClick={() => setPosterPreview(null)}
+                        className="text-[9px] font-bold text-destructive uppercase tracking-widest hover:underline"
+                      >
+                        Remove Poster
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="pt-2">

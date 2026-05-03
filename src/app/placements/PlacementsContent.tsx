@@ -29,6 +29,7 @@ type Placement = {
   location: string;
   type: 'ON_SITE' | 'REMOTE' | 'HYBRID';
   tags: string[];
+  posterUrl: string | null;
   postedAt: Date;
   company: {
     name: string;
@@ -40,6 +41,7 @@ type Placement = {
 export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<string>("ALL");
+  const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
 
   const postings = initialPostings as Placement[];
 
@@ -145,6 +147,14 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                             <Building2 className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
                           )}
                         </div>
+                        {post.posterUrl && (
+                          <button 
+                            onClick={() => setSelectedPoster(post.posterUrl)}
+                            className="mt-4 w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[9px] font-bold uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 transition-all active:scale-95"
+                          >
+                            View Poster
+                          </button>
+                        )}
                       </div>
 
                       {/* Content Section */}
@@ -248,6 +258,38 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
           </div>
         </motion.footer>
 
+        {/* Poster Modal */}
+        <AnimatePresence>
+          {selectedPoster && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedPoster(null)}
+              className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm flex items-center justify-center p-6 cursor-zoom-out"
+            >
+              <motion.div 
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img 
+                  src={selectedPoster} 
+                  alt="Job Poster" 
+                  className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                />
+                <button 
+                  onClick={() => setSelectedPoster(null)}
+                  className="absolute -top-12 right-0 text-white/60 hover:text-white transition-colors flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
+                >
+                  Close Archive <ArrowRight className="h-4 w-4 rotate-45" />
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </main>
   );

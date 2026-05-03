@@ -136,6 +136,7 @@ model SITPosting {
   location      String
   type          PlacementType @default(ON_SITE)
   tags          String[]      @default([])
+  posterUrl     String?       @db.Text
   postedAt      DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
