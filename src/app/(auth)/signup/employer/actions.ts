@@ -2,18 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
-import { z } from "zod";
 import { revalidatePath } from "next/cache";
-
-const employerSchema = z.object({
-  name: z.string().min(2, "Name is too short"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  companyMode: z.enum(["existing", "new"]),
-  companyId: z.string().optional(),
-  newCompanyName: z.string().optional(),
-  industry: z.string().optional(),
-});
 
 export async function getCompanies() {
   return await prisma.company.findMany({
@@ -29,15 +18,15 @@ export async function registerEmployer(formData: FormData) {
     const password = formData.get("password") as string;
     const companyMode = formData.get("companyMode") as "existing" | "new";
 
-    // These are now Base64 strings sent from the client
+    // Base64 strings sent from the client
     const logo = formData.get("logo") as string | null;
     const banner = formData.get("banner") as string | null;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     if (companyMode === "new") {
       const companyName = formData.get("newCompanyName") as string;
       const industry = formData.get("industry") as string;
-
-      const hashedPassword = await bcrypt.hash(password, 10);
 
       await prisma.user.create({
         data: {
@@ -45,25 +34,21 @@ export async function registerEmployer(formData: FormData) {
           email,
           password: hashedPassword,
           role: "EMPLOYER",
-          employer: {
+          isApproved: false,
+          company: {
             create: {
-              company: {
-                create: {
-                  name: companyName,
-                  email: `${companyName.toLowerCase().replace(/\s+/g, '.')}@partner.sit`,
-                  industry,
-                  logoUrl: logo,
-                  bannerUrl: banner,
-                  isVerified: false,
-                },
-              },
+              name: companyName,
+              email: `${companyName.toLowerCase().replace(/\s+/g, '.')}@partner.sit`,
+              industry,
+              logoUrl: logo,
+              bannerUrl: banner,
+              isVerified: false,
             },
           },
         },
       });
     } else {
       const companyId = formData.get("companyId") as string;
-      const hashedPassword = await bcrypt.hash(password, 10);
 
       await prisma.user.create({
         data: {
@@ -71,12 +56,9 @@ export async function registerEmployer(formData: FormData) {
           email,
           password: hashedPassword,
           role: "EMPLOYER",
-          employer: {
-            create: {
-              company: {
-                connect: { id: companyId },
-              },
-            },
+          isApproved: false,
+          company: {
+            connect: { id: companyId },
           },
         },
       });
