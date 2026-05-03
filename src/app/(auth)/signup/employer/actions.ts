@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
 import { z } from "zod";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import crypto from "crypto";
 import { revalidatePath } from "next/cache";
@@ -36,8 +36,7 @@ async function saveFile(file: File | null, prefix: string): Promise<string | nul
     const publicPath = path.join(uploadsDir, fileName);
     
     // Ensure directory exists
-    const fs = require('fs/promises');
-    await fs.mkdir(uploadsDir, { recursive: true });
+    await mkdir(uploadsDir, { recursive: true });
     
     await writeFile(publicPath, buffer);
     return `/uploads/${fileName}`;

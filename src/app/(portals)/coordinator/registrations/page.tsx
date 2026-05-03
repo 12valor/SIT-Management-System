@@ -11,8 +11,7 @@ import {
   CheckCircle2, 
   GraduationCap,
   Briefcase,
-  User,
-  Image as ImageIcon
+  User
 } from "lucide-react";
 import { getPendingRegistrations, approveUser, rejectUser, verifyCompany, verifyPartnership } from "./actions";
 import { cn } from "@/lib/utils";

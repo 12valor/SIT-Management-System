@@ -12,7 +12,6 @@ export default function EmployerLoginPage() {
   const [password, setPassword] = useState("");
   const [authStatus, setAuthStatus] = useState<AuthStatus>("idle");
   const [authMessage, setAuthMessage] = useState("");
-  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
