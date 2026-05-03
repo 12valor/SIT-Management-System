@@ -508,6 +508,46 @@ export default function EmployerSignupPage() {
           </div>
         </div>
       </motion.div>
+      <ThemeExperiment />
     </main>
+  );
+}
+
+function ThemeExperiment() {
+  const themes = [
+    { name: "Default", color: "hsl(0 0% 0%)", label: "Pure Black" },
+    { name: "Warm", color: "hsl(348 10% 3.5%)", label: "Warm Ink" },
+    { name: "Obsidian", color: "hsl(240 10% 4%)", label: "Obsidian" },
+    { name: "Anthracite", color: "hsl(0 0% 5%)", label: "Anthracite" },
+  ];
+
+  const applyTheme = (color: string) => {
+    document.documentElement.style.setProperty('--background', color);
+    // Also update card and popover to stay slightly relative
+    const parts = color.match(/hsl\((.*)\)/);
+    if (parts) {
+      const [h, s, lStr] = parts[1].split(' ');
+      const l = parseFloat(lStr);
+      document.documentElement.style.setProperty('--card', `hsl(${h} ${s} ${l + 2}%)`);
+      document.documentElement.style.setProperty('--popover', `hsl(${h} ${s} ${l + 1}%)`);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 p-4 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl z-50 animate-in-fade" style={{ backdropFilter: 'blur(12px)' }}>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3 font-serif">Dark Mode Background Lab</p>
+      <div className="flex gap-2">
+        {themes.map(t => (
+          <button
+            key={t.name}
+            onClick={() => applyTheme(t.color)}
+            className="px-3 py-1.5 rounded-lg text-[11px] font-medium border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all font-serif bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-200"
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-[9px] text-slate-400 mt-2 font-serif">Note: Changes are temporary and will reset on refresh.</p>
+    </div>
   );
 }
