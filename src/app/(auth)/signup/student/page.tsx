@@ -79,8 +79,8 @@ export default function StudentSignupPage() {
             )}
             
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                   Full Name
                 </label>
                 <input
@@ -92,15 +92,15 @@ export default function StudentSignupPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                   Course / Program
                 </label>
                 <div className="relative">
                   <select
                     name="course"
                     required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
+                    className="w-full h-11 px-4 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
                   >
                     <option value="" className="text-slate-400">Select program</option>
                     <option value="BS in Computer Engineering">BS in Computer Engineering</option>
@@ -118,8 +118,8 @@ export default function StudentSignupPage() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                 Institutional Email
               </label>
               <input
@@ -127,13 +127,13 @@ export default function StudentSignupPage() {
                 type="email"
                 required
                 placeholder="e.g. 2024-12345-V-0@tupv.edu.ph"
-                className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
+                className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
               />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                   Security Password
                 </label>
                 <input
@@ -145,8 +145,8 @@ export default function StudentSignupPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-slate-700 dark:text-slate-300 font-serif">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                   Confirm Password
                 </label>
                 <input

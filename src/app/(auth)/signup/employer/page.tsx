@@ -171,20 +171,20 @@ export default function EmployerSignupPage() {
 
             <div className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                     Full Name
                   </label>
                   <input
                     name="name"
                     required
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
+                    className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif flex items-center justify-between">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center justify-between h-4">
                     Corporate Email
                     <AnimatePresence>
                       {emailStatus !== "idle" && emailStatus !== "checking" && (
@@ -214,7 +214,7 @@ export default function EmployerSignupPage() {
                       }}
                       onBlur={(e) => checkUserEmail(e.target.value)}
                       className={cn(
-                        "w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border rounded-xl outline-none transition-all text-slate-900 dark:text-white",
+                        "w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border rounded-xl outline-none transition-all text-[13px] text-slate-900 dark:text-white",
                         emailStatus === "available" ? "border-green-500/50 focus:ring-green-500/20" : 
                         emailStatus === "taken" ? "border-red-500/50 focus:ring-red-500/20" : 
                         "border-slate-200 dark:border-white/10 focus:border-primary/50 focus:ring-primary/20"
@@ -252,8 +252,8 @@ export default function EmployerSignupPage() {
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 gap-6 animate-in-slide-up">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif flex items-center justify-between">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center justify-between h-4">
                       Company Name
                       <AnimatePresence>
                         {companyStatus !== "idle" && companyStatus !== "checking" && (
@@ -282,7 +282,7 @@ export default function EmployerSignupPage() {
                         }}
                         onBlur={(e) => checkCompanyName(e.target.value)}
                         className={cn(
-                          "w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border rounded-xl outline-none transition-all text-slate-900 dark:text-white",
+                          "w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border rounded-xl outline-none transition-all text-[13px] text-slate-900 dark:text-white",
                           companyStatus === "available" ? "border-green-500/50 focus:ring-green-500/20" : 
                           companyStatus === "taken" ? "border-red-500/50 focus:ring-red-500/20" : 
                           "border-slate-200 dark:border-white/10 focus:border-primary/50 focus:ring-primary/20"
@@ -298,20 +298,20 @@ export default function EmployerSignupPage() {
                       </p>
                     )}
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center justify-between h-4">
                       Industry Sector
                     </label>
                     <input
                       name="industry"
                       required={companyMode === "new"}
                       placeholder="e.g. Manufacturing, Technology, IT"
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
+                      className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
                     />
                   </div>
                   
-                  <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  <div className="md:col-span-2 space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                       Company Description
                     </label>
                     <textarea
@@ -322,8 +322,8 @@ export default function EmployerSignupPage() {
                     />
                   </div>
 
-                  <div className="md:col-span-2 space-y-2 relative group/location">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  <div className="md:col-span-2 space-y-1.5 relative group/location">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                       Corporate Locations
                     </label>
                     <textarea
@@ -458,8 +458,8 @@ export default function EmployerSignupPage() {
               )}
 
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                     Security Password
                   </label>
                   <input
@@ -467,12 +467,12 @@ export default function EmployerSignupPage() {
                     type="password"
                     required
                     placeholder="Create a secure password"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
+                    className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
                     Confirm Password
                   </label>
                   <input
@@ -480,7 +480,7 @@ export default function EmployerSignupPage() {
                     type="password"
                     required
                     placeholder="Re-enter your password"
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-sm text-slate-900 dark:text-white"
+                    className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
