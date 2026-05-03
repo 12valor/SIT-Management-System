@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Clock, Briefcase, ArrowRight, Building2, Filter } from "lucide-react";
+import { Search, MapPin, Clock, ArrowRight, Building2, Filter } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { format } from "date-fns";
 
 const fadeInUp = {
@@ -131,7 +132,15 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                       <div className="flex-shrink-0">
                         <div className="w-16 h-16 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden">
                           {post.company.logoUrl ? (
-                            <img src={post.company.logoUrl} alt={post.company.name} className="w-full h-full object-cover" />
+                            <div className="relative w-full h-full">
+                              <Image 
+                                src={post.company.logoUrl} 
+                                alt={post.company.name} 
+                                fill 
+                                className="object-cover"
+                                unoptimized
+                              />
+                            </div>
                           ) : (
                             <Building2 className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
                           )}

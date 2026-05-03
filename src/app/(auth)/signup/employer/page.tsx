@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { registerEmployer, getCompanies } from "./actions";
 import { cn } from "@/lib/utils";
@@ -213,7 +214,13 @@ export default function EmployerSignupPage() {
                         <div className="flex items-center gap-4">
                           <div className="relative w-16 h-16 rounded-xl bg-slate-50 dark:bg-white/5 border-2 border-dashed border-slate-200 dark:border-white/10 overflow-hidden flex items-center justify-center group/logo">
                             {logoPreview ? (
-                              <img src={logoPreview} alt="Logo preview" className="w-full h-full object-cover" />
+                              <Image 
+                                src={logoPreview} 
+                                alt="Logo preview" 
+                                fill 
+                                className="object-cover"
+                                unoptimized
+                              />
                             ) : (
                               <div className="text-slate-400 group-hover/logo:text-primary transition-colors">
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -245,7 +252,13 @@ export default function EmployerSignupPage() {
                         <div className="flex flex-col gap-3">
                           <div className="relative w-full h-16 rounded-xl bg-slate-50 dark:bg-white/5 border-2 border-dashed border-slate-200 dark:border-white/10 overflow-hidden flex items-center justify-center group/banner">
                             {bannerPreview ? (
-                              <img src={bannerPreview} alt="Banner preview" className="w-full h-full object-cover" />
+                              <Image 
+                                src={bannerPreview} 
+                                alt="Banner preview" 
+                                fill 
+                                className="object-cover"
+                                unoptimized
+                              />
                             ) : (
                               <div className="text-slate-400 group-hover/banner:text-primary transition-colors">
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

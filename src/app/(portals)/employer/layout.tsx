@@ -9,11 +9,8 @@ import {
   BarChart3, 
   ClipboardList, 
   Users, 
-  Building2, 
   LogOut,
   X,
-  Settings,
-  ClipboardCheck,
   Star
 } from "lucide-react";
 import { cn } from "@/lib/utils";

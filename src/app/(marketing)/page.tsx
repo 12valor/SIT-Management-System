@@ -1,9 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Building2,
-} from "lucide-react";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";

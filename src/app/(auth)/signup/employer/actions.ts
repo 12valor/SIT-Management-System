@@ -73,8 +73,8 @@ export async function registerEmployer(formData: FormData) {
       }
 
       try {
-        const logoFile = formData.get("logo") as File;
-        const bannerFile = formData.get("banner") as File;
+        const logoFile = formData.get("logo") as File | null;
+        const bannerFile = formData.get("banner") as File | null;
         
         const logoUrl = await saveFile(logoFile, "logo");
         const bannerUrl = await saveFile(bannerFile, "banner");
@@ -90,8 +90,9 @@ export async function registerEmployer(formData: FormData) {
           },
         });
         finalCompanyId = newCompany.id;
-      } catch (fileError: any) {
-        return { success: false, error: fileError.message || "File upload failed." };
+      } catch (fileError) {
+        const message = fileError instanceof Error ? fileError.message : "File upload failed.";
+        return { success: false, error: message };
       }
     }
 
