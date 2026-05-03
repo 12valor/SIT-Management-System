@@ -11,12 +11,14 @@ import {
   CheckCircle2, 
   GraduationCap,
   Briefcase,
-  User
+  User,
+  Image as ImageIcon
 } from "lucide-react";
 import { getPendingRegistrations, approveUser, rejectUser, verifyCompany, verifyPartnership } from "./actions";
 import { cn } from "@/lib/utils";
 import { RegistrationData, PendingUser } from "./types";
 import { Company } from "@prisma/client";
+import Image from "next/image";
 
 export default function CoordinatorRegistrationsPage() {
   const [data, setData] = useState<RegistrationData | null>(null);
@@ -209,8 +211,18 @@ export default function CoordinatorRegistrationsPage() {
                 <div key={user.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col h-full space-y-6 transition-all hover:border-primary/20 ring-1 ring-primary/5">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center text-primary border border-primary/10">
-                        <Building2 className="h-5 w-5" />
+                      <div className="w-12 h-12 rounded-lg bg-card border border-border/50 flex items-center justify-center overflow-hidden relative shadow-sm">
+                        {user.company?.logoUrl ? (
+                          <Image 
+                            src={user.company.logoUrl} 
+                            alt={user.company.name} 
+                            fill 
+                            className="object-cover"
+                            unoptimized={user.company.logoUrl.startsWith('data:')}
+                          />
+                        ) : (
+                          <Building2 className="h-6 w-6 text-primary/40" />
+                        )}
                       </div>
                       <div>
                         <h4 className="text-sm font-semibold text-foreground tracking-tight">{user.company?.name}</h4>
@@ -218,6 +230,19 @@ export default function CoordinatorRegistrationsPage() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Banner Preview */}
+                  {user.company?.bannerUrl && (
+                    <div className="relative h-20 w-full rounded-lg overflow-hidden border border-border/50 bg-muted">
+                      <Image 
+                        src={user.company.bannerUrl} 
+                        alt="Banner Preview" 
+                        fill 
+                        className="object-cover"
+                        unoptimized={user.company.bannerUrl.startsWith('data:')}
+                      />
+                    </div>
+                  )}
 
                   <div className="space-y-4 flex-1">
                     <div className="p-3 bg-muted/30 rounded-lg border border-border/50">
@@ -294,8 +319,18 @@ export default function CoordinatorRegistrationsPage() {
               {orphanedCompanies.length > 0 ? orphanedCompanies.map((company: Company) => (
                 <div key={company.id} className="bg-card border border-border p-6 rounded-xl shadow-sm flex flex-col space-y-6 transition-all hover:border-primary/20">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-foreground/70 border border-border/50">
-                      <Building2 className="h-6 w-6" />
+                    <div className="w-12 h-12 rounded-lg bg-card border border-border/50 flex items-center justify-center overflow-hidden relative shadow-sm">
+                      {company.logoUrl ? (
+                        <Image 
+                          src={company.logoUrl} 
+                          alt={company.name} 
+                          fill 
+                          className="object-cover"
+                          unoptimized={company.logoUrl.startsWith('data:')}
+                        />
+                      ) : (
+                        <Building2 className="h-6 w-6 text-foreground/20" />
+                      )}
                     </div>
                     <div>
                       <h4 className="text-sm font-semibold text-foreground tracking-tight">{company.name}</h4>

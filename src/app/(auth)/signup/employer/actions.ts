@@ -6,6 +6,7 @@ import { z } from "zod";
 import { writeFile } from "fs/promises";
 import path from "path";
 import crypto from "crypto";
+import { revalidatePath } from "next/cache";
 
 const employerSchema = z.object({
   name: z.string().min(2, "Name is too short"),
@@ -29,15 +30,20 @@ async function saveFile(file: File | null, prefix: string): Promise<string | nul
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    const extension = file.name.split('.').pop();
+    const extension = file.name.split('.').pop() || 'png';
     const fileName = `${prefix}_${crypto.randomUUID()}.${extension}`;
-    const publicPath = path.join(process.cwd(), "public", "uploads", fileName);
+    const uploadsDir = path.join(process.cwd(), "public", "uploads");
+    const publicPath = path.join(uploadsDir, fileName);
+    
+    // Ensure directory exists
+    const fs = require('fs/promises');
+    await fs.mkdir(uploadsDir, { recursive: true });
     
     await writeFile(publicPath, buffer);
     return `/uploads/${fileName}`;
   } catch (error) {
     console.error(`Error saving ${prefix}:`, error);
-    return null;
+    throw new Error(`Failed to save ${prefix} image. Please try again.`);
   }
 }
 
@@ -90,6 +96,10 @@ export async function registerEmployer(formData: FormData) {
           },
         });
         finalCompanyId = newCompany.id;
+        
+        // Revalidate coordinator paths to show new company/registration
+        revalidatePath("/coordinator/registrations");
+        revalidatePath("/coordinator/companies");
       } catch (fileError) {
         const message = fileError instanceof Error ? fileError.message : "File upload failed.";
         return { success: false, error: message };
