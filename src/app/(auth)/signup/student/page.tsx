@@ -87,7 +87,7 @@ export default function StudentSignupPage() {
                   name="name"
                   type="text"
                   required
-                  placeholder="Juan Dela Cruz"
+                  placeholder="Enter your full name"
                   className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                 />
               </div>
@@ -126,7 +126,7 @@ export default function StudentSignupPage() {
                 name="email"
                 type="email"
                 required
-                placeholder="id@tupv.edu.ph"
+                placeholder="e.g. 2024-12345-V-0@tupv.edu.ph"
                 className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
               />
             </div>
@@ -140,7 +140,7 @@ export default function StudentSignupPage() {
                   name="password"
                   type="password"
                   required
-                  placeholder="••••••••"
+                  placeholder="Create a secure password"
                   className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                 />
               </div>
@@ -153,7 +153,7 @@ export default function StudentSignupPage() {
                   name="confirmPassword"
                   type="password"
                   required
-                  placeholder="••••••••"
+                  placeholder="Re-enter your password"
                   className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                 />
               </div>

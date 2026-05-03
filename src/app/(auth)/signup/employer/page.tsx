@@ -178,7 +178,7 @@ export default function EmployerSignupPage() {
                   <input
                     name="name"
                     required
-                    placeholder="Jane Smith"
+                    placeholder="Enter your full name"
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                   />
                 </div>
@@ -208,7 +208,7 @@ export default function EmployerSignupPage() {
                       name="email"
                       type="email"
                       required
-                      placeholder="jane@company.com"
+                      placeholder="e.g. name@corporate.com"
                       onChange={(e) => {
                         setEmailStatus("idle");
                       }}
@@ -276,7 +276,7 @@ export default function EmployerSignupPage() {
                       <input
                         name="newCompanyName"
                         required={companyMode === "new"}
-                        placeholder="TechCorp Solutions Inc."
+                        placeholder="Official registered company name"
                         onChange={(e) => {
                           setCompanyStatus("idle");
                         }}
@@ -305,7 +305,7 @@ export default function EmployerSignupPage() {
                     <input
                       name="industry"
                       required={companyMode === "new"}
-                      placeholder="Manufacturing / IT"
+                      placeholder="e.g. Manufacturing, Technology, IT"
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                     />
                   </div>
@@ -466,7 +466,7 @@ export default function EmployerSignupPage() {
                     name="password"
                     type="password"
                     required
-                    placeholder="••••••••"
+                    placeholder="Create a secure password"
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                   />
                 </div>
@@ -479,7 +479,7 @@ export default function EmployerSignupPage() {
                     name="confirmPassword"
                     type="password"
                     required
-                    placeholder="••••••••"
+                    placeholder="Re-enter your password"
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
                   />
                 </div>
