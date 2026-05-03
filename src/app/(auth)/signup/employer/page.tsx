@@ -184,8 +184,24 @@ export default function EmployerSignupPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif flex items-center justify-between">
                     Corporate Email
+                    <AnimatePresence>
+                      {emailStatus !== "idle" && emailStatus !== "checking" && (
+                        <motion.span 
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -10 }}
+                          className={cn(
+                            "text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5",
+                            emailStatus === "available" ? "text-green-600" : "text-red-600"
+                          )}
+                        >
+                          <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", emailStatus === "available" ? "bg-green-500" : "bg-red-500")} />
+                          {emailStatus === "available" ? "Available" : "Taken"}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </label>
                   <div className="relative">
                     <input
@@ -195,7 +211,6 @@ export default function EmployerSignupPage() {
                       placeholder="jane@company.com"
                       onChange={(e) => {
                         setEmailStatus("idle");
-                        // Debounce could be added here, but for now we'll check on blur
                       }}
                       onBlur={(e) => checkUserEmail(e.target.value)}
                       className={cn(
@@ -207,18 +222,6 @@ export default function EmployerSignupPage() {
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
                       {emailStatus === "checking" && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
-                      {emailStatus === "available" && (
-                        <div className="flex items-center gap-1.5 text-green-600 font-serif text-[10px] font-bold uppercase tracking-wider">
-                          <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                          Available
-                        </div>
-                      )}
-                      {emailStatus === "taken" && (
-                        <div className="flex items-center gap-1.5 text-red-600 font-serif text-[10px] font-bold uppercase tracking-wider">
-                          <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                          Email Taken
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -250,8 +253,24 @@ export default function EmployerSignupPage() {
               ) : (
                 <div className="grid md:grid-cols-2 gap-6 animate-in-slide-up">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif flex items-center justify-between">
                       Company Name
+                      <AnimatePresence>
+                        {companyStatus !== "idle" && companyStatus !== "checking" && (
+                          <motion.span 
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -10 }}
+                            className={cn(
+                              "text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5",
+                              companyStatus === "available" ? "text-green-600" : "text-red-600"
+                            )}
+                          >
+                            <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", companyStatus === "available" ? "bg-green-500" : "bg-red-500")} />
+                            {companyStatus === "available" ? "Ready" : "Registered"}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
                     </label>
                     <div className="relative">
                       <input
@@ -271,18 +290,6 @@ export default function EmployerSignupPage() {
                       />
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
                         {companyStatus === "checking" && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
-                        {companyStatus === "available" && (
-                          <div className="flex items-center gap-1.5 text-green-600 font-serif text-[10px] font-bold uppercase tracking-wider">
-                            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                            Ready
-                          </div>
-                        )}
-                        {companyStatus === "taken" && (
-                          <div className="flex items-center gap-1.5 text-red-600 font-serif text-[10px] font-bold uppercase tracking-wider">
-                            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                            Registered
-                          </div>
-                        )}
                       </div>
                     </div>
                     {generatedEmail && companyStatus === "available" && (
