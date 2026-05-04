@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { sendApprovalEmail } from "@/lib/email";
 
 export async function getCompanies() {
   return await prisma.company.findMany({
@@ -14,10 +15,19 @@ export async function getCompanies() {
 }
 
 export async function setCompanyVerification(companyId: string, isVerified: boolean) {
-  await prisma.company.update({
+  const company = await prisma.company.update({
     where: { id: companyId },
     data: { isVerified },
   });
+
+  // Only send notification if the company is being approved (verified: true)
+  if (isVerified && company.email) {
+    // We fire and forget or handle error silently to not block the UI action
+    sendApprovalEmail(company.email, company.name).catch((err) => {
+      console.error("Delayed email notification failed:", err);
+    });
+  }
+
   revalidatePath("/coordinator/companies");
   return { success: true };
 }
@@ -85,7 +95,7 @@ export async function addCompany(data: {
   bannerUrl?: string;
 }) {
   try {
-    await prisma.company.create({
+    const company = await prisma.company.create({
       data: {
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
@@ -97,6 +107,11 @@ export async function addCompany(data: {
         bannerUrl: data.bannerUrl,
         isVerified: true,
       },
+    });
+
+    // Notify the company since they are auto-verified on creation
+    sendApprovalEmail(company.email, company.name).catch((err) => {
+      console.error("Delayed email notification failed:", err);
     });
 
     revalidatePath("/coordinator/companies");
