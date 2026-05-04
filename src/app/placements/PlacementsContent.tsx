@@ -144,7 +144,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-100 dark:border-red-500/20">
                   <ClipboardCheck className="h-4 w-4 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
@@ -161,7 +161,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-100 dark:border-red-500/20">
                   <User className="h-4 w-4 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
@@ -179,7 +179,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-t border-slate-100 dark:border-white/5">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-100 dark:border-red-500/20">
                   <Tag className="h-4 w-4 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
@@ -200,7 +200,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="space-y-4 flex-1">
             {/* Status Section */}
             <div className="flex gap-3 items-center">
-               <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
+               <div className="w-10 h-10 rounded-full border border-red-100 dark:border-red-500/20 flex items-center justify-center shrink-0">
                  <Send className="h-4 w-4 text-[#7A0012]" />
                </div>
                <div>
