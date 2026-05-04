@@ -198,14 +198,6 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   {tag}
                 </span>
               ))}
-              {post.posterUrl && (
-                <button 
-                  onClick={() => onShowPoster(post.posterUrl!)}
-                  className="px-4 py-2 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 rounded-full text-xs font-bold text-[#008A44] tracking-tight hover:bg-emerald-100 transition-all"
-                >
-                  Visual Poster
-                </button>
-              )}
             </div>
           </div>
 
@@ -291,6 +283,46 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   </div>
                 </div>
               ))}
+              
+              {post.posterUrl && (
+                <button 
+                  onClick={() => onShowPoster(post.posterUrl!)}
+                  className="w-full py-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 rounded-xl text-sm font-bold text-[#008A44] flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all mt-2"
+                >
+                  <ImageIcon className="h-4 w-4" />
+                  View Visual Poster
+                </button>
+              )}
+            </div>
+
+            <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
+
+            {/* Institutional Profile restored */}
+            <div className="space-y-6">
+              <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.2em]">Institutional profile</h4>
+              
+              <div className="space-y-5">
+                 {[
+                   { icon: Building2, label: "Industry", value: post.company.industry },
+                   { icon: MapPin, label: "Headquarters", value: post.company.location },
+                   { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
+                 ].map((info, idx) => (
+                   <div key={idx} className="flex gap-4">
+                     <info.icon className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
+                     <div className="min-w-0 flex-1">
+                       <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none mb-2">{info.label}</p>
+                       {info.isLink ? (
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-[#008A44] flex items-center gap-1 truncate transition-colors">
+                           {info.value}
+                           <ExternalLink className="h-3 w-3 shrink-0" />
+                         </a>
+                       ) : (
+                         <p className="text-sm font-medium text-slate-700 dark:text-slate-300 truncate tracking-tight">{info.value}</p>
+                       )}
+                     </div>
+                   </div>
+                 ))}
+              </div>
             </div>
           </div>
 
