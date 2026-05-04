@@ -279,7 +279,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               ].map((fact, idx) => (
                 <div key={idx} className="flex gap-4">
                   <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/30 dark:border-white/5">
-                    <fact.icon className="h-3.5 w-3.5 text-slate-400" />
+                    <fact.icon className="h-3.5 w-3.5 text-slate-600" />
                   </div>
                   <div>
                     <h5 className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">{fact.label}</h5>
@@ -302,7 +302,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                    { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-4">
-                     <info.icon className="h-3.5 w-3.5 text-slate-300 shrink-0 mt-0.5" />
+                     <info.icon className="h-3.5 w-3.5 text-slate-500 shrink-0 mt-0.5" />
                      <div className="min-w-0 flex-1">
                        <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
                        {info.isLink ? (
