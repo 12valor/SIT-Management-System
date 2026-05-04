@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Clock, ArrowRight, Building2, Filter, X, Image as ImageIcon } from "lucide-react";
+import { Search, MapPin, Clock, ArrowRight, Building2, Filter, X, Globe, Facebook, Linkedin, Twitter, Instagram, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -37,6 +37,11 @@ type Placement = {
     name: string;
     logoUrl: string | null;
     industry: string;
+    websiteUrl?: string | null;
+    facebookUrl?: string | null;
+    linkedinUrl?: string | null;
+    twitterUrl?: string | null;
+    instagramUrl?: string | null;
   };
 };
 
@@ -178,9 +183,70 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                             </div>
                           </div>
                           
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-full border border-slate-100 dark:border-white/5 h-fit">
-                            {format(new Date(post.postedAt), 'MMM dd')}
-                          </span>
+                          <div className="flex flex-col items-end gap-3">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-full border border-slate-100 dark:border-white/5 h-fit">
+                              {format(new Date(post.postedAt), 'MMM dd')}
+                            </span>
+                            
+                            {/* Institutional Links */}
+                            <div className="flex items-center gap-2">
+                              {post.company.websiteUrl && (
+                                <a 
+                                  href={post.company.websiteUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-primary hover:border-primary/30 transition-all"
+                                  title="Visit Official Website"
+                                >
+                                  <Globe className="h-3.5 w-3.5" />
+                                </a>
+                              )}
+                              {post.company.linkedinUrl && (
+                                <a 
+                                  href={post.company.linkedinUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#0077b5] hover:border-[#0077b5]/30 transition-all"
+                                  title="LinkedIn Profile"
+                                >
+                                  <Linkedin className="h-3.5 w-3.5" />
+                                </a>
+                              )}
+                              {post.company.facebookUrl && (
+                                <a 
+                                  href={post.company.facebookUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#1877f2] hover:border-[#1877f2]/30 transition-all"
+                                  title="Facebook Page"
+                                >
+                                  <Facebook className="h-3.5 w-3.5" />
+                                </a>
+                              )}
+                              {post.company.twitterUrl && (
+                                <a 
+                                  href={post.company.twitterUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#1da1f2] hover:border-[#1da1f2]/30 transition-all"
+                                  title="X (Twitter) Profile"
+                                >
+                                  <Twitter className="h-3.5 w-3.5" />
+                                </a>
+                              )}
+                              {post.company.instagramUrl && (
+                                <a 
+                                  href={post.company.instagramUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#e4405f] hover:border-[#e4405f]/30 transition-all"
+                                  title="Instagram Profile"
+                                >
+                                  <Instagram className="h-3.5 w-3.5" />
+                                </a>
+                              )}
+                            </div>
+                          </div>
                         </div>
 
                         {/* Description Snippet */}

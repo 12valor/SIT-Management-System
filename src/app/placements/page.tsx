@@ -22,7 +22,12 @@ export default async function PlacementsPage() {
           name: true, 
           logoUrl: true, 
           industry: true,
-          location: true
+          location: true,
+          websiteUrl: true,
+          facebookUrl: true,
+          linkedinUrl: true,
+          twitterUrl: true,
+          instagramUrl: true
         },
       },
     },
