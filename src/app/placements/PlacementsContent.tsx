@@ -73,8 +73,17 @@ type Placement = {
   };
 };
 
-function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: (url: string) => void }) {
-  const [isSaved, setIsSaved] = useState(false);
+function PlacementCard({ 
+  post, 
+  onShowPoster,
+  isSaved,
+  onToggleSave
+}: { 
+  post: Placement, 
+  onShowPoster: (url: string) => void,
+  isSaved: boolean,
+  onToggleSave: (id: string) => void
+}) {
 
   return (
     <motion.article 
@@ -281,17 +290,16 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
         </div>
       </div>
 
-      {/* Unified Card Footer actions */}
-      <div className="bg-slate-50/30 dark:bg-white/[0.01] border-t border-slate-200/60 dark:border-white/10 p-6 flex flex-wrap items-center justify-between gap-6">
+        <div className="bg-slate-50/30 dark:bg-white/[0.01] border-t border-slate-200/60 dark:border-white/10 p-6 flex flex-wrap items-center justify-between gap-6">
         <div className="flex flex-wrap items-center gap-6">
           <div className="flex items-center gap-3">
             <button 
-              onClick={() => setIsSaved(!isSaved)}
+              onClick={() => onToggleSave(post.id)}
               className={cn(
-                "w-12 h-12 rounded-xl border transition-all flex items-center justify-center",
+                "h-12 w-12 rounded-xl border flex items-center justify-center transition-all active:scale-90",
                 isSaved 
-                  ? "bg-red-50 text-[#7A0012] border-[#7A0012]/20" 
-                  : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 hover:border-red-500/50"
+                  ? "bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-[#7A0012]" 
+                  : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-400 hover:border-slate-300"
               )}
             >
               <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
@@ -349,7 +357,18 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<string>("ALL");
+  const [showSavedOnly, setShowSavedOnly] = useState(false);
+  const [savedJobIds, setSavedJobIds] = useState<Set<string>>(new Set());
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
+
+  const toggleSave = (id: string) => {
+    setSavedJobIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   const postings = initialPostings as Placement[];
 
@@ -359,7 +378,8 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
       post.company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = filterType === "ALL" || post.type === filterType;
-    return matchesSearch && matchesType;
+    const matchesSaved = !showSavedOnly || savedJobIds.has(post.id);
+    return matchesSearch && matchesType && matchesSaved;
   });
 
   return (
@@ -386,39 +406,67 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
           </p>
         </motion.header>
 
-        {/* Controls */}
-        <motion.section className="mb-12 flex flex-col md:flex-row gap-6 justify-between items-end" variants={fadeInUp}>
-          <div className="w-full md:w-96">
-            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">
+        {/* Controls Overlay Card */}
+        <motion.section 
+          className="mb-12 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-sm"
+          variants={fadeInUp}
+        >
+          <div className="flex flex-col space-y-4">
+            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Explore Opportunities
             </label>
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
-              <input 
-                type="text"
-                placeholder="Search by role, company, or location..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-sm py-4 pl-12 pr-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-primary/50 transition-colors shadow-sm"
-              />
-            </div>
-          </div>
+            
+            <div className="flex flex-col lg:flex-row items-center gap-4">
+              {/* Search Bar */}
+              <div className="relative flex-1 w-full group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-[#7A0012] transition-colors" />
+                <input 
+                  type="text"
+                  placeholder="Search by role, company, or location..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full bg-slate-50/50 dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7A0012]/5 focus:border-[#7A0012]/50 transition-all shadow-none"
+                />
+              </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-            <Filter className="h-4 w-4 text-slate-400 mr-2 shrink-0" />
-            {['ALL', 'ON_SITE', 'HYBRID', 'REMOTE'].map((type) => (
-              <button
-                key={type}
-                onClick={() => setFilterType(type)}
-                className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-sm whitespace-nowrap transition-all active:scale-95 ${
-                  filterType === type 
-                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900" 
-                    : "bg-white dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10 hover:border-slate-400"
-                }`}
-              >
-                {type.replace('_', '-')}
-              </button>
-            ))}
+              {/* Action Group */}
+              <div className="flex items-center gap-3 w-full lg:w-auto">
+                <button className="h-[52px] w-[52px] flex items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-500 hover:border-slate-300 transition-all">
+                  <Filter className="h-5 w-5" />
+                </button>
+                
+                <button 
+                  onClick={() => setShowSavedOnly(!showSavedOnly)}
+                  className={cn(
+                    "h-[52px] w-[52px] flex items-center justify-center rounded-xl border transition-all active:scale-95",
+                    showSavedOnly 
+                      ? "bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-[#7A0012]" 
+                      : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 hover:border-slate-300"
+                  )}
+                >
+                  <Bookmark className={cn("h-5 w-5", showSavedOnly && "fill-current")} />
+                </button>
+
+                <div className="h-8 w-px bg-slate-200 dark:bg-white/10 mx-1 hidden lg:block" />
+
+                <div className="flex items-center gap-1.5 bg-slate-50/50 dark:bg-white/5 p-1.5 rounded-xl border border-slate-200 dark:border-white/10">
+                  {['ALL', 'ON_SITE', 'HYBRID', 'REMOTE'].map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => setFilterType(type)}
+                      className={cn(
+                        "px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg whitespace-nowrap transition-all active:scale-95",
+                        filterType === type 
+                          ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm" 
+                          : "text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-white/10"
+                      )}
+                    >
+                      {type.replace('_', '-')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </motion.section>
 
@@ -428,7 +476,13 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
             {filteredPostings.length > 0 ? (
               <div className="space-y-10">
                 {filteredPostings.map((post) => (
-                  <PlacementCard key={post.id} post={post} onShowPoster={setSelectedPoster} />
+                  <PlacementCard 
+                    key={post.id} 
+                    post={post} 
+                    onShowPoster={setSelectedPoster}
+                    isSaved={savedJobIds.has(post.id)}
+                    onToggleSave={toggleSave}
+                  />
                 ))}
               </div>
             ) : (
