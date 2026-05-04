@@ -221,7 +221,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </button>
 
               <div className="flex items-center gap-1.5 ml-4">
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mr-2">Share:</span>
+                <span className="text-[11px] font-bold text-slate-400 font-sans mr-2">Share:</span>
                 <button 
                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/placements?id=' + post.id)}`, '_blank')}
                   className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
@@ -248,8 +248,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </div>
             </div>
 
-            <button className="flex items-center gap-2 text-[9px] font-bold text-slate-400 hover:text-primary transition-all uppercase tracking-[0.3em]">
-               Report Registry Entry
+            <button className="flex items-center gap-2 text-[11px] font-bold text-slate-400 hover:text-primary transition-all font-sans">
+               Report registry entry
                <Flag className="h-3 w-3" />
             </button>
           </div>
