@@ -54,6 +54,23 @@ export function PresenceForm({ initialData }: PresenceFormProps) {
     }
   };
 
+  const socialLinks = [
+    { name: "facebookUrl", label: "Facebook Page", icon: Facebook, placeholder: "https://facebook.com/yourcompany" },
+    { name: "linkedinUrl", label: "LinkedIn Profile", icon: Linkedin, placeholder: "https://linkedin.com/company/yourcompany" },
+    { name: "twitterUrl", label: "X (Twitter) Profile", icon: Twitter, placeholder: "https://x.com/yourcompany" },
+    { name: "instagramUrl", label: "Instagram Profile", icon: Instagram, placeholder: "https://instagram.com/yourcompany" },
+  ];
+
+  return (
+    <div className="max-w-3xl">
+      <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
+        <div className="px-8 py-6 border-b border-border bg-muted/30">
+          <h3 className="text-sm font-bold text-foreground uppercase tracking-widest">Connect with Trainees</h3>
+          <p className="text-[11px] text-muted-foreground font-medium mt-1">
+            Manage your institution&apos;s digital footprint to help students learn more about your culture.
+          </p>
+        </div>
+
         <form onSubmit={handleSubmit} className="p-8 space-y-8">
           {/* Primary Institutional Link */}
           <div className="space-y-4">
