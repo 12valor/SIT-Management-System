@@ -230,7 +230,7 @@ function PlacementCard({
               ].map((fact, idx) => (
                 <div key={idx} className="flex gap-3 items-center">
                   <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                    <fact.icon className="h-6 w-6 text-slate-800" />
+                    <fact.icon className="h-6 w-6 text-slate-800" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-none mb-0.5">{fact.label}</h5>
@@ -264,7 +264,7 @@ function PlacementCard({
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-3 items-center">
                      <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                       <info.icon className="h-6 w-6 text-slate-800" />
+                       <info.icon className="h-6 w-6 text-slate-800" strokeWidth={1.5} />
                      </div>
                      <div className="min-w-0 flex-1">
                        <p className="text-[10px] font-bold text-slate-950 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
