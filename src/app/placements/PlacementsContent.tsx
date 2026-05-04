@@ -297,7 +297,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
             <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />            {/* Institutional Profile restored */}
             <div className="space-y-4">
-              <h4 className="text-[11px] font-bold text-slate-600 uppercase tracking-[0.2em]">Institutional profile</h4>
+              <h4 className="text-[11px] font-bold text-slate-950 uppercase tracking-[0.2em]">Institutional profile</h4>
               
               <div className="space-y-4">
                  {[
@@ -307,10 +307,10 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-3 items-center">
                      <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0">
-                       <info.icon className="h-4 w-4 text-slate-500" />
+                       <info.icon className="h-4 w-4 text-slate-800" />
                      </div>
                      <div className="min-w-0 flex-1">
-                       <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
+                       <p className="text-[10px] font-bold text-slate-950 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
                        {info.isLink ? (
                          <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-slate-800 dark:text-slate-200 hover:text-[#7A0012] flex items-center gap-1 truncate transition-colors">
                            {info.value}
