@@ -5,21 +5,52 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function sendApprovalEmail(to: string, companyName: string) {
   try {
     const { data, error } = await resend.emails.send({
-      from: "SIT Management System <notifications@resend.dev>", // Replace with verified domain in production
+      from: "SIT Management System <notifications@resend.dev>",
       to: [to],
-      subject: "Company Account Approved - SIT Management System",
+      subject: "INSTITUTIONAL NOTICE: Company Account Approved",
       html: `
-        <div style="font-family: sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
-          <h1 style="color: #0f172a; margin-top: 0; font-size: 24px;">Registration Approved</h1>
-          <p>Hello <strong>${companyName}</strong>,</p>
-          <p>We are pleased to inform you that your company account has been successfully verified and approved by the SIT Coordinator.</p>
-          <p>You can now log in to your dashboard to post industrial placement opportunities and manage your student applications.</p>
-          <div style="margin: 30px 0;">
-            <a href="${process.env.NEXTAUTH_URL}/login" style="background-color: #0f172a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: 500; display: inline-block;">Login to Dashboard</a>
+        <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 20px auto; padding: 40px; border: 1px solid #e2e8f0; background-color: #ffffff;">
+          <div style="border-top: 4px solid #0f172a; margin-bottom: 30px;"></div>
+          
+          <h1 style="color: #0f172a; margin-top: 0; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
+            Registration Approval Notice
+          </h1>
+          
+          <p style="font-size: 15px; margin-top: 25px;">
+            Attention: <strong>${companyName}</strong>
+          </p>
+          
+          <p style="font-size: 15px; color: #334155;">
+            This official communication confirms that your company profile has been reviewed and successfully verified by the SIT Coordination Office. Your organization is now authorized to participate in the Industrial Placement program.
+          </p>
+          
+          <p style="font-size: 15px; color: #334155;">
+            Authorized actions now available:
+          </p>
+          <ul style="font-size: 14px; color: #475569; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">Publish industrial placement opportunities</li>
+            <li style="margin-bottom: 8px;">Access student application registries</li>
+            <li style="margin-bottom: 8px;">Manage company representative credentials</li>
+          </ul>
+          
+          <div style="margin: 40px 0;">
+            <a href="${process.env.NEXTAUTH_URL}/login" style="background-color: #0f172a; color: #ffffff; padding: 14px 28px; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block;">
+              Access Institutional Portal
+            </a>
           </div>
-          <p style="font-size: 14px; color: #64748b;">If you have any questions, please contact the SIT Coordination Office.</p>
-          <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
-          <p style="font-size: 12px; color: #94a3b8; text-align: center;">&copy; ${new Date().getFullYear()} SIT Management System. All rights reserved.</p>
+          
+          <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 5px;">
+              SIT Coordination Office
+            </p>
+            <p style="font-size: 12px; color: #94a3b8;">
+              System Generated Notice | Please do not reply directly to this email.
+            </p>
+          </div>
+          
+          <p style="font-size: 11px; color: #cbd5e1; text-align: center; margin-top: 40px;">
+            &copy; ${new Date().getFullYear()} SIT MANAGEMENT SYSTEM. ALL RIGHTS RESERVED.
+          </p>
         </div>
       `,
     });
