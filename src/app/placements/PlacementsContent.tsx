@@ -85,7 +85,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
     >
       <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-white/5">
         {/* Left Column: Core Job Details */}
-        <div className="flex-1 p-6 md:p-10 space-y-8">
+        <div className="flex-1 p-6 md:p-10 space-y-5">
           {/* Header Section */}
           <div className="flex gap-6 items-start">
             <div className="flex-shrink-0">
@@ -144,14 +144,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
           {/* Responsibilities & Qualifications */}
           <div className="grid md:grid-cols-2 gap-10">
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
                   <ClipboardCheck className="h-4 w-4 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {post.responsibilities.slice(0, 3).map((res, i) => (
                   <li key={i} className="flex gap-3 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">
                     <span className="text-[#7A0012] font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-[#7A0012] shrink-0" />
@@ -161,14 +161,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </ul>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
                   <User className="h-4 w-4 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {post.requirements.slice(0, 3).map((req, i) => (
                   <li key={i} className="flex gap-3 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">
                     <span className="text-red-400 dark:text-red-600 font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
@@ -180,7 +180,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Metadata Bar Grounded */}
-          <div className="flex flex-wrap items-center justify-between gap-6 py-8 border-y border-slate-100 dark:border-white/5">
+          <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-y border-slate-100 dark:border-white/5">
             <div className="flex items-center gap-5 pr-8 border-r border-slate-100 dark:border-white/10">
                <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
                  <Calendar className="h-6 w-6 text-[#7A0012]" />
@@ -202,7 +202,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Card Footer Actions */}
-          <div className="flex flex-wrap items-center justify-between pt-6 gap-6">
+          <div className="flex flex-wrap items-center justify-between pt-3 gap-6">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsSaved(!isSaved)}
