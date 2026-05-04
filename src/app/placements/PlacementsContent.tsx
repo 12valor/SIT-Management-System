@@ -274,7 +274,7 @@ function PlacementCard({
                      <div className="min-w-0 flex-1">
                        <p className="text-[10px] font-bold text-slate-950 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
                        {info.isLink ? (
-                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-slate-800 dark:text-slate-200 hover:text-[#7A0012] flex items-center gap-1 truncate transition-colors">
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-[#7A0012] flex items-center gap-1 truncate transition-colors hover:opacity-80">
                            {info.value}
                            <ExternalLink className="h-3 w-3 shrink-0" />
                          </a>
