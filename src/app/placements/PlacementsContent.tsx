@@ -226,13 +226,29 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
               <div className="flex items-center gap-1.5 ml-4">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Share:</span>
-                {[LinkIcon, Facebook, Linkedin].map((Icon, idx) => (
-                  <button key={idx} className="w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all">
-                    <Icon className="h-3.5 w-3.5" />
-                  </button>
-                ))}
-                <button className="w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400">
-                  <MoreHorizontal className="h-3.5 w-3.5" />
+                <button 
+                  onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/placements?id=' + post.id)}`, '_blank')}
+                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
+                >
+                  <Facebook className="h-3.5 w-3.5" />
+                </button>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id);
+                    alert("Link copied! You can now share it on Instagram.");
+                  }}
+                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
+                >
+                  <Instagram className="h-3.5 w-3.5" />
+                </button>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id);
+                  }}
+                  className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
+                  title="Copy Link"
+                >
+                  <LinkIcon className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
@@ -247,8 +263,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
         {/* Right Column: Institutional Sidebar */}
         <div className="w-full lg:w-80 p-6 md:p-8 bg-slate-50/50 dark:bg-white/[0.01] space-y-8">
           {/* Status Box */}
-          <div className="flex gap-4 p-4 bg-white dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm">
-             <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0">
+          <div className="flex gap-4 p-4 bg-white dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm">
+             <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0">
                <Send className="h-5 w-5 text-emerald-600" />
              </div>
              <div>
@@ -266,7 +282,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               { icon: Calendar, label: "Posted", sub: format(new Date(post.postedAt), 'MMMM dd') },
             ].map((fact, idx) => (
               <div key={idx} className="flex gap-4">
-                <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-white/5">
+                <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-white/5">
                   <fact.icon className="h-4 w-4 text-slate-500" />
                 </div>
                 <div>
@@ -280,16 +296,12 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
 
           {/* Company Mini Profile */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-widest">About the company</h4>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
-              {post.company.description || "Leading institutional partner committed to excellence in student industrial training and development."}
-            </p>
             
-            <div className="space-y-4 pt-2">
+            <div className="space-y-4">
                {[
                  { icon: Building2, label: "Industry", value: post.company.industry },
-                 { icon: Users, label: "Company size", value: "51-200 employees" },
                  { icon: MapPin, label: "Headquarters", value: post.company.location },
                  { icon: Globe, label: "Website", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                ].map((info, idx) => (
