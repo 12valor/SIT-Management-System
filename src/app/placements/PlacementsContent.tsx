@@ -146,12 +146,14 @@ function PlacementCard({
 
           {/* Responsibilities & Qualifications */}
           <div className="grid md:grid-cols-2 gap-10">
-            <div className="flex gap-4">
-              <div className="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                <ClipboardCheck className="h-6 w-6 text-[#7A0012]" />
-              </div>
-              <div className="space-y-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-6 w-6 text-[#7A0012]" strokeWidth={1.5} />
+                </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
+              </div>
+              <div className="pl-12">
                 <ul className="space-y-2.5">
                   {post.responsibilities.map((res, i) => (
                     <li key={i} className="flex items-start gap-3 group">
@@ -163,12 +165,14 @@ function PlacementCard({
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                <User className="h-6 w-6 text-[#7A0012]" />
-              </div>
-              <div className="space-y-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                  <User className="h-6 w-6 text-[#7A0012]" strokeWidth={1.5} />
+                </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
+              </div>
+              <div className="pl-12">
                 <ul className="space-y-2.5">
                   {post.requirements.map((req, i) => (
                     <li key={i} className="flex items-start gap-3 group">
@@ -183,12 +187,14 @@ function PlacementCard({
 
           {/* Metadata Bar Grounded - Skills restored to full width */}
           <div className="py-4 border-t border-slate-100 dark:border-white/5">
-            <div className="flex gap-4">
-              <div className="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                <Tag className="h-6 w-6 text-[#7A0012]" />
-              </div>
-              <div className="space-y-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                  <Tag className="h-6 w-6 text-[#7A0012]" strokeWidth={1.5} />
+                </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
+              </div>
+              <div className="pl-12">
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag, idx) => (
                     <span 
