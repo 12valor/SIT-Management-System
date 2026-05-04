@@ -145,7 +145,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <ClipboardCheck className="h-5 w-5 text-[#7A0012]" />
+                  <ClipboardCheck className="h-6 w-6 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
               </div>
@@ -162,7 +162,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <User className="h-5 w-5 text-[#7A0012]" />
+                  <User className="h-6 w-6 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
               </div>
@@ -180,7 +180,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <Tag className="h-5 w-5 text-[#7A0012]" />
+                  <Tag className="h-6 w-6 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
               </div>
@@ -201,7 +201,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             {/* Status Section */}
             <div className="flex gap-3 items-center">
                <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                 <Send className="h-5 w-5 text-[#7A0012]" />
+                 <Send className="h-6 w-6 text-[#7A0012]" />
                </div>
                <div>
                  <h4 className="text-sm font-bold text-slate-950 dark:text-white leading-tight">Actively hiring</h4>
@@ -221,7 +221,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               ].map((fact, idx) => (
                 <div key={idx} className="flex gap-3 items-center">
                   <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                    <fact.icon className="h-5 w-5 text-slate-800" />
+                    <fact.icon className="h-6 w-6 text-slate-800" />
                   </div>
                   <div>
                     <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-none mb-0.5">{fact.label}</h5>
@@ -255,7 +255,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-3 items-center">
                      <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                       <info.icon className="h-5 w-5 text-slate-800" />
+                       <info.icon className="h-6 w-6 text-slate-800" />
                      </div>
                      <div className="min-w-0 flex-1">
                        <p className="text-[10px] font-bold text-slate-950 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
