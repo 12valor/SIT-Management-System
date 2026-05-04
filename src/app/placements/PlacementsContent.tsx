@@ -324,20 +324,12 @@ function PlacementCard({
                     <s.icon className="h-4 w-4" />
                   </button>
                 ))}
-                <button className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-slate-800">
-                  <MoreHorizontal className="h-4 w-4" />
-                </button>
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-8">
-          <button className="flex items-center gap-2 text-sm font-bold text-[#7A0012] hover:opacity-80 transition-all">
-             Report job
-             <Flag className="h-4 w-4" />
-          </button>
-
           <Link 
             href={`/login/student?redirect=/student/opportunities/${post.id}`} 
             className="group/btn relative w-full sm:w-64 h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98]"
