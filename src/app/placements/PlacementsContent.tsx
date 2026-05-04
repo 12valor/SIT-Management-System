@@ -336,8 +336,6 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="absolute inset-0 bg-[#5A000D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
         </Link>
       </div>
-    </motion.article>v>
-      </div>
     </motion.article>
   );
 }
