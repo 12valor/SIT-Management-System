@@ -431,10 +431,6 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
 
               {/* Action Group */}
               <div className="flex items-center gap-3 w-full lg:w-auto">
-                <button className="h-[52px] w-[52px] flex items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-500 hover:border-slate-300 transition-all">
-                  <Filter className="h-5 w-5" />
-                </button>
-                
                 <button 
                   onClick={() => setShowSavedOnly(!showSavedOnly)}
                   className={cn(
