@@ -181,13 +181,13 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                  <Calendar className="h-5 w-5 text-primary" />
                </div>
                <div>
-                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Compensation</p>
+                 <p className="text-[9px] font-medium text-slate-400 uppercase tracking-widest leading-none mb-1">Compensation</p>
                  <p className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tighter">Internship / OJT</p>
                </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mr-2">Core Skills</span>
+              <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-2">Core Skills</span>
               {post.tags.slice(0, 3).map(tag => (
                 <span key={tag} className="px-2 py-1 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded text-[9px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tight">
                   {tag}
@@ -221,7 +221,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </button>
 
               <div className="flex items-center gap-1.5 ml-4">
-                <span className="text-[11px] font-bold text-slate-400 font-sans mr-2">Share:</span>
+                <span className="text-[11px] font-medium text-slate-400 font-sans mr-2">Share:</span>
                 <button 
                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/placements?id=' + post.id)}`, '_blank')}
                   className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
@@ -248,7 +248,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </div>
             </div>
 
-            <button className="flex items-center gap-2 text-[11px] font-bold text-slate-400 hover:text-primary transition-all font-sans">
+            <button className="flex items-center gap-2 text-[11px] font-medium text-slate-400 hover:text-primary transition-all font-sans">
                Report registry entry
                <Flag className="h-3 w-3" />
             </button>
