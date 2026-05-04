@@ -279,7 +279,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   </div>
                   <div>
                     <h5 className="text-[13px] font-bold text-slate-900 dark:text-white leading-none mb-0.5">{fact.label}</h5>
-                    <p className="text-[11px] text-slate-500 leading-none">{fact.sub}</p>
+                    <p className="text-[11px] font-light text-slate-500 leading-none">{fact.sub}</p>
                   </div>
                 </div>
               ))}
@@ -299,7 +299,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
             {/* Institutional Profile restored */}
             <div className="space-y-4">
-              <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.2em]">Institutional profile</h4>
+              <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Institutional profile</h4>
               
               <div className="space-y-3.5">
                  {[
@@ -310,14 +310,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                    <div key={idx} className="flex gap-3">
                      <info.icon className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
                      <div className="min-w-0 flex-1">
-                       <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
+                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
                        {info.isLink ? (
-                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-medium text-slate-700 dark:text-slate-300 hover:text-[#9D0019] flex items-center gap-1 truncate transition-colors">
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-slate-700 dark:text-slate-300 hover:text-[#9D0019] flex items-center gap-1 truncate transition-colors">
                            {info.value}
                            <ExternalLink className="h-3 w-3 shrink-0" />
                          </a>
                        ) : (
-                         <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300 truncate tracking-tight">{info.value}</p>
+                         <p className="text-[13px] font-light text-slate-700 dark:text-slate-300 truncate tracking-tight">{info.value}</p>
                        )}
                      </div>
                    </div>
