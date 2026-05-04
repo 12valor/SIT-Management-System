@@ -258,14 +258,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
         {/* Right Column: Institutional Sidebar */}
         <div className="w-full lg:w-72 p-5 bg-slate-50/30 dark:bg-white/[0.01] flex flex-col">
           <div className="space-y-6 flex-1">
-            {/* Status Box */}
-            <div className="flex gap-4 p-4 bg-white dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm">
-               <div className="w-9 h-9 rounded-lg bg-primary/5 dark:bg-primary/10 flex items-center justify-center shrink-0">
-                 <Send className="h-4 w-4 text-primary" />
+            {/* Status Section - Integrated, not floating */}
+            <div className="flex gap-4 p-1">
+               <div className="w-8 h-8 rounded bg-primary/5 dark:bg-primary/10 flex items-center justify-center shrink-0 border border-primary/10">
+                 <Send className="h-3.5 w-3.5 text-primary" />
                </div>
                <div>
-                 <h4 className="text-[11px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">Actively hiring</h4>
-                 <p className="text-[9px] text-slate-500 uppercase tracking-widest mt-0.5 font-medium">Verified Placement</p>
+                 <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Registry Status</h4>
+                 <p className="text-[10px] text-primary uppercase tracking-[0.2em] mt-0.5 font-black">Actively Hiring</p>
                </div>
             </div>
 
