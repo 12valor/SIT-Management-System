@@ -149,11 +149,11 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
               </div>
-              <ul className="space-y-2">
-                {post.responsibilities.slice(0, 3).map((res, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">
-                    <span className="text-[#7A0012] font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-[#7A0012] shrink-0" />
-                    {res}
+              <ul className="space-y-2.5">
+                {post.responsibilities.map((res, i) => (
+                  <li key={i} className="flex items-start gap-3 group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
+                    <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{res}</span>
                   </li>
                 ))}
               </ul>
@@ -166,11 +166,11 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
               </div>
-              <ul className="space-y-2">
-                {post.requirements.slice(0, 3).map((req, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">
-                    <span className="text-red-400 dark:text-red-600 font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
-                    {req}
+              <ul className="space-y-2.5">
+                {post.requirements.map((req, i) => (
+                  <li key={i} className="flex items-start gap-3 group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
+                    <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{req}</span>
                   </li>
                 ))}
               </ul>
