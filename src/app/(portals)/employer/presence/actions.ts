@@ -31,11 +31,11 @@ export async function getCompanyPresence() {
 }
 
 export async function updateCompanyPresence(data: {
-  websiteUrl?: string;
-  facebookUrl?: string;
-  linkedinUrl?: string;
-  twitterUrl?: string;
-  instagramUrl?: string;
+  websiteUrl?: string | null;
+  facebookUrl?: string | null;
+  linkedinUrl?: string | null;
+  twitterUrl?: string | null;
+  instagramUrl?: string | null;
 }) {
   const session = await auth();
   if (!session?.user?.id) return { success: false, error: "Unauthorized" };
