@@ -181,13 +181,13 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                  <Calendar className="h-5 w-5 text-primary" />
                </div>
                <div>
-                 <p className="text-[9px] font-medium text-slate-400 uppercase tracking-widest leading-none mb-1">Compensation</p>
+                 <p className="text-[11px] font-medium text-slate-400 font-sans leading-none mb-1.5">Compensation</p>
                  <p className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tighter">Internship / OJT</p>
                </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-2">Core Skills</span>
+              <span className="text-[11px] font-medium text-slate-400 font-sans mr-2">Core skills</span>
               {post.tags.slice(0, 3).map(tag => (
                 <span key={tag} className="px-2 py-1 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded text-[9px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tight">
                   {tag}
