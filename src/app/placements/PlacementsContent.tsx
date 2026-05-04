@@ -16,7 +16,7 @@ import {
   Twitter, 
   Instagram, 
   Image as ImageIcon,
-  CheckCircle2,
+  BadgeCheck,
   ClipboardCheck,
   User,
   Calendar,
@@ -115,7 +115,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   </h3>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-lg font-bold text-slate-900 dark:text-slate-100">{post.company.name}</span>
-                    <CheckCircle2 className="h-4 w-4 text-[#7A0012] fill-[#7A0012]/10" />
+                    <BadgeCheck className="h-4 w-4 text-emerald-600" />
                   </div>
                   <div className="flex items-center gap-4 text-sm font-normal text-slate-700 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
