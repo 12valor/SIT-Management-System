@@ -178,9 +178,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 ))}
               </ul>
             </div>
-          </div>
-
-          {/* Metadata Bar Grounded */}
+          </div>          {/* Metadata Bar Grounded */}
           <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-y border-slate-100 dark:border-white/5">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
@@ -197,53 +195,6 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Card Footer Actions */}
-          <div className="flex flex-wrap items-center justify-between pt-3 gap-6">
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => setIsSaved(!isSaved)}
-                className={cn(
-                  "w-12 h-12 rounded-xl border transition-all flex items-center justify-center",
-                  isSaved 
-                    ? "bg-red-50 text-[#7A0012] border-[#7A0012]/20" 
-                    : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 hover:border-red-500/50"
-                )}
-              >
-                <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
-              </button>
-
-              <div className="flex items-center gap-4 ml-6">
-                <span className="text-sm font-bold text-slate-600">Share:</span>
-                <div className="flex items-center gap-2">
-                  {[
-                    { icon: LinkIcon, action: () => navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id) },
-                    { icon: Facebook, action: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/placements?id=' + post.id)}`, '_blank') },
-                    { icon: Instagram, action: () => {
-                      navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id);
-                      alert("Link copied for Instagram.");
-                    }}
-                  ].map((s, i) => (
-                    <button 
-                      key={i}
-                      onClick={s.action}
-                      className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-[#7A0012] hover:border-[#7A0012] transition-all"
-                    >
-                      <s.icon className="h-4 w-4" />
-                    </button>
-                  ))}
-                  <button className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-slate-800">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <button className="flex items-center gap-2 text-sm font-bold text-[#7A0012] hover:opacity-80 transition-all">
-               Report job
-               <Flag className="h-4 w-4" />
-            </button>
           </div>
         </div>
 
@@ -293,7 +244,9 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               )}
             </div>
 
-            <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />            {/* Institutional Profile restored */}
+            <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
+
+            {/* Institutional Profile restored */}
             <div className="space-y-4">
               <h4 className="text-[11px] font-bold text-slate-950 uppercase tracking-[0.2em]">Institutional profile</h4>
               
@@ -323,18 +276,67 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </div>
             </div>
           </div>
-
-          <Link 
-            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
-            className="group/btn relative w-full h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-red-500/20 mt-6"
-          >
-            <span className="relative z-10 flex items-center gap-2 uppercase tracking-widest">
-              APPLY NOW
-              <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
-            </span>
-            <div className="absolute inset-0 bg-[#5A000D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-          </Link>
         </div>
+      </div>
+
+      {/* Unified Card Footer actions */}
+      <div className="bg-slate-50/30 dark:bg-white/[0.01] border-t border-slate-100 dark:border-white/5 p-6 flex flex-wrap items-center justify-between gap-6">
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => setIsSaved(!isSaved)}
+            className={cn(
+              "w-12 h-12 rounded-xl border transition-all flex items-center justify-center",
+              isSaved 
+                ? "bg-red-50 text-[#7A0012] border-[#7A0012]/20" 
+                : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 hover:border-red-500/50"
+            )}
+          >
+            <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
+          </button>
+
+          <div className="flex items-center gap-4 ml-6">
+            <span className="text-sm font-bold text-slate-600">Share:</span>
+            <div className="flex items-center gap-2">
+              {[
+                { icon: LinkIcon, action: () => navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id) },
+                { icon: Facebook, action: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/placements?id=' + post.id)}`, '_blank') },
+                { icon: Instagram, action: () => {
+                  navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id);
+                  alert("Link copied for Instagram.");
+                }}
+              ].map((s, i) => (
+                <button 
+                  key={i}
+                  onClick={s.action}
+                  className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-[#7A0012] hover:border-[#7A0012] transition-all"
+                >
+                  <s.icon className="h-4 w-4" />
+                </button>
+              ))}
+              <button className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          <button className="flex items-center gap-2 text-sm font-bold text-[#7A0012] hover:opacity-80 transition-all ml-6">
+             Report job
+             <Flag className="h-4 w-4" />
+          </button>
+        </div>
+
+        <Link 
+          href={`/login/student?redirect=/student/opportunities/${post.id}`} 
+          className="group/btn relative w-full sm:w-64 h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-red-500/20"
+        >
+          <span className="relative z-10 flex items-center gap-2 uppercase tracking-widest">
+            APPLY NOW
+            <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
+          </span>
+          <div className="absolute inset-0 bg-[#5A000D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+        </Link>
+      </div>
+    </motion.article>v>
       </div>
     </motion.article>
   );
