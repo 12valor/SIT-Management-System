@@ -182,16 +182,6 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
           {/* Metadata Bar Grounded */}
           <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-y border-slate-100 dark:border-white/5">
-            <div className="flex items-center gap-5 pr-8 border-r border-slate-100 dark:border-white/10">
-               <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
-                 <Calendar className="h-6 w-6 text-[#7A0012]" />
-               </div>
-               <div>
-                 <p className="text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">Compensation</p>
-                 <p className="text-base font-bold text-slate-950 dark:text-white">Internship / OJT</p>
-               </div>
-            </div>
-
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-3">
                 <Tag className="h-4 w-4 text-[#7A0012]" />
