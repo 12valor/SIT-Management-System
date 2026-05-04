@@ -81,15 +81,15 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.98 }}
-      className="group bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-primary/5 transition-all duration-500"
+      className="group bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
     >
       <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-white/5">
         {/* Left Column: Core Job Details */}
-        <div className="flex-1 p-6 md:p-8 space-y-8">
+        <div className="flex-1 p-6 md:p-8 space-y-6">
           {/* Header Section */}
           <div className="flex gap-6">
             <div className="flex-shrink-0">
-              <div className="w-20 h-20 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+              <div className="w-20 h-20 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
                 {post.company.logoUrl ? (
                   <div className="relative w-full h-full">
                     <Image 
@@ -107,27 +107,27 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-4 mb-2">
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white leading-tight">
+              <div className="flex items-start justify-between gap-4 mb-1">
+                <h3 className="text-3xl font-serif font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
                   {post.title}
                 </h3>
-                <span className="shrink-0 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-emerald-100 dark:border-emerald-500/20">
+                <span className="shrink-0 px-2 py-1 bg-primary/5 dark:bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-md border border-primary/10">
                   {format(new Date(post.postedAt), 'MMM dd')}
                 </span>
               </div>
-              <div className="flex flex-wrap items-center gap-4 text-sm">
-                <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-medium">
+                <div className="flex items-center gap-1.5 text-slate-900 dark:text-white uppercase tracking-wider font-bold">
                   {post.company.name}
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500 fill-emerald-500/10" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 fill-blue-500/10" />
                 </div>
                 <span className="text-slate-300 dark:text-slate-700">•</span>
-                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-                  <MapPin className="h-4 w-4" />
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-serif">
+                  <MapPin className="h-4 w-4 text-slate-400" />
                   {post.location}
                 </div>
                 <span className="text-slate-300 dark:text-slate-700">•</span>
-                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-                  <Building2 className="h-4 w-4" />
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-serif">
+                  <Building2 className="h-4 w-4 text-slate-400" />
                   {post.type.replace('_', '-')}
                 </div>
               </div>
@@ -135,25 +135,23 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Description */}
-          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-serif max-w-2xl">
+          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-serif max-w-2xl italic">
             {post.description}
           </p>
 
           <div className="h-px bg-slate-100 dark:bg-white/5 w-full" />
 
           {/* Responsibilities & Qualifications */}
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
-                   <ClipboardCheck className="h-4 w-4 text-emerald-600" />
-                </div>
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest">Responsibilities</h4>
+              <div className="flex items-center gap-2">
+                <ClipboardCheck className="h-4 w-4 text-primary/60" />
+                <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Strategic Responsibilities</h4>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {post.responsibilities.slice(0, 3).map((res, i) => (
-                  <li key={i} className="flex gap-3 text-xs text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                    <span className="text-emerald-500 font-bold">•</span>
+                  <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                    <span className="text-primary font-bold">•</span>
                     {res}
                   </li>
                 ))}
@@ -161,16 +159,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-primary/5 dark:bg-primary/10 flex items-center justify-center">
-                   <User className="h-4 w-4 text-primary" />
-                </div>
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest">Qualifications</h4>
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-slate-400" />
+                <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Candidate Prerequisites</h4>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {post.requirements.slice(0, 3).map((req, i) => (
-                  <li key={i} className="flex gap-3 text-xs text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                    <span className="text-primary font-bold">•</span>
+                  <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                    <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
                     {req}
                   </li>
                 ))}
@@ -179,28 +175,28 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Skills & Compensation Bar */}
-          <div className="bg-slate-50 dark:bg-white/5 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-6 border border-slate-100 dark:border-white/10">
+          <div className="bg-slate-50/50 dark:bg-white/5 rounded-xl p-4 flex flex-wrap items-center justify-between gap-6 border border-slate-100 dark:border-white/10">
             <div className="flex items-center gap-4">
-               <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center">
-                 <Calendar className="h-5 w-5 text-emerald-500" />
+               <div className="w-10 h-10 rounded-lg bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center">
+                 <Calendar className="h-5 w-5 text-primary" />
                </div>
                <div>
-                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Compensation</p>
-                 <p className="text-xs font-bold text-slate-900 dark:text-white">Internship / OJT</p>
+                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Compensation</p>
+                 <p className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tighter">Internship / OJT</p>
                </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Skills</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mr-2">Core Skills</span>
               {post.tags.slice(0, 3).map(tag => (
-                <span key={tag} className="px-3 py-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                <span key={tag} className="px-2 py-1 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded text-[9px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tight">
                   {tag}
                 </span>
               ))}
               {post.posterUrl && (
                 <button 
                   onClick={() => onShowPoster(post.posterUrl!)}
-                  className="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 rounded-lg text-[10px] font-bold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 transition-all"
+                  className="px-2 py-1 bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded text-[9px] font-black text-primary uppercase tracking-widest hover:bg-primary/10 transition-all"
                 >
                   Visual Poster
                 </button>
@@ -209,28 +205,28 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Card Footer Actions */}
-          <div className="flex flex-wrap items-center justify-between pt-6 gap-6">
+          <div className="flex flex-wrap items-center justify-between pt-4 gap-6">
             <div className="flex items-center gap-2">
               <button 
                 onClick={() => setIsSaved(!isSaved)}
                 className={cn(
-                  "h-10 px-4 rounded-lg border transition-all flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest",
+                  "h-10 px-4 rounded-lg border transition-all flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em]",
                   isSaved 
                     ? "bg-primary text-white border-primary shadow-lg shadow-primary/20" 
                     : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-primary/50"
                 )}
               >
-                <Bookmark className={cn("h-4 w-4", isSaved && "fill-current")} />
-                {isSaved ? "Saved Job" : "Save Job"}
+                <Bookmark className={cn("h-3.5 w-3.5", isSaved && "fill-current")} />
+                {isSaved ? "Saved" : "Save job"}
               </button>
 
               <div className="flex items-center gap-1.5 ml-4">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Share:</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mr-2">Share:</span>
                 <button 
                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/placements?id=' + post.id)}`, '_blank')}
                   className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
                 >
-                  <Facebook className="h-3.5 w-3.5" />
+                  <Facebook className="h-3 w-3.5" />
                 </button>
                 <button 
                   onClick={() => {
@@ -246,82 +242,99 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                     navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id);
                   }}
                   className="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all"
-                  title="Copy Link"
                 >
                   <LinkIcon className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
 
-            <button className="flex items-center gap-2 text-[10px] font-bold text-slate-400 hover:text-primary transition-all uppercase tracking-[0.2em]">
-               Report Job
+            <button className="flex items-center gap-2 text-[9px] font-bold text-slate-400 hover:text-primary transition-all uppercase tracking-[0.3em]">
+               Report Registry Entry
                <Flag className="h-3 w-3" />
             </button>
           </div>
         </div>
 
         {/* Right Column: Institutional Sidebar */}
-        <div className="w-full lg:w-80 p-6 md:p-8 bg-slate-50/50 dark:bg-white/[0.01] space-y-8">
-          {/* Status Box */}
-          <div className="flex gap-4 p-4 bg-white dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm">
-             <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0">
-               <Send className="h-5 w-5 text-emerald-600" />
-             </div>
-             <div>
-               <h4 className="text-xs font-bold text-slate-900 dark:text-white">Actively hiring</h4>
-               <p className="text-[10px] text-slate-500 mt-0.5">Be one of the first applicants.</p>
-             </div>
-          </div>
+        <div className="w-full lg:w-72 p-5 bg-slate-50/30 dark:bg-white/[0.01] flex flex-col">
+          <div className="space-y-6 flex-1">
+            {/* Status Box */}
+            <div className="flex gap-4 p-4 bg-white dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm">
+               <div className="w-9 h-9 rounded-lg bg-primary/5 dark:bg-primary/10 flex items-center justify-center shrink-0">
+                 <Send className="h-4 w-4 text-primary" />
+               </div>
+               <div>
+                 <h4 className="text-[11px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">Actively hiring</h4>
+                 <p className="text-[9px] text-slate-500 uppercase tracking-widest mt-0.5 font-medium">Verified Placement</p>
+               </div>
+            </div>
 
-          {/* Quick Facts */}
-          <div className="space-y-6">
-            {[
-              { icon: Clock, label: `${post.requiredHours}H requirement`, sub: "Estimated commitment" },
-              { icon: Building2, label: "Work setup", sub: post.type.replace('_', '-') },
-              { icon: MapPin, label: "Location", sub: post.location },
-              { icon: Calendar, label: "Posted", sub: format(new Date(post.postedAt), 'MMMM dd') },
-            ].map((fact, idx) => (
-              <div key={idx} className="flex gap-4">
-                <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-white/5">
-                  <fact.icon className="h-4 w-4 text-slate-500" />
+            {/* Quick Facts */}
+            <div className="space-y-4 px-1">
+              {[
+                { icon: Clock, label: `${post.requiredHours}H total`, sub: "SIT Requirement" },
+                { icon: Building2, label: "Work setup", sub: post.type.replace('_', '-') },
+                { icon: MapPin, label: "Location", sub: post.location },
+                { icon: Calendar, label: "Registry Date", sub: format(new Date(post.postedAt), 'MMMM dd') },
+              ].map((fact, idx) => (
+                <div key={idx} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/30 dark:border-white/5">
+                    <fact.icon className="h-3.5 w-3.5 text-slate-400" />
+                  </div>
+                  <div>
+                    <h5 className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">{fact.label}</h5>
+                    <p className="text-[10px] text-slate-500 font-serif italic">{fact.sub}</p>
+                  </div>
                 </div>
-                <div>
-                  <h5 className="text-[11px] font-bold text-slate-900 dark:text-white leading-tight">{fact.label}</h5>
-                  <p className="text-[10px] text-slate-500 mt-0.5">{fact.sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
+            <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
 
-          {/* Company Mini Profile */}
-          <div className="space-y-6">
-            <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-widest">About the company</h4>
-            
-            <div className="space-y-4">
-               {[
-                 { icon: Building2, label: "Industry", value: post.company.industry },
-                 { icon: MapPin, label: "Headquarters", value: post.company.location },
-                 { icon: Globe, label: "Website", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
-               ].map((info, idx) => (
-                 <div key={idx} className="flex gap-4">
-                   <info.icon className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
-                   <div>
-                     <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
-                     {info.isLink ? (
-                       <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
-                         {info.value}
-                         <ExternalLink className="h-3 w-3" />
-                       </a>
-                     ) : (
-                       <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{info.value}</p>
-                     )}
+            {/* Company Mini Profile */}
+            <div className="space-y-5 px-1">
+              <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Institutional Profile</h4>
+              
+              <div className="space-y-4">
+                 {[
+                   { icon: Building2, label: "Industry", value: post.company.industry },
+                   { icon: MapPin, label: "Headquarters", value: post.company.location },
+                   { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
+                 ].map((info, idx) => (
+                   <div key={idx} className="flex gap-4">
+                     <info.icon className="h-3.5 w-3.5 text-slate-300 shrink-0 mt-0.5" />
+                     <div className="min-w-0 flex-1">
+                       <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
+                       {info.isLink ? (
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-primary hover:underline flex items-center gap-1 truncate">
+                           {info.value}
+                           <ExternalLink className="h-2.5 w-2.5 shrink-0" />
+                         </a>
+                       ) : (
+                         <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate">{info.value}</p>
+                       )}
+                     </div>
                    </div>
-                 </div>
-               ))}
+                 ))}
+              </div>
             </div>
           </div>
+
+          <Link 
+            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
+            className="group/btn relative w-full h-12 bg-primary text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-lg flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/20 mt-8"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              Apply
+              <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+            </span>
+            <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+          </Link>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
           <Link 
             href={`/login/student?redirect=/student/opportunities/${post.id}`} 
