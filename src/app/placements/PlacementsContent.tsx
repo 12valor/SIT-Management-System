@@ -101,7 +101,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                     />
                   </div>
                 ) : (
-                  <Building2 className="w-10 h-10 text-slate-300" strokeWidth={1.5} />
+                  <Building2 className="w-10 h-10 text-slate-400" strokeWidth={1.5} />
                 )}
               </div>
             </div>
@@ -109,26 +109,26 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             <div className="flex-1 min-w-0 pt-1">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-3xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-2">
+                  <h3 className="text-3xl font-bold text-slate-950 dark:text-white leading-tight tracking-tight mb-2">
                     {post.title}
                   </h3>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-lg font-medium text-slate-700 dark:text-slate-300">{post.company.name}</span>
-                    <CheckCircle2 className="h-4 w-4 text-[#9D0019] fill-[#9D0019]/10" />
+                    <span className="text-lg font-bold text-slate-900 dark:text-slate-100">{post.company.name}</span>
+                    <CheckCircle2 className="h-4 w-4 text-[#7A0012] fill-[#7A0012]/10" />
                   </div>
-                  <div className="flex items-center gap-4 text-sm font-normal text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-4 text-sm font-normal text-slate-700 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4 text-slate-400" />
+                      <MapPin className="h-4 w-4 text-slate-500" />
                       {post.location}
                     </div>
                     <span className="text-slate-300 dark:text-slate-700">•</span>
                     <div className="flex items-center gap-1.5">
-                      <Building2 className="h-4 w-4 text-slate-400" />
+                      <Building2 className="h-4 w-4 text-slate-500" />
                       {post.type.replace('_', '-')}
                     </div>
                   </div>
                 </div>
-                <span className="shrink-0 px-3 py-1 bg-red-50 dark:bg-red-500/10 text-[#9D0019] text-[10px] font-bold uppercase tracking-widest rounded-full border border-red-100 dark:border-red-500/20">
+                <span className="shrink-0 px-3 py-1 bg-red-50 dark:bg-red-500/10 text-[#7A0012] text-[10px] font-bold uppercase tracking-widest rounded-full border border-red-100 dark:border-red-500/20">
                   {format(new Date(post.postedAt), 'MMM dd')}
                 </span>
               </div>
@@ -136,7 +136,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Description */}
-          <p className="text-slate-500 dark:text-slate-400 text-[15px] leading-relaxed font-normal max-w-3xl">
+          <p className="text-slate-800 dark:text-slate-300 text-[15px] leading-relaxed font-normal max-w-3xl">
             {post.description}
           </p>
 
@@ -147,14 +147,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             <div className="space-y-5">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
-                  <ClipboardCheck className="h-4 w-4 text-[#9D0019]" />
+                  <ClipboardCheck className="h-4 w-4 text-[#7A0012]" />
                 </div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white">Responsibilities</h4>
+                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
               </div>
               <ul className="space-y-3">
                 {post.responsibilities.slice(0, 3).map((res, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    <span className="text-[#9D0019] font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-[#9D0019] shrink-0" />
+                  <li key={i} className="flex gap-3 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">
+                    <span className="text-[#7A0012] font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-[#7A0012] shrink-0" />
                     {res}
                   </li>
                 ))}
@@ -164,14 +164,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             <div className="space-y-5">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
-                  <User className="h-4 w-4 text-[#9D0019]" />
+                  <User className="h-4 w-4 text-[#7A0012]" />
                 </div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white">Qualifications</h4>
+                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
               </div>
               <ul className="space-y-3">
                 {post.requirements.slice(0, 3).map((req, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    <span className="text-red-300 dark:text-red-500 font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-red-300 shrink-0" />
+                  <li key={i} className="flex gap-3 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">
+                    <span className="text-red-400 dark:text-red-600 font-bold mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
                     {req}
                   </li>
                 ))}
@@ -183,18 +183,18 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="bg-white dark:bg-white/5 rounded-2xl p-6 flex flex-wrap items-center justify-between gap-6 border border-slate-100 dark:border-white/10 shadow-sm">
             <div className="flex items-center gap-5 pr-8 border-r border-slate-100 dark:border-white/10">
                <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
-                 <Calendar className="h-6 w-6 text-[#9D0019]" />
+                 <Calendar className="h-6 w-6 text-[#7A0012]" />
                </div>
                <div>
-                 <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Compensation</p>
-                 <p className="text-base font-bold text-slate-900 dark:text-white">Internship / OJT</p>
+                 <p className="text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">Compensation</p>
+                 <p className="text-base font-bold text-slate-950 dark:text-white">Internship / OJT</p>
                </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 flex-1">
-              <span className="text-sm font-medium text-slate-400 mr-2">Skills</span>
+              <span className="text-sm font-bold text-slate-600 mr-2">Skills</span>
               {post.tags.slice(0, 3).map(tag => (
-                <span key={tag} className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-full text-xs font-bold text-slate-600 dark:text-slate-400 tracking-tight">
+                <span key={tag} className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-full text-xs font-bold text-slate-800 dark:text-slate-200 tracking-tight">
                   {tag}
                 </span>
               ))}
@@ -209,15 +209,15 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 className={cn(
                   "w-12 h-12 rounded-xl border transition-all flex items-center justify-center",
                   isSaved 
-                    ? "bg-red-50 text-[#9D0019] border-[#9D0019]/20" 
-                    : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-400 hover:border-red-500/50"
+                    ? "bg-red-50 text-[#7A0012] border-[#7A0012]/20" 
+                    : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 hover:border-red-500/50"
                 )}
               >
                 <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
               </button>
 
               <div className="flex items-center gap-4 ml-6">
-                <span className="text-sm font-medium text-slate-400">Share:</span>
+                <span className="text-sm font-bold text-slate-600">Share:</span>
                 <div className="flex items-center gap-2">
                   {[
                     { icon: LinkIcon, action: () => navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id) },
@@ -230,19 +230,19 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                     <button 
                       key={i}
                       onClick={s.action}
-                      className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-[#9D0019] hover:border-[#9D0019] transition-all"
+                      className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-[#7A0012] hover:border-[#7A0012] transition-all"
                     >
                       <s.icon className="h-4 w-4" />
                     </button>
                   ))}
-                  <button className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-slate-600">
+                  <button className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-slate-800">
                     <MoreHorizontal className="h-4 w-4" />
                   </button>
                 </div>
               </div>
             </div>
 
-            <button className="flex items-center gap-2 text-sm font-bold text-[#9D0019] hover:opacity-80 transition-all">
+            <button className="flex items-center gap-2 text-sm font-bold text-[#7A0012] hover:opacity-80 transition-all">
                Report job
                <Flag className="h-4 w-4" />
             </button>
@@ -250,16 +250,16 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
         </div>
 
         {/* Right Column: Institutional Sidebar */}
-        <div className="w-full lg:w-80 p-6 bg-slate-50/20 dark:bg-white/[0.01] flex flex-col border-l border-slate-100 dark:border-white/5">
+        <div className="w-full lg:w-80 p-6 bg-slate-50/20 dark:bg-white/[0.01] flex flex-col border-l border-slate-100 dark:divide-white/5">
           <div className="space-y-4 flex-1">
             {/* Status Section */}
             <div className="flex gap-3 items-center">
                <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
-                 <Send className="h-4 w-4 text-[#9D0019]" />
+                 <Send className="h-4 w-4 text-[#7A0012]" />
                </div>
                <div>
-                 <h4 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Actively hiring</h4>
-                 <p className="text-[11px] text-slate-500 leading-tight">Be one of the first applicants.</p>
+                 <h4 className="text-sm font-bold text-slate-950 dark:text-white leading-tight">Actively hiring</h4>
+                 <p className="text-[11px] font-light text-slate-700 leading-tight">Be one of the first applicants.</p>
                </div>
             </div>
 
@@ -275,11 +275,11 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               ].map((fact, idx) => (
                 <div key={idx} className="flex gap-3 items-center">
                   <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0">
-                    <fact.icon className="h-4 w-4 text-slate-600" />
+                    <fact.icon className="h-4 w-4 text-slate-800" />
                   </div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 dark:text-white leading-none mb-0.5">{fact.label}</h5>
-                    <p className="text-[11px] font-light text-slate-500 leading-none">{fact.sub}</p>
+                    <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-none mb-0.5">{fact.label}</h5>
+                    <p className="text-[11px] font-light text-slate-700 leading-none">{fact.sub}</p>
                   </div>
                 </div>
               ))}
@@ -287,7 +287,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               {post.posterUrl && (
                 <button 
                   onClick={() => onShowPoster(post.posterUrl!)}
-                  className="w-full py-2.5 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-xl text-xs font-bold text-[#9D0019] flex items-center justify-center gap-2 hover:bg-red-100 transition-all mt-1"
+                  className="w-full py-2.5 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-xl text-xs font-bold text-[#7A0012] flex items-center justify-center gap-2 hover:bg-red-100 transition-all mt-1"
                 >
                   <ImageIcon className="h-4 w-4" />
                   View Visual Poster
@@ -299,7 +299,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
             {/* Institutional Profile restored */}
             <div className="space-y-4">
-              <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Institutional profile</h4>
+              <h4 className="text-[11px] font-bold text-slate-600 uppercase tracking-[0.2em]">Institutional profile</h4>
               
               <div className="space-y-3.5">
                  {[
@@ -308,16 +308,16 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                    { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-3">
-                     <info.icon className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
+                     <info.icon className="h-4 w-4 text-slate-700 shrink-0 mt-0.5" />
                      <div className="min-w-0 flex-1">
-                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
+                       <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest leading-none mb-1">{info.label}</p>
                        {info.isLink ? (
-                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-slate-700 dark:text-slate-300 hover:text-[#9D0019] flex items-center gap-1 truncate transition-colors">
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-slate-800 dark:text-slate-200 hover:text-[#7A0012] flex items-center gap-1 truncate transition-colors">
                            {info.value}
                            <ExternalLink className="h-3 w-3 shrink-0" />
                          </a>
                        ) : (
-                         <p className="text-[13px] font-light text-slate-700 dark:text-slate-300 truncate tracking-tight">{info.value}</p>
+                         <p className="text-[13px] font-light text-slate-800 dark:text-slate-200 truncate tracking-tight">{info.value}</p>
                        )}
                      </div>
                    </div>
@@ -328,13 +328,13 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
           <Link 
             href={`/login/student?redirect=/student/opportunities/${post.id}`} 
-            className="group/btn relative w-full h-12 bg-[#9D0019] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-red-500/20 mt-6"
+            className="group/btn relative w-full h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-red-500/20 mt-6"
           >
             <span className="relative z-10 flex items-center gap-2 uppercase tracking-widest">
               APPLY NOW
               <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
             </span>
-            <div className="absolute inset-0 bg-[#7A0012] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            <div className="absolute inset-0 bg-[#5A000D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
           </Link>
         </div>
       </div>
