@@ -122,7 +122,7 @@ export function PresenceForm({ initialData }: PresenceFormProps) {
                       type="url"
                       id={link.name}
                       name={link.name}
-                      value={(formData as any)[link.name] || ""}
+                      value={formData[link.name as keyof typeof formData] || ""}
                       onChange={handleChange}
                       placeholder={link.placeholder}
                       className="w-full h-11 px-4 rounded-xl bg-background border border-border text-sm font-medium transition-all focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none group-hover:border-primary/50"

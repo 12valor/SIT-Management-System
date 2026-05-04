@@ -8,12 +8,9 @@ import {
   Clock, 
   ArrowRight, 
   Building2, 
-  Filter, 
   X, 
   Globe, 
   Facebook, 
-  Linkedin, 
-  Twitter, 
   Instagram, 
   Image as ImageIcon,
   BadgeCheck,
@@ -22,10 +19,7 @@ import {
   Calendar,
   Bookmark,
   Link as LinkIcon,
-  MoreHorizontal,
-  Flag,
   Send,
-  Users,
   ExternalLink,
   Tag
 } from "lucide-react";
