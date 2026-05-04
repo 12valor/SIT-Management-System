@@ -252,66 +252,65 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                Report registry entry
                <Flag className="h-3 w-3" />
             </button>
-          </div>
         </div>
- 
+
         {/* Right Column: Institutional Sidebar */}
-        <div className="w-full lg:w-72 p-5 bg-slate-50/30 dark:bg-white/[0.01] flex flex-col">
-          <div className="space-y-8 flex-1">
-            {/* Status Section - Integrated, not floating */}
-            <div className="flex gap-4 p-1">
-               <div className="w-10 h-10 rounded bg-primary/5 dark:bg-primary/10 flex items-center justify-center shrink-0 border border-primary/10">
-                 <Send className="h-4 w-4 text-primary" />
+        <div className="w-full lg:w-72 p-5 bg-slate-50/30 dark:bg-white/[0.01] flex flex-col border-l border-slate-100 dark:border-white/5">
+          <div className="space-y-6 flex-1">
+            {/* Status Section - Compact */}
+            <div className="flex gap-3 p-1">
+               <div className="w-8 h-8 rounded bg-primary/5 dark:bg-primary/10 flex items-center justify-center shrink-0 border border-primary/10">
+                 <Send className="h-3.5 w-3.5 text-primary" />
                </div>
                <div>
-                 <h4 className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Registry status</h4>
-                 <p className="text-[12px] text-primary uppercase tracking-[0.2em] mt-0.5 font-black">Actively Hiring</p>
+                 <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none">Registry status</h4>
+                 <p className="text-[11px] text-primary uppercase tracking-widest mt-1 font-bold">Actively Hiring</p>
                </div>
             </div>
- 
+
             {/* Quick Facts */}
-            <div className="space-y-6 px-1">
+            <div className="space-y-4 px-1">
               {[
                 { icon: Clock, label: `${post.requiredHours}H total`, sub: "SIT Requirement" },
                 { icon: Building2, label: "Work setup", sub: post.type.replace('_', '-') },
                 { icon: MapPin, label: "Location", sub: post.location },
                 { icon: Calendar, label: "Registry Date", sub: format(new Date(post.postedAt), 'MMMM dd') },
               ].map((fact, idx) => (
-                <div key={idx} className="flex gap-4">
-                  <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/30 dark:border-white/5">
-                    <fact.icon className="h-4 w-4 text-slate-600" />
+                <div key={idx} className="flex gap-3">
+                  <div className="w-7 h-7 rounded bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/30 dark:border-white/5">
+                    <fact.icon className="h-3.5 w-3.5 text-slate-500" />
                   </div>
                   <div>
-                    <h5 className="text-[12px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">{fact.label}</h5>
-                    <p className="text-[12px] text-slate-500 font-sans">{fact.sub}</p>
+                    <h5 className="text-[11px] font-medium text-slate-400 uppercase tracking-tight leading-none">{fact.label}</h5>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 font-sans tracking-tight mt-0.5">{fact.sub}</p>
                   </div>
                 </div>
               ))}
             </div>
- 
+
             <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
- 
+
             {/* Company Mini Profile */}
-            <div className="space-y-6 px-1">
-              <h4 className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Institutional profile</h4>
+            <div className="space-y-4 px-1">
+              <h4 className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none">Institutional profile</h4>
               
-              <div className="space-y-5">
+              <div className="space-y-3.5">
                  {[
                    { icon: Building2, label: "Industry", value: post.company.industry },
                    { icon: MapPin, label: "Headquarters", value: post.company.location },
                    { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                  ].map((info, idx) => (
-                   <div key={idx} className="flex gap-4">
-                     <info.icon className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+                   <div key={idx} className="flex gap-3">
+                     <info.icon className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
                      <div className="min-w-0 flex-1">
-                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
+                       <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
                        {info.isLink ? (
-                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold text-primary hover:underline flex items-center gap-1 truncate font-sans">
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[11px] font-medium text-primary hover:underline flex items-center gap-1 truncate font-sans tracking-tight">
                            {info.value}
-                           <ExternalLink className="h-3 w-3 shrink-0" />
+                           <ExternalLink className="h-2.5 w-2.5 shrink-0" />
                          </a>
                        ) : (
-                         <p className="text-[12px] font-bold text-slate-700 dark:text-slate-300 truncate font-sans">{info.value}</p>
+                         <p className="text-[11px] font-medium text-slate-700 dark:text-slate-300 truncate font-sans tracking-tight">{info.value}</p>
                        )}
                      </div>
                    </div>
@@ -319,7 +318,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </div>
             </div>
           </div>
- 
+
           <Link 
             href={`/login/student?redirect=/student/opportunities/${post.id}`} 
             className="group/btn relative w-full h-14 bg-primary text-white text-[12px] font-black uppercase tracking-[0.3em] rounded-lg flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/20 mt-8"
