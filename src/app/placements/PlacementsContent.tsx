@@ -58,6 +58,7 @@ type Placement = {
     name: string;
     logoUrl: string | null;
     industry: string;
+    location: string;
     description: string | null;
     websiteUrl?: string | null;
     facebookUrl?: string | null;
