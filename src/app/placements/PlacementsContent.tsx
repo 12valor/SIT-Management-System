@@ -283,7 +283,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   </div>
                   <div>
                     <h5 className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">{fact.label}</h5>
-                    <p className="text-[10px] text-slate-500 font-serif italic">{fact.sub}</p>
+                    <p className="text-[10px] text-slate-500 font-serif">{fact.sub}</p>
                   </div>
                 </div>
               ))}
