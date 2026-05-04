@@ -142,54 +142,59 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
           {/* Responsibilities & Qualifications */}
           <div className="grid md:grid-cols-2 gap-10">
-            <div className="space-y-4">
-              <div className="flex flex-col items-start gap-2">
-                <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <ClipboardCheck className="h-6 w-6 text-[#7A0012]" />
-                </div>
-                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                <ClipboardCheck className="h-6 w-6 text-[#7A0012]" />
               </div>
-              <ul className="space-y-2.5">
-                {post.responsibilities.map((res, i) => (
-                  <li key={i} className="flex items-start gap-3 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
-                    <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{res}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="space-y-4">
+                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
+                <ul className="space-y-2.5">
+                  {post.responsibilities.map((res, i) => (
+                    <li key={i} className="flex items-start gap-3 group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
+                      <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{res}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex flex-col items-start gap-2">
-                <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <User className="h-6 w-6 text-[#7A0012]" />
-                </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                <User className="h-6 w-6 text-[#7A0012]" />
+              </div>
+              <div className="space-y-4">
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
+                <ul className="space-y-2.5">
+                  {post.requirements.map((req, i) => (
+                    <li key={i} className="flex items-start gap-3 group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
+                      <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{req}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-2.5">
-                {post.requirements.map((req, i) => (
-                  <li key={i} className="flex items-start gap-3 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
-                    <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{req}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
-          </div>          {/* Metadata Bar Grounded */}
-          <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-t border-slate-100 dark:border-white/5">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <Tag className="h-6 w-6 text-[#7A0012]" />
-                </div>
-                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
+          </div>
+
+          {/* Metadata Bar Grounded - Skills restored to full width */}
+          <div className="py-4 border-t border-slate-100 dark:border-white/5">
+            <div className="flex gap-4">
+              <div className="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                <Tag className="h-6 w-6 text-[#7A0012]" />
               </div>
-              <div className="flex flex-wrap gap-2">
-                {post.tags.slice(0, 3).map(tag => (
-                  <span key={tag} className="px-4 py-1.5 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-full text-xs font-bold text-slate-800 dark:text-slate-200 tracking-tight">
-                    {tag}
-                  </span>
-                ))}
+              <div className="space-y-4">
+                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag, idx) => (
+                    <span 
+                      key={idx}
+                      className="px-3 py-1 bg-slate-50 dark:bg-white/5 text-[15px] font-light text-slate-800 dark:text-slate-300 border border-slate-100 dark:border-white/10 rounded-full hover:border-[#7A0012]/30 transition-colors"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
