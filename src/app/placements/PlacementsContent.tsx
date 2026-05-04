@@ -135,37 +135,37 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           </div>
 
           {/* Description */}
-          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-serif max-w-2xl italic">
+          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-sans max-w-2xl">
             {post.description}
           </p>
-
+ 
           <div className="h-px bg-slate-100 dark:bg-white/5 w-full" />
-
+ 
           {/* Responsibilities & Qualifications */}
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <ClipboardCheck className="h-4 w-4 text-primary/60" />
-                <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Strategic Responsibilities</h4>
+                <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Strategic responsibilities</h4>
               </div>
               <ul className="space-y-2">
                 {post.responsibilities.slice(0, 3).map((res, i) => (
-                  <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                  <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
                     <span className="text-primary font-bold">•</span>
                     {res}
                   </li>
                 ))}
               </ul>
             </div>
-
+ 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4 text-slate-400" />
-                <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Candidate Prerequisites</h4>
+                <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Candidate prerequisites</h4>
               </div>
               <ul className="space-y-2">
                 {post.requirements.slice(0, 3).map((req, i) => (
-                  <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                  <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
                     <span className="text-slate-300 dark:text-slate-600 font-bold">•</span>
                     {req}
                   </li>
@@ -173,7 +173,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </ul>
             </div>
           </div>
-
+ 
           {/* Skills & Compensation Bar */}
           <div className="bg-slate-50/50 dark:bg-white/5 rounded-xl p-4 flex flex-wrap items-center justify-between gap-6 border border-slate-100 dark:border-white/10">
             <div className="flex items-center gap-4">
@@ -185,7 +185,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                  <p className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tighter">Internship / OJT</p>
                </div>
             </div>
-
+ 
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-[11px] font-medium text-slate-400 font-sans mr-2">Core skills</span>
               {post.tags.slice(0, 3).map(tag => (
@@ -203,7 +203,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               )}
             </div>
           </div>
-
+ 
           {/* Card Footer Actions */}
           <div className="flex flex-wrap items-center justify-between pt-4 gap-6">
             <div className="flex items-center gap-2">
@@ -219,7 +219,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 <Bookmark className={cn("h-3.5 w-3.5", isSaved && "fill-current")} />
                 {isSaved ? "Saved" : "Save job"}
               </button>
-
+ 
               <div className="flex items-center gap-1.5 ml-4">
                 <span className="text-[11px] font-medium text-slate-400 font-sans mr-2">Share:</span>
                 <button 
@@ -247,14 +247,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 </button>
               </div>
             </div>
-
+ 
             <button className="flex items-center gap-2 text-[11px] font-medium text-slate-400 hover:text-primary transition-all font-sans">
                Report registry entry
                <Flag className="h-3 w-3" />
             </button>
           </div>
         </div>
-
+ 
         {/* Right Column: Institutional Sidebar */}
         <div className="w-full lg:w-72 p-5 bg-slate-50/30 dark:bg-white/[0.01] flex flex-col">
           <div className="space-y-8 flex-1">
@@ -268,7 +268,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                  <p className="text-[12px] text-primary uppercase tracking-[0.2em] mt-0.5 font-black">Actively Hiring</p>
                </div>
             </div>
-
+ 
             {/* Quick Facts */}
             <div className="space-y-6 px-1">
               {[
@@ -283,14 +283,14 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   </div>
                   <div>
                     <h5 className="text-[12px] font-bold text-slate-900 dark:text-white uppercase tracking-tight">{fact.label}</h5>
-                    <p className="text-[12px] text-slate-500 font-serif">{fact.sub}</p>
+                    <p className="text-[12px] text-slate-500 font-sans">{fact.sub}</p>
                   </div>
                 </div>
               ))}
             </div>
-
+ 
             <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
-
+ 
             {/* Company Mini Profile */}
             <div className="space-y-6 px-1">
               <h4 className="text-[12px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Institutional profile</h4>
@@ -306,12 +306,12 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                      <div className="min-w-0 flex-1">
                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
                        {info.isLink ? (
-                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold text-primary hover:underline flex items-center gap-1 truncate">
+                         <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold text-primary hover:underline flex items-center gap-1 truncate font-sans">
                            {info.value}
                            <ExternalLink className="h-3 w-3 shrink-0" />
                          </a>
                        ) : (
-                         <p className="text-[12px] font-bold text-slate-700 dark:text-slate-300 truncate">{info.value}</p>
+                         <p className="text-[12px] font-bold text-slate-700 dark:text-slate-300 truncate font-sans">{info.value}</p>
                        )}
                      </div>
                    </div>
@@ -319,13 +319,13 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </div>
             </div>
           </div>
-
+ 
           <Link 
             href={`/login/student?redirect=/student/opportunities/${post.id}`} 
             className="group/btn relative w-full h-14 bg-primary text-white text-[12px] font-black uppercase tracking-[0.3em] rounded-lg flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/20 mt-8"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Apply now
+              APPLY NOW
               <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
             </span>
             <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
