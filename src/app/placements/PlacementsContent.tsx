@@ -1,11 +1,35 @@
-"use client";
-
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Clock, ArrowRight, Building2, Filter, X, Globe, Facebook, Linkedin, Twitter, Instagram, Image as ImageIcon } from "lucide-react";
+import { 
+  Search, 
+  MapPin, 
+  Clock, 
+  ArrowRight, 
+  Building2, 
+  Filter, 
+  X, 
+  Globe, 
+  Facebook, 
+  Linkedin, 
+  Twitter, 
+  Instagram, 
+  Image as ImageIcon,
+  CheckCircle2,
+  ClipboardCheck,
+  User,
+  Calendar,
+  Bookmark,
+  Link as LinkIcon,
+  MoreHorizontal,
+  Flag,
+  Send,
+  Users,
+  ExternalLink
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 15 },
@@ -37,6 +61,7 @@ type Placement = {
     name: string;
     logoUrl: string | null;
     industry: string;
+    description: string | null;
     websiteUrl?: string | null;
     facebookUrl?: string | null;
     linkedinUrl?: string | null;
@@ -44,6 +69,261 @@ type Placement = {
     instagramUrl?: string | null;
   };
 };
+
+function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: (url: string) => void }) {
+  const [isSaved, setIsSaved] = useState(false);
+
+  return (
+    <motion.article 
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      className="group bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-primary/5 transition-all duration-500"
+    >
+      <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-white/5">
+        {/* Left Column: Core Job Details */}
+        <div className="flex-1 p-6 md:p-8 space-y-8">
+          {/* Header Section */}
+          <div className="flex gap-6">
+            <div className="flex-shrink-0">
+              <div className="w-20 h-20 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+                {post.company.logoUrl ? (
+                  <div className="relative w-full h-full">
+                    <Image 
+                      src={post.company.logoUrl} 
+                      alt={post.company.name} 
+                      fill 
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <Building2 className="w-10 h-10 text-slate-300" strokeWidth={1.5} />
+                )}
+              </div>
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <h3 className="text-3xl font-bold text-slate-900 dark:text-white leading-tight">
+                  {post.title}
+                </h3>
+                <span className="shrink-0 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-emerald-100 dark:border-emerald-500/20">
+                  {format(new Date(post.postedAt), 'MMM dd')}
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 text-sm">
+                <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+                  {post.company.name}
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500 fill-emerald-500/10" />
+                </div>
+                <span className="text-slate-300 dark:text-slate-700">•</span>
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                  <MapPin className="h-4 w-4" />
+                  {post.location}
+                </div>
+                <span className="text-slate-300 dark:text-slate-700">•</span>
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                  <Building2 className="h-4 w-4" />
+                  {post.type.replace('_', '-')}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Description */}
+          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-serif max-w-2xl">
+            {post.description}
+          </p>
+
+          <div className="h-px bg-slate-100 dark:bg-white/5 w-full" />
+
+          {/* Responsibilities & Qualifications */}
+          <div className="grid md:grid-cols-2 gap-10">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
+                   <ClipboardCheck className="h-4 w-4 text-emerald-600" />
+                </div>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest">Responsibilities</h4>
+              </div>
+              <ul className="space-y-3">
+                {post.responsibilities.slice(0, 3).map((res, i) => (
+                  <li key={i} className="flex gap-3 text-xs text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    {res}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-primary/5 dark:bg-primary/10 flex items-center justify-center">
+                   <User className="h-4 w-4 text-primary" />
+                </div>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest">Qualifications</h4>
+              </div>
+              <ul className="space-y-3">
+                {post.requirements.slice(0, 3).map((req, i) => (
+                  <li key={i} className="flex gap-3 text-xs text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
+                    <span className="text-primary font-bold">•</span>
+                    {req}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Skills & Compensation Bar */}
+          <div className="bg-slate-50 dark:bg-white/5 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-6 border border-slate-100 dark:border-white/10">
+            <div className="flex items-center gap-4">
+               <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center">
+                 <Calendar className="h-5 w-5 text-emerald-500" />
+               </div>
+               <div>
+                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Compensation</p>
+                 <p className="text-xs font-bold text-slate-900 dark:text-white">Internship / OJT</p>
+               </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Skills</span>
+              {post.tags.slice(0, 3).map(tag => (
+                <span key={tag} className="px-3 py-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                  {tag}
+                </span>
+              ))}
+              {post.posterUrl && (
+                <button 
+                  onClick={() => onShowPoster(post.posterUrl!)}
+                  className="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 rounded-lg text-[10px] font-bold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 transition-all"
+                >
+                  Visual Poster
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Card Footer Actions */}
+          <div className="flex flex-wrap items-center justify-between pt-6 gap-6">
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setIsSaved(!isSaved)}
+                className={cn(
+                  "h-10 px-4 rounded-lg border transition-all flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest",
+                  isSaved 
+                    ? "bg-primary text-white border-primary shadow-lg shadow-primary/20" 
+                    : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-primary/50"
+                )}
+              >
+                <Bookmark className={cn("h-4 w-4", isSaved && "fill-current")} />
+                {isSaved ? "Saved Job" : "Save Job"}
+              </button>
+
+              <div className="flex items-center gap-1.5 ml-4">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Share:</span>
+                {[LinkIcon, Facebook, Linkedin].map((Icon, idx) => (
+                  <button key={idx} className="w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all">
+                    <Icon className="h-3.5 w-3.5" />
+                  </button>
+                ))}
+                <button className="w-8 h-8 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400">
+                  <MoreHorizontal className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+
+            <button className="flex items-center gap-2 text-[10px] font-bold text-slate-400 hover:text-primary transition-all uppercase tracking-[0.2em]">
+               Report Job
+               <Flag className="h-3 w-3" />
+            </button>
+          </div>
+        </div>
+
+        {/* Right Column: Institutional Sidebar */}
+        <div className="w-full lg:w-80 p-6 md:p-8 bg-slate-50/50 dark:bg-white/[0.01] space-y-8">
+          {/* Status Box */}
+          <div className="flex gap-4 p-4 bg-white dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/10 shadow-sm">
+             <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0">
+               <Send className="h-5 w-5 text-emerald-600" />
+             </div>
+             <div>
+               <h4 className="text-xs font-bold text-slate-900 dark:text-white">Actively hiring</h4>
+               <p className="text-[10px] text-slate-500 mt-0.5">Be one of the first applicants.</p>
+             </div>
+          </div>
+
+          {/* Quick Facts */}
+          <div className="space-y-6">
+            {[
+              { icon: Clock, label: `${post.requiredHours}H requirement`, sub: "Estimated commitment" },
+              { icon: Building2, label: "Work setup", sub: post.type.replace('_', '-') },
+              { icon: MapPin, label: "Location", sub: post.location },
+              { icon: Calendar, label: "Posted", sub: format(new Date(post.postedAt), 'MMMM dd') },
+            ].map((fact, idx) => (
+              <div key={idx} className="flex gap-4">
+                <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-white/5">
+                  <fact.icon className="h-4 w-4 text-slate-500" />
+                </div>
+                <div>
+                  <h5 className="text-[11px] font-bold text-slate-900 dark:text-white leading-tight">{fact.label}</h5>
+                  <p className="text-[10px] text-slate-500 mt-0.5">{fact.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
+
+          {/* Company Mini Profile */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-widest">About the company</h4>
+            <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-serif">
+              {post.company.description || "Leading institutional partner committed to excellence in student industrial training and development."}
+            </p>
+            
+            <div className="space-y-4 pt-2">
+               {[
+                 { icon: Building2, label: "Industry", value: post.company.industry },
+                 { icon: Users, label: "Company size", value: "51-200 employees" },
+                 { icon: MapPin, label: "Headquarters", value: post.company.location },
+                 { icon: Globe, label: "Website", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
+               ].map((info, idx) => (
+                 <div key={idx} className="flex gap-4">
+                   <info.icon className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
+                   <div>
+                     <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{info.label}</p>
+                     {info.isLink ? (
+                       <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
+                         {info.value}
+                         <ExternalLink className="h-3 w-3" />
+                       </a>
+                     ) : (
+                       <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{info.value}</p>
+                     )}
+                   </div>
+                 </div>
+               ))}
+            </div>
+          </div>
+
+          <Link 
+            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
+            className="group/btn relative w-full h-14 bg-primary text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-xl shadow-primary/20"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              Apply Now
+              <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
+            </span>
+            <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+          </Link>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,7 +344,7 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
   return (
     <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-48 pb-24 px-6 transition-colors duration-300">
       <motion.div 
-        className="container mx-auto max-w-5xl"
+        className="container mx-auto max-w-6xl"
         initial="initial"
         animate="animate"
         variants={staggerContainer}
@@ -125,202 +405,9 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
         <motion.section variants={fadeInUp} className="min-h-[400px]">
           <AnimatePresence mode="popLayout">
             {filteredPostings.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-10">
                 {filteredPostings.map((post) => (
-                  <motion.article 
-                    key={post.id}
-                    layout
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4 }}
-                    className="group bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-6 md:p-8 rounded-xl hover:border-primary/40 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500"
-                  >
-                    <div className="flex flex-col md:flex-row gap-6">
-                      {/* Company Logo Section */}
-                      <div className="flex-shrink-0">
-                        <div className="w-16 h-16 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden">
-                          {post.company.logoUrl ? (
-                            <div className="relative w-full h-full">
-                              <Image 
-                                src={post.company.logoUrl} 
-                                alt={post.company.name} 
-                                fill 
-                                className="object-cover"
-                                unoptimized
-                              />
-                            </div>
-                          ) : (
-                            <Building2 className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
-                          )}
-                        </div>
-                        {post.posterUrl && (
-                          <button 
-                            onClick={() => setSelectedPoster(post.posterUrl)}
-                            className="mt-4 w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[9px] font-bold uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 transition-all active:scale-95"
-                          >
-                            View Poster
-                          </button>
-                        )}
-                      </div>
-
-                      {/* Content Section */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors leading-tight mb-1">
-                              {post.title}
-                            </h3>
-                            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                              <span className="font-semibold hover:underline cursor-pointer">{post.company.name}</span>
-                              <span className="text-slate-300 dark:text-slate-700">•</span>
-                              <span className="flex items-center gap-1">
-                                <MapPin className="h-3 w-3" />
-                                {post.location}
-                              </span>
-                              <span className="text-slate-300 dark:text-slate-700">•</span>
-                              <span className="text-emerald-600 dark:text-emerald-400 font-medium">{post.type.replace('_', '-')}</span>
-                            </div>
-                          </div>
-                          
-                          <div className="flex flex-col items-end gap-3">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-full border border-slate-100 dark:border-white/5 h-fit">
-                              {format(new Date(post.postedAt), 'MMM dd')}
-                            </span>
-                            
-                            {/* Institutional Links */}
-                            <div className="flex items-center gap-2">
-                              {post.company.websiteUrl && (
-                                <a 
-                                  href={post.company.websiteUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-primary hover:border-primary/30 transition-all"
-                                  title="Visit Official Website"
-                                >
-                                  <Globe className="h-3.5 w-3.5" />
-                                </a>
-                              )}
-                              {post.company.linkedinUrl && (
-                                <a 
-                                  href={post.company.linkedinUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#0077b5] hover:border-[#0077b5]/30 transition-all"
-                                  title="LinkedIn Profile"
-                                >
-                                  <Linkedin className="h-3.5 w-3.5" />
-                                </a>
-                              )}
-                              {post.company.facebookUrl && (
-                                <a 
-                                  href={post.company.facebookUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#1877f2] hover:border-[#1877f2]/30 transition-all"
-                                  title="Facebook Page"
-                                >
-                                  <Facebook className="h-3.5 w-3.5" />
-                                </a>
-                              )}
-                              {post.company.twitterUrl && (
-                                <a 
-                                  href={post.company.twitterUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#1da1f2] hover:border-[#1da1f2]/30 transition-all"
-                                  title="X (Twitter) Profile"
-                                >
-                                  <Twitter className="h-3.5 w-3.5" />
-                                </a>
-                              )}
-                              {post.company.instagramUrl && (
-                                <a 
-                                  href={post.company.instagramUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-400 hover:text-[#e4405f] hover:border-[#e4405f]/30 transition-all"
-                                  title="Instagram Profile"
-                                >
-                                  <Instagram className="h-3.5 w-3.5" />
-                                </a>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Description Snippet */}
-                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 font-serif">
-                          {post.description}
-                        </p>
-
-                        {((post.requirements?.length || 0) > 0 || (post.responsibilities?.length || 0) > 0) && (
-                          <div className="grid md:grid-cols-2 gap-8 mb-8 p-6 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5">
-                            {(post.responsibilities?.length || 0) > 0 && (
-                              <div className="space-y-3">
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/70">Strategic Responsibilities</h4>
-                                <ul className="space-y-2">
-                                  {post.responsibilities?.map((res, i) => (
-                                    <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                                      <span className="text-primary mt-1">•</span>
-                                      {res}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            {(post.requirements?.length || 0) > 0 && (
-                              <div className="space-y-3">
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Candidate Prerequisites</h4>
-                                <ul className="space-y-2">
-                                  {post.requirements?.map((req, i) => (
-                                    <li key={i} className="flex gap-3 text-[11px] text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                                      <span className="text-slate-300 dark:text-slate-700 mt-1">•</span>
-                                      {req}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Footer / Meta Tags */}
-                        <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                          <div className="flex flex-wrap gap-2">
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-white/5 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-tight border border-slate-100 dark:border-white/10">
-                              <Clock className="h-3 w-3 text-primary/60" />
-                              {post.requiredHours}h Req.
-                            </div>
-                            {post.tags.slice(0, 3).map(tag => (
-                              <span key={tag} className="px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-full text-[10px] font-bold text-primary uppercase tracking-tight border border-primary/10">
-                                {tag}
-                              </span>
-                            ))}
-                            {post.posterUrl && (
-                              <button 
-                                onClick={() => setSelectedPoster(post.posterUrl)}
-                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-white/5 rounded-full text-[10px] font-black text-slate-500 uppercase tracking-widest border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-white/10 transition-all active:scale-95"
-                              >
-                                <ImageIcon className="h-3 w-3" /> Visual Poster
-                              </button>
-                            )}
-                          </div>
-
-                          <Link 
-                            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
-                            className="group/btn relative inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
-                          >
-                            <span className="relative z-10 flex items-center">
-                              Apply Now
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                            </span>
-                            <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.article>
+                  <PlacementCard key={post.id} post={post} onShowPoster={setSelectedPoster} />
                 ))}
               </div>
             ) : (
@@ -359,9 +446,6 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                 All placements listed are vetted by the TUPV Strategic Office. Students must formalize their application through the designated Student Portal. Direct contact with partners without portal authorization is prohibited.
               </p>
             </div>
-            <div className="flex flex-col md:items-end justify-center">
-              {/* Institutional markers removed per request */}
-            </div>
           </div>
         </motion.footer>
 
@@ -391,11 +475,9 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
                   unoptimized
                 />
                 
-                {/* Close Button Overlay */}
                 <button 
                   onClick={() => setSelectedPoster(null)}
                   className="fixed top-6 right-6 h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 z-[210] border border-white/20"
-                  title="Close Archive"
                 >
                   <X className="h-6 w-6" />
                 </button>

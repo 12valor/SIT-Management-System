@@ -23,6 +23,7 @@ export default async function PlacementsPage() {
           logoUrl: true, 
           industry: true,
           location: true,
+          description: true,
           websiteUrl: true,
           facebookUrl: true,
           linkedinUrl: true,
