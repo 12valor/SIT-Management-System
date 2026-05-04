@@ -245,7 +245,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
             {/* Institutional Profile restored */}
             <div className="space-y-4">
-              <h4 className="text-[11px] font-bold text-slate-950 uppercase tracking-[0.2em]">Institutional profile</h4>
+              <h4 className="text-[11px] font-bold text-slate-950 uppercase tracking-[0.2em]">Company profile</h4>
               
               <div className="space-y-4">
                  {[
