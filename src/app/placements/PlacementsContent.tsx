@@ -183,9 +183,11 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           {/* Metadata Bar Grounded */}
           <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-y border-slate-100 dark:border-white/5">
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-3">
-                <Tag className="h-4 w-4 text-[#7A0012]" />
-                <span className="text-sm font-bold text-slate-950 uppercase tracking-widest">Skills</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
+                  <Tag className="h-4 w-4 text-[#7A0012]" />
+                </div>
+                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
               </div>
               <div className="flex flex-wrap gap-2">
                 {post.tags.slice(0, 3).map(tag => (
