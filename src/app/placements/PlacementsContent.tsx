@@ -336,22 +336,6 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
   );
 }
 
-          <Link 
-            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
-            className="group/btn relative w-full h-14 bg-primary text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98] shadow-xl shadow-primary/20"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Apply Now
-              <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
-            </span>
-            <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-          </Link>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
 export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<string>("ALL");
