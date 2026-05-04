@@ -191,13 +191,18 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 flex-1">
-              <span className="text-sm font-bold text-slate-600 mr-2 uppercase tracking-widest">Skills</span>
-              {post.tags.slice(0, 3).map(tag => (
-                <span key={tag} className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-full text-xs font-bold text-slate-800 dark:text-slate-200 tracking-tight">
-                  {tag}
-                </span>
-              ))}
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <Tag className="h-4 w-4 text-[#7A0012]" />
+                <span className="text-sm font-bold text-slate-950 uppercase tracking-widest">Skills</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.slice(0, 3).map(tag => (
+                  <span key={tag} className="px-4 py-1.5 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-full text-xs font-bold text-slate-800 dark:text-slate-200 tracking-tight">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
