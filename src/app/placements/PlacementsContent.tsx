@@ -129,9 +129,6 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                     </div>
                   </div>
                 </div>
-                <span className="shrink-0 px-3 py-1 bg-red-50 dark:bg-red-500/10 text-[#7A0012] text-[10px] font-bold uppercase tracking-widest rounded-full border border-red-100 dark:border-red-500/20">
-                  {format(new Date(post.postedAt), 'MMM dd')}
-                </span>
               </div>
             </div>
           </div>
