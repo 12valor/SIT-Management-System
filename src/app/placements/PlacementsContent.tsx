@@ -252,6 +252,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                Report registry entry
                <Flag className="h-3 w-3" />
             </button>
+          </div>
         </div>
 
         {/* Right Column: Institutional Sidebar */}
