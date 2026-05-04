@@ -6581,6 +6581,11 @@ export namespace Prisma {
     location: string | null
     logoUrl: string | null
     bannerUrl: string | null
+    websiteUrl: string | null
+    facebookUrl: string | null
+    linkedinUrl: string | null
+    twitterUrl: string | null
+    instagramUrl: string | null
     slots: number | null
     isVerified: boolean | null
     joinedAt: Date | null
@@ -6596,6 +6601,11 @@ export namespace Prisma {
     location: string | null
     logoUrl: string | null
     bannerUrl: string | null
+    websiteUrl: string | null
+    facebookUrl: string | null
+    linkedinUrl: string | null
+    twitterUrl: string | null
+    instagramUrl: string | null
     slots: number | null
     isVerified: boolean | null
     joinedAt: Date | null
@@ -6611,6 +6621,11 @@ export namespace Prisma {
     location: number
     logoUrl: number
     bannerUrl: number
+    websiteUrl: number
+    facebookUrl: number
+    linkedinUrl: number
+    twitterUrl: number
+    instagramUrl: number
     slots: number
     isVerified: number
     joinedAt: number
@@ -6636,6 +6651,11 @@ export namespace Prisma {
     location?: true
     logoUrl?: true
     bannerUrl?: true
+    websiteUrl?: true
+    facebookUrl?: true
+    linkedinUrl?: true
+    twitterUrl?: true
+    instagramUrl?: true
     slots?: true
     isVerified?: true
     joinedAt?: true
@@ -6651,6 +6671,11 @@ export namespace Prisma {
     location?: true
     logoUrl?: true
     bannerUrl?: true
+    websiteUrl?: true
+    facebookUrl?: true
+    linkedinUrl?: true
+    twitterUrl?: true
+    instagramUrl?: true
     slots?: true
     isVerified?: true
     joinedAt?: true
@@ -6666,6 +6691,11 @@ export namespace Prisma {
     location?: true
     logoUrl?: true
     bannerUrl?: true
+    websiteUrl?: true
+    facebookUrl?: true
+    linkedinUrl?: true
+    twitterUrl?: true
+    instagramUrl?: true
     slots?: true
     isVerified?: true
     joinedAt?: true
@@ -6768,6 +6798,11 @@ export namespace Prisma {
     location: string | null
     logoUrl: string | null
     bannerUrl: string | null
+    websiteUrl: string | null
+    facebookUrl: string | null
+    linkedinUrl: string | null
+    twitterUrl: string | null
+    instagramUrl: string | null
     slots: number
     isVerified: boolean
     joinedAt: Date
@@ -6802,6 +6837,11 @@ export namespace Prisma {
     location?: boolean
     logoUrl?: boolean
     bannerUrl?: boolean
+    websiteUrl?: boolean
+    facebookUrl?: boolean
+    linkedinUrl?: boolean
+    twitterUrl?: boolean
+    instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
     joinedAt?: boolean
@@ -6820,6 +6860,11 @@ export namespace Prisma {
     location?: boolean
     logoUrl?: boolean
     bannerUrl?: boolean
+    websiteUrl?: boolean
+    facebookUrl?: boolean
+    linkedinUrl?: boolean
+    twitterUrl?: boolean
+    instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
     joinedAt?: boolean
@@ -6835,6 +6880,11 @@ export namespace Prisma {
     location?: boolean
     logoUrl?: boolean
     bannerUrl?: boolean
+    websiteUrl?: boolean
+    facebookUrl?: boolean
+    linkedinUrl?: boolean
+    twitterUrl?: boolean
+    instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
     joinedAt?: boolean
@@ -6850,13 +6900,18 @@ export namespace Prisma {
     location?: boolean
     logoUrl?: boolean
     bannerUrl?: boolean
+    websiteUrl?: boolean
+    facebookUrl?: boolean
+    linkedinUrl?: boolean
+    twitterUrl?: boolean
+    instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
     joinedAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "industry" | "description" | "location" | "logoUrl" | "bannerUrl" | "slots" | "isVerified" | "joinedAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "industry" | "description" | "location" | "logoUrl" | "bannerUrl" | "websiteUrl" | "facebookUrl" | "linkedinUrl" | "twitterUrl" | "instagramUrl" | "slots" | "isVerified" | "joinedAt" | "updatedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employers?: boolean | Company$employersArgs<ExtArgs>
     postings?: boolean | Company$postingsArgs<ExtArgs>
@@ -6880,6 +6935,11 @@ export namespace Prisma {
       location: string | null
       logoUrl: string | null
       bannerUrl: string | null
+      websiteUrl: string | null
+      facebookUrl: string | null
+      linkedinUrl: string | null
+      twitterUrl: string | null
+      instagramUrl: string | null
       slots: number
       isVerified: boolean
       joinedAt: Date
@@ -7317,6 +7377,11 @@ export namespace Prisma {
     readonly location: FieldRef<"Company", 'String'>
     readonly logoUrl: FieldRef<"Company", 'String'>
     readonly bannerUrl: FieldRef<"Company", 'String'>
+    readonly websiteUrl: FieldRef<"Company", 'String'>
+    readonly facebookUrl: FieldRef<"Company", 'String'>
+    readonly linkedinUrl: FieldRef<"Company", 'String'>
+    readonly twitterUrl: FieldRef<"Company", 'String'>
+    readonly instagramUrl: FieldRef<"Company", 'String'>
     readonly slots: FieldRef<"Company", 'Int'>
     readonly isVerified: FieldRef<"Company", 'Boolean'>
     readonly joinedAt: FieldRef<"Company", 'DateTime'>
@@ -14620,6 +14685,11 @@ export namespace Prisma {
     location: 'location',
     logoUrl: 'logoUrl',
     bannerUrl: 'bannerUrl',
+    websiteUrl: 'websiteUrl',
+    facebookUrl: 'facebookUrl',
+    linkedinUrl: 'linkedinUrl',
+    twitterUrl: 'twitterUrl',
+    instagramUrl: 'instagramUrl',
     slots: 'slots',
     isVerified: 'isVerified',
     joinedAt: 'joinedAt',
@@ -15199,6 +15269,11 @@ export namespace Prisma {
     location?: StringNullableFilter<"Company"> | string | null
     logoUrl?: StringNullableFilter<"Company"> | string | null
     bannerUrl?: StringNullableFilter<"Company"> | string | null
+    websiteUrl?: StringNullableFilter<"Company"> | string | null
+    facebookUrl?: StringNullableFilter<"Company"> | string | null
+    linkedinUrl?: StringNullableFilter<"Company"> | string | null
+    twitterUrl?: StringNullableFilter<"Company"> | string | null
+    instagramUrl?: StringNullableFilter<"Company"> | string | null
     slots?: IntFilter<"Company"> | number
     isVerified?: BoolFilter<"Company"> | boolean
     joinedAt?: DateTimeFilter<"Company"> | Date | string
@@ -15216,6 +15291,11 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     logoUrl?: SortOrderInput | SortOrder
     bannerUrl?: SortOrderInput | SortOrder
+    websiteUrl?: SortOrderInput | SortOrder
+    facebookUrl?: SortOrderInput | SortOrder
+    linkedinUrl?: SortOrderInput | SortOrder
+    twitterUrl?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
     joinedAt?: SortOrder
@@ -15236,6 +15316,11 @@ export namespace Prisma {
     location?: StringNullableFilter<"Company"> | string | null
     logoUrl?: StringNullableFilter<"Company"> | string | null
     bannerUrl?: StringNullableFilter<"Company"> | string | null
+    websiteUrl?: StringNullableFilter<"Company"> | string | null
+    facebookUrl?: StringNullableFilter<"Company"> | string | null
+    linkedinUrl?: StringNullableFilter<"Company"> | string | null
+    twitterUrl?: StringNullableFilter<"Company"> | string | null
+    instagramUrl?: StringNullableFilter<"Company"> | string | null
     slots?: IntFilter<"Company"> | number
     isVerified?: BoolFilter<"Company"> | boolean
     joinedAt?: DateTimeFilter<"Company"> | Date | string
@@ -15253,6 +15338,11 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     logoUrl?: SortOrderInput | SortOrder
     bannerUrl?: SortOrderInput | SortOrder
+    websiteUrl?: SortOrderInput | SortOrder
+    facebookUrl?: SortOrderInput | SortOrder
+    linkedinUrl?: SortOrderInput | SortOrder
+    twitterUrl?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
     joinedAt?: SortOrder
@@ -15276,6 +15366,11 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Company"> | string | null
     logoUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
     bannerUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    websiteUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    facebookUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    linkedinUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    twitterUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    instagramUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
     slots?: IntWithAggregatesFilter<"Company"> | number
     isVerified?: BoolWithAggregatesFilter<"Company"> | boolean
     joinedAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
@@ -16102,6 +16197,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -16119,6 +16219,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -16136,6 +16241,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16153,6 +16263,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16170,6 +16285,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -16185,6 +16305,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16200,6 +16325,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17172,6 +17302,11 @@ export namespace Prisma {
     location?: SortOrder
     logoUrl?: SortOrder
     bannerUrl?: SortOrder
+    websiteUrl?: SortOrder
+    facebookUrl?: SortOrder
+    linkedinUrl?: SortOrder
+    twitterUrl?: SortOrder
+    instagramUrl?: SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
     joinedAt?: SortOrder
@@ -17191,6 +17326,11 @@ export namespace Prisma {
     location?: SortOrder
     logoUrl?: SortOrder
     bannerUrl?: SortOrder
+    websiteUrl?: SortOrder
+    facebookUrl?: SortOrder
+    linkedinUrl?: SortOrder
+    twitterUrl?: SortOrder
+    instagramUrl?: SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
     joinedAt?: SortOrder
@@ -17206,6 +17346,11 @@ export namespace Prisma {
     location?: SortOrder
     logoUrl?: SortOrder
     bannerUrl?: SortOrder
+    websiteUrl?: SortOrder
+    facebookUrl?: SortOrder
+    linkedinUrl?: SortOrder
+    twitterUrl?: SortOrder
+    instagramUrl?: SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
     joinedAt?: SortOrder
@@ -18889,6 +19034,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -18905,6 +19055,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -19197,6 +19352,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19213,6 +19373,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19617,6 +19782,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -19633,6 +19803,11 @@ export namespace Prisma {
     location?: string | null
     logoUrl?: string | null
     bannerUrl?: string | null
+    websiteUrl?: string | null
+    facebookUrl?: string | null
+    linkedinUrl?: string | null
+    twitterUrl?: string | null
+    instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
     joinedAt?: Date | string
@@ -19748,6 +19923,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19764,6 +19944,11 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    websiteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedinUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string

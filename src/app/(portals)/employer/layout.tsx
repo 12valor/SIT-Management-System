@@ -11,7 +11,8 @@ import {
   Users, 
   LogOut,
   X,
-  Star
+  Star,
+  Globe
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -40,6 +41,7 @@ export default function EmployerLayout({
     { name: "Industrial Postings", href: "/employer/postings", icon: ClipboardList },
     { name: "Trainee Applicants", href: "/employer/applicants", icon: Users },
     { name: "Performance Audit", href: "/employer/evaluations", icon: Star },
+    { name: "Institutional Presence", href: "/employer/presence", icon: Globe },
   ];
 
 

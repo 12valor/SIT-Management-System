@@ -31,6 +31,11 @@ export async function getEmployerDashboardData() {
     take: 8,
   });
 
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: { company: true },
+  });
+
   return {
     success: true,
     data: {
@@ -39,6 +44,14 @@ export async function getEmployerDashboardData() {
       pendingApplicants,
       hiredCount,
       recentApplications,
+      company: user?.company ? {
+        name: user.company.name,
+        websiteUrl: user.company.websiteUrl,
+        facebookUrl: user.company.facebookUrl,
+        linkedinUrl: user.company.linkedinUrl,
+        twitterUrl: user.company.twitterUrl,
+        instagramUrl: user.company.instagramUrl,
+      } : null,
     },
   };
 }

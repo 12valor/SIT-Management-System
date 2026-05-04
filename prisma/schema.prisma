@@ -118,6 +118,11 @@ model Company {
   location    String?
   logoUrl     String?
   bannerUrl   String?
+  websiteUrl  String?
+  facebookUrl String?
+  linkedinUrl String?
+  twitterUrl  String?
+  instagramUrl String?
   slots       Int      @default(0)
   isVerified  Boolean  @default(false)
   joinedAt    DateTime @default(now())

@@ -3,7 +3,16 @@
 import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Calendar, Building2, ChevronRight } from "lucide-react";
+import { 
+  Calendar, 
+  Building2, 
+  ChevronRight, 
+  Globe, 
+  Facebook, 
+  Linkedin, 
+  Twitter, 
+  Instagram 
+} from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface RecentApplication {
@@ -19,6 +28,14 @@ interface EmployerDashboardData {
   pendingApplicants: number;
   hiredCount: number;
   recentApplications: RecentApplication[];
+  company: {
+    name: string;
+    websiteUrl: string | null;
+    facebookUrl: string | null;
+    linkedinUrl: string | null;
+    twitterUrl: string | null;
+    instagramUrl: string | null;
+  } | null;
 }
 
 interface Props {
@@ -167,6 +184,36 @@ export function EmployerDashboardShell({ data, userName }: Props) {
                 className="flex h-11 w-full items-center justify-center rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-colors"
               >
                 Manage Postings
+              </Link>
+            </div>
+
+            <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                  <Globe className="h-5 w-5" data-no-skeleton />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-foreground uppercase tracking-widest">Institutional Presence</h4>
+                  <p className="text-[10px] text-muted-foreground font-medium">Digital Footprint</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-2 mb-4">
+                {data?.company?.websiteUrl && <Globe className="h-4 w-4 text-muted-foreground/60" />}
+                {data?.company?.facebookUrl && <Facebook className="h-4 w-4 text-muted-foreground/60" />}
+                {data?.company?.linkedinUrl && <Linkedin className="h-4 w-4 text-muted-foreground/60" />}
+                {data?.company?.twitterUrl && <Twitter className="h-4 w-4 text-muted-foreground/60" />}
+                {data?.company?.instagramUrl && <Instagram className="h-4 w-4 text-muted-foreground/60" />}
+                {(!data?.company || (!data.company.websiteUrl && !data.company.facebookUrl && !data.company.linkedinUrl && !data.company.twitterUrl && !data.company.instagramUrl)) && (
+                  <span className="text-[10px] text-muted-foreground font-medium italic">No links configured</span>
+                )}
+              </div>
+
+              <p className="text-[11px] text-muted-foreground leading-relaxed mb-4">
+                Your digital presence helps students learn more about your company culture and values.
+              </p>
+              <Link href="/employer/presence" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                Manage Presence <ChevronRight className="h-3 w-3" data-no-skeleton />
               </Link>
             </div>
 
