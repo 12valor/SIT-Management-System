@@ -115,7 +115,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                   </h3>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-lg font-bold text-slate-900 dark:text-slate-100">{post.company.name}</span>
-                    <BadgeCheck className="h-4 w-4 text-[#7A0012] fill-[#7A0012]" />
+                    <BadgeCheck className="h-4 w-4 text-white fill-[#7A0012]" />
                   </div>
                   <div className="flex items-center gap-4 text-sm font-normal text-slate-700 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
