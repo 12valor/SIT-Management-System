@@ -144,8 +144,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-100 dark:border-red-500/20">
-                  <ClipboardCheck className="h-4 w-4 text-[#7A0012]" />
+                <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-5 w-5 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
               </div>
@@ -161,8 +161,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-100 dark:border-red-500/20">
-                  <User className="h-4 w-4 text-[#7A0012]" />
+                <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                  <User className="h-5 w-5 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
               </div>
@@ -179,8 +179,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-t border-slate-100 dark:border-white/5">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-100 dark:border-red-500/20">
-                  <Tag className="h-4 w-4 text-[#7A0012]" />
+                <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                  <Tag className="h-5 w-5 text-[#7A0012]" />
                 </div>
                 <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
               </div>
@@ -200,8 +200,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           <div className="space-y-4 flex-1">
             {/* Status Section */}
             <div className="flex gap-3 items-center">
-               <div className="w-10 h-10 rounded-full border border-red-100 dark:border-red-500/20 flex items-center justify-center shrink-0">
-                 <Send className="h-4 w-4 text-[#7A0012]" />
+               <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                 <Send className="h-5 w-5 text-[#7A0012]" />
                </div>
                <div>
                  <h4 className="text-sm font-bold text-slate-950 dark:text-white leading-tight">Actively hiring</h4>
@@ -220,8 +220,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                 { icon: Calendar, label: "Posted", sub: format(new Date(post.postedAt), 'MMMM dd') },
               ].map((fact, idx) => (
                 <div key={idx} className="flex gap-3 items-center">
-                  <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0">
-                    <fact.icon className="h-4 w-4 text-slate-800" />
+                  <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                    <fact.icon className="h-5 w-5 text-slate-800" />
                   </div>
                   <div>
                     <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-none mb-0.5">{fact.label}</h5>
@@ -254,8 +254,8 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
                    { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-3 items-center">
-                     <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0">
-                       <info.icon className="h-4 w-4 text-slate-800" />
+                     <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                       <info.icon className="h-5 w-5 text-slate-800" />
                      </div>
                      <div className="min-w-0 flex-1">
                        <p className="text-[10px] font-bold text-slate-950 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
