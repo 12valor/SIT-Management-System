@@ -179,7 +179,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
               </ul>
             </div>
           </div>          {/* Metadata Bar Grounded */}
-          <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-y border-slate-100 dark:border-white/5">
+          <div className="flex flex-wrap items-center justify-between gap-6 py-4 border-t border-slate-100 dark:border-white/5">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
