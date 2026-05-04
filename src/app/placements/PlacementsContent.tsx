@@ -143,7 +143,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
           {/* Responsibilities & Qualifications */}
           <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-start gap-2">
                 <div className="w-8 h-8 flex items-center justify-center shrink-0">
                   <ClipboardCheck className="h-6 w-6 text-[#7A0012]" />
                 </div>
@@ -160,7 +160,7 @@ function PlacementCard({ post, onShowPoster }: { post: Placement, onShowPoster: 
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-start gap-2">
                 <div className="w-8 h-8 flex items-center justify-center shrink-0">
                   <User className="h-6 w-6 text-[#7A0012]" />
                 </div>
