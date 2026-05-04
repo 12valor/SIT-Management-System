@@ -51,6 +51,7 @@ export async function registerEmployer(formData: FormData) {
           industry,
           description: formData.get("description") as string | null,
           location: location,
+          websiteUrl: formData.get("websiteUrl") as string | null,
           logoUrl: (logo as unknown) instanceof File ? null : logo,
           bannerUrl: (banner as unknown) instanceof File ? null : banner,
           isVerified: false,

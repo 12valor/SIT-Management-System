@@ -54,51 +54,66 @@ export function PresenceForm({ initialData }: PresenceFormProps) {
     }
   };
 
-  const socialLinks = [
-    { name: "websiteUrl", label: "Official Website", icon: Globe, placeholder: "https://yourcompany.com" },
-    { name: "facebookUrl", label: "Facebook Page", icon: Facebook, placeholder: "https://facebook.com/yourcompany" },
-    { name: "linkedinUrl", label: "LinkedIn Profile", icon: Linkedin, placeholder: "https://linkedin.com/company/yourcompany" },
-    { name: "twitterUrl", label: "X (Twitter) Profile", icon: Twitter, placeholder: "https://x.com/yourcompany" },
-    { name: "instagramUrl", label: "Instagram Profile", icon: Instagram, placeholder: "https://instagram.com/yourcompany" },
-  ];
-
-  return (
-    <div className="max-w-3xl">
-      <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
-        <div className="px-8 py-6 border-b border-border bg-muted/30">
-          <h3 className="text-sm font-bold text-foreground uppercase tracking-widest">Connect with Trainees</h3>
-          <p className="text-[11px] text-muted-foreground font-medium mt-1">
-            Manage your institution&apos;s digital footprint to help students learn more about your culture.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          <div className="grid gap-6">
-            {socialLinks.map((link) => (
-              <div key={link.name} className="space-y-2">
-                <label 
-                  htmlFor={link.name}
-                  className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.15em] ml-1 flex items-center gap-2"
-                >
-                  <link.icon className="h-3 w-3 text-primary/60" />
-                  {link.label}
-                </label>
-                <div className="relative group">
-                  <input
-                    type="url"
-                    id={link.name}
-                    name={link.name}
-                    value={(formData as any)[link.name] || ""}
-                    onChange={handleChange}
-                    placeholder={link.placeholder}
-                    className="w-full h-12 px-4 rounded-xl bg-background border border-border text-sm font-medium transition-all focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none group-hover:border-primary/50"
-                  />
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none">
-                    <link.icon className="h-4 w-4 text-primary/20" />
-                  </div>
+        <form onSubmit={handleSubmit} className="p-8 space-y-8">
+          {/* Primary Institutional Link */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.2em] flex items-center gap-2">
+               <Globe className="h-3 w-3" />
+               Institutional Foundation
+            </h4>
+            <div className="space-y-2">
+              <label 
+                htmlFor="websiteUrl"
+                className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1"
+              >
+                Official Website
+              </label>
+              <div className="relative group">
+                <input
+                  type="url"
+                  id="websiteUrl"
+                  name="websiteUrl"
+                  value={formData.websiteUrl || ""}
+                  onChange={handleChange}
+                  placeholder="https://yourcompany.com"
+                  className="w-full h-14 px-5 rounded-xl bg-background border-2 border-border text-base font-bold transition-all focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none group-hover:border-primary/30"
+                />
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 text-muted-foreground/30 group-focus-within:text-primary transition-colors">
+                  <Globe className="h-5 w-5" />
                 </div>
               </div>
-            ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] flex items-center gap-2 pt-4">
+               <Facebook className="h-3 w-3" />
+               Social Ecosystem
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {socialLinks.map((link) => (
+                <div key={link.name} className="space-y-2">
+                  <label 
+                    htmlFor={link.name}
+                    className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1 flex items-center gap-2"
+                  >
+                    <link.icon className="h-3 w-3 text-muted-foreground/40" />
+                    {link.label}
+                  </label>
+                  <div className="relative group">
+                    <input
+                      type="url"
+                      id={link.name}
+                      name={link.name}
+                      value={(formData as any)[link.name] || ""}
+                      onChange={handleChange}
+                      placeholder={link.placeholder}
+                      className="w-full h-11 px-4 rounded-xl bg-background border border-border text-sm font-medium transition-all focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none group-hover:border-primary/50"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border mt-8">

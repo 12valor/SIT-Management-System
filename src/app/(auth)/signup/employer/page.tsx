@@ -309,6 +309,19 @@ export default function EmployerSignupPage() {
                       className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
                     />
                   </div>
+
+                  <div className="md:col-span-2 space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center justify-between h-4">
+                      Official Website
+                      <span className="text-[9px] text-slate-400 font-normal lowercase tracking-normal font-serif">(Institutional Presence)</span>
+                    </label>
+                    <input
+                      name="websiteUrl"
+                      type="url"
+                      placeholder="https://yourcompany.com"
+                      className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
+                    />
+                  </div>
                   
                   <div className="md:col-span-2 space-y-1.5">
                     <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
