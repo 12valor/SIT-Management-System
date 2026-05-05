@@ -25,10 +25,10 @@ export function Footer() {
         ? "bg-white dark:bg-[#050505] border-slate-200 dark:border-white/5" 
         : "bg-[#F8F9FA] dark:bg-white/[0.02] border-slate-200 dark:border-white/5"
     }`}>
-      <div className="mx-auto px-6 md:px-12 lg:px-20 w-full max-w-[1600px]">
-        <div className="flex flex-col lg:flex-row gap-20 lg:gap-32 mb-16">
+      <div className="mx-auto px-6 md:px-10 lg:px-12 w-full">
+        <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24 mb-16">
           {/* BRAND COLUMN */}
-          <div className="flex flex-col gap-8 lg:w-[30%]">
+          <div className="flex flex-col gap-8 lg:w-[28%]">
             <div className="flex items-center gap-5">
               <Image 
                 src="/Technological_University_of_the_Philippines_Seal.svg.png" 
