@@ -32,8 +32,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #f4f4f5;
-  background-image: linear-gradient(135deg, #ef4444 0%, #450a0a 100%);
+  background-color: #991b1b;
+  border: 2.5px solid white;
   transition: .4s;
   border-radius: 30px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -58,14 +58,14 @@
 
 input:checked + .slider {
   background-color: #1a1a1a;
-  background-image: none;
+  border: 2.5px solid white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 input:checked + .slider:before {
   left: calc(100% - (var(--size-of-icon,1em) + var(--slider-offset,0.2em)));
-  background: #1a1a1a;
-  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+  background: white;
+  border: 1.5px solid #1a1a1a;
 }
 
 .tooltip {
@@ -74,8 +74,8 @@ input:checked + .slider:before {
   right: calc(100% + 12px);
   transform: translateY(-50%);
   opacity: 0;
-  background-color: #ffe53b;
-  background-image: linear-gradient(135deg, #ef4444 0%, #450a0a 100%);
+  background-color: #991b1b;
+  border: 2px solid white;
   color: white;
   padding: 5px 12px;
   border-radius: 5px;
@@ -101,8 +101,10 @@ input:checked + .slider:before {
   content: "";
   width: 8px;
   height: 8px;
-  background-color: #450a0a;
+  background-color: #991b1b;
   top: 50%;
   right: -4px;
   transform: translateY(-50%) rotate(45deg);
+  border-right: 2px solid white;
+  border-top: 2px solid white;
 }
