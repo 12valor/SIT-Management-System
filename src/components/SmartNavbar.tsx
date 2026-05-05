@@ -11,6 +11,7 @@ export function SmartNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,11 +39,22 @@ export function SmartNavbar() {
     <>
       <header className={`fixed top-0 w-full z-50 flex flex-col transition-all duration-300 ${scrolled ? "bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-white dark:bg-[#050505]"}`}>
         {/* Top Announcement Banner */}
-        <div className="bg-primary text-white py-2 px-4 flex justify-center items-center gap-3 text-[11px] md:text-xs text-center relative z-20">
-          <span className="hover:underline cursor-pointer font-medium transition-all text-white/90 hover:text-white">
-            Simplify your institutional training with a unified platform
-          </span>
-        </div>
+        {showBanner && (
+          <div className="bg-primary text-white py-2 px-6 flex justify-between items-center text-[11px] md:text-xs relative z-20">
+            <div className="flex-1 flex justify-center">
+              <span className="hover:underline cursor-pointer font-medium transition-all text-white/90 hover:text-white">
+                Simplify your institutional training with a unified platform
+              </span>
+            </div>
+            <button 
+              onClick={() => setShowBanner(false)}
+              className="p-1 hover:bg-white/10 rounded-full transition-colors"
+              aria-label="Dismiss announcement"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        )}
 
         {/* Main Navigation */}
         <div className={`bg-white dark:bg-[#050505] border-b border-border/40 transition-all duration-300 relative z-10 ${scrolled ? "py-1" : "py-0"}`}>
