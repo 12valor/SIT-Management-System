@@ -63,10 +63,10 @@ export function Footer() {
           {/* VERTICAL DIVIDER */}
           <div className="hidden lg:block w-[1px] bg-slate-200 dark:bg-white/10 self-stretch opacity-60" />
 
-          {/* LINKS GRID */}
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-12 lg:pl-4">
+          {/* LINKS COLUMNS */}
+          <div className="flex-[2] flex flex-col md:flex-row justify-between gap-12 lg:pl-24">
             {/* PORTALS COLUMN */}
-            <div>
+            <div className="min-w-[200px]">
               <div className="mb-8">
                 <h4 className="text-[13px] font-black text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Access Portals</h4>
                 <div className="w-10 h-[2.5px] bg-primary" />
@@ -88,7 +88,7 @@ export function Footer() {
             </div>
 
             {/* RESOURCES COLUMN */}
-            <div>
+            <div className="min-w-[200px]">
               <div className="mb-8">
                 <h4 className="text-[13px] font-black text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Resources</h4>
                 <div className="w-10 h-[2.5px] bg-primary" />
@@ -111,7 +111,7 @@ export function Footer() {
             </div>
 
             {/* INSTITUTIONAL COLUMN */}
-            <div>
+            <div className="min-w-[200px]">
               <div className="mb-8">
                 <h4 className="text-[13px] font-black text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Institutional</h4>
                 <div className="w-10 h-[2.5px] bg-primary" />
