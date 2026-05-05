@@ -20,40 +20,40 @@ export function Footer() {
   const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/signup");
 
   return (
-    <footer className={`relative z-10 w-full pt-20 pb-10 border-t transition-colors duration-300 ${
+    <footer className={`relative z-10 w-full pt-12 pb-8 border-t transition-colors duration-300 ${
       isAuthRoute 
         ? "bg-white dark:bg-[#050505] border-slate-200 dark:border-white/5" 
         : "bg-[#F8F9FA] dark:bg-white/[0.02] border-slate-200 dark:border-white/5"
     }`}>
       <div className="mx-auto px-6 md:px-10 lg:px-12 w-full">
-        <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24 mb-16">
+        <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24 mb-10">
           {/* BRAND COLUMN */}
-          <div className="flex flex-col gap-8 lg:w-[28%]">
+          <div className="flex flex-col gap-6 lg:w-[28%]">
             <div className="flex items-center gap-5">
               <Image 
                 src="/Technological_University_of_the_Philippines_Seal.svg.png" 
                 alt="TUP Seal" 
                 width={70}
                 height={70}
-                className="h-16 w-auto" 
+                className="h-14 w-auto" 
               />
                <div className="flex flex-col uppercase">
-                  <h5 className="text-2xl font-bold text-[#1A202C] dark:text-white leading-none tracking-tight">TUP-V SIT</h5>
-                  <span className="text-[12px] font-semibold text-primary tracking-[0.2em] mt-1.5">Institutional Link</span>
+                  <h5 className="text-xl font-bold text-[#1A202C] dark:text-white leading-none tracking-tight">TUP-V SIT</h5>
+                  <span className="text-[11px] font-semibold text-primary tracking-[0.2em] mt-1">Institutional Link</span>
                </div>
             </div>
-             <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm font-normal">
+             <p className="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm font-normal">
               The official landing for Supervised Industrial Training at Technological University of the Philippines - Visayas. Connecting emerging talent with industry leadership.
             </p>
              <div className="flex items-center gap-3">
-              <Link href="#" className="w-10 h-10 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
-                <Facebook className="w-5 h-5" />
+              <Link href="#" className="w-9 h-9 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
+                <Facebook className="w-4.5 h-4.5" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
-                <Instagram className="w-5 h-5" />
+              <Link href="#" className="w-9 h-9 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
+                <Instagram className="w-4.5 h-4.5" />
               </Link>
-              <Link href="#" className="w-10 h-10 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+              <Link href="#" className="w-9 h-9 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4.5 h-4.5">
                   <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                 </svg>
               </Link>
@@ -67,9 +67,9 @@ export function Footer() {
           <div className="flex-[2] flex flex-col md:flex-row justify-between gap-12 lg:pl-24">
             {/* PORTALS COLUMN */}
             <div className="min-w-[200px]">
-              <div className="mb-8">
-                <h4 className="text-[13px] font-bold text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Access Portals</h4>
-                <div className="w-10 h-[2.5px] bg-primary" />
+              <div className="mb-6">
+                <h4 className="text-[12px] font-bold text-[#1A202C] dark:text-white uppercase tracking-wider mb-1.5">Access Portals</h4>
+                <div className="w-8 h-[2px] bg-primary" />
               </div>
               <ul className="space-y-0">
                 {[
@@ -78,8 +78,8 @@ export function Footer() {
                   { name: "New Student Registration", href: "/signup/student" }
                 ].map((link, i) => (
                   <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
-                    <Link href={link.href} className="flex items-center gap-3 py-4 text-[13.5px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
-                      <ChevronRight size={14} className="text-primary opacity-80 group-hover:opacity-100" />
+                    <Link href={link.href} className="flex items-center gap-3 py-2.5 text-[13px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
+                      <ChevronRight size={12} className="text-primary opacity-80 group-hover:opacity-100" />
                       {link.name}
                     </Link>
                   </li>
@@ -89,9 +89,9 @@ export function Footer() {
 
             {/* RESOURCES COLUMN */}
             <div className="min-w-[200px]">
-              <div className="mb-8">
-                <h4 className="text-[13px] font-bold text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Resources</h4>
-                <div className="w-10 h-[2.5px] bg-primary" />
+              <div className="mb-6">
+                <h4 className="text-[12px] font-bold text-[#1A202C] dark:text-white uppercase tracking-wider mb-1.5">Resources</h4>
+                <div className="w-8 h-[2px] bg-primary" />
               </div>
               <ul className="space-y-0">
                 {[
@@ -101,8 +101,8 @@ export function Footer() {
                   { name: "Training Modules", href: "#" }
                 ].map((link, i) => (
                   <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
-                    <Link href={link.href} className="flex items-center gap-3 py-4 text-[13.5px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
-                      <ChevronRight size={14} className="text-primary opacity-80 group-hover:opacity-100" />
+                    <Link href={link.href} className="flex items-center gap-3 py-2.5 text-[13px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
+                      <ChevronRight size={12} className="text-primary opacity-80 group-hover:opacity-100" />
                       {link.name}
                     </Link>
                   </li>
@@ -112,9 +112,9 @@ export function Footer() {
 
             {/* INSTITUTIONAL COLUMN */}
             <div className="min-w-[200px]">
-              <div className="mb-8">
-                <h4 className="text-[13px] font-bold text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Institutional</h4>
-                <div className="w-10 h-[2.5px] bg-primary" />
+              <div className="mb-6">
+                <h4 className="text-[12px] font-bold text-[#1A202C] dark:text-white uppercase tracking-wider mb-1.5">Institutional</h4>
+                <div className="w-8 h-[2px] bg-primary" />
               </div>
               <ul className="space-y-0">
                 {[
@@ -124,8 +124,8 @@ export function Footer() {
                   { name: "Technical Support", href: "#" }
                 ].map((link, i) => (
                   <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
-                    <Link href={link.href} className="flex items-center gap-3 py-4 text-[13.5px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
-                      <ChevronRight size={14} className="text-primary opacity-80 group-hover:opacity-100" />
+                    <Link href={link.href} className="flex items-center gap-3 py-2.5 text-[13px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
+                      <ChevronRight size={12} className="text-primary opacity-80 group-hover:opacity-100" />
                       {link.name}
                     </Link>
                   </li>
@@ -136,7 +136,7 @@ export function Footer() {
         </div>
 
         {/* BOTTOM BAR */}
-        <div className="pt-10 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
             © 2026 Technological University of the Philippines - Visayas. All Rights Reserved.
           </p>
