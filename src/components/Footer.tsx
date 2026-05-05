@@ -134,17 +134,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-
-        {/* BOTTOM BAR */}
-        <div className="pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-            © 2026 Technological University of the Philippines - Visayas. All Rights Reserved.
-          </p>
-          <div className="flex items-center gap-8">
-            <Link href="#" className="text-[11px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">Security</Link>
-            <Link href="#" className="text-[11px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">Privacy</Link>
-          </div>
-        </div>
       </div>
     </footer>
   );
