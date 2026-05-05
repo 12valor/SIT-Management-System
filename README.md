@@ -7,7 +7,7 @@
   [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
-  [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.tupvisayas.edu.ph/)
+  [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](./LICENSE.md)
 </div>
 
 > **Notice:** This project is currently in an advanced stage of development. The system is being standardized to an **Institutional Brutalism** aesthetic to ensure maximum authority and archival integrity.
@@ -95,6 +95,10 @@ The system employs a custom **Institutional Brutalism** design language—a high
 
 ---
 
+## License & Copyright
+
 **Proprietary Software.**  
 Copyright © 2026 Technological University of the Philippines - Visayas (TUP-V).  
-*Unauthorized reproduction or distribution is strictly prohibited.*
+See [LICENSE.md](./LICENSE.md) for full terms and conditions.
+
+---
