@@ -12,26 +12,24 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <label className={styles.switch}>
-        <div className="w-full h-full bg-slate-200 dark:bg-white/10 rounded-full animate-pulse" />
-      </label>
-    );
-  }
-
   const isDark = resolvedTheme === "dark";
 
   return (
-    <label className={styles.switch}>
-      <input 
-        type="checkbox" 
-        checked={isDark}
-        onChange={() => setTheme(isDark ? "light" : "dark")}
-        aria-label="Toggle theme"
-      />
-      <span className={styles.slider}></span>
-      <span className={styles.tooltip}>{isDark ? "Light Mode" : "Dark Mode"}</span>
+    <label className={styles.switch} suppressHydrationWarning>
+      {!mounted ? (
+        <div className="w-full h-full bg-slate-200 dark:bg-white/10 rounded-full animate-pulse" />
+      ) : (
+        <>
+          <input 
+            type="checkbox" 
+            checked={isDark}
+            onChange={() => setTheme(isDark ? "light" : "dark")}
+            aria-label="Toggle theme"
+          />
+          <span className={styles.slider}></span>
+          <span className={styles.tooltip}>{isDark ? "Light Mode" : "Dark Mode"}</span>
+        </>
+      )}
     </label>
   );
 }

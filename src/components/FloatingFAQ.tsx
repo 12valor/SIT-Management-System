@@ -6,14 +6,20 @@ import { usePathname } from "next/navigation";
 import styles from "./floating-faq.module.css";
 
 export function FloatingFAQ() {
+  const [mounted, setMounted] = React.useState(false);
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isPortalRoute = 
     pathname.startsWith("/student") ||
     pathname.startsWith("/employer") ||
     pathname.startsWith("/coordinator") ||
     pathname === "/faq";
 
-  if (isPortalRoute) return null;
+  if (isPortalRoute || !mounted) return null;
 
   return (
     <div className="fixed bottom-20 right-9 z-[100] hidden sm:block">
