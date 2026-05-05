@@ -3,103 +3,98 @@
 <div align="center">
   <p><strong>A Next-Generation Enterprise Platform for Supervised Industrial Training</strong></p>
   
-  [![Status: In Development](https://img.shields.io/badge/Status-In_Development-orange.svg)]()
+  [![Status: Active Development](https://img.shields.io/badge/Status-Active_Development-orange.svg)]()
   [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
   [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.tupvisayas.edu.ph/)
 </div>
 
-> **Notice:** This project is currently in active development. Features and API surfaces are subject to change without notice.
+> **Notice:** This project is currently in an advanced stage of development. The system is being standardized to an **Institutional Brutalism** aesthetic to ensure maximum authority and archival integrity.
 
 ---
 
 ## Overview
 
-The **Supervised Industrial Training (SIT) Management System** is a mission-critical, centralized platform engineered specifically for the **Technological University of the Philippines - Visayas (TUP-V)**. Designed to seamlessly orchestrate the industrial training lifecycle, it bridges the gap between academia and industry.
+The **Supervised Industrial Training (SIT) Management System** is a mission-critical, centralized platform engineered for the **Technological University of the Philippines - Visayas (TUP-V)**. It serves as the official bridge between academic requirements and industrial deployment, digitalizing the entire training lifecycle.
 
-This digital workspace replaces antiquated, paper-based workflows with a highly secure, responsive web application—ensuring absolute fidelity in tracking training hours, managing mandatory documents, and facilitating real-time stakeholder communication.
+This workspace replaces fragmented paper workflows with a high-fidelity, secure environment for tracking trainee performance, managing compliance documents, and facilitating real-time coordination between students, industrial partners, and university administrators.
 
-## Architecture & Schematics
+## Design Aesthetic: Institutional Brutalism
 
-- [Database Schema (ER Diagram)](./public/diagrams/database-schema.html)
-- [Website Flowchart](./public/diagrams/website-flow.html)
+The system employs a custom **Institutional Brutalism** design language—a high-contrast, authoritative aesthetic that rejects generic "SaaS" patterns in favor of:
+- **Typography**: Authority-driven pairings of **Instrumental Serif** for headers and **Poppins/Outfit** for functional UI.
+- **Color Palette**: TUP Maroon (`#8c1515`) accents against pure ink-black and paper-white backgrounds.
+- **Structure**: High-density layouts with solid `1px` borders, dot-pattern backgrounds, and refined micro-animations.
+- **Interactive Islands**: Floating UI components with thick borders and spring-based motion.
 
-*(Click to view self-contained HTML diagrams)*
+## Technical Schematics
 
-## Enterprise Features
+- [Database Schema (ER Diagram)](./public/diagrams/database-schema.html) — Prisma/PostgreSQL architecture.
+- [Website Flowchart](./public/diagrams/website-flow.html) — Multi-portal navigation logic.
 
-- **Role-Based Access Control (RBAC):** Distinct, secure portals tailored for Students, Industry Supervisors, and University Coordinators.
-- **Digital Logbook & DTR:** Seamless, high-precision digital tracking for Daily Time Records and granular task execution.
-- **Supervisor Workflow Automation:** Streamlined review processes allowing industry supervisors to approve or reject logbook entries with a single click.
-- **Secure Document Vault:** Centralized, encrypted storage for mission-critical compliance documents (Waivers, MOAs, Evaluations).
-- **Archival Dashboard Interface:** A refined, document-based layout for University Coordinators, optimized for high-density student and employer data management.
+## Multi-Portal Ecosystem
+
+### 🎓 Student Terminal
+- **Manifest Management**: Browse and apply for verified industrial placements.
+- **Digital Logbook**: High-precision daily time records (DTR) and task logging.
+- **Compliance Vault**: Secure repository for Waivers, MOAs, and Certifications.
+- **Performance Tracking**: Real-time status of training hours and supervisor approvals.
+
+### 🏢 Partner Verification (Employer)
+- **Talent Acquisition**: Post and manage verified SIT positions.
+- **Credential Audit**: Authenticate student logbook entries and performance records.
+- **Evaluation Terminal**: Submit institutional performance reviews and hireability assessments.
+- **Company Identity**: Manage organizational profile and verification status.
+
+### ⚖️ University Coordinator
+- **Centralized Audit**: Oversight of all active students and industrial partners.
+- **Document Verification**: Review and approve mandatory SIT documentation.
+- **System Governance**: Direct administrative control over user verification and database integrity.
 
 ## Technology Stack
 
-Engineered for performance, scalability, and strict type safety, utilizing the latest in modern web architecture:
-
 | Category | Technology |
 | :--- | :--- |
-| **Core Framework** | [Next.js 15 (App Router)](https://nextjs.org/) |
+| **Framework** | [Next.js 15 (App Router)](https://nextjs.org/) |
 | **Language** | [TypeScript 5](https://www.typescriptlang.org/) |
-| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) |
-| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) |
 | **Database/ORM** | [Prisma](https://www.prisma.io/) & [PostgreSQL](https://www.postgresql.org/) |
-| **Design Language** | Archival/Editorial Aesthetic with Deep-Crimson Gradients |
+| **Auth** | [Auth.js v5 (Beta)](https://authjs.dev/) |
+| **Motion** | [Framer Motion](https://www.framer.com/motion/) |
+| **Communication** | [Resend](https://resend.com/) & [Nodemailer](https://nodemailer.com/) |
 
-## Quick Start
+## Development Setup
 
 ### Prerequisites
-
-Ensure the following dependencies are installed on your local environment:
 - **Node.js**: `v20.x` or higher
-- **Package Manager**: `npm` (or `pnpm`/`yarn`)
+- **PostgreSQL**: Local or remote instance
+- **Environment**: See `.env.example` for required keys (Auth Secret, Database URL, Resend API Key).
 
-### Local Development Setup
-
-1. **Clone & Navigate**
-   ```bash
-   cd "SIT Management System"
-   ```
-
-2. **Install Dependencies**
+### Getting Started
+1. **Install Dependencies**
    ```bash
    npm install
    ```
-
-3. **Environment Configuration**
-   Copy the example environment file and configure your local variables:
-   ```bash
-   cp .env.example .env.local
-   ```
-   *(Ensure `DATABASE_URL` and `AUTH_SECRET` are properly set).*
-
-4. **Database Setup**
-   Generate the Prisma client and seed the initial administrative data:
+2. **Database Initialization**
    ```bash
    npx prisma generate
-   npm run seed
+   npm run seed # Seeds administrative coordinator accounts
    ```
-
-5. **Launch Development Server**
+3. **Launch Terminal**
    ```bash
    npm run dev
    ```
-   The application will be available at [http://localhost:3000](http://localhost:3000).
+   Access the dashboard at `http://localhost:3000`.
 
-## Architectural Guidelines & Standards
+## Engineering Philosophies
 
-This repository strictly enforces the following engineering philosophies:
+- **Kaizen**: Continuous, incremental optimization of the codebase.
+- **Poka-Yoke**: Error-proofing through advanced TypeScript patterns to prevent invalid states.
+- **RSC Default**: Strict adherence to React Server Components for optimal data fetching, reserving Client Components for interactive islands only.
 
-- **Kaizen (Continuous Improvement):** Every PR must leave the codebase cleaner. We enforce incremental refactoring, code standardization, and uncompromising type safety.
-- **Archival/Editorial Standard:** The UI must maintain an authoritative, professional aesthetic—prioritizing typographic hierarchy, refined micro-animations, and a "themeless" yet premium feel.
-- **Poka-Yoke (Error Proofing):** Leverage advanced TypeScript patterns to make invalid application states unrepresentable. Fail at compile-time, never at runtime.
-- **Next.js Paradigms:** Default to **React Server Components (RSC)** for optimal data fetching. Client Components (`"use client"`) are heavily restricted and reserved exclusively for interactive UI islands.
+---
 
-## License & Copyright
-
-**Proprietary Software.**
-Copyright © 2026 Technological University of the Philippines - Visayas (TUP-V). All rights reserved.
-
-Unauthorized copying, distribution, modification, or use of this software is strictly prohibited without explicit written consent.
+**Proprietary Software.**  
+Copyright © 2026 Technological University of the Philippines - Visayas (TUP-V).  
+*Unauthorized reproduction or distribution is strictly prohibited.*
