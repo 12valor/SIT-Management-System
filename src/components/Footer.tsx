@@ -3,12 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, ChevronRight } from "lucide-react";
 
 export function Footer() {
   const pathname = usePathname();
 
-  // 1. Dashboard / Portal routes use the minimal dark-theme-aware footer
   const isPortalRoute = 
     pathname.startsWith("/student") ||
     pathname.startsWith("/employer") ||
@@ -18,95 +17,138 @@ export function Footer() {
     return null;
   }
 
-  // 2. Auth routes (login/signup) and Marketing use the large footer, 
-  // but we must wrap it in relative z-10 so it's clickable over the background.
   const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/signup");
 
   return (
-    <footer className={`relative z-10 w-full pt-24 pb-12 border-t transition-colors duration-300 ${
+    <footer className={`relative z-10 w-full pt-20 pb-10 border-t transition-colors duration-300 ${
       isAuthRoute 
         ? "bg-white dark:bg-[#050505] border-slate-200 dark:border-white/5" 
-        : "bg-slate-50 dark:bg-white/[0.02] border-slate-100 dark:border-white/5"
+        : "bg-[#F8F9FA] dark:bg-white/[0.02] border-slate-200 dark:border-white/5"
     }`}>
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-row lg:justify-between gap-12 mb-16">
+      <div className="container mx-auto px-6 max-w-7xl">
+        <div className="flex flex-col lg:flex-row gap-16 mb-16">
           {/* BRAND COLUMN */}
-          <div className="flex flex-col gap-6 max-w-sm">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-8 lg:w-[35%]">
+            <div className="flex items-center gap-5">
               <Image 
                 src="/Technological_University_of_the_Philippines_Seal.svg.png" 
                 alt="TUP Seal" 
-                width={48}
-                height={48}
-                className="h-12 w-auto transition-all duration-300 hover:scale-105" 
+                width={70}
+                height={70}
+                className="h-16 w-auto" 
               />
                <div className="flex flex-col uppercase">
-                  <h5 className="text-sm font-bold text-slate-900 dark:text-white font-heading leading-tight transition-colors">TUP-V SIT</h5>
-                  <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 tracking-widest font-heading">Institutional Link</span>
+                  <h5 className="text-2xl font-black text-[#1A202C] dark:text-white leading-none tracking-tight">TUP-V SIT</h5>
+                  <span className="text-[12px] font-bold text-primary tracking-[0.2em] mt-1.5">Institutional Link</span>
                </div>
             </div>
-             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans transition-colors">
+             <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm font-medium">
               The official landing for Supervised Industrial Training at Technological University of the Philippines - Visayas. Connecting emerging talent with industry leadership.
             </p>
-             <div className="flex items-center gap-4">
-              <Link href="#" className="w-8 h-8 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-slate-900 dark:hover:border-white hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer group">
-                <Facebook className="w-4 h-4 text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
+             <div className="flex items-center gap-3">
+              <Link href="#" className="w-10 h-10 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
+                <Facebook className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-8 h-8 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-slate-900 dark:hover:border-white hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer group">
-                <Instagram className="w-4 h-4 text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
+              <Link href="#" className="w-10 h-10 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
+                <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-8 h-8 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-slate-900 dark:hover:border-white hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer group">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+              <Link href="#" className="w-10 h-10 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                   <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                 </svg>
               </Link>
             </div>
           </div>
 
-          {/* PORTALS COLUMN */}
-          <div className="min-w-fit">
-            <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] mb-8 font-heading transition-colors">Access Portals</h4>
-            <ul className="space-y-4">
-              <li><Link href="/login/student" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Student Portal</Link></li>
-              <li><Link href="/login/employer" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Employer Portal</Link></li>
-              <li><Link href="/signup/student" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">New Student Registration</Link></li>
-            </ul>
-          </div>
+          {/* VERTICAL DIVIDER */}
+          <div className="hidden lg:block w-[1px] bg-slate-200 dark:bg-white/10 self-stretch opacity-60" />
 
-          {/* RESOURCES COLUMN */}
-          <div className="min-w-fit">
-            <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] mb-8 font-heading transition-colors">Resources</h4>
-            <ul className="space-y-4">
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">SIT Guidelines</Link></li>
-              <li><Link href="/partners" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Partner Companies</Link></li>
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Digital Logbook Guide</Link></li>
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Training Modules</Link></li>
-            </ul>
-          </div>
+          {/* LINKS GRID */}
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-12 lg:pl-4">
+            {/* PORTALS COLUMN */}
+            <div>
+              <div className="mb-8">
+                <h4 className="text-[13px] font-black text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Access Portals</h4>
+                <div className="w-10 h-[2.5px] bg-primary" />
+              </div>
+              <ul className="space-y-0">
+                {[
+                  { name: "Student Portal", href: "/login/student" },
+                  { name: "Employer Portal", href: "/login/employer" },
+                  { name: "New Student Registration", href: "/signup/student" }
+                ].map((link, i) => (
+                  <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
+                    <Link href={link.href} className="flex items-center gap-3 py-4 text-[13.5px] font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
+                      <ChevronRight size={14} className="text-primary opacity-80 group-hover:opacity-100" />
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* INSTITUTIONAL COLUMN */}
-          <div className="min-w-fit">
-            <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] mb-8 font-heading transition-colors">Institutional</h4>
-            <ul className="space-y-4">
-              <li><Link href="/about" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">About the Platform</Link></li>
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">UIPEN Strategic Office</Link></li>
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Contact Registry</Link></li>
-              <li><Link href="#" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-sans focus:outline-none">Technical Support</Link></li>
-            </ul>
+            {/* RESOURCES COLUMN */}
+            <div>
+              <div className="mb-8">
+                <h4 className="text-[13px] font-black text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Resources</h4>
+                <div className="w-10 h-[2.5px] bg-primary" />
+              </div>
+              <ul className="space-y-0">
+                {[
+                  { name: "SIT Guidelines", href: "#" },
+                  { name: "Partner Companies", href: "/partners" },
+                  { name: "Digital Logbook Guide", href: "#" },
+                  { name: "Training Modules", href: "#" }
+                ].map((link, i) => (
+                  <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
+                    <Link href={link.href} className="flex items-center gap-3 py-4 text-[13.5px] font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
+                      <ChevronRight size={14} className="text-primary opacity-80 group-hover:opacity-100" />
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* INSTITUTIONAL COLUMN */}
+            <div>
+              <div className="mb-8">
+                <h4 className="text-[13px] font-black text-[#1A202C] dark:text-white uppercase tracking-wider mb-2">Institutional</h4>
+                <div className="w-10 h-[2.5px] bg-primary" />
+              </div>
+              <ul className="space-y-0">
+                {[
+                  { name: "About the Platform", href: "/about" },
+                  { name: "UIPEN Strategic Office", href: "#" },
+                  { name: "Contact Registry", href: "#" },
+                  { name: "Technical Support", href: "#" }
+                ].map((link, i) => (
+                  <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
+                    <Link href={link.href} className="flex items-center gap-3 py-4 text-[13.5px] font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
+                      <ChevronRight size={14} className="text-primary opacity-80 group-hover:opacity-100" />
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* BOTTOM BAR */}
-        <div className="pt-12 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left transition-colors">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] font-sans leading-relaxed">
-            © 2026 Technological University of the Philippines - Visayas. <br className="md:hidden" /> ALL RIGHTS RESERVED.
+        <div className="pt-10 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+            © 2026 Technological University of the Philippines - Visayas. All Rights Reserved.
           </p>
           <div className="flex items-center gap-8">
-            <Link href="#" className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-[0.2em] font-sans transition-colors focus:outline-none">Security</Link>
+            <Link href="#" className="text-[11px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">Security</Link>
+            <Link href="#" className="text-[11px] font-bold text-slate-400 hover:text-primary uppercase tracking-widest transition-colors">Privacy</Link>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
+
 
