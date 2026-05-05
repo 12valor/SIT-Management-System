@@ -1,12 +1,22 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Configure SMTP transport
+// You can use Gmail, Outlook, or any other SMTP provider
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_SERVER_HOST,
+  port: Number(process.env.EMAIL_SERVER_PORT),
+  auth: {
+    user: process.env.EMAIL_SERVER_USER,
+    pass: process.env.EMAIL_SERVER_PASSWORD,
+  },
+  secure: process.env.EMAIL_SERVER_PORT === "465", // true for 465, false for other ports
+});
 
 export async function sendApprovalEmail(to: string, companyName: string) {
   try {
-    const { data, error } = await resend.emails.send({
-      from: "SIT Management System <notifications@resend.dev>",
-      to: [to],
+    const info = await transporter.sendMail({
+      from: `"SIT Management System" <${process.env.EMAIL_FROM}>`,
+      to: to,
       subject: "INSTITUTIONAL NOTICE: Company Account Approved",
       html: `
         <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 20px auto; padding: 40px; border: 1px solid #e2e8f0; background-color: #ffffff;">
@@ -55,14 +65,10 @@ export async function sendApprovalEmail(to: string, companyName: string) {
       `,
     });
 
-    if (error) {
-      console.error("Failed to send approval email:", error);
-      return { success: false, error };
-    }
-
-    return { success: true, data };
+    console.log("Approval email sent successfully:", info.messageId);
+    return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error("Email service error:", error);
+    console.error("Nodemailer service error:", error);
     return { success: false, error };
   }
 }
