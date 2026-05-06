@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: "TUP-V SIT Management System",
   description: "A premium platform for managing Supervised Industrial Training (SIT) at TUP-V. Connecting students and industry partners.",
   icons: {
-    icon: "/icon.png?v=2",
+    icon: "/icon.png?v=3",
   },
 };
 
