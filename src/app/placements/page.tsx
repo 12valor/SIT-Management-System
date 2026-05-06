@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Official registry of approved industrial placements for the Supervised Industrial Training program.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function PlacementsPage() {
   // Fetch only OPEN postings from verified companies
   const postings = await prisma.sITPosting.findMany({
