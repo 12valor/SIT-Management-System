@@ -160,3 +160,31 @@
     animation-play-state: paused;
   }
 }
+
+/* Theme Wipe Animation using View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+.theme-transitioning::view-transition-new(root) {
+  animation: wipe-right 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+}
+
+@keyframes wipe-right {
+  from {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
