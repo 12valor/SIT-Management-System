@@ -141,9 +141,30 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-
-
+        {/* Section 03 — Institutional Impact (By the Numbers) */}
+        <section className="py-24 bg-white dark:bg-background relative transition-colors duration-300">
+          <div className="container mx-auto px-6 max-w-6xl">
+            <div className="grid grid-cols-2 md:grid-cols-4 border border-slate-200 dark:border-white/10 divide-x divide-y md:divide-y-0 divide-slate-200 dark:divide-white/10">
+              {[
+                { value: "450+", label: "Active Placements" },
+                { value: "85", label: "Verified Partners" },
+                { value: "12.5k", label: "Hours Logged" },
+                { value: "100%", label: "Audit Compliance" },
+              ].map((stat, i) => (
+                <div key={stat.label} className="group p-12 flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] hover:bg-white dark:hover:bg-[#050505] transition-colors duration-500">
+                  <Reveal delay={0.1 * i} className="flex flex-col items-center">
+                    <span className="text-5xl md:text-6xl font-serif font-medium text-slate-900 dark:text-white mb-4 block group-hover:scale-105 transition-transform duration-500">
+                      {stat.value}
+                    </span>
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+                      {stat.label}
+                    </span>
+                  </Reveal>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         {/* Section 04 — Operational Protocol (How It Works) */}
         <section className="py-40 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
           <div className="container mx-auto px-6 max-w-4xl">
