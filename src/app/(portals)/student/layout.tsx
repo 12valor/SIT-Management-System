@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { SignOutOverlay } from "@/components/SignOutOverlay";
 import { getStudentPlacementStatus } from "./actions";
 
 export default function StudentLayout({
@@ -29,6 +30,13 @@ export default function StudentLayout({
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isPlaced, setIsPlaced] = React.useState(false);
+  const [isSigningOut, setIsSigningOut] = React.useState(false);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await new Promise(resolve => setTimeout(resolve, 800));
+    signOut({ callbackUrl: "/login" });
+  };
 
   React.useEffect(() => {
     async function checkPlacement() {
@@ -133,7 +141,7 @@ export default function StudentLayout({
           </div>
 
           <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={handleSignOut}
             className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group w-full text-left"
           >
             <LogOut className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-x-1" />
@@ -141,6 +149,9 @@ export default function StudentLayout({
           </button>
         </div>
       </aside>
+
+      {/* Sign Out Loading Overlay */}
+      <SignOutOverlay isVisible={isSigningOut} />
 
       {/* Main Content */}
       <div className="flex flex-col flex-1 lg:pl-72">
