@@ -4,11 +4,17 @@ import { Reveal } from "@/components/Reveal";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
-  const [activePlacements, verifiedPartners, jobPostings] = await Promise.all([
+  const [activePlacements, verifiedPartners, jobPostings, hoursResult] = await Promise.all([
     prisma.application.count({ where: { status: "ACCEPTED" } }),
     prisma.company.count({ where: { isVerified: true } }),
     prisma.sITPosting.count({ where: { status: "OPEN" } }),
+    prisma.logbookEntry.aggregate({
+      _sum: { hours: true },
+      where: { status: "APPROVED" },
+    }),
   ]);
+
+  const verifiedHours = hoursResult._sum.hours || 0;
   return (
     <div className="flex flex-col">
       <main>
@@ -114,11 +120,12 @@ export default async function Home() {
         {/* Section 03 — Institutional Impact (By the Numbers) */}
         <section className="py-24 bg-white dark:bg-background relative transition-colors duration-300">
           <div className="container mx-auto px-6 max-w-6xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 border border-slate-200 dark:border-white/10 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-white/10">
+            <div className="grid grid-cols-2 md:grid-cols-4 border border-slate-200 dark:border-white/10 divide-x divide-y md:divide-y-0 divide-slate-200 dark:divide-white/10">
               {[
                 { value: activePlacements, label: "Active Placements" },
                 { value: verifiedPartners, label: "Verified Partners" },
                 { value: jobPostings, label: "Job Postings" },
+                { value: verifiedHours, label: "Verified Hours" },
               ].map((stat, i) => (
                 <div key={stat.label} className="group p-12 flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] hover:bg-white dark:hover:bg-[#050505] transition-colors duration-500">
                   <Reveal delay={0.1 * i} className="flex flex-col items-center">
