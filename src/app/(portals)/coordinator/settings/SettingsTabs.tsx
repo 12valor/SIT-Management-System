@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { updateHeroSlides, getHeroSlides } from "./general/actions";
 
 const TABS = [
@@ -108,13 +109,18 @@ export function SettingsTabs() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 text-sm rounded-lg transition-all font-medium",
+                "w-full flex items-center gap-3 px-4 py-3 text-sm rounded-lg transition-all font-medium group",
                 isActive 
                   ? "bg-primary/10 text-primary" 
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >
-              <tab.icon className="h-4 w-4" />
+              <motion.div
+                whileHover={{ scale: 1.2, rotate: 10 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <tab.icon className="h-4 w-4" />
+              </motion.div>
               {tab.name}
             </button>
           );
@@ -174,11 +180,18 @@ export function SettingsTabs() {
                               </div>
                             )}
                             
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
-                              <div className="bg-white text-black px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider shadow-sm">
+                            <motion.div 
+                              initial={{ opacity: 0 }}
+                              whileHover={{ opacity: 1 }}
+                              className="absolute inset-0 bg-black/40 transition-all flex items-center justify-center pointer-events-none"
+                            >
+                              <motion.div 
+                                whileHover={{ scale: 1.1 }}
+                                className="bg-white text-black px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider shadow-sm"
+                              >
                                 Change Image
-                              </div>
-                            </div>
+                              </motion.div>
+                            </motion.div>
 
                             <input
                               type="file"
@@ -193,14 +206,16 @@ export function SettingsTabs() {
                   </div>
 
                   <div className="flex justify-end pt-8 border-t border-border">
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       type="submit"
                       disabled={isSaving || (!previews[0] && !previews[1] && !previews[2])}
-                      className="inline-flex items-center justify-center h-10 px-8 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-all"
+                      className="inline-flex items-center justify-center h-10 px-8 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-all shadow-sm"
                     >
                       {isSaving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                       {isSaving ? "Saving..." : "Save Settings"}
-                    </button>
+                    </motion.button>
                   </div>
                 </form>
               )}
