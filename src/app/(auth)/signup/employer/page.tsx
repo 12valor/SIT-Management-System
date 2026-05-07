@@ -267,7 +267,7 @@ export default function EmployerSignupPage() {
                             )}
                           >
                             <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", companyStatus === "available" ? "bg-green-500" : "bg-red-500")} />
-                            {companyStatus === "available" ? "Ready" : "Registered"}
+                            {companyStatus === "available" ? "Available" : "Registered"}
                           </motion.span>
                         )}
                       </AnimatePresence>
