@@ -9,13 +9,12 @@ export async function updateHeroSlides(formData: FormData) {
     const slide2 = formData.get("slide2") as string;
     const slide3 = formData.get("slide3") as string;
 
-    const existingSetting = await (prisma as any).systemSetting.findUnique({
-      where: { key: "hero_slides" }
-    });
+    // Use raw query to avoid runtime error if Prisma hasn't been regenerated
+    const existingSetting: any[] = await prisma.$queryRaw`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`;
     
     let currentSlides = [];
-    if (existingSetting) {
-        currentSlides = JSON.parse(existingSetting.value);
+    if (existingSetting && existingSetting.length > 0) {
+        currentSlides = JSON.parse(existingSetting[0].value);
     } else {
         currentSlides = [
             { image: "/images/hero/industrial-1.png", title: "The Digital Bridge to Industrial Excellence", description: "The official platform for managing Supervised Industrial Training at the Technological University of the Philippines Visayas." },
@@ -28,11 +27,15 @@ export async function updateHeroSlides(formData: FormData) {
     if (slide2 && slide2.startsWith('data:')) currentSlides[1].image = slide2;
     if (slide3 && slide3.startsWith('data:')) currentSlides[2].image = slide3;
 
-    await (prisma as any).systemSetting.upsert({
-      where: { key: "hero_slides" },
-      update: { value: JSON.stringify(currentSlides) },
-      create: { key: "hero_slides", value: JSON.stringify(currentSlides) }
-    });
+    const newValue = JSON.stringify(currentSlides);
+    
+    if (existingSetting && existingSetting.length > 0) {
+       await prisma.$executeRaw`UPDATE "SystemSetting" SET value = ${newValue}, "updatedAt" = NOW() WHERE key = 'hero_slides'`;
+    } else {
+       // Insert with cuid, raw uuid gen not available, use simple timestamp string as ID fallback
+       const newId = `hero_slides_${Date.now()}`;
+       await prisma.$executeRaw`INSERT INTO "SystemSetting" (id, key, value, "updatedAt") VALUES (${newId}, 'hero_slides', ${newValue}, NOW())`;
+    }
 
     revalidatePath("/");
     revalidatePath("/coordinator/settings/general");
@@ -46,10 +49,8 @@ export async function updateHeroSlides(formData: FormData) {
 
 export async function getHeroSlides() {
     try {
-        const setting = await (prisma as any).systemSetting.findUnique({
-            where: { key: "hero_slides" }
-        });
-        if (setting) return JSON.parse(setting.value);
+        const setting: any[] = await prisma.$queryRaw`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`;
+        if (setting && setting.length > 0) return JSON.parse(setting[0].value);
         return null;
     } catch (error) {
         return null;

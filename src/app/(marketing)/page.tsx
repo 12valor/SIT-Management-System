@@ -12,13 +12,11 @@ export default async function Home() {
       _sum: { hours: true },
       where: { status: "APPROVED" },
     }),
-    (prisma as any).systemSetting.findUnique({
-      where: { key: "hero_slides" }
-    }).catch(() => null),
+    prisma.$queryRaw<any[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`.catch(() => null),
   ]);
 
   const verifiedHours = hoursResult._sum.hours || 0;
-  const customSlides = heroSetting ? JSON.parse(heroSetting.value) : null;
+  const customSlides = heroSetting && heroSetting.length > 0 ? JSON.parse(heroSetting[0].value) : null;
 
   return (
     <div className="flex flex-col">
