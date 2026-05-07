@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
-  const [activePlacements, verifiedPartners, jobPostings, hoursResult] = await Promise.all([
+  const [activePlacements, verifiedPartners, jobPostings, hoursResult, heroSetting] = await Promise.all([
     prisma.application.count({ where: { status: "ACCEPTED" } }),
     prisma.company.count({ where: { isVerified: true } }),
     prisma.sITPosting.count({ where: { status: "OPEN" } }),
@@ -12,15 +12,20 @@ export default async function Home() {
       _sum: { hours: true },
       where: { status: "APPROVED" },
     }),
+    (prisma as any).systemSetting.findUnique({
+      where: { key: "hero_slides" }
+    }).catch(() => null),
   ]);
 
   const verifiedHours = hoursResult._sum.hours || 0;
+  const customSlides = heroSetting ? JSON.parse(heroSetting.value) : null;
+
   return (
     <div className="flex flex-col">
       <main>
         {/* Section 01 — Hero */}
         <section className="bg-white dark:bg-[#050505]">
-          <HeroCarousel />
+          <HeroCarousel slides={customSlides} />
         </section>
 
         {/* Section 02 — Gateway Cards */}

@@ -232,3 +232,10 @@ model Notification {
 
   @@index([userId])
 }
+
+model SystemSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g., 'hero_slides'
+  value     String   @db.Text // JSON string or simple text
+  updatedAt DateTime @updatedAt
+}

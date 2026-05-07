@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-const slides = [
+const defaultSlides = [
   {
     image: "/images/hero/industrial-1.png",
     title: "The Digital Bridge to Industrial Excellence",
@@ -24,15 +24,17 @@ const slides = [
   }
 ];
 
-export function HeroCarousel() {
+export function HeroCarousel({ slides: customSlides }: { slides?: { image: string, title: string, description: string }[] | null }) {
   const [index, setIndex] = useState(0);
+
+  const activeSlides = customSlides && customSlides.length > 0 ? customSlides : defaultSlides;
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
+      setIndex((prev) => (prev + 1) % activeSlides.length);
     }, 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [activeSlides.length]);
 
   return (
     <section className="relative h-[90vh] md:h-screen w-full overflow-hidden bg-black flex items-end pb-24 md:pb-32">
@@ -48,8 +50,8 @@ export function HeroCarousel() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src={slides[index].image}
-            alt={slides[index].title}
+            src={activeSlides[index].image}
+            alt={activeSlides[index].title}
             fill
             className="object-cover"
             priority
@@ -76,11 +78,11 @@ export function HeroCarousel() {
               className="space-y-6"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-white leading-[1.1] tracking-tight">
-                {slides[index].title}
+                {activeSlides[index].title}
               </h1>
 
               <p className="text-lg sm:text-xl text-white/80 font-serif leading-relaxed max-w-2xl">
-                {slides[index].description}
+                {activeSlides[index].description}
               </p>
 
               <div className="flex flex-wrap items-center gap-5 pt-8">

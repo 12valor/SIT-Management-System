@@ -8,28 +8,40 @@ export default function SystemControlPage() {
       icon: Lock,
       description: "Manage system-wide access policies, token expiration, and multi-factor enforcement.",
       status: "Operational",
-      statusColor: "text-emerald-500"
+      statusColor: "text-emerald-500",
+      path: "#"
     },
     {
       title: "Database Integrity",
       icon: Database,
       description: "Audit storage allocation, run maintenance scripts, and verify relationship constraints.",
       status: "Optimized",
-      statusColor: "text-emerald-500"
+      statusColor: "text-emerald-500",
+      path: "#"
+    },
+    {
+      title: "General Website Settings",
+      icon: Globe,
+      description: "Configure institutional branding, landing page hero visuals, and public-facing assets.",
+      status: "Configurable",
+      statusColor: "text-emerald-500",
+      path: "/coordinator/settings/general"
     },
     {
       title: "Institutional Registry",
       icon: Shield,
       description: "Configure official university branding, department identifiers, and regional settings.",
       status: "Verified",
-      statusColor: "text-emerald-500"
+      statusColor: "text-emerald-500",
+      path: "#"
     },
     {
       title: "System Infrastructure",
       icon: Server,
       description: "Monitor node health, API latency, and real-time synchronization services.",
       status: "Active",
-      statusColor: "text-emerald-500"
+      statusColor: "text-emerald-500",
+      path: "#"
     }
   ];
 
@@ -54,7 +66,7 @@ export default function SystemControlPage() {
         {controlSections.map((section) => (
           <div 
             key={section.title}
-            className="group bg-card border border-border p-8 rounded-xl shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 relative overflow-hidden"
+            className="group bg-card border border-border p-8 rounded-xl shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 relative overflow-hidden flex flex-col"
           >
             {/* Background Accent */}
             <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
@@ -77,9 +89,15 @@ export default function SystemControlPage() {
                 {section.description}
               </p>
 
-              <button className="h-10 w-full rounded-lg bg-muted border border-border text-[11px] font-bold text-foreground uppercase tracking-widest hover:bg-primary hover:text-white hover:border-primary transition-all active:scale-[0.98]">
-                Configure Parameters
-              </button>
+              {section.path.startsWith("/") ? (
+                <a href={section.path} className="flex items-center justify-center h-10 w-full rounded-lg bg-muted border border-border text-[11px] font-bold text-foreground uppercase tracking-widest hover:bg-primary hover:text-white hover:border-primary transition-all active:scale-[0.98]">
+                  Configure Parameters
+                </a>
+              ) : (
+                <button className="h-10 w-full rounded-lg bg-muted border border-border text-[11px] font-bold text-foreground uppercase tracking-widest hover:bg-primary hover:text-white hover:border-primary transition-all active:scale-[0.98]">
+                  Configure Parameters
+                </button>
+              )}
             </div>
           </div>
         ))}

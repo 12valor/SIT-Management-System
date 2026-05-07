@@ -255,6 +255,13 @@ exports.Prisma.NotificationScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.SystemSettingScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -309,7 +316,8 @@ exports.Prisma.ModelName = {
   LogbookEntry: 'LogbookEntry',
   SITEvaluation: 'SITEvaluation',
   SITDocument: 'SITDocument',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  SystemSetting: 'SystemSetting'
 };
 
 /**
