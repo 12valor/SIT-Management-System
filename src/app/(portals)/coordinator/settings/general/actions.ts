@@ -38,7 +38,7 @@ export async function updateHeroSlides(formData: FormData) {
     }
 
     revalidatePath("/");
-    revalidatePath("/coordinator/settings/general");
+    revalidatePath("/coordinator/settings");
     
     return { success: true };
   } catch (error: any) {
