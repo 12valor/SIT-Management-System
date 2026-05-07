@@ -3,6 +3,8 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, CheckCircle2, XCircle, X } from "lucide-react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export type AuthStatus = "idle" | "loading" | "success" | "error";
 
@@ -20,54 +22,90 @@ export function AuthStatusModal({ status, message, onClose }: AuthStatusModalPro
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 dark:bg-black/60 backdrop-blur-[2px] p-6"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background/80 backdrop-blur-md p-6"
         >
-          <motion.div
-            initial={{ scale: 0.96, opacity: 0, y: 8 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.96, opacity: 0, y: 4 }}
-            transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-            className="bg-white dark:bg-[#161616] rounded-xl p-8 max-w-xs w-full shadow-xl relative border border-slate-200/60 dark:border-white/10"
-          >
-            {status === "error" && onClose && (
-              <button 
-                onClick={onClose} 
-                className="absolute top-4 right-4 p-1.5 rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:text-white dark:hover:bg-white/10 transition-colors"
-                aria-label="Close"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-            
-            <div className="flex flex-col items-center text-center gap-4">
-              {status === "loading" && (
-                <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center mb-2">
-                  <Loader2 className="w-6 h-6 animate-spin text-slate-900 dark:text-white" />
-                </div>
-              )}
-              {status === "success" && (
-                <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center mb-2">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-                </div>
-              )}
-              {status === "error" && (
-                <div className="w-12 h-12 rounded-full bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center mb-2">
-                  <XCircle className="w-6 h-6 text-rose-600 dark:text-rose-400" />
-                </div>
-              )}
+          {status === "error" && onClose && (
+            <button 
+              onClick={onClose} 
+              className="absolute top-8 right-8 p-3 rounded-full text-foreground/40 hover:text-foreground hover:bg-muted transition-all active:scale-95"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+
+          <div className="flex flex-col items-center gap-8 text-center max-w-sm w-full">
+            {/* Logo/Icon Section */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              key={status}
+              className="relative"
+            >
+              <div className={cn(
+                "absolute inset-0 rounded-full blur-2xl animate-pulse",
+                status === "loading" && "bg-primary/10",
+                status === "success" && "bg-emerald-500/10",
+                status === "error" && "bg-rose-500/10"
+              )} />
               
-              <div className="space-y-1">
-                <h3 className="font-semibold text-base text-slate-900 dark:text-white">
-                  {status === "loading" && "Authenticating"}
-                  {status === "success" && "Access Granted"}
-                  {status === "error" && "Access Denied"}
-                </h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  {message || (status === "loading" ? "Validating credentials..." : "")}
-                </p>
+              {status === "loading" && (
+                <Image 
+                  src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                  alt="TUP Seal" 
+                  width={80}
+                  height={80}
+                  className="relative z-10 h-20 w-auto object-contain"
+                />
+              )}
+
+              {status === "success" && (
+                <div className="relative z-10 h-20 w-20 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                  <CheckCircle2 className="h-10 w-10 text-emerald-500" strokeWidth={1.5} />
+                </div>
+              )}
+
+              {status === "error" && (
+                <div className="relative z-10 h-20 w-20 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20">
+                  <XCircle className="h-10 w-10 text-rose-500" strokeWidth={1.5} />
+                </div>
+              )}
+            </motion.div>
+
+            {/* Content Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                {status === "loading" && "Authenticating"}
+                {status === "success" && "Access Granted"}
+                {status === "error" && "Access Denied"}
+              </h2>
+              
+              <div className="flex flex-col items-center gap-3">
+                {status === "loading" && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin text-primary opacity-50" />
+                    <span className="text-sm font-medium">{message || "Validating credentials..."}</span>
+                  </div>
+                )}
+                
+                {(status === "success" || status === "error") && (
+                  <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+                    {message}
+                  </p>
+                )}
               </div>
             </div>
-          </motion.div>
+
+            {/* Error Action */}
+            {status === "error" && onClose && (
+              <button
+                onClick={onClose}
+                className="mt-4 px-6 py-2 text-xs font-bold uppercase tracking-widest text-foreground/60 hover:text-foreground transition-all"
+              >
+                Try Again
+              </button>
+            )}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
