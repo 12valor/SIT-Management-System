@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
-  const [activePlacements, verifiedPartners, jobPostings, hoursResult, heroSetting] = await Promise.all([
+  const [activePlacements, verifiedPartners, jobPostings, hoursResult] = await Promise.all([
     prisma.application.count({ where: { status: "ACCEPTED" } }),
     prisma.company.count({ where: { isVerified: true } }),
     prisma.sITPosting.count({ where: { status: "OPEN" } }),
@@ -12,11 +12,10 @@ export default async function Home() {
       _sum: { hours: true },
       where: { status: "APPROVED" },
     }),
-    prisma.$queryRaw<any[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`.catch(() => null),
   ]);
 
   const verifiedHours = hoursResult._sum.hours || 0;
-  const customSlides = heroSetting && heroSetting.length > 0 ? JSON.parse(heroSetting[0].value) : null;
+  const customSlides = null; // Temporarily disabled to debug TypeError
 
   return (
     <div className="flex flex-col">
