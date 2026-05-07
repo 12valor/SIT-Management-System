@@ -118,57 +118,35 @@ export default async function Home() {
           </div>
         </section>
         {/* Section 03 — Institutional Impact (By the Numbers) */}
-        <section className="py-32 bg-white dark:bg-background relative overflow-hidden transition-colors duration-300">
-          {/* Subtle architectural grid background */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.02] dark:opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)', backgroundSize: '120px 120px' }} />
-          
-          <div className="container mx-auto px-6 max-w-7xl relative z-10">
-            <div className="flex flex-col lg:flex-row gap-20 items-start">
-              {/* Left Column: Context */}
-              <div className="lg:w-1/3 lg:sticky lg:top-32 space-y-8 pt-8 z-20">
-                <Reveal>
-                  <div className="inline-flex items-center gap-4 mb-4">
-                    <span className="w-12 h-[1px] bg-primary"></span>
-                    <span className="text-primary font-bold tracking-[0.2em] uppercase text-[10px]">Ecosystem Scale</span>
-                  </div>
-                  <h2 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white leading-[1.1]">
-                    Institutional <br/>
-                    <span className="italic text-slate-400 dark:text-slate-500">Impact</span>
-                  </h2>
-                  <p className="text-slate-600 dark:text-slate-400 font-serif leading-relaxed mt-8 text-lg">
-                    Real-time operational metrics reflecting the ongoing collaboration between academic excellence and industrial leadership within the SIT framework.
-                  </p>
-                </Reveal>
-              </div>
+        <section className="py-24 bg-white dark:bg-background relative transition-colors duration-300">
+          <div className="container mx-auto px-6 max-w-6xl">
+            <Reveal className="text-center mb-16">
+              <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
+                Ecosystem Scale
+              </span>
+              <h2 className="text-4xl font-serif font-medium text-slate-900 dark:text-white mb-4">
+                Institutional Impact
+              </h2>
+            </Reveal>
 
-              {/* Right Column: Metrics Grid */}
-              <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-20 relative z-10">
-                {[
-                  { value: activePlacements.toLocaleString(), label: "Active Placements", desc: "Trainees currently deployed", offset: false },
-                  { value: verifiedPartners.toLocaleString(), label: "Verified Partners", desc: "Accredited institutions", offset: true },
-                  { value: jobPostings.toLocaleString(), label: "Job Postings", desc: "Open industrial opportunities", offset: false },
-                  { value: verifiedHours.toLocaleString(), label: "Verified Hours", desc: "Total logged training time", offset: true },
-                ].map((stat, i) => (
-                  <Reveal key={stat.label} delay={0.1 * i} className={`relative group ${stat.offset ? 'sm:mt-24' : ''}`}>
-                    <div className="absolute -inset-6 bg-[#fafaf9] dark:bg-white/[0.02] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
-                    <div className="absolute -left-6 top-6 bottom-6 w-[2px] bg-gradient-to-b from-primary/0 via-primary/30 to-primary/0 scale-y-0 group-hover:scale-y-100 transition-transform duration-700 origin-top" />
-                    
-                    <div className="pl-6 border-l border-slate-200 dark:border-white/10 group-hover:border-transparent transition-colors duration-500">
-                      <span className="block text-6xl md:text-8xl font-serif font-light tracking-tighter text-slate-900 dark:text-white mb-4 group-hover:-translate-y-2 transition-transform duration-500">
-                        {stat.value}
-                      </span>
-                      <div className="space-y-2">
-                        <span className="block text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
-                          {stat.label}
-                        </span>
-                        <span className="block text-[13px] font-serif text-slate-500 dark:text-slate-400 italic">
-                          {stat.desc}
-                        </span>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { value: activePlacements.toLocaleString(), label: "Active Placements" },
+                { value: verifiedPartners.toLocaleString(), label: "Verified Partners" },
+                { value: jobPostings.toLocaleString(), label: "Job Postings" },
+                { value: verifiedHours.toLocaleString(), label: "Verified Hours" },
+              ].map((stat, i) => (
+                <Reveal key={stat.label} delay={0.1 * i} className="h-full">
+                  <div className="group flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-10 h-full transition-all duration-500 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+                    <span className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-4 block group-hover:scale-105 transition-transform duration-500">
+                      {stat.value}
+                    </span>
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+                      {stat.label}
+                    </span>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
