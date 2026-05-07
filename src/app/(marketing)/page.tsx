@@ -4,6 +4,11 @@ import { Reveal } from "@/components/Reveal";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
+  interface SystemSetting {
+    key: string;
+    value: string;
+  }
+
   const [activePlacements, verifiedPartners, jobPostings, hoursResult, heroSetting] = await Promise.all([
     prisma.application.count({ where: { status: "ACCEPTED" } }),
     prisma.company.count({ where: { isVerified: true } }),
@@ -12,7 +17,7 @@ export default async function Home() {
       _sum: { hours: true },
       where: { status: "APPROVED" },
     }),
-    prisma.$queryRaw<any[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`.catch(() => null),
+    prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`.catch(() => null),
   ]);
 
   const verifiedHours = hoursResult._sum.hours || 0;

@@ -3,6 +3,13 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+interface SystemSetting {
+  id: string;
+  key: string;
+  value: string;
+  updatedAt: Date;
+}
+
 export async function updateHeroSlides(formData: FormData) {
   try {
     const slide1 = formData.get("slide1") as string;
@@ -10,7 +17,7 @@ export async function updateHeroSlides(formData: FormData) {
     const slide3 = formData.get("slide3") as string;
 
     // Use raw query to avoid runtime error if Prisma hasn't been regenerated
-    const existingSetting: any[] = await prisma.$queryRaw`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`;
+    const existingSetting = await prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`;
     
     let currentSlides = [];
     if (existingSetting && existingSetting.length > 0) {
@@ -41,18 +48,20 @@ export async function updateHeroSlides(formData: FormData) {
     revalidatePath("/coordinator/settings");
     
     return { success: true };
-  } catch (error: any) {
-    console.error("Error updating settings:", error);
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+    console.error("Error updating settings:", errorMessage);
+    return { success: false, error: errorMessage };
   }
 }
 
 export async function getHeroSlides() {
     try {
-        const setting: any[] = await prisma.$queryRaw`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`;
+        const setting = await prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`;
         if (setting && setting.length > 0) return JSON.parse(setting[0].value);
         return null;
     } catch (error) {
+        console.error("Error fetching settings:", error);
         return null;
     }
 }

@@ -24,9 +24,15 @@ const TABS = [
   { id: "infrastructure", name: "System Health", icon: Server, description: "Infrastructure monitoring and API status." },
 ];
 
+interface HeroSlide {
+  image: string;
+  title: string;
+  description: string;
+}
+
 export function SettingsTabs() {
   const [activeTab, setActiveTab] = useState("website");
-  const [slides, setSlides] = useState<any[]>([]);
+  const [slides, setSlides] = useState<HeroSlide[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
