@@ -1,44 +1,14 @@
-"use client";
-
 import Link from "next/link";
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { Reveal } from "@/components/Reveal";
+import prisma from "@/lib/prisma";
 
-function Reveal({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px 0px" });
-
-  // Impeccable Motion Law: Exponential Ease-Out
-  const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ 
-        duration: 0.9, 
-        delay, 
-        ease: EASE_EXPO,
-        opacity: { duration: 1.2 }
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-export default function Home() {
+export default async function Home() {
+  const [activePlacements, verifiedPartners, jobPostings] = await Promise.all([
+    prisma.application.count({ where: { status: "ACCEPTED" } }),
+    prisma.company.count({ where: { isVerified: true } }),
+    prisma.sITPosting.count({ where: { status: "OPEN" } }),
+  ]);
   return (
     <div className="flex flex-col">
       <main>
@@ -146,9 +116,9 @@ export default function Home() {
           <div className="container mx-auto px-6 max-w-6xl">
             <div className="grid grid-cols-1 md:grid-cols-3 border border-slate-200 dark:border-white/10 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-white/10">
               {[
-                { value: "450+", label: "Active Placements" },
-                { value: "85", label: "Verified Partners" },
-                { value: "120+", label: "Job Postings" },
+                { value: activePlacements, label: "Active Placements" },
+                { value: verifiedPartners, label: "Verified Partners" },
+                { value: jobPostings, label: "Job Postings" },
               ].map((stat, i) => (
                 <div key={stat.label} className="group p-12 flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] hover:bg-white dark:hover:bg-[#050505] transition-colors duration-500">
                   <Reveal delay={0.1 * i} className="flex flex-col items-center">
