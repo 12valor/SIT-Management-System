@@ -17,11 +17,11 @@ import { cn } from "@/lib/utils";
 import { updateHeroSlides, getHeroSlides } from "./general/actions";
 
 const TABS = [
-  { id: "website", name: "Website Assets", icon: Globe, description: "Manage landing page hero carousel and branding." },
-  { id: "security", name: "Security & Access", icon: Lock, description: "Authentication policies and session management." },
-  { id: "registry", name: "Institutional Registry", icon: Shield, description: "Department codes and university identifiers." },
-  { id: "database", name: "Database Maintenance", icon: Database, description: "Integrity checks and archival protocols." },
-  { id: "infrastructure", name: "System Health", icon: Server, description: "Infrastructure monitoring and API status." },
+  { id: "website", name: "Website Assets", icon: Globe, description: "Hero carousel and branding." },
+  { id: "security", name: "Security & Access", icon: Lock, description: "Auth policies." },
+  { id: "registry", name: "Institutional Registry", icon: Shield, description: "University identifiers." },
+  { id: "database", name: "Database Maintenance", icon: Database, description: "Archival protocols." },
+  { id: "infrastructure", name: "System Health", icon: Server, description: "API status." },
 ];
 
 interface HeroSlide {
@@ -80,175 +80,159 @@ export function SettingsTabs() {
     
     setIsSaving(false);
     if (result.success) {
-      setMessage({ type: 'success', text: "Website configuration synchronized successfully." });
+      setMessage({ type: 'success', text: "System state synchronized" });
       setPreviews(["", "", ""]);
       const data = await getHeroSlides();
       if (data) setSlides(data);
     } else {
-      setMessage({ type: 'error', text: "Failed to update system settings." });
+      setMessage({ type: 'error', text: "Synchronization failure" });
     }
   };
 
   const defaultSlides = [
-    { title: "Slide 1", image: "/images/hero/industrial-1.png" },
-    { title: "Slide 2", image: "/images/hero/industrial-2.png" },
-    { title: "Slide 3", image: "/images/hero/industrial-3.png" },
+    { title: "Slide 1", image: "/images/hero/industrial-1.png", description: "" },
+    { title: "Slide 2", image: "/images/hero/industrial-2.png", description: "" },
+    { title: "Slide 3", image: "/images/hero/industrial-3.png", description: "" },
   ];
 
   const currentSlides = slides.length > 0 ? slides : defaultSlides;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
       {/* Sidebar Navigation */}
-      <aside className="w-full lg:w-80 flex flex-col gap-2">
+      <aside className="lg:col-span-1 space-y-1">
+        <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest mb-4 px-4">Management Nodes</p>
         {TABS.map((tab) => {
-          const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "flex items-start gap-4 p-4 rounded-xl text-left transition-all duration-300 border-2",
+                "w-full flex items-center gap-3 px-4 py-3 text-sm transition-all border-l-2",
                 isActive 
-                  ? "bg-primary/5 border-primary/20 shadow-sm" 
-                  : "bg-card border-transparent hover:border-border"
+                  ? "bg-primary/5 border-primary text-foreground font-semibold" 
+                  : "border-transparent text-foreground/60 hover:text-foreground hover:bg-muted/50"
               )}
             >
-              <div className={cn(
-                "h-10 w-10 rounded-lg flex items-center justify-center shrink-0 transition-colors",
-                isActive ? "bg-primary text-white" : "bg-muted text-muted-foreground"
-              )}>
-                <Icon className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col gap-0.5">
-                <span className={cn(
-                  "text-sm font-bold tracking-tight",
-                  isActive ? "text-foreground" : "text-muted-foreground"
-                )}>
-                  {tab.name}
-                </span>
-                <span className="text-[11px] text-muted-foreground leading-tight line-clamp-1">
-                  {tab.description}
-                </span>
-              </div>
+              <tab.icon className={cn("h-4 w-4", isActive ? "text-primary" : "opacity-40")} />
+              {tab.name}
             </button>
           );
         })}
       </aside>
 
       {/* Content Area */}
-      <div className="flex-1 min-w-0">
-        <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden min-h-[600px]">
-          {activeTab === "website" && (
-            <div className="p-8 lg:p-12 animate-in-fade">
-              <div className="mb-10">
-                <h3 className="text-xl font-bold text-foreground mb-2">Institutional Hero Assets</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                  Configure the primary visual narrative of the portal. These high-impact images are the first thing 
-                  industrial partners and students see upon entering the platform.
-                </p>
-              </div>
-
-              {message && (
-                <div className={cn(
-                  "mb-8 p-4 rounded-xl border flex items-center gap-3 animate-in-slide-down",
-                  message.type === 'success' 
-                    ? "bg-emerald-50/50 border-emerald-100 text-emerald-700" 
-                    : "bg-rose-50/50 border-rose-100 text-rose-700"
-                )}>
-                  {message.type === 'success' ? <CheckCircle2 className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
-                  <span className="text-xs font-bold uppercase tracking-widest">{message.text}</span>
-                </div>
-              )}
-
-              {isLoading ? (
-                <div className="flex items-center justify-center h-64">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-              ) : (
-                <form onSubmit={handleSave} className="space-y-10">
-                  <div className="grid md:grid-cols-3 gap-6">
-                    {[0, 1, 2].map((index) => {
-                      const slide = currentSlides[index];
-                      const preview = previews[index];
-                      const displayImage = preview || slide?.image || "";
-
-                      return (
-                        <div key={index} className="space-y-4">
-                          <div className="relative aspect-[4/5] rounded-2xl bg-muted border-2 border-dashed border-border overflow-hidden flex flex-col items-center justify-center group transition-all hover:border-primary/40">
-                            {displayImage ? (
-                              <Image 
-                                src={displayImage} 
-                                alt={`Slide ${index + 1}`} 
-                                fill 
-                                className="object-cover"
-                                unoptimized
-                              />
-                            ) : (
-                              <div className="text-muted-foreground group-hover:text-primary transition-colors flex flex-col items-center gap-2">
-                                <Upload className="h-8 w-8" />
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Upload Asset</span>
-                              </div>
-                            )}
-                            
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                              <div className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
-                                <Upload className="h-5 w-5" />
-                              </div>
-                              <span className="text-white text-[10px] font-bold uppercase tracking-[0.2em]">Update Slide</span>
-                            </div>
-
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => handleFileChange(e, index)}
-                              className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                            />
-                          </div>
-                          <div className="px-1">
-                            <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-1">Slide 0{index + 1}</h4>
-                            <p className="text-xs text-muted-foreground line-clamp-1 font-medium">{slide?.title || "Default Technical Asset"}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="flex items-center justify-between pt-8 border-t border-border">
-                    <p className="text-[11px] text-muted-foreground font-medium italic">
-                      * Maximum file size per asset: 4MB. Recommended aspect ratio: 4:5 or 16:9.
-                    </p>
-                    <button
-                      type="submit"
-                      disabled={isSaving || (!previews[0] && !previews[1] && !previews[2])}
-                      className="inline-flex items-center justify-center h-12 px-10 bg-primary text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-xl shadow-lg shadow-primary/20 disabled:opacity-50 transition-all hover:translate-y-[-2px] active:translate-y-[0px]"
-                    >
-                      {isSaving ? <Loader2 className="h-4 w-4 animate-spin mr-3" /> : null}
-                      {isSaving ? "Synchronizing..." : "Update System Config"}
-                    </button>
-                  </div>
-                </form>
-              )}
+      <div className="lg:col-span-3 space-y-8">
+        {activeTab === "website" && (
+          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-10 animate-in-fade">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground">Landing Page Assets</h3>
+              <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Public-Facing Visuals</p>
             </div>
-          )}
 
-          {activeTab !== "website" && (
-            <div className="flex flex-col items-center justify-center h-[600px] p-12 text-center">
-              <div className="h-20 w-20 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground mb-6">
-                <Settings className="h-10 w-10 opacity-20" />
+            {message && (
+              <div className={cn(
+                "p-4 rounded-lg border flex items-center gap-3 animate-in-slide-down",
+                message.type === 'success' 
+                  ? "bg-emerald-500/5 border-emerald-500/20 text-emerald-600" 
+                  : "bg-rose-500/5 border-rose-500/20 text-rose-600"
+              )}>
+                {message.type === 'success' ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+                <span className="text-[10px] font-mono uppercase tracking-widest font-bold">{message.text}</span>
               </div>
-              <h3 className="text-lg font-bold text-foreground mb-2 capitalize">{activeTab} Controls Restricted</h3>
-              <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-                This administrative module is currently in read-only mode while the system undergoes 
-                scheduled architectural maintenance.
+            )}
+
+            {isLoading ? (
+              <div className="flex items-center justify-center h-64">
+                <Loader2 className="h-8 w-8 animate-spin text-primary opacity-20" />
+              </div>
+            ) : (
+              <form onSubmit={handleSave} className="space-y-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {[0, 1, 2].map((index) => {
+                    const slide = currentSlides[index];
+                    const preview = previews[index];
+                    const displayImage = preview || slide?.image || "";
+
+                    return (
+                      <div key={index} className="space-y-4 group">
+                        <div className="flex items-center justify-between">
+                          <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Slide 0{index + 1}</p>
+                        </div>
+                        <div className="relative aspect-[4/5] bg-muted border border-border rounded-lg overflow-hidden transition-all group-hover:border-primary/50 group-hover:shadow-lg group-hover:shadow-primary/5">
+                          {displayImage ? (
+                            <Image 
+                              src={displayImage} 
+                              alt={`Slide ${index + 1}`} 
+                              fill 
+                              className="object-cover"
+                              unoptimized
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                              <Upload className="h-6 w-6 text-foreground/20" />
+                              <span className="text-[10px] font-mono text-foreground/30 uppercase tracking-widest">Null Asset</span>
+                            </div>
+                          )}
+                          
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-3 backdrop-blur-[2px]">
+                            <div className="h-10 w-10 rounded-full bg-white text-black flex items-center justify-center">
+                              <Upload className="h-5 w-5" />
+                            </div>
+                            <span className="text-white text-[10px] font-bold uppercase tracking-widest">Replace Asset</span>
+                          </div>
+
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, index)}
+                            className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                          />
+                        </div>
+                        <div className="space-y-1 px-1">
+                          <p className="text-xs font-semibold text-foreground line-clamp-1">{slide?.title || "Technical Asset"}</p>
+                          <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Verified Reference</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="flex items-center justify-between pt-8 border-t border-border">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest italic">Constraint: 4MB Limit</p>
+                    <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Protocol: 4:5 Portrait</p>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSaving || (!previews[0] && !previews[1] && !previews[2])}
+                    className="inline-flex items-center justify-center h-10 px-8 bg-foreground text-background text-[10px] font-bold uppercase tracking-[0.2em] rounded-md transition-all hover:bg-foreground/90 disabled:opacity-30 disabled:translate-y-0 active:scale-[0.98]"
+                  >
+                    {isSaving && <Loader2 className="h-3 w-3 animate-spin mr-3" />}
+                    {isSaving ? "Synchronizing..." : "Sync State"}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        )}
+
+        {activeTab !== "website" && (
+          <div className="bg-card border border-border p-12 rounded-xl shadow-sm min-h-[400px] flex flex-col items-center justify-center text-center space-y-6">
+            <div className="h-16 w-16 bg-muted border border-border rounded-lg flex items-center justify-center text-foreground/20">
+              <Lock className="h-8 w-8" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-foreground uppercase tracking-widest italic">Node Restricted</h3>
+              <p className="text-xs text-foreground/50 max-w-xs leading-relaxed">
+                Module for {activeTab.replace(/_/g, ' ')} management is currently undergoing maintenance.
               </p>
             </div>
-          )}
-        </div>
+            <p className="text-[10px] font-mono text-foreground/30 uppercase tracking-widest">Protocol Version v5.2.0</p>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-import { Settings } from "lucide-react";
