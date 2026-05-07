@@ -6,12 +6,12 @@ export default function SystemControlPage() {
   return (
     <div className="flex-1 space-y-12">
       {/* 1. Header Section */}
-      <div className="pb-8 border-b border-border/40">
-        <h2 className="text-2xl font-light text-foreground tracking-tight">
+      <div className="pb-6 border-b border-border">
+        <h2 className="text-2xl font-semibold text-foreground">
           System Control
         </h2>
-        <p className="text-[13px] text-foreground/40 mt-2 font-light tracking-wide">
-          Administrative terminal for the SIT Management System
+        <p className="text-sm text-muted-foreground mt-1">
+          Configure platform settings and public assets.
         </p>
       </div>
 
