@@ -78,18 +78,18 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --font-sans: var(--font-poppins);
-  --font-heading: var(--font-montserrat);
-  --font-premium: var(--font-outfit);
-  --font-serif: var(--font-serif);
+  --font-heading: var(--font-poppins);
+  --font-premium: var(--font-poppins);
+  --font-serif: var(--font-poppins);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 font-light;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans font-light;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -101,7 +101,7 @@
     @apply bg-primary text-white;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold tracking-tight;
+    @apply font-sans font-light tracking-tight;
   }
 }
 

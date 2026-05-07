@@ -44,17 +44,17 @@ export function DashboardHeader({
       </button>
       
       <div className="flex-1">
-        <p className="text-xs font-medium text-foreground">
+        <p className="text-xs font-light text-foreground uppercase tracking-widest">
           {activeItem?.name || "Dashboard"}
         </p>
       </div>
  
       <div className="flex items-center gap-6">
         <div className="text-right hidden sm:block">
-          <p className="text-xs font-medium text-foreground">
+          <p className="text-xs font-light text-foreground">
             {session?.user?.name || "Unauthorized"}
           </p>
-          <p className="text-[10px] text-foreground/70 font-medium">
+          <p className="text-[10px] text-foreground/40 font-thin uppercase tracking-wider">
             {roleTitle}
           </p>
         </div>
