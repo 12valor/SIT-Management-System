@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Facebook, Instagram, ChevronRight } from "lucide-react";
+import { Facebook, ChevronRight } from "lucide-react";
 
 export function Footer() {
   const pathname = usePathname();
@@ -49,14 +49,7 @@ export function Footer() {
               <Link href="https://www.facebook.com/tupvisayas.sitprogram" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
                 <Facebook className="w-4.5 h-4.5" />
               </Link>
-              <Link href="#" className="w-9 h-9 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
-                <Instagram className="w-4.5 h-4.5" />
-              </Link>
-              <Link href="#" className="w-9 h-9 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all cursor-pointer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4.5 h-4.5">
-                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                </svg>
-              </Link>
+
             </div>
           </div>
 
