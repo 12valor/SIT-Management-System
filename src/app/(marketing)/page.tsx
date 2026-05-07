@@ -144,12 +144,11 @@ export default function Home() {
         {/* Section 03 — Institutional Impact (By the Numbers) */}
         <section className="py-24 bg-white dark:bg-background relative transition-colors duration-300">
           <div className="container mx-auto px-6 max-w-6xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 border border-slate-200 dark:border-white/10 divide-x divide-y md:divide-y-0 divide-slate-200 dark:divide-white/10">
+            <div className="grid grid-cols-1 md:grid-cols-3 border border-slate-200 dark:border-white/10 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-white/10">
               {[
                 { value: "450+", label: "Active Placements" },
                 { value: "85", label: "Verified Partners" },
-                { value: "12.5k", label: "Hours Logged" },
-                { value: "100%", label: "Audit Compliance" },
+                { value: "120+", label: "Job Postings" },
               ].map((stat, i) => (
                 <div key={stat.label} className="group p-12 flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] hover:bg-white dark:hover:bg-[#050505] transition-colors duration-500">
                   <Reveal delay={0.1 * i} className="flex flex-col items-center">
