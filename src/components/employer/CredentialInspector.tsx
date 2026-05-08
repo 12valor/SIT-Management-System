@@ -32,7 +32,7 @@ interface StudentDocument {
   name: string;
   type: string;
   url: string | null;
-  uploadedAt: Date;
+  uploadedAt: Date | string;
 }
 
 interface StudentEvaluation {
@@ -40,7 +40,8 @@ interface StudentEvaluation {
   companyName: string;
   overallGrade: number;
   comments: string;
-  submittedAt: Date;
+  submittedAt: Date | string;
+  [key: string]: any; // Allow for extra Prisma fields
 }
 
 interface StudentData {
@@ -49,7 +50,7 @@ interface StudentData {
   email: string | null;
   course: string | null;
   image: string | null;
-  createdAt: Date;
+  createdAt?: Date | string;
   documents: StudentDocument[];
   evaluations: StudentEvaluation[];
 }
@@ -71,8 +72,8 @@ export function CredentialInspector({
         setIsLoading(true);
         setError(null);
         const result = await getStudentCredentials(studentId, applicationId);
-        if (result.success) {
-          setData(result.data);
+        if (result.success && result.data) {
+          setData(result.data as unknown as StudentData);
         } else {
           setError(result.error || "Failed to load credentials");
         }
