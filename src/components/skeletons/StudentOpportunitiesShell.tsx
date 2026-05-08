@@ -2,8 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   Search, 
   CheckCircle2,
@@ -23,22 +22,26 @@ import { applyForOpportunity } from "@/app/(portals)/student/opportunities/actio
 import { SITOpportunity } from "@/app/(portals)/student/opportunities/types";
 
 export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpportunity[] | null }) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [applyingTo, setApplyingTo] = useState<SITOpportunity | null>(null);
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const deepLinkHandled = useRef(false);
 
   useEffect(() => {
     if (initialData) setPostings(initialData);
   }, [initialData]);
 
   useEffect(() => {
-    const applyId = searchParams.get("apply");
-    if (!applyId || postings.length === 0) return;
+    if (deepLinkHandled.current || postings.length === 0) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const applyId = params.get("apply");
+    if (!applyId) return;
+
+    deepLinkHandled.current = true;
 
     const target = postings.find(p => p.id === applyId);
     if (target) {
@@ -48,8 +51,8 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
       }
     }
 
-    router.replace("/student/opportunities", { scroll: false });
-  }, [searchParams, postings, router]);
+    window.history.replaceState({}, "", "/student/opportunities");
+  }, [postings]);
 
   const handleApply = async (postingId: string) => {
     setIsSubmitting(true);

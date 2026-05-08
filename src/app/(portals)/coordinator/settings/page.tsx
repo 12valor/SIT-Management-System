@@ -1,5 +1,4 @@
 import React from "react";
-import { Settings } from "lucide-react";
 import { SettingsTabs } from "./SettingsTabs";
 
 export default function SystemControlPage() {
