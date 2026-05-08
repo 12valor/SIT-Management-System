@@ -121,14 +121,14 @@ function PlacementCard({
                     <span className="text-lg font-bold text-slate-900 dark:text-slate-100">{post.company.name}</span>
                     <BadgeCheck className="h-4 w-4 text-white fill-[#7A0012]" />
                   </div>
-                  <div className="flex items-center gap-4 text-sm font-normal text-slate-700 dark:text-slate-400">
+                  <div className="flex items-center gap-4 text-sm font-normal text-slate-600 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4 text-slate-500" />
+                      <MapPin className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                       {post.location}
                     </div>
                     <span className="text-slate-300 dark:text-slate-700">•</span>
                     <div className="flex items-center gap-1.5">
-                      <Building2 className="h-4 w-4 text-slate-500" />
+                      <Building2 className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                       {post.type.replace('_', '-')}
                     </div>
                   </div>
@@ -219,12 +219,12 @@ function PlacementCard({
                  <Send className="h-6 w-6 text-[#7A0012]" />
                </div>
                <div>
-                 <h4 className="text-sm font-bold text-slate-950 dark:text-white leading-tight">Actively hiring</h4>
-                 <p className="text-[11px] font-light text-slate-700 leading-tight">Be one of the first applicants.</p>
+                 <h4 className="text-sm font-bold text-foreground leading-tight">Actively hiring</h4>
+                 <p className="text-[11px] font-light text-muted-foreground leading-tight">Be one of the first applicants.</p>
                </div>
             </div>
 
-            <div className="h-px bg-slate-100 dark:bg-white/10 w-full" />
+            <div className="h-px bg-border w-full" />
 
             {/* Quick Facts */}
             <div className="space-y-3">
@@ -236,11 +236,11 @@ function PlacementCard({
               ].map((fact, idx) => (
                 <div key={idx} className="flex gap-3 items-center">
                   <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                    <fact.icon className="h-6 w-6 text-slate-800" strokeWidth={1.5} />
+                    <fact.icon className="h-6 w-6 text-slate-700 dark:text-slate-300" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-none mb-0.5">{fact.label}</h5>
-                    <p className="text-[11px] font-light text-slate-700 leading-none">{fact.sub}</p>
+                    <p className="text-[11px] font-light text-slate-600 dark:text-slate-400 leading-none">{fact.sub}</p>
                   </div>
                 </div>
               ))}
@@ -307,7 +307,7 @@ function PlacementCard({
             </button>
 
             <div className="flex items-center gap-4 ml-4">
-              <span className="text-sm font-bold text-slate-600">Share:</span>
+              <span className="text-sm font-bold text-slate-600 dark:text-slate-400">Share:</span>
               <div className="flex items-center gap-2">
                 {[
                   { icon: LinkIcon, action: () => navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id) },
@@ -320,7 +320,7 @@ function PlacementCard({
                   <button 
                     key={i}
                     onClick={s.action}
-                    className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 hover:text-[#7A0012] hover:border-[#7A0012] transition-all"
+                    className="w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-[#7A0012] hover:border-[#7A0012] transition-all"
                   >
                     <s.icon className="h-4 w-4" />
                   </button>
