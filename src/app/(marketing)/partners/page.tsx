@@ -136,7 +136,6 @@ export default function PartnersPage() {
                         </div>
                         <div className="h-3 w-24 bg-slate-100 dark:bg-white/5 rounded" />
                       </div>
-                      <div className="h-10 w-10 rounded-full bg-slate-100 dark:bg-white/5" />
                     </div>
                   </div>
                 </div>
@@ -230,17 +229,6 @@ export default function PartnersPage() {
                             <span className="font-medium text-xs">{partner.slots} Openings</span>
                           </div>
                         </div>
-                        
-                        <Link 
-                          href="#" 
-                          className="group/btn relative w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden transition-all duration-300 shadow-sm active:scale-90"
-                          aria-label={`View details for ${partner.name}`}
-                        >
-                          <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300">
-                            <ArrowRight className="w-4 h-4" />
-                          </span>
-                          <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-                        </Link>
                       </footer>
                     </div>
                   </motion.div>
