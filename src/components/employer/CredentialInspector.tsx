@@ -16,7 +16,7 @@ import {
   Loader2,
   AlertCircle
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { getStudentCredentials } from "@/app/(portals)/employer/applicants/actions";
 
 interface CredentialInspectorProps {
@@ -27,6 +27,33 @@ interface CredentialInspectorProps {
   applicationId: string;
 }
 
+interface StudentDocument {
+  id: string;
+  name: string;
+  type: string;
+  url: string | null;
+  uploadedAt: Date;
+}
+
+interface StudentEvaluation {
+  id: string;
+  companyName: string;
+  overallGrade: number;
+  comments: string;
+  submittedAt: Date;
+}
+
+interface StudentData {
+  id: string;
+  name: string | null;
+  email: string | null;
+  course: string | null;
+  image: string | null;
+  createdAt: Date;
+  documents: StudentDocument[];
+  evaluations: StudentEvaluation[];
+}
+
 export function CredentialInspector({ 
   isOpen, 
   onClose, 
@@ -34,7 +61,7 @@ export function CredentialInspector({
   studentName,
   applicationId 
 }: CredentialInspectorProps) {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<StudentData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -116,9 +143,14 @@ export function CredentialInspector({
                   {/* Profile Section */}
                   <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="flex flex-col items-center md:items-start gap-4">
-                      <div className="h-32 w-32 rounded-2xl bg-foreground/5 border-2 border-dashed border-border flex items-center justify-center text-muted-foreground overflow-hidden">
+                      <div className="h-32 w-32 rounded-2xl bg-foreground/5 border-2 border-dashed border-border flex items-center justify-center text-muted-foreground overflow-hidden relative">
                         {data?.image ? (
-                          <img src={data.image} alt={studentName} className="h-full w-full object-cover" />
+                          <Image 
+                            src={data.image} 
+                            alt={studentName} 
+                            fill
+                            className="object-cover"
+                          />
                         ) : (
                           <User className="h-12 w-12 opacity-20" />
                         )}
@@ -153,7 +185,9 @@ export function CredentialInspector({
                           <Calendar className="h-4 w-4 text-primary mt-0.5" />
                           <div className="space-y-0.5">
                             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Member Since</p>
-                            <p className="text-sm font-medium">{new Date(data?.createdAt).toLocaleDateString()}</p>
+                            <p className="text-sm font-medium">
+                              {data?.createdAt ? new Date(data.createdAt).toLocaleDateString() : 'Unknown'}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -171,7 +205,7 @@ export function CredentialInspector({
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {data?.documents && data.documents.length > 0 ? (
-                        data.documents.map((doc: any) => (
+                        data.documents.map((doc: StudentDocument) => (
                           <div 
                             key={doc.id} 
                             className="group flex items-center justify-between p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-muted/30 transition-all cursor-pointer"
@@ -208,7 +242,7 @@ export function CredentialInspector({
                     
                     {data?.evaluations && data.evaluations.length > 0 ? (
                       <div className="space-y-4">
-                        {data.evaluations.map((evalData: any) => (
+                        {data.evaluations.map((evalData: StudentEvaluation) => (
                           <div key={evalData.id} className="p-4 rounded-xl border border-border bg-muted/10">
                             <div className="flex justify-between items-start mb-2">
                               <h6 className="text-xs font-bold">{evalData.companyName}</h6>
@@ -216,7 +250,7 @@ export function CredentialInspector({
                                 Grade: {evalData.overallGrade.toFixed(1)}
                               </div>
                             </div>
-                            <p className="text-xs text-muted-foreground line-clamp-2 italic">"{evalData.comments}"</p>
+                            <p className="text-xs text-muted-foreground line-clamp-2 italic">&quot;{evalData.comments}&quot;</p>
                           </div>
                         ))}
                       </div>
