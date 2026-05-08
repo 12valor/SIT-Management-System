@@ -155,32 +155,7 @@ export default function ResourcesContent() {
           </motion.section>
 
 
-
         </div>
-
-        {/* Institutional Footer */}
-        <motion.footer 
-          className="mt-40 pt-20 border-t border-slate-900/10 dark:border-white/10"
-          variants={fadeInUp}
-        >
-          <div className="grid md:grid-cols-3 gap-12 text-sm text-slate-500 dark:text-slate-400 font-serif">
-            <div>
-              <h5 className="text-slate-900 dark:text-white font-medium mb-4 uppercase tracking-widest text-[10px]">Strategic Office</h5>
-              <p>Technological University of the Philippines Visayas</p>
-              <p>City of Talisay, Negros Occidental</p>
-            </div>
-            <div>
-              <h5 className="text-slate-900 dark:text-white font-medium mb-4 uppercase tracking-widest text-[10px]">Archival Support</h5>
-              <p>Email: sit.archives@tupv.edu.ph</p>
-              <p>Phone: (034) 495-3480</p>
-            </div>
-            <div className="flex flex-col items-end justify-center">
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30">EST. 1977</p>
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30">OFFICIAL REPOSITORY</p>
-            </div>
-          </div>
-        </motion.footer>
-
       </motion.div>
     </main>
   );
