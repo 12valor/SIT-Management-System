@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { pushNotification } from "@/lib/actions/notifications";
 
 export async function getSITOpportunities() {
   const session = await auth();
@@ -47,7 +48,6 @@ export async function applyForOpportunity(postingId: string) {
   if (!session?.user?.id) return { success: false, error: "Unauthorized" };
 
   try {
-    // Check if already applied
     const existing = await prisma.application.findFirst({
       where: {
         postingId,
@@ -64,6 +64,28 @@ export async function applyForOpportunity(postingId: string) {
         status: 'PENDING'
       }
     });
+
+    const posting = await prisma.sITPosting.findUnique({
+      where: { id: postingId },
+      include: {
+        company: {
+          include: { employers: { select: { id: true } } }
+        }
+      }
+    });
+
+    if (posting?.company?.employers) {
+      const studentName = session.user.name || "A student";
+      for (const employer of posting.company.employers) {
+        await pushNotification({
+          userId: employer.id,
+          title: "New SIT Applicant",
+          message: `${studentName} has applied for the ${posting.title} position.`,
+          type: 'APPLICATION',
+          link: '/employer/applicants'
+        });
+      }
+    }
 
     revalidatePath("/student/opportunities");
     revalidatePath("/student/dashboard");

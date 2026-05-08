@@ -332,7 +332,7 @@ function PlacementCard({
 
         <div className="flex items-center gap-8">
           <Link 
-            href={`/login/student?redirect=/student/opportunities/${post.id}`} 
+            href={`/login/student?redirect=${encodeURIComponent('/student/opportunities?apply=' + post.id)}`} 
             className="group/btn relative w-full sm:w-64 h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98]"
           >
             <span className="relative z-10 flex items-center gap-2 uppercase tracking-widest">

@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
 import { motion } from "framer-motion";
 
 export default function StudentLoginPage() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/student/dashboard";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authStatus, setAuthStatus] = useState<AuthStatus>("idle");
@@ -30,7 +33,7 @@ export default function StudentLoginPage() {
         setAuthStatus("success");
         setAuthMessage("Redirecting to Student Portal...");
         setTimeout(() => {
-          window.location.href = "/student/dashboard";
+          window.location.href = redirectTo;
         }, 800);
       } else {
         setAuthStatus("error");

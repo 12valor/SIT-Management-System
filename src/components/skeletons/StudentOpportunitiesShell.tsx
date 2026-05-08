@@ -2,6 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import Image from "next/image";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { 
   Search, 
@@ -22,6 +23,8 @@ import { applyForOpportunity } from "@/app/(portals)/student/opportunities/actio
 import { SITOpportunity } from "@/app/(portals)/student/opportunities/types";
 
 export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpportunity[] | null }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [applyingTo, setApplyingTo] = useState<SITOpportunity | null>(null);
@@ -32,6 +35,21 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
   useEffect(() => {
     if (initialData) setPostings(initialData);
   }, [initialData]);
+
+  useEffect(() => {
+    const applyId = searchParams.get("apply");
+    if (!applyId || postings.length === 0) return;
+
+    const target = postings.find(p => p.id === applyId);
+    if (target) {
+      const alreadyApplied = target.applications.length > 0;
+      if (!alreadyApplied) {
+        setApplyingTo(target);
+      }
+    }
+
+    router.replace("/student/opportunities", { scroll: false });
+  }, [searchParams, postings, router]);
 
   const handleApply = async (postingId: string) => {
     setIsSubmitting(true);
