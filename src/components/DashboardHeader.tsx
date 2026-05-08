@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ThemeToggle } from "./theme-toggle";
 
 interface Session {
   user?: {
@@ -50,6 +51,8 @@ export function DashboardHeader({
       </div>
  
       <div className="flex items-center gap-6">
+        <ThemeToggle />
+        <div className="h-6 w-px bg-border hidden sm:block" />
         <div className="text-right hidden sm:block">
           <p className="text-sm font-semibold text-foreground">
             {session?.user?.name || "Unauthorized"}
