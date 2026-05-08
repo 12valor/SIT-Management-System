@@ -51,7 +51,7 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
 
     const result = await uploadDocumentMetadata({
       name: docName,
-      type: "PDF",
+      type: file.type.includes("image") ? "IMAGE" : "PDF",
       url: mockUrl
     });
 
@@ -189,7 +189,7 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                                 ) : (
                                   <Clock className="h-3.5 w-3.5" />
                                 )}
-                                Submit PDF
+                                Submit File
                               </button>
                             </motion.div>
                           )}
@@ -231,7 +231,7 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                 <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Compliance Checklist</p>
                 <div className="space-y-3">
                   {[
-                    "Files must be in standardized PDF format",
+                    "Files must be in PDF or standard Image format",
                     "Maximum individual manifest size: 5MB",
                     "Verify digital signatures before archiving",
                     "Credentials are visible to industry partners"

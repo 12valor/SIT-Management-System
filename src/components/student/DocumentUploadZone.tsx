@@ -21,7 +21,7 @@ interface DocumentUploadZoneProps {
 export function DocumentUploadZone({ 
   onUpload, 
   isUploading, 
-  acceptedTypes = ["application/pdf"], 
+  acceptedTypes = ["application/pdf", "image/png", "image/jpeg", "image/webp"], 
   maxSize = 5 
 }: DocumentUploadZoneProps) {
   const [dragActive, setDragActive] = useState(false);
@@ -40,7 +40,7 @@ export function DocumentUploadZone({
 
   const validateFile = (file: File) => {
     if (!acceptedTypes.includes(file.type)) {
-      setError("Invalid file type. Please upload a PDF.");
+      setError("Invalid file type. Please upload a PDF or Image.");
       return false;
     }
     if (file.size > maxSize * 1024 * 1024) {
@@ -129,7 +129,7 @@ export function DocumentUploadZone({
               </div>
               <div className="space-y-1">
                 <p className="text-sm font-bold text-foreground">Drop your credential manifest here</p>
-                <p className="text-[11px] text-muted-foreground font-medium">Supported formats: PDF (Max {maxSize}MB)</p>
+                <p className="text-[11px] text-muted-foreground font-medium">Supported formats: PDF, PNG, JPG (Max {maxSize}MB)</p>
               </div>
               <button 
                 onClick={() => fileInputRef.current?.click()}
