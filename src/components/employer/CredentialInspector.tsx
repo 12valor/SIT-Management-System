@@ -41,7 +41,7 @@ interface StudentEvaluation {
   overallGrade: number;
   comments: string;
   submittedAt: Date | string;
-  [key: string]: any; // Allow for extra Prisma fields
+  [key: string]: unknown; // Allow for extra Prisma fields
 }
 
 interface StudentData {
