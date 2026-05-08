@@ -89,9 +89,7 @@ export function Footer() {
               <ul className="space-y-0">
                 {[
                   { name: "SIT Guidelines", href: "#" },
-                  { name: "Partner Companies", href: "/partners" },
-                  { name: "Digital Logbook Guide", href: "#" },
-                  { name: "Training Modules", href: "#" }
+                  { name: "Partner Companies", href: "/partners" }
                 ].map((link, i) => (
                   <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
                     <Link href={link.href} className="flex items-center gap-3 py-2.5 text-[13px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
@@ -112,7 +110,6 @@ export function Footer() {
               <ul className="space-y-0">
                 {[
                   { name: "About the Platform", href: "/about" },
-                  { name: "UIPEN Strategic Office", href: "#" },
                   { name: "Contact Registry", href: "#" },
                   { name: "Technical Support", href: "#" }
                 ].map((link, i) => (
