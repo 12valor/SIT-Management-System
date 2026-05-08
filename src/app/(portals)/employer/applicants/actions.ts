@@ -76,3 +76,53 @@ export async function updateApplicationStatus(id: string, status: 'ACCEPTED' | '
     return { success: false, error: message };
   }
 }
+
+export async function getStudentCredentials(studentId: string, applicationId: string) {
+  const session = await auth();
+  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+
+  try {
+    const employer = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: { company: true }
+    });
+
+    if (!employer?.companyId) return { success: false, error: "Unauthorized access" };
+
+    // Security check: Verify the student actually applied to a posting from this company
+    const application = await prisma.application.findFirst({
+      where: {
+        id: applicationId,
+        studentId: studentId,
+        posting: { companyId: employer.companyId }
+      }
+    });
+
+    if (!application) return { success: false, error: "Credential record not found or access denied" };
+
+    const student = await prisma.user.findUnique({
+      where: { id: studentId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        course: true,
+        image: true,
+        documents: {
+          orderBy: { uploadedAt: 'desc' }
+        },
+        evaluations: {
+          orderBy: { submittedAt: 'desc' },
+          take: 5
+        }
+      }
+    });
+
+    if (!student) return { success: false, error: "Student profile not found" };
+
+    return { success: true, data: student };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to fetch credentials";
+    return { success: false, error: message };
+  }
+}

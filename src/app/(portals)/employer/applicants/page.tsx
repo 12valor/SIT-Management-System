@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getEmployerApplicants, updateApplicationStatus } from "./actions";
+import { CredentialInspector } from "@/components/employer/CredentialInspector";
 
 type Application = {
   id: string;
@@ -36,6 +37,10 @@ export default function ApplicantsPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery] = useState("");
+  
+  // Inspector State
+  const [selectedApp, setSelectedApp] = useState<{ studentId: string; studentName: string; applicationId: string } | null>(null);
+  const [isInspectorOpen, setIsInspectorOpen] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -53,6 +58,15 @@ export default function ApplicantsPage() {
     if (result.success) {
       setApplications(prev => prev.map(app => app.id === id ? { ...app, status } : app));
     }
+  };
+
+  const openInspector = (app: Application) => {
+    setSelectedApp({
+      studentId: app.student.id,
+      studentName: app.student.name || "Anonymous Student",
+      applicationId: app.id
+    });
+    setIsInspectorOpen(true);
   };
 
   const filteredApps = applications.filter(app => 
@@ -142,9 +156,9 @@ export default function ApplicantsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 pt-4 border-t border-border/50">
+                    <div className="flex flex-col gap-2 pt-4 border-t border-border/50">
                       {app.status === 'PENDING' && (
-                        <>
+                        <div className="flex items-center gap-2">
                           <button 
                             onClick={() => handleUpdateStatus(app.id, 'ACCEPTED')}
                             className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shadow-sm shadow-primary/10"
@@ -157,13 +171,20 @@ export default function ApplicantsPage() {
                           >
                             <XCircle className="h-3.5 w-3.5" /> Decline
                           </button>
-                        </>
+                        </div>
                       )}
-                      {app.status !== 'PENDING' && (
-                        <button className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-card border border-border text-muted-foreground text-[10px] font-bold uppercase tracking-wider hover:text-primary hover:border-primary transition-all shadow-sm">
-                          Inspect Credentials <ArrowRight className="h-3.5 w-3.5" />
-                        </button>
-                      )}
+                      
+                      <button 
+                        onClick={() => openInspector(app)}
+                        className={cn(
+                          "w-full flex items-center justify-center gap-2 h-9 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm",
+                          app.status === 'PENDING' 
+                            ? "bg-muted text-muted-foreground hover:bg-muted/80" 
+                            : "bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary"
+                        )}
+                      >
+                        Inspect Credentials <ArrowRight className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -179,6 +200,14 @@ export default function ApplicantsPage() {
           );
         })}
       </div>
+
+      <CredentialInspector 
+        isOpen={isInspectorOpen}
+        onClose={() => setIsInspectorOpen(false)}
+        studentId={selectedApp?.studentId || ""}
+        studentName={selectedApp?.studentName || ""}
+        applicationId={selectedApp?.applicationId || ""}
+      />
     </div>
     </Skeleton>
   );
