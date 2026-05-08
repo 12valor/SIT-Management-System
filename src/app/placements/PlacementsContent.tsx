@@ -138,7 +138,7 @@ function PlacementCard({
           </div>
 
           {/* Description */}
-          <p className="text-slate-800 dark:text-slate-300 text-[15px] leading-relaxed font-normal max-w-3xl">
+          <p className="text-slate-700 dark:text-slate-300 text-[15px] leading-relaxed font-normal max-w-3xl">
             {post.description}
           </p>
 
@@ -158,7 +158,7 @@ function PlacementCard({
                   {post.responsibilities.map((res, i) => (
                     <li key={i} className="flex items-start gap-3 group">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
-                      <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{res}</span>
+                      <span className="text-[15px] font-light text-slate-700 dark:text-slate-300 leading-relaxed">{res}</span>
                     </li>
                   ))}
                 </ul>
@@ -177,7 +177,7 @@ function PlacementCard({
                   {post.requirements.map((req, i) => (
                     <li key={i} className="flex items-start gap-3 group">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
-                      <span className="text-[15px] font-light text-slate-800 dark:text-slate-300 leading-relaxed">{req}</span>
+                      <span className="text-[15px] font-light text-slate-700 dark:text-slate-300 leading-relaxed">{req}</span>
                     </li>
                   ))}
                 </ul>
@@ -199,7 +199,7 @@ function PlacementCard({
                   {post.tags.map((tag, idx) => (
                     <span 
                       key={idx}
-                      className="px-3 py-1 bg-slate-50 dark:bg-white/5 text-[15px] font-light text-slate-800 dark:text-slate-300 border border-slate-100 dark:border-white/10 rounded-full hover:border-[#7A0012]/30 transition-colors"
+                      className="px-3 py-1 bg-slate-50 dark:bg-white/5 text-[15px] font-light text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-white/10 rounded-full hover:border-[#7A0012]/30 transition-colors"
                     >
                       {tag}
                     </span>
@@ -273,14 +273,14 @@ function PlacementCard({
                        <info.icon className="h-6 w-6 text-slate-800" strokeWidth={1.5} />
                      </div>
                      <div className="min-w-0 flex-1">
-                       <p className="text-[10px] font-bold text-slate-950 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
+                       <p className="text-[10px] font-bold text-slate-950 dark:text-slate-200 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
                        {info.isLink ? (
                          <a href={info.url || "#"} target="_blank" rel="noopener noreferrer" className="text-[13px] font-light text-[#7A0012] flex items-center gap-1 truncate transition-colors hover:opacity-80">
                            {info.value}
                            <ExternalLink className="h-3 w-3 shrink-0" />
                          </a>
                        ) : (
-                         <p className="text-[13px] font-light text-slate-800 dark:text-slate-200 truncate tracking-tight">{info.value}</p>
+                         <p className="text-[13px] font-light text-slate-700 dark:text-slate-300 truncate tracking-tight">{info.value}</p>
                        )}
                      </div>
                    </div>
