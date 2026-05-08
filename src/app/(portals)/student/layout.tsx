@@ -13,7 +13,8 @@ import {
   User as UserIcon, 
   LogOut,
   X,
-  Award
+  Award,
+  Building2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +36,8 @@ export default function StudentLayout({
   const handleSignOut = async () => {
     setIsSigningOut(true);
     await new Promise(resolve => setTimeout(resolve, 800));
-    signOut({ callbackUrl: "/login" });
+    await signOut({ redirect: false });
+    window.location.href = "/login";
   };
 
   React.useEffect(() => {
@@ -51,6 +53,7 @@ export default function StudentLayout({
   const navItems = [
     { name: "Executive Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
     ...(!isPlaced ? [{ name: "Industry Opportunities", href: "/student/opportunities", icon: Briefcase }] : []),
+    { name: "Industry Partners", href: "/partners", icon: Building2 },
     { name: "Digital Logbook", href: "/student/logbook", icon: BookOpen },
     { name: "Training Documents", href: "/student/documents", icon: FileText },
     { name: "SIT Certification", href: "/student/completion", icon: Award },

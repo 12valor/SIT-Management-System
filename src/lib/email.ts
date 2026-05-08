@@ -44,7 +44,7 @@ export async function sendApprovalEmail(to: string, companyName: string) {
           </ul>
           
           <div style="margin: 40px 0;">
-            <a href="${process.env.NEXTAUTH_URL}/login" style="background-color: #0f172a; color: #ffffff; padding: 14px 28px; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block;">
+            <a href="${process.env.AUTH_URL || process.env.NEXTAUTH_URL || ''}/login" style="background-color: #0f172a; color: #ffffff; padding: 14px 28px; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block;">
               Access Institutional Portal
             </a>
           </div>

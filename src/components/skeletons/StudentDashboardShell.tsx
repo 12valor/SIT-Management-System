@@ -198,6 +198,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
               <div className="divide-y divide-slate-50">
                 {[
                   ...(data?.hiredPlacement ? [] : [{ label: "Browse opportunities", href: "/student/opportunities" }]),
+                  { label: "Browse industry partners", href: "/partners" },
                   { label: "Upload documents", href: "/student/documents" },
                   { label: "Request MOA", href: "#" },
                 ].map((link) => (

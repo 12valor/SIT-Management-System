@@ -33,7 +33,8 @@ export default function EmployerLayout({
   const handleSignOut = async () => {
     setIsSigningOut(true);
     await new Promise(resolve => setTimeout(resolve, 800));
-    signOut({ callbackUrl: "/login" });
+    await signOut({ redirect: false });
+    window.location.href = "/login";
   };
 
   useEffect(() => {

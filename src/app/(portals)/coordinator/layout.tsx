@@ -35,7 +35,8 @@ export default function CoordinatorLayout({
     setIsSigningOut(true);
     // Add a small delay for the animation to be visible
     await new Promise(resolve => setTimeout(resolve, 800));
-    signOut({ callbackUrl: "/login" });
+    await signOut({ redirect: false });
+    window.location.href = "/login";
   };
 
   useEffect(() => {
