@@ -88,7 +88,7 @@ export function Footer() {
               </div>
               <ul className="space-y-0">
                 {[
-                  { name: "SIT Guidelines", href: "#" },
+                  { name: "SIT Guidelines", href: "/resources" },
                   { name: "Partner Companies", href: "/partners" }
                 ].map((link, i) => (
                   <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
@@ -110,8 +110,8 @@ export function Footer() {
               <ul className="space-y-0">
                 {[
                   { name: "About the Platform", href: "/about" },
-                  { name: "Contact Registry", href: "#" },
-                  { name: "Technical Support", href: "#" }
+                  { name: "Contact Registry", href: "/about" },
+                  { name: "Technical Support", href: "/faq" }
                 ].map((link, i) => (
                   <li key={i} className="border-b border-slate-200/60 dark:border-white/5 last:border-0">
                     <Link href={link.href} className="flex items-center gap-3 py-2.5 text-[13px] font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors group">
