@@ -53,7 +53,6 @@ export default function StudentLayout({
   const navItems = [
     { name: "Executive Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
     ...(!isPlaced ? [{ name: "Industry Opportunities", href: "/student/opportunities", icon: Briefcase }] : []),
-    { name: "Industry Partners", href: "/partners", icon: Building2 },
     { name: "Digital Logbook", href: "/student/logbook", icon: BookOpen },
     { name: "Training Documents", href: "/student/documents", icon: FileText },
     { name: "SIT Certification", href: "/student/completion", icon: Award },
