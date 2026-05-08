@@ -10,7 +10,7 @@ import {
   FileBadge,
   AlertCircle,
   ExternalLink,
-  ChevronRight,
+  Loader2,
   Info
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";

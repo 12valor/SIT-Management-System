@@ -6,7 +6,6 @@ import {
   FileText, 
   X, 
   Loader2, 
-  CheckCircle2,
   AlertCircle
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
