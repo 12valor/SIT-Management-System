@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Bell, BellDot, Check, ExternalLink, X } from "lucide-react";
+import { Bell, BellDot, ExternalLink, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -22,16 +22,13 @@ export function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchNotifications = async () => {
-    setIsLoading(true);
     const result = await getNotifications();
     if (result.success && result.data) {
       setNotifications(result.data.notifications);
       setUnreadCount(result.data.unreadCount);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {

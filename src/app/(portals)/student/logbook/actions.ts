@@ -15,6 +15,10 @@ export async function getStudentLogbook() {
       orderBy: { date: 'desc' }
     });
 
+    const totalApprovedHours = entries
+      .filter(e => e.status === 'APPROVED')
+      .reduce((acc, curr) => acc + curr.hours, 0);
+
     const placement = await prisma.application.findFirst({
       where: { 
         studentId: session.user.id,
