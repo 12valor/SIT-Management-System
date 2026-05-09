@@ -12,7 +12,8 @@ import {
   LogOut,
   X,
   Star,
-  Globe
+  Globe,
+  BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -49,6 +50,7 @@ export default function EmployerLayout({
     { name: "Executive Analytics", href: "/employer/dashboard", icon: BarChart3 },
     { name: "Industrial Postings", href: "/employer/postings", icon: ClipboardList },
     { name: "Trainee Applicants", href: "/employer/applicants", icon: Users },
+    { name: "Logbook Registry", href: "/employer/logbooks", icon: BookOpen },
     { name: "Performance Audit", href: "/employer/evaluations", icon: Star },
     { name: "Institutional Presence", href: "/employer/presence", icon: Globe },
   ];

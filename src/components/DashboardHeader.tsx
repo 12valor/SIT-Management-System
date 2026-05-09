@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { NotificationBell } from "./NotificationBell";
 
 interface Session {
   user?: {
@@ -50,7 +51,8 @@ export function DashboardHeader({
         </p>
       </div>
  
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 sm:gap-6">
+        <NotificationBell />
         <ThemeToggle />
         <div className="h-6 w-px bg-border hidden sm:block" />
         <div className="text-right hidden sm:block">

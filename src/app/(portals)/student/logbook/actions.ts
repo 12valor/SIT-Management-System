@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { pushNotification } from "@/lib/actions/notifications";
 
 export async function getStudentLogbook() {
   const session = await auth();
@@ -14,15 +15,19 @@ export async function getStudentLogbook() {
       orderBy: { date: 'desc' }
     });
 
-    const totalApprovedHours = entries
-      .filter(e => e.status === 'APPROVED')
-      .reduce((acc, curr) => acc + curr.hours, 0);
+    const placement = await prisma.application.findFirst({
+      where: { 
+        studentId: session.user.id,
+        status: 'ACCEPTED'
+      }
+    });
 
     return {
       success: true,
       data: {
         entries,
-        totalApprovedHours
+        totalApprovedHours,
+        hasPlacement: !!placement
       }
     };
   } catch (error: unknown) {
@@ -40,6 +45,21 @@ export async function submitLogbookEntry(data: {
   if (!session?.user?.id) return { success: false, error: "Unauthorized" };
 
   try {
+    // Find the associated employer to notify
+    const placement = await prisma.application.findFirst({
+      where: { 
+        studentId: session.user.id,
+        status: 'ACCEPTED'
+      },
+      include: {
+        posting: true
+      }
+    });
+
+    if (!placement) {
+      return { success: false, error: "No active industrial placement detected. Logbook entries require an active assignment." };
+    }
+
     await prisma.logbookEntry.create({
       data: {
         studentId: session.user.id,
@@ -49,6 +69,17 @@ export async function submitLogbookEntry(data: {
         status: 'PENDING'
       }
     });
+
+    // Notify Employer
+    if (placement.posting.employerId) {
+      await pushNotification({
+        userId: placement.posting.employerId,
+        title: "Industrial Logbook Submission",
+        message: `${session.user.name || 'A trainee'} has submitted a new logbook entry for verification.`,
+        type: 'LOGBOOK',
+        link: '/employer/logbooks'
+      });
+    }
 
     revalidatePath("/student/logbook");
     revalidatePath("/student/dashboard");

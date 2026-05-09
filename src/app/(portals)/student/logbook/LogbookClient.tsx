@@ -9,7 +9,8 @@ import {
   TrendingUp,
   Search,
   MoreVertical,
-  FileText
+  FileText,
+  AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { submitLogbookEntry } from "./actions";
@@ -47,7 +48,8 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
       router.refresh();
       setIsAdding(false);
     } else {
-      alert("Error: " + result.error);
+      // In a real app, use a toast
+      alert(result.error);
     }
     setIsSubmitting(false);
   };
@@ -63,10 +65,21 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
             <p className="text-sm text-muted-foreground font-medium">Record and track your industrial hours for SIT certification.</p>
           </div>
           <button 
-            onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 h-11 px-6 rounded-lg bg-[#800000] text-white font-bold uppercase tracking-wider text-xs shadow-md shadow-red-900/10 hover:bg-red-900 transition-all active:scale-95"
+            onClick={() => {
+              if (!data.hasPlacement) {
+                alert("Institutional Access Denied: You must have an accepted industrial placement before you can log hours.");
+                return;
+              }
+              setIsAdding(true);
+            }}
+            className={cn(
+              "flex items-center gap-2 h-11 px-6 rounded-lg font-bold uppercase tracking-wider text-xs shadow-md transition-all active:scale-95",
+              data.hasPlacement 
+                ? "bg-[#800000] text-white shadow-red-900/10 hover:bg-red-900" 
+                : "bg-muted text-muted-foreground cursor-not-allowed opacity-50"
+            )}
           >
-            <PlusCircle className="h-4 w-4" />
+            {data.hasPlacement ? <PlusCircle className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
             Add Entry
           </button>
         </div>

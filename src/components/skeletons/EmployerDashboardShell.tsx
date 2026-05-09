@@ -27,6 +27,7 @@ interface EmployerDashboardData {
   totalApplicants: number;
   pendingApplicants: number;
   hiredCount: number;
+  pendingLogsCount: number;
   recentApplications: RecentApplication[];
   company: {
     name: string;
@@ -51,9 +52,9 @@ export function EmployerDashboardShell({ data, userName }: Props) {
 
   const statCards = data ? [
     { label: "Active Postings",  value: data.totalPostings },
-    { label: "Total Applicants", value: data.totalApplicants },
     { label: "Pending Review",   value: data.pendingApplicants },
     { label: "Confirmed Hires",  value: data.hiredCount },
+    { label: "Pending Logs",     value: data.pendingLogsCount },
   ] : [];
 
   return (

@@ -19,6 +19,20 @@ export async function getEmployerDashboardData() {
   const pendingApplicants = allApplications.filter((a) => a.status === "PENDING").length;
   const hiredCount = allApplications.filter((a) => a.status === "ACCEPTED").length;
 
+  const pendingLogsCount = await prisma.logbookEntry.count({
+    where: {
+      status: "PENDING",
+      student: {
+        applications: {
+          some: {
+            status: "ACCEPTED",
+            posting: { employerId: session.user.id }
+          }
+        }
+      }
+    }
+  });
+
   const recentApplications = await prisma.application.findMany({
     where: {
       posting: { employerId: session.user.id },
@@ -43,6 +57,7 @@ export async function getEmployerDashboardData() {
       totalApplicants,
       pendingApplicants,
       hiredCount,
+      pendingLogsCount,
       recentApplications,
       company: user?.company ? {
         name: user.company.name,

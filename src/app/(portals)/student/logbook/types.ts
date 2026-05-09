@@ -11,4 +11,5 @@ export interface LogbookEntry {
 export interface LogbookData {
   entries: LogbookEntry[];
   totalApprovedHours: number;
+  hasPlacement: boolean;
 }
