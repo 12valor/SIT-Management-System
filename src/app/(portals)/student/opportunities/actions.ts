@@ -57,6 +57,15 @@ export async function applyForOpportunity(postingId: string) {
 
     if (existing) return { success: false, error: "Application already exists" };
 
+    // Check for CV compliance
+    const student = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: { documents: true }
+    });
+
+    const hasCV = student?.documents.some(doc => doc.name === "Student Resume / CV");
+    if (!hasCV) return { success: false, error: "Please upload your Student Resume / CV before applying." };
+
     await prisma.application.create({
       data: {
         postingId,

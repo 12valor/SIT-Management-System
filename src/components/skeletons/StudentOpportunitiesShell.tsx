@@ -2,6 +2,7 @@
 
 import { Skeleton } from "boneyard-js/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { 
   Search, 
@@ -14,14 +15,22 @@ import {
   ArrowUpRight,
   Activity,
   Sparkles,
-  SlidersHorizontal
+  SlidersHorizontal,
+  AlertTriangle,
+  FileWarning
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { applyForOpportunity } from "@/app/(portals)/student/opportunities/actions";
 import { SITOpportunity } from "@/app/(portals)/student/opportunities/types";
 
-export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpportunity[] | null }) {
+export function StudentOpportunitiesShell({ 
+  initialData, 
+  hasCV 
+}: { 
+  initialData: SITOpportunity[] | null, 
+  hasCV: boolean 
+}) {
   const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [applyingTo, setApplyingTo] = useState<SITOpportunity | null>(null);
@@ -300,13 +309,33 @@ export function StudentOpportunitiesShell({ initialData }: { initialData: SITOpp
                         </div>
                      </div>
 
-                     <button
-                      onClick={() => handleApply(applyingTo.id)}
-                      disabled={isSubmitting}
-                      className="w-full flex h-12 items-center justify-center rounded-xl bg-primary text-sm font-bold text-white uppercase tracking-wider shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all disabled:opacity-50"
-                     >
-                       {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Finalize Application <Send className="ml-2 h-4 w-4" /></>}
-                     </button>
+                     {!hasCV ? (
+                       <div className="p-6 rounded-xl bg-destructive/5 border border-destructive/10 flex flex-col items-center text-center gap-4">
+                          <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
+                             <FileWarning className="h-6 w-6" />
+                          </div>
+                          <div className="space-y-1">
+                             <p className="text-sm font-bold text-destructive uppercase tracking-tight">Missing Credentials</p>
+                             <p className="text-xs text-muted-foreground font-medium leading-relaxed">
+                               Your industrial resume (CV) is missing from the vault. Industrial partners require this for review.
+                             </p>
+                          </div>
+                          <Link 
+                            href="/student/documents"
+                            className="text-xs font-bold text-destructive hover:underline flex items-center gap-1.5"
+                          >
+                            Upload CV Now <ArrowUpRight className="h-3 w-3" />
+                          </Link>
+                       </div>
+                     ) : (
+                       <button
+                        onClick={() => handleApply(applyingTo.id)}
+                        disabled={isSubmitting}
+                        className="w-full flex h-12 items-center justify-center rounded-xl bg-primary text-sm font-bold text-white uppercase tracking-wider shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all disabled:opacity-50"
+                       >
+                         {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Finalize Application <Send className="ml-2 h-4 w-4" /></>}
+                       </button>
+                     )}
                   </div>
                 </div>
               )}
