@@ -83,8 +83,10 @@ export function DocumentUploadZone({
         onDragOver={handleDrag}
         onDrop={handleDrop}
         className={cn(
-          "relative group border-2 border-dashed rounded-2xl p-8 transition-all flex flex-col items-center justify-center text-center bg-muted/30",
-          dragActive ? "border-primary bg-primary/5" : "border-border hover:border-primary/20",
+          "relative group border-2 border-dashed rounded-xl p-10 transition-all flex flex-col items-center justify-center text-center",
+          dragActive 
+            ? "border-primary bg-primary/5" 
+            : "border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.01] hover:border-slate-300 dark:hover:border-white/20",
           isUploading && "pointer-events-none opacity-60"
         )}
       >
@@ -100,20 +102,15 @@ export function DocumentUploadZone({
           {isUploading ? (
             <motion.div 
               key="uploading"
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               className="flex flex-col items-center gap-4"
             >
-              <div className="relative">
-                <Loader2 className="h-10 w-10 text-primary animate-spin" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Upload className="h-4 w-4 text-primary opacity-50" />
-                </div>
-              </div>
+              <Loader2 className="h-10 w-10 text-primary animate-spin" />
               <div className="space-y-1">
-                <p className="text-[11px] font-bold text-primary uppercase tracking-[0.2em]">Archiving Document</p>
-                <p className="text-[10px] text-muted-foreground">Digital signature protocol in progress...</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">Uploading document...</p>
+                <p className="text-xs text-slate-500">This will only take a moment.</p>
               </div>
             </motion.div>
           ) : (
@@ -124,18 +121,18 @@ export function DocumentUploadZone({
               exit={{ opacity: 0, y: -10 }}
               className="flex flex-col items-center gap-4"
             >
-              <div className="h-16 w-16 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                <FileText className="h-8 w-8" />
+              <div className="h-16 w-16 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors">
+                <Upload className="h-7 w-7" />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-bold text-foreground">Drop your credential manifest here</p>
-                <p className="text-[11px] text-muted-foreground font-medium">Supported formats: PDF, PNG, JPG (Max {maxSize}MB)</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">Click to upload or drag and drop</p>
+                <p className="text-xs text-slate-500">PDF, PNG, or JPG (max. {maxSize}MB)</p>
               </div>
               <button 
                 onClick={() => fileInputRef.current?.click()}
-                className="mt-2 h-10 px-6 rounded-lg bg-foreground text-background text-[11px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity"
+                className="mt-2 px-4 py-2 text-xs font-bold border rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
               >
-                Select System File
+                Select File
               </button>
             </motion.div>
           )}
@@ -145,12 +142,12 @@ export function DocumentUploadZone({
           <motion.div 
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute -bottom-10 left-0 right-0 flex items-center justify-center gap-2 text-destructive"
+            className="mt-4 flex items-center justify-center gap-2 text-red-500"
           >
-            <AlertCircle className="h-3.5 w-3.5" />
-            <span className="text-[10px] font-bold uppercase tracking-wider">{error}</span>
-            <button onClick={() => setError(null)} className="ml-2 hover:text-foreground">
-              <X className="h-3.5 w-3.5" />
+            <AlertCircle className="h-4 w-4" />
+            <span className="text-xs font-medium">{error}</span>
+            <button onClick={() => setError(null)} className="ml-2 hover:text-slate-900 dark:hover:text-white">
+              <X className="h-4 w-4" />
             </button>
           </motion.div>
         )}
