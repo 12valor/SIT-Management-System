@@ -18,7 +18,8 @@ import {
   EyeOff, 
   LayoutGrid, 
   Table as TableIcon,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Briefcase
 } from "lucide-react";
 import { getEmployerPostings, createSITPosting, togglePostingStatus, deleteSITPosting } from "./actions";
 import { SITPosting, PlacementType, PostingStatus } from "@/generated/client";
@@ -88,9 +89,9 @@ export default function EmployerPostingsPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const MAX_SIZE = 3 * 1024 * 1024; // 3MB limit for posters
+      const MAX_SIZE = 3 * 1024 * 1024;
       if (file.size > MAX_SIZE) {
-        setError("Poster file exceeds 3MB industrial limit.");
+        setError("Image size exceeds 3MB limit.");
         e.target.value = "";
         return;
       }
@@ -118,7 +119,7 @@ export default function EmployerPostingsPage() {
       setPosterPreview(null);
       await loadPostings();
     } else {
-      setError(res.error || "Failed to create posting.");
+      setError(res.error || "Failed to post opening.");
     }
     setIsSubmitting(false);
   };
@@ -129,7 +130,7 @@ export default function EmployerPostingsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to decommission this industrial opportunity? This action is irreversible.")) {
+    if (confirm("Delete this posting? This cannot be undone.")) {
       const res = await deleteSITPosting(id);
       if (res.success) await loadPostings();
     }
@@ -150,164 +151,120 @@ export default function EmployerPostingsPage() {
         </div>
       }
     >
-    <div className="space-y-8 pb-24">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <div className="space-y-8 pb-24 max-w-7xl mx-auto">
+      {/* Header - Simple */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-border/60">
         <div className="space-y-1">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground">Industrial Registry</h1>
-          <p className="text-sm text-muted-foreground font-medium">Manage and broadcast strategic training opportunities for students.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Job Postings</h1>
+          <p className="text-sm text-muted-foreground font-medium italic">Manage openings for student trainees.</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex bg-muted/50 p-1 rounded-lg border border-border">
+          <div className="flex bg-muted p-1 rounded-xl border border-border/40">
              <button 
               onClick={() => setViewMode('cards')}
-              className={cn("p-2 rounded-md transition-all", viewMode === 'cards' ? "bg-card text-primary shadow-sm" : "text-muted-foreground hover:text-foreground")}
+              className={cn("p-2 rounded-lg transition-all", viewMode === 'cards' ? "bg-card text-primary shadow-sm" : "text-muted-foreground/40 hover:text-foreground")}
              >
                <LayoutGrid className="h-4 w-4" />
              </button>
              <button 
               onClick={() => setViewMode('table')}
-              className={cn("p-2 rounded-md transition-all", viewMode === 'table' ? "bg-card text-primary shadow-sm" : "text-muted-foreground hover:text-foreground")}
+              className={cn("p-2 rounded-lg transition-all", viewMode === 'table' ? "bg-card text-primary shadow-sm" : "text-muted-foreground/40 hover:text-foreground")}
              >
                <TableIcon className="h-4 w-4" />
              </button>
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 h-11 px-6 rounded-xl bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/10 hover:brightness-110 transition-all active:scale-95 shrink-0"
+            className="flex items-center gap-2 h-10 px-5 rounded-xl bg-primary text-white text-xs font-bold uppercase tracking-wider shadow-md hover:brightness-110 active:scale-95 transition-all"
           >
-            <Plus className="h-4 w-4" /> New Opportunity
+            <Plus className="h-4 w-4" /> Post Opening
           </button>
         </div>
       </div>
 
-      {/* Search + summary */}
+      {/* Filters - Simple */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="relative w-full max-w-md">
+        <div className="relative w-full max-w-sm">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
           <input
             type="text"
-            placeholder="Filter by position or details..."
+            placeholder="Search positions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 h-12 rounded-2xl border border-border bg-card text-foreground text-sm outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
+            className="w-full pl-10 pr-4 h-11 rounded-xl border border-border/60 bg-card text-sm outline-none focus:border-primary transition-all shadow-sm"
           />
         </div>
-        <div className="flex items-center gap-4">
-          <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest bg-card px-4 py-2 rounded-xl border border-border shadow-sm">
-            {filtered.length} Active Listings
-          </p>
+        <div className="px-4 py-2 bg-muted/30 rounded-xl border border-border/40 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+          {filtered.length} Active Listings
         </div>
       </div>
 
-      {/* Display Content */}
+      {/* Grid Content */}
       <AnimatePresence mode="wait">
         {viewMode === 'cards' ? (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="grid grid-cols-1 xl:grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {filtered.length === 0 && !isLoading ? (
-              <div className="col-span-full py-32 text-center rounded-2xl border-2 border-dashed border-border bg-muted/5">
-                <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">No matching industrial roles</p>
+              <div className="col-span-full py-24 text-center rounded-3xl border-2 border-dashed border-border/40 bg-muted/5">
+                <p className="text-xs text-muted-foreground/40 font-bold uppercase tracking-widest">No matching openings</p>
               </div>
             ) : (
               filtered.map((p) => (
-                <div key={p.id} className="group bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/20 transition-all flex flex-col h-full">
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-muted border border-border flex items-center justify-center text-lg font-bold text-muted-foreground/40 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
-                        {p.company.name[0]}
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-foreground leading-tight">{p.title}</h3>
-                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium mt-1">
-                          <Building2 className="h-3 w-3 opacity-40" /> {p.company.name}
-                        </div>
-                      </div>
+                <div key={p.id} className="group bg-card border border-border/50 rounded-2xl p-5 shadow-sm hover:border-primary/20 transition-all flex flex-col">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center font-bold text-muted-foreground/30 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                      {p.title[0]}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                        <button 
                         onClick={() => handleToggleStatus(p.id, p.status)}
                         className={cn(
-                          "px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border transition-all",
-                          p.status === 'OPEN' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" : "bg-muted text-muted-foreground border-border"
+                          "px-2 py-1 rounded-lg text-[8px] font-bold uppercase tracking-widest border transition-all",
+                          p.status === 'OPEN' ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20" : "bg-muted text-muted-foreground/40 border-border"
                         )}
                        >
-                         {p.status === 'OPEN' ? <span className="flex items-center gap-1.5"><Eye className="h-3 w-3" /> Visible</span> : <span className="flex items-center gap-1.5"><EyeOff className="h-3 w-3" /> Hidden</span>}
+                         {p.status === 'OPEN' ? "Visible" : "Hidden"}
                        </button>
                        <button 
                         onClick={() => handleDelete(p.id)}
-                        className="p-2 rounded-lg bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white transition-all"
+                        className="p-1.5 rounded-lg bg-rose-500/10 text-rose-500 border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all"
                        >
                          <Trash2 className="h-3.5 w-3.5" />
                        </button>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-3 mb-6">
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/50 rounded-lg border border-border text-[10px] font-bold text-muted-foreground uppercase tracking-tight">
-                       <MapPin className="h-3 w-3 opacity-40" /> {p.location}
+                  <div className="space-y-1 mb-4 flex-1">
+                    <h3 className="font-bold text-foreground truncate">{p.title}</h3>
+                    <p className="text-xs text-muted-foreground font-medium flex items-center gap-1.5 truncate">
+                      <MapPin className="h-3 w-3 opacity-30" /> {p.location}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="px-2 py-0.5 bg-muted rounded-md text-[9px] font-bold text-muted-foreground flex items-center gap-1">
+                       <Clock className="h-2.5 w-2.5" /> {p.requiredHours}h
                     </div>
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/50 rounded-lg border border-border text-[10px] font-bold text-muted-foreground uppercase tracking-tight">
-                       <Clock className="h-3 w-3 opacity-40" /> {p.requiredHours}h
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/5 rounded-lg border border-primary/10 text-[10px] font-black text-primary uppercase tracking-widest">
+                    <div className="px-2 py-0.5 bg-primary/10 rounded-md text-[9px] font-bold text-primary uppercase">
                        {TYPE_LABEL[p.type]}
                     </div>
                   </div>
 
-                  {/* Bulleted Lists Section */}
-                  {((p.responsibilities?.length || 0) > 0 || (p.requirements?.length || 0) > 0) && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6 p-5 bg-muted/30 rounded-xl border border-border/50 flex-1">
-                      {(p.responsibilities?.length || 0) > 0 && (
-                        <div className="space-y-2.5">
-                          <p className="text-[9px] font-black uppercase tracking-[0.15em] text-primary/70">Strategic Role</p>
-                          <ul className="space-y-1.5">
-                            {p.responsibilities.slice(0, 3).map((r, i) => (
-                              <li key={i} className="flex gap-2 text-[10px] text-muted-foreground leading-tight">
-                                <span className="text-primary mt-0.5">•</span> {r}
-                              </li>
-                            ))}
-                            {(p.responsibilities?.length || 0) > 3 && (
-                              <li className="text-[9px] font-bold text-muted-foreground/40 italic ml-3">+ {p.responsibilities.length - 3} more</li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                      {(p.requirements?.length || 0) > 0 && (
-                        <div className="space-y-2.5">
-                          <p className="text-[9px] font-black uppercase tracking-[0.15em] text-muted-foreground/60">Candidate Prerequisites</p>
-                          <ul className="space-y-1.5">
-                            {p.requirements.slice(0, 3).map((r, i) => (
-                              <li key={i} className="flex gap-2 text-[10px] text-muted-foreground leading-tight">
-                                <span className="text-muted-foreground/30 mt-0.5">•</span> {r}
-                              </li>
-                            ))}
-                            {(p.requirements?.length || 0) > 3 && (
-                              <li className="text-[9px] font-bold text-muted-foreground/40 italic ml-3">+ {p.requirements.length - 3} more</li>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between pt-4 border-t border-border mt-auto">
-                    <div className="flex items-center gap-3">
-                       <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-                         <Users className="h-4 w-4 text-muted-foreground/30" />
-                         {p._count.applications} <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">Applicants</span>
-                       </div>
+                  <div className="flex items-center justify-between pt-4 border-t border-border/40 mt-auto">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                      <Users className="h-3.5 w-3.5 text-muted-foreground/20" />
+                      {p._count.applications} <span className="text-[9px] text-muted-foreground font-medium">Applicants</span>
                     </div>
                     {p.posterUrl && (
                       <button 
                         onClick={() => setSelectedPoster(p.posterUrl)}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-primary text-white text-[9px] font-black uppercase tracking-widest rounded-lg shadow-sm hover:brightness-110 active:scale-95 transition-all"
+                        className="text-[9px] font-bold text-primary hover:underline uppercase tracking-widest"
                       >
-                        <ImageIcon className="h-3 w-3" /> Job Poster
+                        View Poster
                       </button>
                     )}
                   </div>
@@ -326,46 +283,43 @@ export default function EmployerPostingsPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-muted/30 border-b border-border">
-                    <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Position Title</th>
-                    <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Modality</th>
-                    <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Duration</th>
-                    <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Applications</th>
-                    <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 text-right">Actions</th>
+                    <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Title</th>
+                    <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Type</th>
+                    <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Hours</th>
+                    <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Applied</th>
+                    <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/50">
+                <tbody className="divide-y divide-border/40">
                   {filtered.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="py-32 text-center text-sm font-bold text-muted-foreground/40 uppercase tracking-widest">No Active Postings</td>
+                      <td colSpan={5} className="py-24 text-center text-[10px] font-bold text-muted-foreground/30 uppercase tracking-widest">No Postings</td>
                     </tr>
                   ) : (
                     filtered.map((p) => (
-                      <tr key={p.id} className="hover:bg-muted/20 transition-colors group">
-                        <td className="px-6 py-4">
-                          <p className="font-bold text-foreground">{p.title}</p>
-                          <p className="text-[10px] text-muted-foreground font-medium flex items-center gap-1.5 mt-0.5"><MapPin className="h-3 w-3 opacity-30" /> {p.location}</p>
+                      <tr key={p.id} className="hover:bg-muted/10 transition-colors group">
+                        <td className="px-6 py-3">
+                          <p className="font-bold text-foreground text-xs">{p.title}</p>
+                          <p className="text-[10px] text-muted-foreground font-medium truncate max-w-[150px]">{p.location}</p>
                         </td>
-                        <td className="px-6 py-4 hidden md:table-cell">
-                          <span className="text-[10px] font-black uppercase tracking-widest text-primary/70">{TYPE_LABEL[p.type]}</span>
+                        <td className="px-6 py-3 hidden md:table-cell">
+                          <span className="text-[9px] font-bold text-primary uppercase">{TYPE_LABEL[p.type]}</span>
                         </td>
-                        <td className="px-6 py-4 hidden md:table-cell font-bold text-muted-foreground">{p.requiredHours}h</td>
-                        <td className="px-6 py-4">
-                          <div className="inline-flex items-center px-2 py-0.5 rounded-md bg-muted border border-border text-[11px] font-bold text-foreground">
-                            {p._count.applications}
-                          </div>
+                        <td className="px-6 py-3 hidden md:table-cell font-bold text-muted-foreground text-xs">{p.requiredHours}h</td>
+                        <td className="px-6 py-3">
+                          <span className="text-xs font-bold text-foreground">{p._count.applications}</span>
                         </td>
-                        <td className="px-6 py-4 text-right">
+                        <td className="px-6 py-3 text-right">
                           <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                              <button 
                               onClick={() => handleToggleStatus(p.id, p.status)}
-                              className="p-2 rounded-lg hover:bg-primary/10 hover:text-primary text-muted-foreground transition-all"
-                              title={p.status === 'OPEN' ? "Hide Posting" : "Make Visible"}
+                              className="p-1.5 rounded-lg hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
                              >
                                {p.status === 'OPEN' ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                              </button>
                              <button 
                               onClick={() => handleDelete(p.id)}
-                              className="p-2 rounded-lg hover:bg-red-500/10 hover:text-red-500 text-muted-foreground transition-all"
+                              className="p-1.5 rounded-lg hover:bg-rose-500/10 text-muted-foreground hover:text-rose-500 transition-all"
                              >
                                <Trash2 className="h-4 w-4" />
                              </button>
@@ -381,181 +335,137 @@ export default function EmployerPostingsPage() {
         )}
       </AnimatePresence>
 
-      {/* Create Modal */}
+      {/* Modal - Simple Form */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
-          <div className="relative w-full max-w-[1400px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="px-8 py-4 border-b border-border flex items-center justify-between bg-muted/30">
-              <div className="space-y-0.5">
-                <h3 className="text-base font-bold text-foreground leading-none">Broadcast SIT Opportunity</h3>
-                <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider">Industrial Training Registry</p>
-              </div>
-              <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors text-muted-foreground/40 hover:text-foreground">
+          <div className="relative w-full max-w-3xl bg-card border border-border/60 rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="px-8 py-5 border-b border-border/40 flex items-center justify-between bg-muted/20">
+              <h3 className="text-lg font-bold text-foreground tracking-tight">Post Job Opening</h3>
+              <button onClick={() => setShowModal(false)} className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors text-muted-foreground/30 hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-5 space-y-4">
+            <form onSubmit={handleSubmit} className="p-8 space-y-6 max-h-[80vh] overflow-y-auto custom-scrollbar">
               {error && (
-                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-[10px] text-red-500 font-bold flex items-center gap-2">
-                  <X className="h-3.5 w-3.5" /> {error}
+                <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-xs text-rose-600 font-bold">
+                  {error}
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="md:col-span-2 space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Opportunity Title *</label>
-                  <input name="title" required type="text" placeholder="e.g. Software Engineering Intern"
-                    className="w-full h-11 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Job Title *</label>
+                  <input name="title" required type="text" placeholder="e.g. Intern Engineer"
+                    className="w-full h-11 px-4 rounded-xl border border-border/60 bg-muted/20 text-sm outline-none focus:border-primary transition-all" />
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Training Hours *</label>
-                  <input name="requiredHours" required type="number" defaultValue={300}
-                    className="w-full h-11 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Placement Location *</label>
-                  <input name="location" required type="text" placeholder="e.g. Bacolod City"
-                    className="w-full h-11 px-4 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all" />
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Location *</label>
+                  <input name="location" required type="text" placeholder="City or Office"
+                    className="w-full h-11 px-4 rounded-xl border border-border/60 bg-muted/20 text-sm outline-none focus:border-primary transition-all" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Modality *</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Location Type *</label>
                   <div className="relative">
                     <select name="type" defaultValue="ON_SITE"
-                      className="w-full h-11 pl-4 pr-10 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary appearance-none cursor-pointer transition-all">
-                      <option value="ON_SITE">On-site Presence</option>
-                      <option value="REMOTE">Remote Operations</option>
-                      <option value="HYBRID">Hybrid Engagement</option>
+                      className="w-full h-11 pl-4 pr-10 rounded-xl border border-border/60 bg-muted/20 text-sm appearance-none cursor-pointer focus:border-primary transition-all">
+                      <option value="ON_SITE">On-site</option>
+                      <option value="REMOTE">Remote</option>
+                      <option value="HYBRID">Hybrid</option>
                     </select>
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
                   </div>
                 </div>
-                <div className="md:col-span-3 space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Industrial Scope *</label>
-                  <textarea name="description" required rows={1} placeholder="Define duties, technical expectations, and academic requirements..."
-                    className="w-full p-3 h-11 rounded-xl border border-border bg-background text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary resize-none transition-all" />
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Training Hours *</label>
+                  <input name="requiredHours" required type="number" defaultValue={300}
+                    className="w-full h-11 px-4 rounded-xl border border-border/60 bg-muted/20 text-sm outline-none focus:border-primary transition-all" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Strategic Responsibilities (Press Enter)</label>
-                  <div className="min-h-[80px] border border-border rounded-2xl bg-muted/20 p-2 flex flex-col transition-all">
-                    <div className="flex flex-wrap gap-1.5 mb-2">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Summary *</label>
+                <textarea name="description" required rows={3} placeholder="Briefly describe the role..."
+                  className="w-full p-4 rounded-xl border border-border/60 bg-muted/20 text-sm outline-none focus:border-primary resize-none transition-all" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Responsibilities (Enter)</label>
+                  <div className="min-h-[100px] border border-border/60 rounded-xl bg-muted/10 p-3 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-2">
                       {resps.map((r) => (
-                        <span key={r} className="flex items-center gap-1.5 px-2 py-1 bg-card text-muted-foreground text-[9px] font-bold rounded-lg border border-border shadow-sm">
-                          {r} <X className="h-2.5 w-2.5 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setResps(resps.filter(x => x !== r))} />
+                        <span key={r} className="px-2 py-1 bg-card text-[10px] font-bold rounded-lg border border-border flex items-center gap-1.5">
+                          {r} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40" onClick={() => setResps(resps.filter(x => x !== r))} />
                         </span>
                       ))}
                     </div>
                     <input value={respInput} onChange={(e) => setRespInput(e.target.value)} onKeyDown={handleRespKey}
-                      placeholder="e.g. System maintenance..." className="bg-transparent outline-none text-[11px] text-foreground w-full px-2" />
+                      placeholder="Add task..." className="bg-transparent outline-none text-sm w-full" />
                   </div>
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Candidate Prerequisites (Press Enter)</label>
-                  <div className="min-h-[80px] border border-border rounded-2xl bg-muted/20 p-2 flex flex-col transition-all">
-                    <div className="flex flex-wrap gap-1.5 mb-2">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Requirements (Enter)</label>
+                  <div className="min-h-[100px] border border-border/60 rounded-xl bg-muted/10 p-3 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-2">
                       {reqs.map((r) => (
-                        <span key={r} className="flex items-center gap-1.5 px-2 py-1 bg-card text-muted-foreground text-[9px] font-bold rounded-lg border border-border shadow-sm">
-                          {r} <X className="h-2.5 w-2.5 cursor-pointer text-muted-foreground/40 hover:text-destructive" onClick={() => setReqs(reqs.filter(x => x !== r))} />
+                        <span key={r} className="px-2 py-1 bg-card text-[10px] font-bold rounded-lg border border-border flex items-center gap-1.5">
+                          {r} <X className="h-3 w-3 cursor-pointer text-muted-foreground/40" onClick={() => setReqs(reqs.filter(x => x !== r))} />
                         </span>
                       ))}
                     </div>
                     <input value={reqInput} onChange={(e) => setReqInput(e.target.value)} onKeyDown={handleReqKey}
-                      placeholder="e.g. BSCS Student..." className="bg-transparent outline-none text-xs text-foreground w-full px-2" />
+                      placeholder="Add skill..." className="bg-transparent outline-none text-sm w-full" />
                   </div>
                 </div>
               </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Technical Taxonomy (press Enter)</label>
-                  <div className="min-h-[52px] border border-border rounded-xl bg-muted/20 p-2.5 flex flex-wrap gap-2 transition-all">
-                    {tags.map((t) => (
-                      <span key={t} className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/5 text-primary text-[10px] font-bold rounded-lg border border-primary/10 shadow-sm">
-                        {t} <X className="h-3 w-3 cursor-pointer text-primary/40 hover:text-destructive" onClick={() => setTags(tags.filter(x => x !== t))} />
-                      </span>
-                    ))}
-                    <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
-                      placeholder={tags.length === 0 ? "e.g. React, CAD..." : ""} className="flex-1 bg-transparent outline-none text-xs text-foreground min-w-[120px] ml-1" />
-                  </div>
-                </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider ml-1">Visual Job Poster (Optional)</label>
-                  <div className="relative h-[52px] rounded-xl border border-dashed border-border bg-muted/10 overflow-hidden flex items-center px-4 group/poster hover:border-primary/50 transition-all">
-                    {posterPreview ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden relative">
-                           <Image 
-                             src={posterPreview} 
-                             alt="Poster Preview"
-                             fill
-                             className="object-cover" 
-                             unoptimized
-                           />
-                        </div>
-                        <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Poster Attached</p>
-                        <button type="button" onClick={() => setPosterPreview(null)} className="ml-2 text-destructive hover:scale-110 transition-transform"><X className="h-4 w-4" /></button>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Marketing Poster (Optional)</label>
+                <div className="relative h-14 rounded-xl border-2 border-dashed border-border/40 flex items-center px-4 hover:border-primary/50 transition-all cursor-pointer bg-muted/10">
+                  {posterPreview ? (
+                    <div className="flex items-center gap-3 w-full">
+                      <div className="w-8 h-8 rounded-lg relative overflow-hidden">
+                         <Image src={posterPreview} alt="Preview" fill className="object-cover" unoptimized />
                       </div>
-                    ) : (
-                      <div className="flex items-center gap-3 text-muted-foreground/40 group-hover/poster:text-primary transition-colors">
-                        <ImageIcon className="h-4 w-4" />
-                        <p className="text-[10px] font-bold uppercase tracking-widest">Attach Marketing Visual</p>
-                      </div>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="absolute inset-0 opacity-0 cursor-pointer"
-                    />
-                  </div>
+                      <span className="text-[10px] font-bold text-primary uppercase">Image Attached</span>
+                      <button type="button" onClick={() => setPosterPreview(null)} className="ml-auto text-rose-500"><X className="h-4 w-4" /></button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 text-muted-foreground/40">
+                      <ImageIcon className="h-4 w-4" />
+                      <span className="text-[10px] font-bold uppercase tracking-widest">Select Image</span>
+                    </div>
+                  )}
+                  <input type="file" accept="image/*" onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer" />
                 </div>
-              <div className="pt-4">
-                <button type="submit" disabled={isSubmitting}
-                  className="w-full h-12 rounded-2xl bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/10 hover:brightness-110 transition-all disabled:opacity-50 active:scale-[0.98] flex items-center justify-center gap-3">
-                  {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Broadcast Opportunity <Plus className="h-4 w-4" /></>}
-                </button>
               </div>
+
+              <button type="submit" disabled={isSubmitting}
+                className="w-full h-12 rounded-xl bg-primary text-white text-sm font-bold uppercase tracking-widest shadow-lg hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : "Post Job Opening"}
+              </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* Poster Modal */}
+      {/* Poster Preview */}
       <AnimatePresence>
         {selectedPoster && (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setSelectedPoster(null)}
-            className="fixed inset-0 z-[200] bg-background/90 backdrop-blur-md flex items-center justify-center p-6 cursor-zoom-out"
+            className="fixed inset-0 z-[200] bg-background/95 flex items-center justify-center p-6 cursor-zoom-out"
           >
             <motion.div 
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}
             >
-              <Image 
-                src={selectedPoster} 
-                alt="Job Poster" 
-                width={800}
-                height={1200}
-                className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-2xl border border-white/10"
-                unoptimized
-              />
-              
-              <button 
-                onClick={() => setSelectedPoster(null)}
-                className="fixed top-8 right-8 h-12 w-12 rounded-full bg-primary/10 hover:bg-primary/20 backdrop-blur-md flex items-center justify-center text-primary transition-all hover:scale-110 active:scale-95 z-[210] border border-primary/20"
-              >
-                <X className="h-6 w-6" />
-              </button>
+              <Image src={selectedPoster} alt="Job Poster" width={800} height={1200} className="rounded-2xl shadow-2xl" unoptimized />
+              <button onClick={() => setSelectedPoster(null)} className="fixed top-8 right-8 text-primary bg-primary/10 h-10 w-10 rounded-full flex items-center justify-center border border-primary/20"><X className="h-5 w-5" /></button>
             </motion.div>
           </motion.div>
         )}
