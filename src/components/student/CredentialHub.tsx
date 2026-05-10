@@ -7,11 +7,9 @@ import {
   CheckCircle2, 
   Clock,
   ShieldCheck,
-  FileBadge,
   AlertCircle,
   ExternalLink,
-  Loader2,
-  Info
+  Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";

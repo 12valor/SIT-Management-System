@@ -4,7 +4,7 @@ import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Greeting } from "@/app/(portals)/student/dashboard/Greeting";
-import { Lock, ArrowUpRight, ArrowRight, Activity, LayoutGrid } from "lucide-react";
+import { Lock, ArrowUpRight } from "lucide-react";
 import { ComplianceCard } from "@/components/student/ComplianceCard";
 import { StudentDashboardData } from "@/app/(portals)/student/dashboard/types";
 

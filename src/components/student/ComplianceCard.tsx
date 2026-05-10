@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Circle, AlertCircle, ArrowRight } from "lucide-react";
+import { CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { StudentDocument, REQUIRED_CREDENTIALS } from "@/app/(portals)/student/dashboard/types";

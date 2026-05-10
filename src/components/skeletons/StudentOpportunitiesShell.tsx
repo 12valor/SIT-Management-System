@@ -12,11 +12,11 @@ import {
   Loader2,
   Building2,
   Zap,
+  ArrowRight,
   ArrowUpRight,
   Activity,
   Sparkles,
   SlidersHorizontal,
-  AlertTriangle,
   FileWarning
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -210,7 +210,6 @@ export function StudentOpportunitiesShell({
               </div>
             );
           })}
-})}
 
           {filteredPostings.length === 0 && postings.length > 0 && (
              <div className="col-span-full py-32 text-center rounded-xl border border-border bg-card shadow-sm">
