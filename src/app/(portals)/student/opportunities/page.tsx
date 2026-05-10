@@ -6,7 +6,8 @@ import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 
 export default async function StudentOpportunitiesPage() {
-  const [placement, result] = await Promise.all([
+  const [session, placement, result] = await Promise.all([
+    auth(),
     getStudentPlacementStatus(),
     getSITOpportunities()
   ]);
