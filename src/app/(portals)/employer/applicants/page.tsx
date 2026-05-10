@@ -1,7 +1,6 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
-
 import { useState, useEffect } from "react";
 import { 
   Users, 
@@ -36,9 +35,8 @@ type Application = {
 export default function ApplicantsPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   
-  // Inspector State
   const [selectedApp, setSelectedApp] = useState<{ studentId: string; studentName: string; applicationId: string } | null>(null);
   const [isInspectorOpen, setIsInspectorOpen] = useState(false);
 
@@ -63,7 +61,7 @@ export default function ApplicantsPage() {
   const openInspector = (app: Application) => {
     setSelectedApp({
       studentId: app.student.id,
-      studentName: app.student.name || "Anonymous Student",
+      studentName: app.student.name || "Student",
       applicationId: app.id
     });
     setIsInspectorOpen(true);
@@ -75,11 +73,10 @@ export default function ApplicantsPage() {
   );
 
   const columns = [
-    { id: 'PENDING', label: 'New Applied', color: 'text-primary', bg: 'bg-primary/5', dot: 'bg-primary/40' },
-    { id: 'ACCEPTED', label: 'Shortlisted', color: 'text-primary', bg: 'bg-primary/10', dot: 'bg-primary' },
-    { id: 'REJECTED', label: 'Not Suitable', color: 'text-destructive', bg: 'bg-destructive/5', dot: 'bg-destructive' },
+    { id: 'PENDING', label: 'New', color: 'text-primary', bg: 'bg-primary/5' },
+    { id: 'ACCEPTED', label: 'Shortlisted', color: 'text-emerald-500', bg: 'bg-emerald-500/5' },
+    { id: 'REJECTED', label: 'Rejected', color: 'text-rose-500', bg: 'bg-rose-500/5' },
   ];
-
 
   return (
     <Skeleton 
@@ -91,108 +88,97 @@ export default function ApplicantsPage() {
         </div>
       }
     >
-    <div className="space-y-8 max-w-6xl mx-auto pb-20 animate-in-fade">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
+    <div className="space-y-8 max-w-7xl mx-auto pb-20">
+      {/* Header - Simple */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-border/60">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Applicant Tracker</h1>
-          <p className="text-sm text-muted-foreground font-medium">Review and manage candidates specifically aligned with your industrial roles.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Applicants</h1>
+          <p className="text-sm text-muted-foreground font-medium italic">Review and manage student applications.</p>
         </div>
         <div className="flex gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
             <input 
               type="text" 
-              placeholder="Search candidate index..." 
-              className="pl-9 pr-4 h-11 w-full md:w-64 rounded-xl border border-border bg-card text-foreground shadow-sm outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary text-sm transition-all"
+              placeholder="Search students..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 pr-4 h-10 w-full md:w-64 rounded-xl border border-border/60 bg-card text-sm outline-none focus:border-primary transition-all"
             />
           </div>
-          <button className="h-11 px-4 rounded-xl border border-border bg-card flex items-center gap-2 font-bold text-[11px] uppercase tracking-wider hover:bg-muted transition-colors text-muted-foreground/60 shadow-sm">
-            <SlidersHorizontal className="h-4 w-4" /> Filter
-          </button>
         </div>
       </div>
 
-      {/* Kanban Board */}
+      {/* Columns */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {columns.map((col) => {
           const colApps = filteredApps.filter(a => a.status === col.id);
           return (
-            <div key={col.id} className="flex flex-col gap-6">
-              <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-3">
-                  <div className={cn("px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest border", 
-                    col.id === 'PENDING' ? "bg-muted text-muted-foreground/60 border-border" :
-                    col.id === 'ACCEPTED' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" :
-                    "bg-destructive/10 text-destructive border-destructive/20"
+            <div key={col.id} className="flex flex-col gap-4">
+              <div className="flex items-center justify-between px-2">
+                <div className="flex items-center gap-2">
+                  <span className={cn("text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md border", 
+                    col.id === 'PENDING' ? "bg-muted text-muted-foreground border-border" :
+                    col.id === 'ACCEPTED' ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20" :
+                    "bg-rose-500/10 text-rose-600 border-rose-500/20"
                   )}>
                     {col.label}
-                  </div>
-                  <span className="text-xs font-bold text-muted-foreground/40 tabular-nums">{colApps.length}</span>
+                  </span>
+                  <span className="text-[10px] font-bold text-muted-foreground/30">{colApps.length}</span>
                 </div>
               </div>
               
-              <div className="flex flex-col gap-4 min-h-[600px] p-2 rounded-2xl bg-muted/30 border border-border transition-all">
+              <div className="flex flex-col gap-4 min-h-[500px] p-3 rounded-2xl bg-muted/20 border border-border/40">
                 {colApps.map((app) => (
-                  <div 
-                    key={app.id} 
-                    className="group bg-card border border-border rounded-xl p-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-pointer relative"
-                  >
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="h-10 w-10 rounded-lg bg-foreground/5 flex items-center justify-center text-foreground font-bold text-xs shadow-sm group-hover:bg-primary transition-colors">
+                  <div key={app.id} className="group bg-card border border-border/60 rounded-xl p-4 shadow-sm hover:border-primary/30 transition-all">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center font-bold text-[10px] text-muted-foreground/40 group-hover:text-primary transition-colors">
                         {app.student.name?.split(' ').filter(Boolean).map(n => n[0]).join('') || '?'}
                       </div>
-                      <button className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center text-muted-foreground/40 hover:text-foreground transition-all">
+                      <button className="text-muted-foreground/20 hover:text-foreground transition-colors">
                         <MoreVertical className="h-4 w-4" />
                       </button>
                     </div>
 
-                    <div className="space-y-1.5 mb-5 text-left">
-                      <h4 className="font-bold text-[15px] text-foreground leading-tight">{app.student.name || 'Anonymous Student'}</h4>
-                      <p className="text-[11px] font-bold text-primary uppercase tracking-wider opacity-80">{app.posting.title}</p>
-                      <div className="flex items-center text-[10px] text-muted-foreground/60 font-medium pt-1">
-                        <Clock className="h-3 w-3 mr-1.5" />
-                        Inscribed {new Date(app.appliedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    <div className="space-y-1 mb-4">
+                      <h4 className="font-bold text-sm text-foreground truncate">{app.student.name || 'Anonymous'}</h4>
+                      <p className="text-[10px] font-bold text-primary uppercase tracking-tight truncate">{app.posting.title}</p>
+                      <div className="flex items-center text-[9px] text-muted-foreground/60 font-medium">
+                        Applied {new Date(app.appliedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-2 pt-4 border-t border-border/50">
+                    <div className="flex flex-col gap-2 pt-3 border-t border-border/40">
                       {app.status === 'PENDING' && (
                         <div className="flex items-center gap-2">
                           <button 
                             onClick={() => handleUpdateStatus(app.id, 'ACCEPTED')}
-                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shadow-sm shadow-primary/10"
+                            className="flex-1 h-8 rounded-lg bg-primary text-white text-[9px] font-bold uppercase tracking-wider hover:brightness-110 transition-all"
                           >
-                            <CheckCircle2 className="h-3.5 w-3.5" /> Vet
+                            Accept
                           </button>
                           <button 
                             onClick={() => handleUpdateStatus(app.id, 'REJECTED')}
-                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-card border border-border text-muted-foreground/60 text-[10px] font-bold uppercase tracking-wider hover:text-destructive hover:border-destructive/20 transition-all shadow-sm"
+                            className="flex-1 h-8 rounded-lg bg-muted text-muted-foreground text-[9px] font-bold uppercase tracking-wider hover:text-rose-500 transition-all"
                           >
-                            <XCircle className="h-3.5 w-3.5" /> Decline
+                            Reject
                           </button>
                         </div>
                       )}
                       
                       <button 
                         onClick={() => openInspector(app)}
-                        className={cn(
-                          "w-full flex items-center justify-center gap-2 h-9 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm",
-                          app.status === 'PENDING' 
-                            ? "bg-muted text-muted-foreground hover:bg-muted/80" 
-                            : "bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary"
-                        )}
+                        className="w-full h-8 rounded-lg border border-border/60 text-muted-foreground hover:text-primary hover:border-primary text-[9px] font-bold uppercase tracking-wider transition-all"
                       >
-                        Inspect Credentials <ArrowRight className="h-3.5 w-3.5" />
+                        Details
                       </button>
                     </div>
                   </div>
                 ))}
 
                  {colApps.length === 0 && (
-                  <div className="flex-1 flex flex-col items-center justify-center text-center p-12 opacity-20 filter grayscale">
-                     <Users className="h-10 w-10 text-muted-foreground mb-3" />
-                     <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Zero Manifests</p>
+                  <div className="flex-1 flex flex-col items-center justify-center text-center opacity-20">
+                     <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Empty</p>
                   </div>
                 )}
               </div>
