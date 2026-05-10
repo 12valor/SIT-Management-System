@@ -103,7 +103,7 @@ export default function StudentLayout({
         </div>
         
         {/* Navigation Section */}
-        <div className="flex-1 overflow-y-auto px-4 py-2">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-2">
           <nav className="space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
@@ -155,26 +155,11 @@ export default function StudentLayout({
 
         {/* Bottom Sidebar Sections */}
         <div className="p-4 space-y-4">
-          {/* Status Card */}
-          <div className="p-4 rounded-lg bg-muted border border-border">
-             <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[11px] font-medium text-muted-foreground">Status:</span>
-                <span className="text-[11px] font-bold text-primary">Verified</span>
-             </div>
-             {status === "loading" ? (
-                <div className="h-3 w-24 bg-slate-200 animate-pulse rounded" />
-             ) : (
-                <p className="text-[10px] font-medium text-slate-400">
-                   Student ID: {session?.user?.email?.split('@')[0].toUpperCase() || "2021-0042"}
-                </p>
-             )}
-          </div>
-
           <button
             onClick={handleSignOut}
             className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group w-full text-left"
           >
-            <LogOut className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-x-1" />
+            <LogOut className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-1" />
             Logout
           </button>
         </div>
