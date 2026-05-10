@@ -12,11 +12,11 @@ import {
   Loader2,
   Building2,
   Zap,
+  ArrowRight,
   ArrowUpRight,
   Activity,
   Sparkles,
   SlidersHorizontal,
-  AlertTriangle,
   FileWarning
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -118,118 +118,93 @@ export function StudentOpportunitiesShell({
         </div>
       }
     >
-      <div className="space-y-12 max-w-7xl mx-auto pb-24 animate-in-fade">
-        {/* Header & Search */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
-          <div className="space-y-1">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground">Career Opportunities</h2>
-            <p className="text-sm text-muted-foreground font-medium">
-              Explore and apply for industrial placements at TUP-V partner companies.
+      <div className="space-y-16 max-w-7xl mx-auto pb-32">
+        {/* Header & Search — High Contrast */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 pb-12 border-b-2 border-foreground/5">
+          <div className="space-y-4 max-w-2xl">
+            <h2 className="text-6xl font-black tracking-tighter text-foreground leading-[0.85]">
+              Industrial<br />Opportunities<span className="text-primary">.</span>
+            </h2>
+            <p className="text-base text-muted-foreground font-medium italic">
+              A curated manifest of TUP-V partner placements. Filter by industrial sector or location to begin your SIT trajectory.
             </p>
           </div>
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="relative flex-1 md:w-80">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
+          <div className="flex items-center gap-px bg-foreground/10 p-px w-full md:w-auto shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
+            <div className="relative flex-1 md:w-80 bg-card">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/20" />
               <input
                 type="text"
                 placeholder="Search partner companies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 h-11 w-full rounded-lg border border-border bg-card text-foreground text-sm focus:ring-2 focus:ring-primary/5 focus:border-primary outline-none transition-all shadow-sm"
+                className="pl-12 pr-4 h-14 w-full bg-transparent text-foreground text-[11px] font-black uppercase tracking-[0.15em] outline-none transition-all"
               />
             </div>
-            <button className="h-11 px-4 rounded-lg bg-card border border-border text-muted-foreground hover:bg-muted transition-colors flex items-center justify-center shadow-sm">
-               <SlidersHorizontal className="h-4 w-4" />
+            <button className="h-14 w-14 bg-foreground text-background hover:bg-primary transition-colors flex items-center justify-center">
+               <SlidersHorizontal className="h-5 w-5" />
             </button>
           </div>
         </div>
 
         {/* Posting Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredPostings.map((posting) => {
             const applied = posting.applications.length > 0;
             return (
-              <div key={posting.id} className="group bg-card p-6 rounded-xl border border-border shadow-sm hover:border-primary/30 transition-all flex flex-col">
-                 <div className="flex justify-between items-start mb-6">
-                    <div className="w-12 h-12 rounded-lg bg-muted border border-border flex items-center justify-center text-lg font-bold text-muted-foreground/40 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
-                       {posting.company.name[0]}
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                       <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-muted text-muted-foreground border border-border">
-                         {posting.location}
-                       </span>
-                       <div className="flex items-center gap-1.5 px-2 py-0.5 bg-muted rounded-md border border-border">
-                          <Zap className="h-3 w-3 text-muted-foreground/40" />
-                          <span className="text-[10px] font-bold text-muted-foreground/40 uppercase">{posting.type}</span>
+              <div key={posting.id} className="group bg-card border-2 border-foreground/5 p-0 transition-all duration-500 hover:border-foreground flex flex-col relative">
+                 <div className="p-8 space-y-8 flex-1">
+                    <div className="flex justify-between items-start">
+                       <div className="w-14 h-14 bg-foreground/5 border border-foreground/10 flex items-center justify-center text-2xl font-black text-foreground/20 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                          {posting.company.name[0]}
+                       </div>
+                       <div className="text-right">
+                          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40">{posting.location}</p>
+                          <div className="flex items-center justify-end gap-1.5 mt-1">
+                             <Zap className="h-3 w-3 text-primary" />
+                             <span className="text-[10px] font-black text-primary uppercase tracking-[0.1em]">{posting.type}</span>
+                          </div>
                        </div>
                     </div>
-                 </div>
-
-                 <div className="space-y-1 mb-6 flex-1">
-                    <h3 className="text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors">{posting.title}</h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-                       <Building2 className="h-4 w-4 text-muted-foreground/30" /> {posting.company.name}
+ 
+                    <div className="space-y-3">
+                       <h3 className="text-2xl font-black tracking-tight leading-[1.1] text-foreground group-hover:text-primary transition-colors">{posting.title}</h3>
+                       <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                          <Building2 className="h-4 w-4 opacity-30" /> {posting.company.name}
+                       </div>
+                    </div>
+ 
+                    <div className="grid grid-cols-2 gap-4 border-t border-foreground/5 pt-8">
+                       <div className="space-y-1">
+                          <p className="text-[9px] font-black uppercase tracking-widest text-foreground/30">Target Load</p>
+                          <p className="text-2xl font-black text-foreground tabular-nums">{posting.requiredHours}<span className="text-[10px] ml-1 opacity-30">HRS</span></p>
+                       </div>
+                       {posting.posterUrl && (
+                         <div className="flex items-end justify-end">
+                           <button 
+                             onClick={() => setSelectedPoster(posting.posterUrl)}
+                             className="h-10 w-10 border border-foreground/10 bg-card hover:bg-foreground hover:text-background flex items-center justify-center transition-all"
+                           >
+                             <Activity className="h-4 w-4" />
+                           </button>
+                         </div>
+                       )}
                     </div>
                  </div>
-
-                 <div className="flex items-center justify-between border-t border-border pt-4 mb-4 relative z-10">
-                    <div className="space-y-0.5">
-                       <p className="text-[10px] font-bold uppercase text-muted-foreground/50">Duration</p>
-                       <p className="text-base font-bold text-foreground">{posting.requiredHours} <span className="text-[10px] text-muted-foreground/40 font-medium tracking-tight">HRS</span></p>
-                    </div>
-                    {posting.posterUrl && (
-                      <button 
-                        onClick={() => setSelectedPoster(posting.posterUrl)}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-primary/5 hover:bg-primary/10 text-primary text-[9px] font-bold uppercase tracking-widest rounded-lg transition-all active:scale-95 border border-primary/10"
-                      >
-                        Visual Poster
-                      </button>
-                    )}
-                 </div>
-
-                  {(posting.responsibilities?.length > 0 || posting.requirements?.length > 0) && (
-                    <div className="space-y-4 mb-6 pt-4 border-t border-border">
-                      {posting.responsibilities?.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-[9px] font-black uppercase tracking-widest text-primary/70">Strategic Role</p>
-                          <ul className="space-y-1.5">
-                            {posting.responsibilities.slice(0, 3).map((r, i) => (
-                              <li key={i} className="flex gap-2 text-[10px] text-muted-foreground leading-tight">
-                                <span className="text-primary">•</span> {r}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {posting.requirements?.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">Prerequisites</p>
-                          <ul className="space-y-1.5">
-                            {posting.requirements.slice(0, 3).map((r, i) => (
-                              <li key={i} className="flex gap-2 text-[10px] text-muted-foreground leading-tight">
-                                <span className="text-muted-foreground/40">•</span> {r}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
+ 
                  <button 
                   onClick={() => setApplyingTo(posting)}
                   disabled={applied}
                   className={cn(
-                    "w-full h-11 rounded-lg flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider transition-all",
+                    "w-full h-14 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] transition-all border-t-2",
                     applied 
-                    ? "bg-muted text-muted-foreground/40 border border-border cursor-not-allowed" 
-                    : "bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/10 active:scale-95"
+                    ? "bg-muted text-foreground/20 border-foreground/5 cursor-not-allowed" 
+                    : "bg-foreground text-background border-foreground hover:bg-primary hover:border-primary"
                   )}
                  >
                   {applied ? (
-                    <><CheckCircle2 className="h-4 w-4" /> Applied</>
+                    <><CheckCircle2 className="h-4 w-4" /> Manifest Active</>
                   ) : (
-                    <>Apply Now <ArrowUpRight className="h-4 w-4" /></>
+                    <>Submit Candidacy <ArrowRight className="h-4 w-4" /></>
                   )}
                  </button>
               </div>
