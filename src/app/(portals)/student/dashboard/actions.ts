@@ -21,7 +21,8 @@ export async function getStudentDashboardData() {
           },
           orderBy: { appliedAt: 'desc' }
         },
-        logbookEntries: true
+        logbookEntries: true,
+        documents: true
       }
     });
 
@@ -50,7 +51,11 @@ export async function getStudentDashboardData() {
           title: acceptedApp.posting.title,
           company: acceptedApp.posting.company.name,
           location: acceptedApp.posting.location
-        } : null
+        } : null,
+        documents: student.documents.map(doc => ({
+          name: doc.name,
+          url: doc.url,
+        }))
       }
     };
   } catch (error: unknown) {

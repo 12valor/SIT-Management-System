@@ -5,23 +5,10 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Greeting } from "@/app/(portals)/student/dashboard/Greeting";
 import { Lock } from "lucide-react";
+import { ComplianceCard } from "@/components/student/ComplianceCard";
+import { StudentDashboardData } from "@/app/(portals)/student/dashboard/types";
 
-// ─── Types (mirroring server action return) ─────────────────────────────────
-interface Application {
-  id: string;
-  status: string;
-  appliedAt: string;
-  postingTitle: string;
-  companyName: string;
-}
-
-interface StudentDashboardData {
-  totalHours: number;
-  totalLogs: number;
-  approvedLogs: number;
-  applications: Application[];
-  hiredPlacement: { title: string; company: string; location: string | null } | null;
-}
+// Types are now imported from dashboard/types.ts
 
 interface Props {
   data: StudentDashboardData | null;
@@ -174,6 +161,8 @@ export function StudentDashboardShell({ data, userName }: Props) {
 
           {/* Progress & Quick Links */}
           <div className="space-y-6">
+            {data && <ComplianceCard documents={data.documents} />}
+
             <div className="bg-card p-6 rounded-xl border border-border shadow-sm space-y-4">
               <h3 className="text-sm font-bold text-foreground">SIT progress</h3>
               <div>

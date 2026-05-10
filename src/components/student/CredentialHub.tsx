@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { uploadDocumentMetadata, deleteDocument } from "@/app/(portals)/student/documents/actions";
 import { DocumentUploadZone } from "./DocumentUploadZone";
+import { REQUIRED_CREDENTIALS } from "@/app/(portals)/student/dashboard/types";
 
 interface SITDocument {
   id: string;
@@ -26,12 +27,6 @@ interface SITDocument {
   uploadedAt: Date;
 }
 
-const REQUIRED_CREDENTIALS = [
-  { id: "resume", name: "Student Resume / CV", description: "Comprehensive professional manifest", required: true },
-  { id: "intent", name: "SIT Intent Form", description: "Official declaration of training intent", required: true },
-  { id: "waiver", name: "Liability Waiver", description: "Institutional legal clearance", required: true },
-  { id: "cert", name: "Training Certificate", description: "Verified competency validation", required: false },
-];
 
 export function CredentialHub({ initialData }: { initialData: SITDocument[] | null }) {
   const [documents, setDocuments] = useState<SITDocument[]>(initialData || []);
