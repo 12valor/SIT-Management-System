@@ -68,135 +68,159 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
   const findDoc = (name: string) => documents.find(d => d.name === name);
 
   return (
-    <div className="space-y-12 max-w-6xl mx-auto pb-24">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-border pb-10">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-primary font-bold text-[10px] uppercase tracking-[0.3em]">
-            <ShieldCheck className="h-4 w-4" /> Secure Repository
+    <div className="space-y-16 max-w-7xl mx-auto pb-32">
+      {/* Header Section — Editorial Style */}
+      <div className="relative border-b-2 border-foreground/5 pb-12 pt-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+          <div className="max-w-2xl space-y-6">
+            <div className="inline-flex items-center gap-3 px-3 py-1 bg-foreground/[0.03] rounded-full border border-foreground/5">
+              <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/60">Institutional Archive</span>
+            </div>
+            
+            <div className="space-y-4">
+              <h1 className="text-6xl md:text-8xl font-black tracking-tight text-foreground leading-[0.85]">
+                Credential<br />Vault<span className="text-primary">.</span>
+              </h1>
+              <p className="text-base text-muted-foreground max-w-lg font-medium leading-relaxed italic">
+                A centralized repository for verified institutional manifests. These documents serve as the primary validation for industrial placement candidacy.
+              </p>
+            </div>
           </div>
-          <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">Credential Vault</h1>
-          <p className="text-muted-foreground text-sm max-w-md font-medium leading-relaxed">
-            Upload and manage your institutional credentials. These documents will be reviewed by industrial partners during the application process.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-4 rounded-2xl bg-card border border-border shadow-sm flex flex-col gap-1">
-            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active Manifests</span>
-            <span className="text-2xl font-black tabular-nums">{documents.length}</span>
-          </div>
-          <div className="p-4 rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 flex flex-col gap-1">
-            <span className="text-[10px] font-bold opacity-70 uppercase tracking-widest">Compliance</span>
-            <span className="text-2xl font-black tabular-nums">
-              {Math.round((documents.filter(d => REQUIRED_CREDENTIALS.find(r => r.name === d.name)?.required).length / REQUIRED_CREDENTIALS.filter(r => r.required).length) * 100)}%
-            </span>
+          <div className="flex items-center gap-6 lg:pb-2">
+            <div className="group relative">
+               <div className="absolute -inset-4 bg-primary/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+               <div className="relative flex flex-col items-end">
+                 <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">Archive Compliance</span>
+                 <span className="text-7xl font-black tabular-nums text-foreground flex items-baseline">
+                   {Math.round((documents.filter(d => REQUIRED_CREDENTIALS.find(r => r.name === d.name)?.required).length / REQUIRED_CREDENTIALS.filter(r => r.required).length) * 100)}
+                   <span className="text-2xl text-primary font-bold ml-1">%</span>
+                 </span>
+               </div>
+            </div>
+            <div className="h-16 w-px bg-foreground/10 mx-4" />
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">Manifests</span>
+              <span className="text-4xl font-black tabular-nums text-foreground">{documents.length}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
         {/* Main Content */}
-        <div className="lg:col-span-7 space-y-10">
-          <section className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                <FileBadge className="h-5 w-5" />
+        <div className="lg:col-span-8 space-y-12">
+          <section className="space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="h-1 w-12 bg-primary rounded-full" />
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-foreground/40">Requirement Manifest</h3>
               </div>
-              <h3 className="text-lg font-bold tracking-tight">Requirement Manifest</h3>
             </div>
-
-            <div className="space-y-4">
+ 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {REQUIRED_CREDENTIALS.map((cred) => {
                 const doc = findDoc(cred.name);
                 const isItemUploading = activeUploadType === cred.name;
-
+ 
                 return (
                   <div 
                     key={cred.id}
                     className={cn(
-                      "group p-6 rounded-2xl border transition-all duration-300",
+                      "group relative p-8 rounded-none border-l-4 transition-all duration-500 overflow-hidden",
                       doc 
-                        ? "bg-card border-border shadow-sm" 
-                        : "bg-muted/10 border-dashed border-border hover:border-primary/30"
+                        ? "bg-card border-primary" 
+                        : "bg-muted/5 border-foreground/10 hover:border-foreground/30"
                     )}
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-                      <div className="flex items-start gap-4">
-                        <div className={cn(
-                          "h-12 w-12 rounded-xl flex items-center justify-center transition-colors shrink-0",
-                          doc ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "bg-muted text-muted-foreground"
-                        )}>
-                          <FileText className="h-6 w-6" />
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-bold text-sm leading-none">{cred.name}</h4>
-                            {cred.required && (
-                              <span className="px-1.5 py-0.5 rounded-md bg-destructive/5 text-destructive text-[8px] font-black uppercase tracking-widest border border-destructive/10">
-                                Mandatory
-                              </span>
-                            )}
+                    {/* Folder Tab Effect */}
+                    <div className="absolute top-0 right-0 h-12 w-12 bg-foreground/[0.02] border-b border-l border-foreground/10 -mr-6 -mt-6 rotate-45" />
+                    
+                    <div className="flex flex-col h-full gap-8">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className={cn(
+                            "h-10 w-10 flex items-center justify-center transition-colors",
+                            doc ? "text-primary" : "text-foreground/20"
+                          )}>
+                            <FileText className="h-7 w-7 stroke-[1.5]" />
                           </div>
-                          <p className="text-xs text-muted-foreground font-medium">{cred.description}</p>
+                          {cred.required && (
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-primary bg-primary/5 px-2 py-1">
+                              Mandatory
+                            </span>
+                          )}
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <h4 className="font-black text-lg tracking-tight leading-none group-hover:text-primary transition-colors">
+                            {cred.name}
+                          </h4>
+                          <p className="text-xs text-muted-foreground font-medium italic">
+                            {cred.description}
+                          </p>
                         </div>
                       </div>
-
-                      <div className="flex items-center gap-3 self-end sm:self-center">
+ 
+                      <div className="mt-auto pt-6 border-t border-foreground/5 flex items-center justify-between">
                         <AnimatePresence mode="wait">
                           {doc ? (
                             <motion.div 
                               key="status-complete"
-                              initial={{ opacity: 0, x: 10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              className="flex items-center gap-3"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="flex items-center gap-4 w-full"
                             >
-                              <div className="text-right hidden sm:block">
-                                <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Validated</p>
-                                <p className="text-[10px] font-medium text-muted-foreground">{new Date(doc.uploadedAt).toLocaleDateString()}</p>
+                              <div className="flex-1">
+                                <p className="text-[9px] font-black text-primary uppercase tracking-widest">Archived</p>
+                                <p className="text-[9px] font-medium text-muted-foreground">{new Date(doc.uploadedAt).toLocaleDateString()}</p>
                               </div>
-                              <button 
-                                onClick={() => doc.url && window.open(doc.url, '_blank')}
-                                className="h-9 w-9 rounded-lg border border-border bg-card hover:border-primary/30 hover:text-primary flex items-center justify-center transition-all"
-                              >
-                                <ExternalLink className="h-4 w-4" />
-                              </button>
-                              <button 
-                                onClick={() => handleDelete(doc.id)}
-                                className="h-9 w-9 rounded-lg border border-border bg-card hover:bg-destructive/5 hover:text-destructive hover:border-destructive/20 flex items-center justify-center transition-all"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
+                              <div className="flex items-center gap-2">
+                                <button 
+                                  onClick={() => doc.url && window.open(doc.url, '_blank')}
+                                  className="h-9 w-9 border border-foreground/10 bg-card hover:bg-foreground hover:text-background flex items-center justify-center transition-all"
+                                >
+                                  <ExternalLink className="h-4 w-4" />
+                                </button>
+                                <button 
+                                  onClick={() => handleDelete(doc.id)}
+                                  className="h-9 w-9 border border-foreground/10 bg-card hover:bg-destructive hover:text-white flex items-center justify-center transition-all"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
+                              </div>
                             </motion.div>
                           ) : (
                             <motion.div 
                               key="status-action"
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="w-full"
                             >
                               <button 
                                 onClick={() => setActiveUploadType(cred.name)}
                                 disabled={isUploading}
-                                className="h-10 px-5 rounded-xl bg-foreground text-background text-[11px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center gap-2 disabled:opacity-50"
+                                className="w-full h-11 bg-foreground text-background text-[10px] font-black uppercase tracking-[0.2em] hover:bg-primary transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                               >
                                 {isItemUploading ? (
-                                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                  <Loader2 className="h-4 w-4 animate-spin" />
                                 ) : (
-                                  <Clock className="h-3.5 w-3.5" />
+                                  <Clock className="h-4 w-4" />
                                 )}
-                                Submit File
+                                Submit Manifest
                               </button>
                             </motion.div>
                           )}
                         </AnimatePresence>
                       </div>
                     </div>
-
+ 
                     {isItemUploading && (
                       <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
-                        className="mt-6 pt-6 border-t border-border"
+                        className="mt-6 pt-6 border-t border-foreground/10"
                       >
                         <DocumentUploadZone 
                           onUpload={(file) => handleUpload(file, cred.name)}
@@ -210,41 +234,42 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
             </div>
           </section>
         </div>
-
+ 
         {/* Sidebar */}
-        <div className="lg:col-span-5 space-y-8">
-          <div className="p-8 rounded-3xl bg-card border border-border shadow-sm space-y-6 sticky top-24">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
-                <Info className="h-5 w-5" />
+        <div className="lg:col-span-4 space-y-12">
+          <div className="p-10 bg-foreground text-background space-y-10 sticky top-24">
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="h-px w-8 bg-background/30" />
+                <h4 className="font-black text-sm uppercase tracking-[0.3em] opacity-60">Protocol</h4>
               </div>
-              <h4 className="font-bold text-lg tracking-tight">Institutional Protocol</h4>
+              <h3 className="text-3xl font-black tracking-tight leading-none">Security Standards</h3>
             </div>
-
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Compliance Checklist</p>
-                <div className="space-y-3">
-                  {[
-                    "Files must be in PDF or standard Image format",
-                    "Maximum individual manifest size: 5MB",
-                    "Verify digital signatures before archiving",
-                    "Credentials are visible to industry partners"
-                  ].map((rule, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="mt-1 h-4 w-4 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                        <CheckCircle2 className="h-2.5 w-2.5" />
-                      </div>
-                      <p className="text-xs text-muted-foreground font-medium leading-relaxed">{rule}</p>
+ 
+            <div className="space-y-8">
+              <div className="space-y-6">
+                {[
+                  "Files must be in PDF or standard Image format",
+                  "Maximum individual manifest size: 5MB",
+                  "Verify digital signatures before archiving",
+                  "Credentials are visible to industry partners"
+                ].map((rule, i) => (
+                  <div key={i} className="flex items-start gap-4 group">
+                    <div className="mt-1 h-5 w-5 shrink-0 border border-background/20 flex items-center justify-center group-hover:border-primary group-hover:text-primary transition-colors">
+                      <CheckCircle2 className="h-3 w-3" />
                     </div>
-                  ))}
-                </div>
+                    <p className="text-xs font-medium leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{rule}</p>
+                  </div>
+                ))}
               </div>
-
-              <div className="p-4 rounded-2xl bg-muted/50 border border-border flex items-start gap-4">
-                <AlertCircle className="h-5 w-5 text-primary shrink-0" />
-                <p className="text-[10px] font-medium text-muted-foreground italic leading-relaxed">
-                  Notice: Fraudulent manifest submissions are subject to university disciplinary review. All archives are timestamped and logged.
+ 
+              <div className="p-6 bg-background/5 border border-background/10 space-y-3">
+                <div className="flex items-center gap-2 text-primary">
+                  <AlertCircle className="h-4 w-4" />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Notice</span>
+                </div>
+                <p className="text-[11px] font-medium italic opacity-60 leading-relaxed">
+                  Fraudulent manifest submissions are subject to university disciplinary review. All archives are timestamped and logged.
                 </p>
               </div>
             </div>

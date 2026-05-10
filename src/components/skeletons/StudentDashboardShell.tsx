@@ -4,7 +4,7 @@ import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Greeting } from "@/app/(portals)/student/dashboard/Greeting";
-import { Lock } from "lucide-react";
+import { Lock, ArrowUpRight, ArrowRight, Activity, LayoutGrid } from "lucide-react";
 import { ComplianceCard } from "@/components/student/ComplianceCard";
 import { StudentDashboardData } from "@/app/(portals)/student/dashboard/types";
 
@@ -42,53 +42,54 @@ export function StudentDashboardShell({ data, userName }: Props) {
         </div>
       }
     >
-      <div className="flex-1 space-y-8">
+      <div className="flex-1 space-y-12">
         {/* 1. Header Greeting */}
-        <div>
-          <Greeting name={userName?.split(" ")[0] || "Student"} />
-          <p className="text-sm text-muted-foreground font-medium mt-1">
-            Here&apos;s your SIT progress for A.Y. 2025-2026
+        <div className="border-b-2 border-foreground/5 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-primary/5 border border-primary/10">
+               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Academic Session 2025/26</span>
+            </div>
+            <Greeting name={userName?.split(" ")[0] || "Student"} />
+          </div>
+          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-2">
+            Supervised Industrial Training Tracker
           </p>
         </div>
 
-        {/* 2. Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-card p-6 rounded-xl border border-border shadow-sm flex flex-col justify-between">
-            <div>
-              <p className="text-xs font-medium text-muted-foreground mb-4">SIT hours</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-foreground">{data?.totalHours ?? 0} / 300</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">hours logged</p>
+        {/* 2. Metric Grid — Refined Industrial Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10 border-2 border-foreground/5 overflow-hidden">
+          <div className="bg-card p-8 group hover:bg-foreground hover:text-background transition-all duration-500">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-6 group-hover:opacity-60">SIT Hours Logged</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-5xl font-black tracking-tighter tabular-nums">{data?.totalHours ?? 0}</span>
+              <span className="text-xs font-bold opacity-40 tracking-widest">/ 300</span>
             </div>
-            <Link href="/student/logbook" className="text-xs font-bold text-primary hover:underline mt-4">
-              View logbook
+            <Link href="/student/logbook" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest mt-8 group-hover:text-primary transition-colors">
+              Verify Logbook <ArrowUpRight className="h-3 w-3" />
             </Link>
           </div>
-
-          <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-            <p className="text-xs font-medium text-muted-foreground mb-4">Applications</p>
-            <span className="text-2xl font-bold text-foreground">{data?.applications.length ?? 0}</span>
-            <p className="text-xs text-muted-foreground mt-1">
-              {!data?.applications.length ? "No active applications" : "Active submissions"}
-            </p>
+ 
+          <div className="bg-card p-8 group hover:bg-foreground hover:text-background transition-all duration-500">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-6 group-hover:opacity-60">Active Submissions</p>
+            <span className="text-5xl font-black tracking-tighter tabular-nums">{data?.applications.length ?? 0}</span>
+            <p className="text-[10px] font-bold mt-2 opacity-40 uppercase tracking-widest">Partner Applications</p>
           </div>
-
-          <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-            <p className="text-xs font-medium text-muted-foreground mb-4">Verified logs</p>
-            <span className="text-2xl font-bold text-foreground">{data?.approvedLogs ?? 0}</span>
-            <p className="text-xs text-muted-foreground mt-1">Pending adviser approval</p>
+ 
+          <div className="bg-card p-8 group hover:bg-foreground hover:text-background transition-all duration-500">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-6 group-hover:opacity-60">Verification Status</p>
+            <span className="text-5xl font-black tracking-tighter tabular-nums">{data?.approvedLogs ?? 0}</span>
+            <p className="text-[10px] font-bold mt-2 opacity-40 uppercase tracking-widest">Approved Records</p>
           </div>
-
-          <div className="bg-card p-6 rounded-xl border border-border shadow-sm">
-            <p className="text-xs font-medium text-muted-foreground mb-4">Placement status</p>
-            <span className={cn("text-2xl font-bold", data?.hiredPlacement ? "text-emerald-600" : "text-foreground")}>
-              {data?.hiredPlacement ? "Hired" : "Open"}
-            </span>
-            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
-              <span className={cn("h-2 w-2 rounded-full", data?.hiredPlacement ? "bg-primary" : "bg-primary/30")} />
-              {data?.hiredPlacement ? "Deployed to Company" : "Not yet deployed"}
-            </p>
+ 
+          <div className="bg-card p-8 group hover:bg-foreground hover:text-background transition-all duration-500">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-6 group-hover:opacity-60">Industrial Status</p>
+            <div className="flex items-center gap-3">
+              <div className={cn("h-3 w-3 rounded-none", data?.hiredPlacement ? "bg-primary animate-pulse" : "bg-foreground/10")} />
+              <span className="text-4xl font-black tracking-tighter uppercase">
+                {data?.hiredPlacement ? "Hired" : "Open"}
+              </span>
+            </div>
+            <p className="text-[10px] font-bold mt-4 opacity-40 uppercase tracking-widest">Deployment Pipeline</p>
           </div>
         </div>
 

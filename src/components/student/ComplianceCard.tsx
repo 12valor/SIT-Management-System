@@ -23,38 +23,42 @@ export function ComplianceCard({ documents }: Props) {
   const mandatoryTotalCount = complianceItems.filter(i => i.required).length;
 
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden flex flex-col">
-      <div className="px-6 py-4 border-b border-border bg-destructive/5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <AlertCircle className="h-4 w-4 text-destructive" />
-          <h3 className="text-xs font-bold text-destructive uppercase tracking-widest">Action Required</h3>
+    <div className="bg-card border-2 border-foreground shadow-[8px_8px_0px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
+      <div className="px-6 py-5 border-b-2 border-foreground bg-primary text-white flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <AlertCircle className="h-4 w-4" />
+          <h3 className="text-[10px] font-black uppercase tracking-[0.2em]">Institutional Protocol</h3>
         </div>
-        <span className="text-[10px] font-bold text-destructive/60 uppercase tracking-widest">
+        <span className="text-[10px] font-black uppercase tracking-widest opacity-80">
           {mandatoryDoneCount}/{mandatoryTotalCount} Required
         </span>
       </div>
 
-      <div className="p-6 space-y-4">
-        <p className="text-sm font-bold text-foreground">
-          Pending Credentials
-        </p>
+      <div className="p-8 space-y-8">
+        <div className="space-y-2">
+          <h4 className="text-2xl font-black tracking-tight leading-none text-foreground">
+            Manifest<br />Compliance
+          </h4>
+          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Pending Submissions</p>
+        </div>
         
-        <div className="space-y-3">
+        <div className="space-y-4">
           {complianceItems.map((item) => (
-            <div key={item.id} className="flex items-center gap-3">
-              {item.isDone ? (
-                <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-              ) : (
-                <Circle className="h-4 w-4 text-muted-foreground/30 shrink-0" />
-              )}
+            <div key={item.id} className="flex items-center gap-4 group">
+              <div className={cn(
+                "h-5 w-5 border-2 flex items-center justify-center transition-colors",
+                item.isDone ? "bg-primary border-primary text-white" : "border-foreground/10 group-hover:border-foreground/30"
+              )}>
+                {item.isDone && <CheckCircle2 className="h-3 w-3" />}
+              </div>
               <span className={cn(
-                "text-xs font-medium",
-                item.isDone ? "text-muted-foreground line-through" : "text-foreground"
+                "text-xs font-bold tracking-tight transition-colors",
+                item.isDone ? "text-muted-foreground/40 line-through" : "text-foreground"
               )}>
                 {item.name}
               </span>
               {item.required && !item.isDone && (
-                <span className="ml-auto text-[8px] font-black text-destructive/60 uppercase tracking-[0.1em]">Required</span>
+                <span className="ml-auto text-[8px] font-black text-primary uppercase tracking-[0.1em] border border-primary/20 px-1.5 py-0.5">Required</span>
               )}
             </div>
           ))}
@@ -62,10 +66,10 @@ export function ComplianceCard({ documents }: Props) {
 
         <Link 
           href="/student/documents"
-          className="mt-4 flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors group"
+          className="mt-4 flex items-center justify-between p-4 bg-foreground text-background hover:bg-primary transition-all group"
         >
-          <span className="text-[11px] font-bold uppercase tracking-widest text-foreground">Complete Submission</span>
-          <ArrowRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em]">Archive Vault</span>
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
     </div>
