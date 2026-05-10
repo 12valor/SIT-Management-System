@@ -13,7 +13,8 @@ import {
   User as UserIcon, 
   LogOut,
   X,
-  Award
+  Award,
+  Lock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -51,7 +52,13 @@ export default function StudentLayout({
 
   const navItems = [
     { name: "Executive Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
-    ...(!isPlaced ? [{ name: "Industry Opportunities", href: "/student/opportunities", icon: Briefcase }] : []),
+    { 
+      name: "Industry Opportunities", 
+      href: "/student/opportunities", 
+      icon: Briefcase,
+      isLocked: isPlaced,
+      lockReason: "Phase complete"
+    },
     { name: "Digital Logbook", href: "/student/logbook", icon: BookOpen },
     { name: "Training Documents", href: "/student/documents", icon: FileText },
     { name: "SIT Certification", href: "/student/completion", icon: Award },
@@ -101,6 +108,28 @@ export default function StudentLayout({
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
+              const isLocked = "isLocked" in item && item.isLocked;
+
+              if (isLocked) {
+                return (
+                  <div
+                    key={item.href}
+                    className="flex items-center justify-between px-4 py-2.5 text-sm font-medium text-muted-foreground/40 bg-muted/30 rounded-lg cursor-not-allowed group relative"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 text-muted-foreground/20" />
+                      <span>{item.name}</span>
+                    </div>
+                    <Lock className="h-3.5 w-3.5 text-muted-foreground/30" />
+                    
+                    {/* Tooltip or label */}
+                    <div className="absolute left-full ml-2 px-2 py-1 bg-foreground text-background text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      {"lockReason" in item ? item.lockReason : "Locked"}
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={item.href}

@@ -4,6 +4,7 @@ import { Skeleton } from "boneyard-js/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Greeting } from "@/app/(portals)/student/dashboard/Greeting";
+import { Lock } from "lucide-react";
 
 // ─── Types (mirroring server action return) ─────────────────────────────────
 interface Application {
@@ -129,7 +130,12 @@ export function StudentDashboardShell({ data, userName }: Props) {
                       : "You haven't applied to any companies yet. Browse industry partners and submit your first application."
                     }
                   </p>
-                  {!data?.hiredPlacement && (
+                  {data?.hiredPlacement ? (
+                    <div className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-muted text-muted-foreground/40 text-xs font-bold border border-border cursor-not-allowed gap-2 mt-6">
+                      <Lock className="h-3.5 w-3.5" />
+                      Opportunities Locked
+                    </div>
+                  ) : (
                     <Link
                       href="/student/opportunities"
                       className="inline-flex h-10 items-center justify-center px-6 rounded-lg bg-primary text-white text-xs font-bold hover:shadow-lg hover:shadow-primary/20 transition-all font-heading mt-6"
@@ -197,22 +203,38 @@ export function StudentDashboardShell({ data, userName }: Props) {
               </div>
               <div className="divide-y divide-slate-50">
                 {[
-                  ...(data?.hiredPlacement ? [] : [{ label: "Browse opportunities", href: "/student/opportunities" }]),
+                  { label: "Browse opportunities", href: "/student/opportunities", isLocked: !!data?.hiredPlacement },
                   { label: "Browse industry partners", href: "/partners" },
                   { label: "Upload documents", href: "/student/documents" },
                   { label: "Request MOA", href: "#" },
-                ].map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
-                  >
-                    {link.label}
-                    <svg className="h-3 w-3 text-muted-foreground/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                ))}
+                ].map((link) => {
+                  if (link.isLocked) {
+                    return (
+                      <div
+                        key={link.label}
+                        className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-muted-foreground/30 bg-muted/10 cursor-not-allowed"
+                      >
+                        <span className="flex items-center gap-2">
+                          {link.label}
+                          <Lock className="h-3 w-3" />
+                        </span>
+                        <span className="text-[10px] font-bold uppercase tracking-tighter opacity-40">Locked</span>
+                      </div>
+                    );
+                  }
+                  return (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+                    >
+                      {link.label}
+                      <svg className="h-3 w-3 text-muted-foreground/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

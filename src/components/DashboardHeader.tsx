@@ -17,6 +17,8 @@ interface NavItem {
   name: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  isLocked?: boolean;
+  lockReason?: string;
 }
 
 interface DashboardHeaderProps {
