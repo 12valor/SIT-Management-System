@@ -10,7 +10,8 @@ import {
   AlertCircle,
   ExternalLink,
   Loader2,
-  Upload
+  Upload,
+  Pencil
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -35,6 +36,12 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
     setIsUploading(true);
     setActiveUploadType(docName);
     
+    // If a document with the same name exists, delete it first (Modification)
+    const existingDoc = findDoc(docName);
+    if (existingDoc) {
+      await deleteDocument(existingDoc.id);
+    }
+    
     await new Promise(resolve => setTimeout(resolve, 1500));
     const mockUrl = `https://archive.sit.tupv.edu.ph/manifests/${file.name.replace(/\s+/g, '_')}`;
 
@@ -45,7 +52,11 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
     });
 
     if (result.success && result.data) {
-      setDocuments(prev => [result.data as SITDocument, ...prev]);
+      if (existingDoc) {
+        setDocuments(prev => [result.data as SITDocument, ...prev.filter(d => d.id !== existingDoc.id)]);
+      } else {
+        setDocuments(prev => [result.data as SITDocument, ...prev]);
+      }
     }
 
     setIsUploading(false);
@@ -143,14 +154,26 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                       >
                         <button 
                           onClick={() => doc.url && window.open(doc.url, '_blank')}
-                          className="px-4 py-2 text-sm font-medium border rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2"
+                          className="h-10 px-4 text-xs font-bold border border-border rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm"
                         >
-                          <ExternalLink className="h-4 w-4" />
+                          <ExternalLink className="h-3.5 w-3.5" />
                           View
                         </button>
                         <button 
+                          onClick={() => setActiveUploadType(activeUploadType === cred.name ? null : cred.name)}
+                          className={cn(
+                            "h-10 px-4 text-xs font-bold border rounded-xl transition-all flex items-center gap-2",
+                            activeUploadType === cred.name 
+                            ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900"
+                            : "bg-white text-slate-600 border-border hover:bg-slate-50 dark:bg-white/5 dark:text-slate-300 shadow-sm"
+                          )}
+                        >
+                          <Pencil className="h-3.5 w-3.5" />
+                          Modify
+                        </button>
+                        <button 
                           onClick={() => handleDelete(doc.id)}
-                          className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all rounded-lg"
+                          className="h-10 w-10 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all rounded-xl border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -184,7 +207,7 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                 </div>
               </div>
 
-              {activeUploadType === cred.name && !doc && (
+              {activeUploadType === cred.name && (
                 <motion.div 
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
