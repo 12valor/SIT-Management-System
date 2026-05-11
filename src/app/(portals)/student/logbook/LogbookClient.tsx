@@ -34,11 +34,23 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const hoursNum = Number(hours);
+    
+    if (hoursNum > 24) {
+      alert("Clock-in Error: A single day contains 24 hours. Please enter a valid duration.");
+      return;
+    }
+
+    if (hoursNum <= 0) {
+      alert("Clock-in Error: Hours must be greater than zero.");
+      return;
+    }
+
     setIsSubmitting(true);
     
     const result = await submitLogbookEntry({
       date,
-      hours: Number(hours),
+      hours: hoursNum,
       tasks,
     });
 
@@ -210,7 +222,17 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
                      <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full h-11 px-4 rounded-lg bg-background border border-border text-foreground text-sm focus:ring-2 focus:ring-primary/20 outline-none" required />
-                     <input type="number" placeholder="Hours" value={hours} onChange={e => setHours(e.target.value)} className="w-full h-11 px-4 rounded-lg bg-background border border-border text-foreground text-sm focus:ring-2 focus:ring-primary/20 outline-none" required />
+                     <input 
+                        type="number" 
+                        placeholder="Hours" 
+                        value={hours} 
+                        onChange={e => setHours(e.target.value)} 
+                        className="w-full h-11 px-4 rounded-lg bg-background border border-border text-foreground text-sm focus:ring-2 focus:ring-primary/20 outline-none" 
+                        required 
+                        min="0.5"
+                        max="24"
+                        step="0.5"
+                     />
                   </div>
                   <textarea placeholder="Tasks conducted today..." value={tasks} onChange={e => setTasks(e.target.value)} className="w-full p-4 rounded-xl bg-background border border-border text-foreground text-sm focus:ring-2 focus:ring-primary/20 outline-none h-32 resize-none" required />
                   <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white h-11 rounded-lg font-bold uppercase tracking-widest text-xs hover:shadow-lg hover:shadow-primary/20 transition-all">

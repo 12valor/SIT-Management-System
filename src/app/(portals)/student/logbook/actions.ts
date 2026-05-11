@@ -64,10 +64,35 @@ export async function submitLogbookEntry(data: {
       return { success: false, error: "No active industrial placement detected. Logbook entries require an active assignment." };
     }
 
+    const entryDate = new Date(data.date);
+    const startOfDay = new Date(entryDate);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(entryDate);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const existingEntries = await prisma.logbookEntry.findMany({
+      where: {
+        studentId: session.user.id,
+        date: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+    });
+
+    const totalHoursToday = existingEntries.reduce((sum, entry) => sum + entry.hours, 0);
+
+    if (totalHoursToday + data.hours > 24) {
+      return { 
+        success: false, 
+        error: `Daily limit exceeded. You have already logged ${totalHoursToday} hours for this date. The total cannot exceed 24 hours.` 
+      };
+    }
+
     await prisma.logbookEntry.create({
       data: {
         studentId: session.user.id,
-        date: new Date(data.date),
+        date: entryDate,
         hours: data.hours,
         tasks: data.tasks,
         status: 'PENDING'
