@@ -3,13 +3,14 @@
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
 import { z } from "zod";
+import { isCourseCode } from "@/lib/courses";
 
 const studentSchema = z.object({
   name: z.string().min(2, "Name is too short"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
-  course: z.string().min(2, "Course is required"),
+  course: z.string().refine(isCourseCode, "Course must be one of T01-T09"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],

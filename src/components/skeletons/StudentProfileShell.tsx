@@ -5,6 +5,7 @@ import { useState, useTransition, useEffect } from "react";
 import { User as UserIcon, Mail, GraduationCap, Save, CheckCircle2, Loader2, ShieldCheck, Clock } from "lucide-react";
 import { updateStudentProfile } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";
+import { COURSE_OPTIONS, isCourseCode } from "@/lib/courses";
 
 export type ProfileData = {
   id: string;
@@ -55,12 +56,13 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
   const safeProfile = profile || {
     name: 'Student Name',
     email: 'student@example.com',
-    course: 'BS in Information Technology',
+    course: 'T01',
     createdAt: new Date(),
     isApproved: true,
     applications: [],
     logbookEntries: []
   };
+  const hasLegacyCourse = !!safeProfile.course && !isCourseCode(safeProfile.course);
 
   return (
     <Skeleton 
@@ -181,12 +183,16 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
                   className="w-full pl-10 pr-10 h-11 rounded-lg border border-border bg-card text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary appearance-none cursor-pointer transition-all"
                 >
                   <option value="" className="text-foreground bg-card">Select program...</option>
-                  <option value="BS in Information Technology" className="text-foreground bg-card">BS in Information Technology</option>
-                  <option value="BS in Computer Science" className="text-foreground bg-card">BS in Computer Science</option>
-                  <option value="BS in Civil Engineering" className="text-foreground bg-card">BS in Civil Engineering</option>
-                  <option value="BS in Electronics Engineering" className="text-foreground bg-card">BS in Electronics Engineering</option>
-                  <option value="BS in Electrical Engineering" className="text-foreground bg-card">BS in Electrical Engineering</option>
-                  <option value="BS in Mechanical Engineering" className="text-foreground bg-card">BS in Mechanical Engineering</option>
+                  {hasLegacyCourse && (
+                    <option value={safeProfile.course ?? ""} className="text-foreground bg-card">
+                      Current: {safeProfile.course}
+                    </option>
+                  )}
+                  {COURSE_OPTIONS.map((course) => (
+                    <option key={course} value={course} className="text-foreground bg-card">
+                      {course}
+                    </option>
+                  ))}
                 </select>
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 border-l border-border pl-3 pointer-events-none">
                   <Save className="h-3.5 w-3.5 text-muted-foreground/40" />

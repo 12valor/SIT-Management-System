@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { registerStudent } from "./actions";
 import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
 import { motion } from "framer-motion";
+import { COURSE_OPTIONS } from "@/lib/courses";
 
 export default function StudentSignupPage() {
   const [error, setError] = useState("");
@@ -103,11 +104,9 @@ export default function StudentSignupPage() {
                     className="w-full h-11 px-4 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
                   >
                     <option value="" className="text-slate-400">Select program</option>
-                    <option value="BS in Computer Engineering">BS in Computer Engineering</option>
-                    <option value="BS in Electronics Engineering">BS in Electronics Engineering</option>
-                    <option value="BS in Mechanical Engineering">BS in Mechanical Engineering</option>
-                    <option value="BS in Information Technology">BS in Information Technology</option>
-                    <option value="BS in Chemical Engineering">BS in Chemical Engineering</option>
+                    {COURSE_OPTIONS.map((course) => (
+                      <option key={course} value={course}>{course}</option>
+                    ))}
                   </select>
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -184,4 +183,3 @@ export default function StudentSignupPage() {
     </main>
   );
 }
-
