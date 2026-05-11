@@ -102,111 +102,114 @@ export function StudentOpportunitiesShell({
       fallback={
         <div className="space-y-12 max-w-7xl mx-auto pb-24">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
-            <div className="space-y-4">
-              <div className="h-8 w-64 bg-muted rounded-lg animate-pulse" />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-10 border-b border-border">
+            <div className="space-y-3">
+              <div className="h-10 w-64 bg-muted rounded-lg animate-pulse" />
               <div className="h-4 w-96 bg-muted/50 rounded-lg animate-pulse" />
             </div>
-            <div className="h-11 w-80 bg-muted rounded-lg animate-pulse" />
+            <div className="h-12 w-80 bg-muted rounded-2xl animate-pulse" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
              {[1,2,3,4,5,6].map(i => (
-               <div key={i} className="h-64 bg-muted/30 rounded-xl animate-pulse" />
+               <div key={i} className="h-72 bg-muted/30 rounded-2xl animate-pulse" />
              ))}
           </div>
         </div>
       }
     >
-      <div className="space-y-16 max-w-7xl mx-auto pb-32">
-        {/* Header & Search — High Contrast */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 pb-12 border-b-2 border-foreground/5">
-          <div className="space-y-4 max-w-2xl">
-            <h2 className="text-6xl font-black tracking-tighter text-foreground leading-[0.85]">
-              Industrial<br />Opportunities<span className="text-primary">.</span>
+      <div className="space-y-12 max-w-7xl mx-auto pb-32">
+        {/* Header & Search */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-10 border-b border-border">
+          <div className="space-y-3 max-w-2xl">
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">
+              Industry Opportunities
             </h2>
-            <p className="text-base text-muted-foreground font-medium italic">
-              A curated manifest of TUP-V partner placements. Filter by industrial sector or location to begin your SIT trajectory.
+            <p className="text-sm text-muted-foreground font-medium">
+              Explore and apply for placements with our partner companies. Filter by sector or location to find the right fit for your SIT.
             </p>
           </div>
-          <div className="flex items-center gap-px bg-foreground/10 p-px w-full md:w-auto shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
-            <div className="relative flex-1 md:w-80 bg-card">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/20" />
+          <div className="flex items-center w-full md:w-auto bg-muted/50 p-1 rounded-2xl border border-border">
+            <div className="relative flex-1 md:w-80">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search partner companies..."
+                placeholder="Search companies or positions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 h-14 w-full bg-transparent text-foreground text-[11px] font-black uppercase tracking-[0.15em] outline-none transition-all"
+                className="pl-12 pr-4 h-12 w-full bg-transparent text-foreground text-sm font-medium outline-none"
               />
             </div>
-            <button className="h-14 w-14 bg-foreground text-background hover:bg-primary transition-colors flex items-center justify-center">
-               <SlidersHorizontal className="h-5 w-5" />
+            <button className="h-12 px-5 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-xl flex items-center justify-center gap-2 text-sm font-bold shadow-sm">
+               <SlidersHorizontal className="h-4 w-4" />
+               <span className="hidden sm:inline">Filters</span>
             </button>
           </div>
         </div>
 
         {/* Posting Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPostings.map((posting) => {
             const applied = posting.applications.length > 0;
             return (
-              <div key={posting.id} className="group bg-card border-2 border-foreground/5 p-0 transition-all duration-500 hover:border-foreground flex flex-col relative">
+              <div key={posting.id} className="group bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20 flex flex-col relative">
                  <div className="p-8 space-y-8 flex-1">
                     <div className="flex justify-between items-start">
-                       <div className="w-14 h-14 bg-foreground/5 border border-foreground/10 flex items-center justify-center text-2xl font-black text-foreground/20 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                       <div className="w-14 h-14 bg-muted rounded-xl flex items-center justify-center text-xl font-bold text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                           {posting.company.name[0]}
                        </div>
                        <div className="text-right">
-                          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40">{posting.location}</p>
-                          <div className="flex items-center justify-end gap-1.5 mt-1">
-                             <Zap className="h-3 w-3 text-primary" />
-                             <span className="text-[10px] font-black text-primary uppercase tracking-[0.1em]">{posting.type}</span>
+                          <p className="text-xs font-semibold text-muted-foreground">{posting.location}</p>
+                          <div className="flex items-center justify-end gap-1.5 mt-1.5">
+                             <div className="px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                                <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{posting.type}</span>
+                             </div>
                           </div>
                        </div>
                     </div>
  
-                    <div className="space-y-3">
-                       <h3 className="text-2xl font-black tracking-tight leading-[1.1] text-foreground group-hover:text-primary transition-colors">{posting.title}</h3>
-                       <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                          <Building2 className="h-4 w-4 opacity-30" /> {posting.company.name}
+                    <div className="space-y-2">
+                       <h3 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">{posting.title}</h3>
+                       <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                          <Building2 className="h-4 w-4 opacity-50" /> {posting.company.name}
                        </div>
                     </div>
  
-                    <div className="grid grid-cols-2 gap-4 border-t border-foreground/5 pt-8">
-                       <div className="space-y-1">
-                          <p className="text-[9px] font-black uppercase tracking-widest text-foreground/30">Target Load</p>
-                          <p className="text-2xl font-black text-foreground tabular-nums">{posting.requiredHours}<span className="text-[10px] ml-1 opacity-30">HRS</span></p>
+                    <div className="flex items-center justify-between border-t border-border pt-6">
+                       <div className="space-y-0.5">
+                          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">Training Load</p>
+                          <p className="text-xl font-bold text-foreground tabular-nums">{posting.requiredHours}<span className="text-xs ml-1 font-medium opacity-50">HRS</span></p>
                        </div>
                        {posting.posterUrl && (
-                         <div className="flex items-end justify-end">
-                           <button 
-                             onClick={() => setSelectedPoster(posting.posterUrl)}
-                             className="h-10 w-10 border border-foreground/10 bg-card hover:bg-foreground hover:text-background flex items-center justify-center transition-all"
-                           >
-                             <Activity className="h-4 w-4" />
-                           </button>
-                         </div>
+                         <button 
+                           onClick={() => setSelectedPoster(posting.posterUrl)}
+                           className="h-10 px-4 rounded-xl border border-border bg-muted/30 hover:bg-muted hover:border-muted-foreground/20 flex items-center gap-2 text-xs font-bold transition-all"
+                         >
+                           <Activity className="h-4 w-4" />
+                           View Poster
+                         </button>
                        )}
                     </div>
                  </div>
  
-                 <button 
-                  onClick={() => setApplyingTo(posting)}
-                  disabled={applied}
-                  className={cn(
-                    "w-full h-14 flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] transition-all border-t-2",
-                    applied 
-                    ? "bg-muted text-foreground/20 border-foreground/5 cursor-not-allowed" 
-                    : "bg-foreground text-background border-foreground hover:bg-primary hover:border-primary"
-                  )}
-                 >
-                  {applied ? (
-                    <><CheckCircle2 className="h-4 w-4" /> Manifest Active</>
-                  ) : (
-                    <>Submit Candidacy <ArrowRight className="h-4 w-4" /></>
-                  )}
-                 </button>
+                 <div className="px-8 pb-8">
+                    <button 
+                      onClick={() => setApplyingTo(posting)}
+                      disabled={applied}
+                      className={cn(
+                        "w-full h-12 flex items-center justify-center gap-3 text-sm font-bold rounded-xl transition-all",
+                        applied 
+                        ? "bg-muted text-muted-foreground cursor-not-allowed" 
+                        : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/10 hover:shadow-primary/20"
+                      )}
+                    >
+                      {applied ? (
+                        <><CheckCircle2 className="h-4 w-4" /> Already Applied</>
+                      ) : (
+                        <>Apply Now <ArrowRight className="h-4 w-4" /></>
+                      )}
+                    </button>
+                 </div>
               </div>
             );
           })}
@@ -241,8 +244,8 @@ export function StudentOpportunitiesShell({
                   <div className="w-20 h-20 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-sm">
                     <CheckCircle2 className="h-10 w-10" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Application Transmitted</h3>
-                  <p className="text-muted-foreground font-medium">Your industrial candidacy has been forwarded to {applyingTo.company.name}. Check your dashboard for status updates.</p>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Application Submitted</h3>
+                  <p className="text-muted-foreground font-medium">Your application has been sent to {applyingTo.company.name}. You can track its status on your dashboard.</p>
                 </div>
               ) : (
                 <div>
@@ -250,7 +253,7 @@ export function StudentOpportunitiesShell({
                     <div className="space-y-1">
                       <h3 className="text-lg font-bold text-foreground">Confirm Application</h3>
                       <p className="text-xs text-muted-foreground font-medium flex items-center gap-1.5">
-                        <Zap className="h-3.5 w-3.5 text-primary" /> Review your industrial transmission request
+                        <Zap className="h-3.5 w-3.5 text-primary" /> Review your application details
                       </p>
                     </div>
                     <button 
@@ -267,20 +270,20 @@ export function StudentOpportunitiesShell({
                         </div>
                         <div className="space-y-1">
                           <p className="text-sm font-bold">Standard Disclosure</p>
-                          <p className="text-[11px] font-medium opacity-80 leading-relaxed uppercase tracking-tight">
-                            By confirming, your verified SIT manifest, academic records, and professional details will be shared with the industrial partner for review.
+                          <p className="text-xs font-medium opacity-80 leading-relaxed">
+                            By confirming, your SIT profile, academic records, and professional details will be shared with the company for review.
                           </p>
                         </div>
                      </div>
 
                      <div className="grid grid-cols-2 gap-8 py-4 px-2">
                         <div className="space-y-1">
-                           <p className="text-[10px] font-bold uppercase text-muted-foreground/60">Position</p>
+                           <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider">Position</p>
                            <p className="text-lg font-bold text-foreground">{applyingTo.title}</p>
                         </div>
                         <div className="space-y-1">
-                           <p className="text-[10px] font-bold uppercase text-muted-foreground/60">Requirement</p>
-                           <p className="text-lg font-bold text-foreground">{applyingTo.requiredHours} Training Hours</p>
+                           <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider">Requirements</p>
+                           <p className="text-lg font-bold text-foreground">{applyingTo.requiredHours} Hours</p>
                         </div>
                      </div>
 
@@ -290,9 +293,9 @@ export function StudentOpportunitiesShell({
                              <FileWarning className="h-6 w-6" />
                           </div>
                           <div className="space-y-1">
-                             <p className="text-sm font-bold text-destructive uppercase tracking-tight">Missing Credentials</p>
+                             <p className="text-sm font-bold text-destructive uppercase tracking-tight">Missing Resume</p>
                              <p className="text-xs text-muted-foreground font-medium leading-relaxed">
-                               Your industrial resume (CV) is missing from the vault. Industrial partners require this for review.
+                               Your resume (CV) is missing from your documents. Companies require this for their review process.
                              </p>
                           </div>
                           <Link 
@@ -308,7 +311,7 @@ export function StudentOpportunitiesShell({
                         disabled={isSubmitting}
                         className="w-full flex h-12 items-center justify-center rounded-xl bg-primary text-sm font-bold text-white uppercase tracking-wider shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all disabled:opacity-50"
                        >
-                         {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Finalize Application <Send className="ml-2 h-4 w-4" /></>}
+                         {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Send Application <Send className="ml-2 h-4 w-4" /></>}
                        </button>
                      )}
                   </div>

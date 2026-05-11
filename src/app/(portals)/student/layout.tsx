@@ -51,7 +51,7 @@ export default function StudentLayout({
   }, [status]);
 
   const navItems = [
-    { name: "Executive Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
+    { name: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
     { 
       name: "Industry Opportunities", 
       href: "/student/opportunities", 
@@ -59,10 +59,10 @@ export default function StudentLayout({
       isLocked: isPlaced,
       lockReason: "Phase complete"
     },
-    { name: "Digital Logbook", href: "/student/logbook", icon: BookOpen },
-    { name: "Training Documents", href: "/student/documents", icon: FileText },
-    { name: "SIT Certification", href: "/student/completion", icon: Award },
-    { name: "Professional Profile", href: "/student/profile", icon: UserIcon },
+    { name: "Logbook", href: "/student/logbook", icon: BookOpen },
+    { name: "Documents", href: "/student/documents", icon: FileText },
+    { name: "Certification", href: "/student/completion", icon: Award },
+    { name: "Profile", href: "/student/profile", icon: UserIcon },
   ];
 
 
@@ -92,7 +92,7 @@ export default function StudentLayout({
           />
           <div className="flex flex-col justify-center leading-none">
             <span className="font-bold text-base tracking-tight text-foreground font-heading">SIT Platform</span>
-            <span className="text-[10px] font-medium text-primary mt-1">TUP-V Student</span>
+            <span className="text-[10px] font-medium text-primary mt-1">Student Portal</span>
           </div>
           <button 
             className="ml-auto lg:hidden p-2 rounded-lg bg-muted" 
@@ -175,7 +175,7 @@ export default function StudentLayout({
           pathname={pathname}
           navItems={navItems}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
-          roleTitle="Verified Candidate"
+          roleTitle="Student"
         />
         
         <main className="flex-1 p-8 lg:p-14 animate-in-fade w-full overflow-x-hidden">
