@@ -442,33 +442,81 @@ export function StudentOpportunitiesShell({
                         </div>
                      </div>
 
-                     {!hasCV ? (
-                       <div className="p-6 rounded-xl bg-destructive/5 border border-destructive/10 flex flex-col items-center text-center gap-4">
-                          <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
-                             <FileWarning className="h-6 w-6" />
+                     {/* Verification Steps */}
+                     <div className="space-y-6">
+                        <div className="flex items-center gap-3">
+                          <div className="h-px flex-1 bg-border/50" />
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40 whitespace-nowrap">Verification Protocol</span>
+                          <div className="h-px flex-1 bg-border/50" />
+                        </div>
+
+                        {!hasCV ? (
+                          <div className="group relative p-6 rounded-2xl bg-destructive/5 border border-destructive/10 overflow-hidden transition-all hover:bg-destructive/[0.08]">
+                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <FileWarning className="h-20 w-20 -rotate-12" />
+                             </div>
+                             <div className="relative flex items-start gap-5">
+                                <div className="h-12 w-12 rounded-xl bg-destructive/10 flex items-center justify-center text-destructive shrink-0 shadow-sm">
+                                   <FileWarning className="h-6 w-6" />
+                                </div>
+                                <div className="space-y-2">
+                                   <h4 className="text-sm font-bold text-destructive uppercase tracking-tight">Institutional Requirement Missing</h4>
+                                   <p className="text-xs text-muted-foreground font-medium leading-relaxed">
+                                     Your official resume (CV) is required for industrial deployment. Access the document repository to initialize your technical dossier.
+                                   </p>
+                                   <Link 
+                                      href="/student/documents"
+                                      className="inline-flex items-center gap-2 text-xs font-bold text-destructive hover:opacity-80 transition-opacity mt-2"
+                                   >
+                                      Initialize Document Upload <ArrowUpRight className="h-3 w-3" />
+                                   </Link>
+                                </div>
+                             </div>
                           </div>
-                          <div className="space-y-1">
-                             <p className="text-sm font-bold text-destructive uppercase tracking-tight">Missing Resume</p>
-                             <p className="text-xs text-muted-foreground font-medium leading-relaxed">
-                               Your resume (CV) is missing from your documents. Companies require this for their review process.
-                             </p>
+                        ) : (
+                          <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between group transition-all hover:bg-emerald-500/[0.08]">
+                             <div className="flex items-center gap-5">
+                                <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 shadow-sm">
+                                   <CheckCircle2 className="h-6 w-6" />
+                                </div>
+                                <div className="space-y-1">
+                                   <h4 className="text-sm font-bold text-foreground">Technical Resume Verified</h4>
+                                   <p className="text-xs text-muted-foreground font-medium">Your primary dossier is ready for deployment.</p>
+                                </div>
+                             </div>
+                             <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
+                                <Activity className="h-3 w-3" /> Ready
+                             </div>
                           </div>
-                          <Link 
-                            href="/student/documents"
-                            className="text-xs font-bold text-destructive hover:underline flex items-center gap-1.5"
-                          >
-                            Upload CV Now <ArrowUpRight className="h-3 w-3" />
-                          </Link>
-                       </div>
-                     ) : (
-                       <button
-                        onClick={() => handleApply(applyingTo.id)}
-                        disabled={isSubmitting}
-                        className="w-full flex h-12 items-center justify-center rounded-xl bg-primary text-sm font-bold text-white uppercase tracking-wider shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all disabled:opacity-50"
-                       >
-                         {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Send Application <Send className="ml-2 h-4 w-4" /></>}
-                       </button>
-                     )}
+                        )}
+                     </div>
+
+                     <div className="pt-4">
+                        <button
+                          onClick={() => handleApply(applyingTo.id)}
+                          disabled={isSubmitting || !hasCV}
+                          className={cn(
+                            "group/submit relative w-full flex h-14 items-center justify-center rounded-2xl text-sm font-bold uppercase tracking-[0.1em] transition-all overflow-hidden",
+                            isSubmitting || !hasCV
+                            ? "bg-muted text-muted-foreground cursor-not-allowed border border-border"
+                            : "bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-0.5 active:translate-y-0"
+                          )}
+                        >
+                          <div className="absolute inset-0 bg-slate-950 translate-y-full group-hover/submit:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                          <span className="relative z-10 flex items-center gap-3">
+                            {isSubmitting ? (
+                              <Loader2 className="h-5 w-5 animate-spin" />
+                            ) : (
+                              <>Authorize & Deploy Application <Send className="h-4 w-4 transition-transform group-hover/submit:translate-x-1 group-hover/submit:-translate-y-0.5" /></>
+                            )}
+                          </span>
+                        </button>
+                        {!hasCV && (
+                          <p className="text-center mt-4 text-[10px] font-bold text-destructive/60 uppercase tracking-widest">
+                            Authorization Locked • Missing Documentation
+                          </p>
+                        )}
+                     </div>
                   </div>
                 </div>
               )}
