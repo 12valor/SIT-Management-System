@@ -103,7 +103,7 @@ export default function StudentSignupPage() {
                     required
                     className="w-full h-11 px-4 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white appearance-none cursor-pointer [&>option]:bg-white dark:[&>option]:bg-slate-900 [&>option]:text-slate-900 dark:[&>option]:text-white"
                   >
-                    <option value="" className="text-slate-400">Select program</option>
+                    <option value="" disabled className="text-slate-400">Select program</option>
                     {COURSE_OPTIONS.map((course) => (
                       <option key={course} value={course}>{course}</option>
                     ))}

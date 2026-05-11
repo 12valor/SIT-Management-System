@@ -182,7 +182,7 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
                   defaultValue={safeProfile.course ?? ""}
                   className="w-full pl-10 pr-10 h-11 rounded-lg border border-border bg-card text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary appearance-none cursor-pointer transition-all"
                 >
-                  <option value="" className="text-foreground bg-card">Select program...</option>
+                  <option value="" disabled className="text-foreground bg-card">Select program...</option>
                   {hasLegacyCourse && (
                     <option value={safeProfile.course ?? ""} className="text-foreground bg-card">
                       Current: {safeProfile.course}
