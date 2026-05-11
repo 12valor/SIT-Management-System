@@ -11,15 +11,13 @@ import {
   X, 
   Loader2, 
   ChevronDown, 
-  Building2, 
   Users, 
   Trash2, 
   Eye, 
   EyeOff, 
   LayoutGrid, 
   Table as TableIcon,
-  Image as ImageIcon,
-  Briefcase
+  Image as ImageIcon
 } from "lucide-react";
 import { getEmployerPostings, createSITPosting, togglePostingStatus, deleteSITPosting } from "./actions";
 import { SITPosting, PlacementType, PostingStatus } from "@/generated/client";
@@ -62,13 +60,7 @@ export default function EmployerPostingsPage() {
 
   useEffect(() => { loadPostings(); }, [loadPostings]);
 
-  const handleTagKey = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      e.preventDefault();
-      if (!tags.includes(tagInput.trim())) setTags([...tags, tagInput.trim()]);
-      setTagInput("");
-    }
-  };
+
 
   const handleRespKey = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && respInput.trim()) {

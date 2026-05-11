@@ -3,17 +3,10 @@
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect } from "react";
 import { 
-  CheckCircle2, 
-  XCircle, 
-  Clock, 
   User as UserIcon, 
-  MessageSquare,
-  ClipboardCheck,
   MoreVertical,
-  Search,
   Loader2,
   ShieldCheck,
-  Zap,
   ArrowRight,
   Filter
 } from "lucide-react";
@@ -175,7 +168,7 @@ export default function EmployerLogbookReviewPage() {
                                  <div className="space-y-3 flex-1">
                                     <div className="flex items-center gap-3">
                                        <div className="flex items-center gap-1.5 px-2 py-0.5 bg-muted/50 rounded-md border border-border/40 text-[10px] font-bold text-foreground">
-                                          <Clock className="h-3 w-3 text-primary" />
+                                          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                                           {entry.hours}h
                                        </div>
                                        <span className={cn(

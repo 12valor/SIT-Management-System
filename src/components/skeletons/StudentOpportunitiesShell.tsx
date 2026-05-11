@@ -21,7 +21,9 @@ import {
   Info,
   Briefcase,
   Target,
-  ListChecks
+  ListChecks,
+  MapPin,
+  Calendar
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -316,7 +318,7 @@ export function StudentOpportunitiesShell({
                       <h4 className="text-sm font-bold uppercase tracking-widest">About the Role</h4>
                     </div>
                     <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-serif text-lg italic">
-                      "{viewingDetails.description}"
+                      &quot;{viewingDetails.description}&quot;
                     </p>
                   </div>
 

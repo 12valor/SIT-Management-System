@@ -3,14 +3,8 @@
 import { Skeleton } from "boneyard-js/react";
 import { useState, useEffect } from "react";
 import { 
-  Users, 
   Search, 
   MoreVertical, 
-  CheckCircle2,
-  XCircle,
-  Clock,
-  SlidersHorizontal,
-  ArrowRight,
   Loader2
 } from "lucide-react";
 import { cn } from "@/lib/utils";

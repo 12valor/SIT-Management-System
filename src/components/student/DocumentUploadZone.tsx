@@ -3,7 +3,6 @@
 import { useState, useRef } from "react";
 import { 
   Upload, 
-  FileText, 
   X, 
   Loader2, 
   AlertCircle
