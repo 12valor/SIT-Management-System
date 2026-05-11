@@ -17,7 +17,11 @@ import {
   Activity,
   Sparkles,
   SlidersHorizontal,
-  FileWarning
+  FileWarning,
+  Info,
+  Briefcase,
+  Target,
+  ListChecks
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,6 +38,7 @@ export function StudentOpportunitiesShell({
   const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [applyingTo, setApplyingTo] = useState<SITOpportunity | null>(null);
+  const [viewingDetails, setViewingDetails] = useState<SITOpportunity | null>(null);
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -180,15 +185,24 @@ export function StudentOpportunitiesShell({
                           <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">Training Load</p>
                           <p className="text-xl font-bold text-foreground tabular-nums">{posting.requiredHours}<span className="text-xs ml-1 font-medium opacity-50">HRS</span></p>
                        </div>
-                       {posting.posterUrl && (
-                         <button 
-                           onClick={() => setSelectedPoster(posting.posterUrl)}
-                           className="h-10 px-4 rounded-xl border border-border bg-muted/30 hover:bg-muted hover:border-muted-foreground/20 flex items-center gap-2 text-xs font-bold transition-all"
-                         >
-                           <Activity className="h-4 w-4" />
-                           View Poster
-                         </button>
-                       )}
+                       <div className="flex flex-col gap-3">
+                          <button 
+                            onClick={() => setViewingDetails(posting)}
+                            className="h-10 px-4 rounded-xl border border-border bg-background hover:bg-muted hover:border-primary/20 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm"
+                          >
+                            <Info className="h-3.5 w-3.5 text-primary" />
+                            View Full Post
+                          </button>
+                          {posting.posterUrl && (
+                            <button 
+                              onClick={() => setSelectedPoster(posting.posterUrl)}
+                              className="h-10 px-4 rounded-xl border border-border bg-muted/30 hover:bg-muted hover:border-muted-foreground/20 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider transition-all"
+                            >
+                              <Activity className="h-3.5 w-3.5" />
+                              View Poster
+                            </button>
+                          )}
+                       </div>
                     </div>
                  </div>
  
@@ -235,9 +249,150 @@ export function StudentOpportunitiesShell({
           )}
         </div>
 
+        {/* Full Post Details Modal */}
+        <AnimatePresence>
+          {viewingDetails && (
+            <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-6 bg-background/40 backdrop-blur-md animate-in fade-in duration-300">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-3xl bg-card border border-border rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              >
+                {/* Modal Header */}
+                <div className="px-8 py-6 border-b border-border flex justify-between items-start bg-muted/10 sticky top-0 z-20 backdrop-blur-md">
+                  <div className="flex gap-5 items-center">
+                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl font-bold text-primary shadow-inner border border-primary/10">
+                      {viewingDetails.company.name[0]}
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="text-2xl font-bold text-foreground leading-tight">{viewingDetails.title}</h3>
+                      <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
+                        <Building2 className="h-4 w-4 opacity-60" /> {viewingDetails.company.name} 
+                        <span className="mx-2 opacity-30">•</span>
+                        <MapPin className="h-4 w-4 opacity-60" /> {viewingDetails.location}
+                      </p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setViewingDetails(null)}
+                    className="h-10 w-10 rounded-xl hover:bg-muted flex items-center justify-center transition-all text-muted-foreground hover:text-foreground border border-transparent hover:border-border"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                {/* Modal Content - Scrollable */}
+                <div className="flex-1 overflow-y-auto p-8 space-y-10 custom-scrollbar">
+                  {/* Quick Specs */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 bg-muted/30 rounded-2xl border border-border/50">
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Training Load</p>
+                      <div className="flex items-center gap-2">
+                        <Activity className="h-4 w-4 text-primary" />
+                        <p className="text-lg font-bold text-foreground">{viewingDetails.requiredHours} Hours</p>
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Placement Type</p>
+                      <div className="flex items-center gap-2">
+                        <Briefcase className="h-4 w-4 text-primary" />
+                        <p className="text-lg font-bold text-foreground uppercase text-sm">{viewingDetails.type.replace('_', ' ')}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-1.5 hidden md:block">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Posted On</p>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        <p className="text-lg font-bold text-foreground">{new Date(viewingDetails.postedAt).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 text-primary">
+                      <Info className="h-5 w-5" />
+                      <h4 className="text-sm font-bold uppercase tracking-widest">About the Role</h4>
+                    </div>
+                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-serif text-lg italic">
+                      "{viewingDetails.description}"
+                    </p>
+                  </div>
+
+                  {/* Requirements & Responsibilities Grid */}
+                  <div className="grid md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 text-primary">
+                        <Target className="h-5 w-5" />
+                        <h4 className="text-sm font-bold uppercase tracking-widest">Responsibilities</h4>
+                      </div>
+                      <ul className="space-y-3">
+                        {viewingDetails.responsibilities.map((item, i) => (
+                          <li key={i} className="flex gap-3 text-sm font-medium text-muted-foreground leading-relaxed">
+                            <span className="h-1.5 w-1.5 rounded-full bg-primary/40 mt-2 shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 text-primary">
+                        <ListChecks className="h-5 w-5" />
+                        <h4 className="text-sm font-bold uppercase tracking-widest">Requirements</h4>
+                      </div>
+                      <ul className="space-y-3">
+                        {viewingDetails.requirements.map((item, i) => (
+                          <li key={i} className="flex gap-3 text-sm font-medium text-muted-foreground leading-relaxed">
+                            <CheckCircle2 className="h-4 w-4 text-primary/40 shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Footer */}
+                <div className="p-8 bg-muted/10 border-t border-border flex items-center justify-between gap-6">
+                  <button 
+                    onClick={() => setViewingDetails(null)}
+                    className="h-12 px-8 rounded-xl border border-border font-bold text-sm hover:bg-muted transition-colors"
+                  >
+                    Close
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const alreadyApplied = viewingDetails.applications.length > 0;
+                      if (!alreadyApplied) {
+                        setApplyingTo(viewingDetails);
+                        setViewingDetails(null);
+                      }
+                    }}
+                    disabled={viewingDetails.applications.length > 0}
+                    className={cn(
+                      "flex-1 h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg",
+                      viewingDetails.applications.length > 0
+                      ? "bg-muted text-muted-foreground cursor-not-allowed"
+                      : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20"
+                    )}
+                  >
+                    {viewingDetails.applications.length > 0 ? (
+                      <><CheckCircle2 className="h-4 w-4" /> Already Applied</>
+                    ) : (
+                      <>Apply for this Position <ArrowRight className="h-4 w-4" /></>
+                    )}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         {/* Application Modal */}
         {applyingTo && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
             <div className="relative w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
               {isSuccess ? (
                 <div className="p-16 text-center">
