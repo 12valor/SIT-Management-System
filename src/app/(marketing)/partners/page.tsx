@@ -229,6 +229,13 @@ export default function PartnersPage() {
                             <span className="font-medium text-xs">{partner.slots} Openings</span>
                           </div>
                         </div>
+                        <Link 
+                          href={`/placements?search=${encodeURIComponent(partner.name)}`}
+                          className="flex items-center gap-2 text-xs font-bold text-primary hover:underline group/link"
+                        >
+                          View Full Post
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+                        </Link>
                       </footer>
                     </div>
                   </motion.div>

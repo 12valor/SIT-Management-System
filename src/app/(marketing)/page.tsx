@@ -145,14 +145,25 @@ export default async function Home() {
                 { value: verifiedHours.toLocaleString(), label: "Verified Hours" },
               ].map((stat, i) => (
                 <Reveal key={stat.label} delay={0.1 * i} className="h-full">
-                  <div className="group flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-10 h-full transition-all duration-500 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
-                    <span className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-4 block group-hover:scale-105 transition-transform duration-500">
-                      {stat.value}
-                    </span>
-                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-80 group-hover:opacity-100 transition-opacity">
-                      {stat.label}
-                    </span>
-                  </div>
+                  {stat.label === "Job Postings" ? (
+                    <Link href="/placements" className="block h-full group flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-10 h-full transition-all duration-500 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+                      <span className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-4 block group-hover:scale-105 transition-transform duration-500">
+                        {stat.value}
+                      </span>
+                      <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+                        {stat.label}
+                      </span>
+                    </Link>
+                  ) : (
+                    <div className="group flex flex-col items-center justify-center text-center bg-[#fafaf9] dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-10 h-full transition-all duration-500 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+                      <span className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-4 block group-hover:scale-105 transition-transform duration-500">
+                        {stat.value}
+                      </span>
+                      <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+                        {stat.label}
+                      </span>
+                    </div>
+                  )}
                 </Reveal>
               ))}
             </div>

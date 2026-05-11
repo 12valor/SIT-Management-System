@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import { 
   Search, 
   MapPin, 
@@ -347,12 +348,20 @@ function PlacementCard({
   );
 }
 
-export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
+function PlacementsList({ initialPostings }: { initialPostings: Placement[] }) {
+  const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<string>("ALL");
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [savedJobIds, setSavedJobIds] = useState<Set<string>>(new Set());
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
+
+  useEffect(() => {
+    const query = searchParams.get("search");
+    if (query) {
+      setSearchTerm(query);
+    }
+  }, [searchParams]);
 
   const toggleSave = (id: string) => {
     setSavedJobIds(prev => {
@@ -555,5 +564,13 @@ export default function PlacementsContent({ initialPostings }: { initialPostings
         </AnimatePresence>
       </motion.div>
     </main>
+  );
+}
+
+export default function PlacementsContent({ initialPostings }: { initialPostings: Placement[] }) {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#fafaf9] dark:bg-background pt-48 flex items-center justify-center font-serif italic text-slate-400">Initializing Registry Terminal...</div>}>
+      <PlacementsList initialPostings={initialPostings} />
+    </Suspense>
   );
 }
