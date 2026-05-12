@@ -63,6 +63,7 @@ export async function getCoordinatorStats() {
       graduationReady,
       recentPlacements,
       pendingCompanies,
+      pendingLogbooks,
       trendRes
     ] = await Promise.all([
       prisma.user.count({ where: { role: 'STUDENT' } }),

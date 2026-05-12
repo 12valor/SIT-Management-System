@@ -41,7 +41,6 @@ export default function EmployerPostingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [respInput, setRespInput] = useState("");
   const [resps, setResps] = useState<string[]>([]);
