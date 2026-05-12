@@ -12,7 +12,8 @@ import {
   ShieldCheck, 
   Clock,
   Camera,
-  CalendarDays
+  CalendarDays,
+  Palette
 } from "lucide-react";
 import { updateStudentProfile, updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";
@@ -31,8 +32,18 @@ export type ProfileData = {
   logbookEntries: { hours: number }[];
 };
 
+type DarkTheme = "zinc" | "slate" | "oceanic" | "obsidian";
+
+const THEMES: { id: DarkTheme; name: string; accent: string; bg: string }[] = [
+  { id: "zinc", name: "Classic Zinc", accent: "text-zinc-400", bg: "bg-zinc-950" },
+  { id: "slate", name: "Midnight Slate", accent: "text-slate-400", bg: "bg-slate-950" },
+  { id: "oceanic", name: "Deep Oceanic", accent: "text-sky-500", bg: "bg-[#020617]" },
+  { id: "obsidian", name: "True Obsidian", accent: "text-emerald-500", bg: "bg-black" },
+];
+
 export function StudentProfileShell({ initialData }: { initialData: ProfileData | null }) {
   const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [activeTheme, setActiveTheme] = useState<DarkTheme>("zinc");
   const [isPending, startTransition] = useTransition();
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -102,6 +113,14 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
   };
   const hasLegacyCourse = !!safeProfile.course && !isCourseCode(safeProfile.course);
 
+  // Apply theme-specific classes
+  const themeClasses = {
+    zinc: "selection:bg-zinc-500/30",
+    slate: "selection:bg-slate-500/30",
+    oceanic: "selection:bg-sky-500/30",
+    obsidian: "selection:bg-emerald-500/30",
+  }[activeTheme];
+
   return (
     <Skeleton 
       name="student-profile" 
@@ -110,24 +129,42 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
       stagger={80}
       transition={300}
     >
-    <div className="max-w-4xl mx-auto space-y-12 animate-in-fade pb-32 pt-8">
-      {/* 1. Simple Header */}
+    <div className={cn("max-w-4xl mx-auto space-y-12 animate-in-fade pb-32 pt-8", themeClasses)}>
+      {/* 1. Header & Theme Switcher */}
       <div className="pb-6 border-b border-border/60 flex items-center justify-between">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">Account Profile</h1>
-        <div className={cn(
-          "px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest border",
-          safeProfile.isApproved 
-            ? "bg-emerald-500/5 text-emerald-500 border-emerald-500/20" 
-            : "bg-amber-500/5 text-amber-500 border-amber-500/20"
-        )}>
-          {safeProfile.isApproved ? "Verified Candidate" : "Pending Audit"}
+        <div>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">Account Profile</h1>
+          <div className={cn(
+            "mt-2 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-[0.2em] border w-fit",
+            safeProfile.isApproved 
+              ? "bg-emerald-500/5 text-emerald-500 border-emerald-500/20" 
+              : "bg-amber-500/5 text-amber-500 border-amber-500/20"
+          )}>
+            {safeProfile.isApproved ? "Verified Candidate" : "Pending Audit"}
+          </div>
+        </div>
+
+        {/* Theme Toggles */}
+        <div className="flex items-center gap-2 p-1.5 bg-muted/30 rounded-lg border border-border/50">
+           {THEMES.map((t) => (
+             <button
+               key={t.id}
+               onClick={() => setActiveTheme(t.id)}
+               title={t.name}
+               className={cn(
+                 "w-6 h-6 rounded-md border transition-all hover:scale-110",
+                 t.bg,
+                 activeTheme === t.id ? "border-primary ring-2 ring-primary/20 scale-110" : "border-border/50"
+               )}
+             />
+           ))}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {/* Left: Identity Photo */}
-        <div className="md:col-span-1 space-y-4">
-           <div className="relative aspect-square w-full rounded-lg border border-border bg-muted overflow-hidden group">
+        {/* Left: Identity */}
+        <div className="md:col-span-1 space-y-6">
+           <div className="relative aspect-square w-full rounded-2xl border border-border bg-muted overflow-hidden group shadow-sm">
               {imagePreview ? (
                 <Image 
                   src={imagePreview} 
@@ -157,54 +194,59 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
                 />
               </label>
            </div>
-           <div className="space-y-1">
+           <div className="space-y-1 px-1">
               <p className="text-sm font-bold text-foreground tracking-tight">{safeProfile.name}</p>
               <p className="text-xs text-muted-foreground font-medium">{safeProfile.email}</p>
            </div>
         </div>
 
-        {/* Right: Essential Info & Form */}
+        {/* Right: Forms */}
         <div className="md:col-span-2 space-y-12">
-          {/* Simple Stats List */}
-          <div className="grid grid-cols-3 gap-6 py-6 border-y border-border/40">
+          {/* Simple Metrics */}
+          <div className="grid grid-cols-3 gap-8 py-6 border-y border-border/40">
              <div>
-                <p className="text-[10px] font-bold uppercase text-muted-foreground tracking-wider mb-1">Hours</p>
-                <p className="text-xl font-bold text-foreground tabular-nums">{totalHours.toFixed(0)}/300</p>
+                <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider mb-1">Training Hours</p>
+                <p className={cn("text-xl font-bold tracking-tight", activeTheme !== "zinc" ? THEMES.find(t => t.id === activeTheme)?.accent : "text-foreground")}>
+                  {totalHours.toFixed(0)}<span className="text-xs opacity-30 ml-0.5">/300</span>
+                </p>
              </div>
              <div>
-                <p className="text-[10px] font-bold uppercase text-muted-foreground tracking-wider mb-1">Apps</p>
-                <p className="text-xl font-bold text-foreground tabular-nums">{appCount}</p>
+                <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider mb-1">Submissions</p>
+                <p className="text-xl font-bold text-foreground tracking-tight">{appCount}</p>
              </div>
              <div>
-                <p className="text-[10px] font-bold uppercase text-muted-foreground tracking-wider mb-1">Enrolled</p>
-                <p className="text-xl font-bold text-foreground tabular-nums">{new Date(safeProfile.createdAt).getFullYear()}</p>
+                <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider mb-1">Admitted</p>
+                <p className="text-xl font-bold text-foreground tracking-tight">{new Date(safeProfile.createdAt).getFullYear()}</p>
              </div>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {error && (
-              <div className="text-xs text-red-500 font-bold mb-4">{error}</div>
-            )}
+          <form onSubmit={handleSubmit} className="space-y-10">
+            {error && <div className="text-xs text-red-500 font-bold mb-4">{error}</div>}
             
-            <div className="space-y-6">
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase text-foreground/70 tracking-widest">Full Name</label>
+            <div className="space-y-8">
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold uppercase text-foreground/50 tracking-[0.2em] ml-0.5">Full Name</label>
                 <input
                   name="name"
                   required
                   defaultValue={safeProfile.name ?? ""}
-                  className="w-full h-11 border-b border-border bg-transparent text-sm font-medium text-foreground outline-none focus:border-primary transition-colors"
+                  className={cn(
+                    "w-full h-11 border-b border-border/60 bg-transparent text-sm font-medium text-foreground outline-none transition-colors",
+                    activeTheme !== "zinc" ? `focus:border-primary` : "focus:border-foreground"
+                  )}
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase text-foreground/70 tracking-widest">Program</label>
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold uppercase text-foreground/50 tracking-[0.2em] ml-0.5">Academic Program</label>
                 <div className="relative">
                   <select
                     name="course"
                     defaultValue={safeProfile.course ?? ""}
-                    className="w-full h-11 border-b border-border bg-transparent text-sm font-medium text-foreground outline-none focus:border-primary appearance-none cursor-pointer transition-colors"
+                    className={cn(
+                      "w-full h-11 border-b border-border/60 bg-transparent text-sm font-medium text-foreground outline-none appearance-none cursor-pointer transition-colors",
+                      activeTheme !== "zinc" ? `focus:border-primary` : "focus:border-foreground"
+                    )}
                   >
                     <option value="" disabled>Select...</option>
                     {hasLegacyCourse && (
@@ -222,13 +264,16 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
               <button
                 type="submit"
                 disabled={isPending}
-                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:text-primary/80 transition-colors disabled:opacity-50"
+                className={cn(
+                  "flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:opacity-80 active:scale-95 disabled:opacity-50",
+                  activeTheme !== "zinc" ? THEMES.find(t => t.id === activeTheme)?.accent : "text-primary"
+                )}
               >
                 {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                Save Changes
+                Commit Changes
               </button>
               {success && (
-                <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-in fade-in">Success</p>
+                <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-in fade-in">Sync Complete</p>
               )}
             </div>
           </form>
