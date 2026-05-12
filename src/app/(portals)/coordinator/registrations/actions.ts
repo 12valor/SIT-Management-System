@@ -6,12 +6,18 @@ import { revalidatePath } from "next/cache";
 export async function getPendingRegistrations() {
   const [users, companies] = await Promise.all([
     prisma.user.findMany({
-      where: { isApproved: false },
+      where: { 
+        isApproved: false,
+        NOT: { email: "student@tupv.edu.ph" }
+      },
       include: { company: true },
       orderBy: { createdAt: "desc" },
     }),
     prisma.company.findMany({
-      where: { isVerified: false },
+      where: { 
+        isVerified: false,
+        NOT: { email: "tidal.drift@partner.v1" }
+      },
       orderBy: { joinedAt: "desc" },
     }),
   ]);
