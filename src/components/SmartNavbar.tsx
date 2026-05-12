@@ -185,71 +185,126 @@ export function SmartNavbar() {
       </header>
 
       {/* Mobile Navigation Overlay */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 z-40 bg-white/60 dark:bg-black/60 pt-[120px] px-6 md:hidden"
-          >
-            <nav className="flex flex-col gap-4">
-              <div className="flex flex-col">
-                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.3em] mb-6">Access Terminals</span>
-                <div className="grid grid-cols-1 gap-3">
-                  {portals.map((portal) => (
-                    <Link 
-                      key={portal.title}
-                      href={portal.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-5 p-4 bg-white/20 dark:bg-white/5 border border-white/20 dark:border-white/10 rounded-sm active:scale-[0.98] transition-transform"
-                    >
-                      <div className="h-12 w-12 flex items-center justify-center bg-white/30 dark:bg-white/10 text-primary rounded-sm shadow-sm">
-                        <portal.icon className="h-6 w-6" />
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tighter">
-                          {portal.title} Portal
-                        </span>
-                        <span className="text-[10px] text-slate-600 dark:text-slate-400 font-bold uppercase tracking-widest opacity-60">
-                          {portal.description}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+          <>
+            {/* Backdrop with warmer tint and deeper blur */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 z-[60] bg-slate-950/40 dark:bg-black/60 backdrop-blur-md md:hidden"
+            />
+            
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 w-[85%] max-w-[400px] z-[70] bg-white dark:bg-[#080808] shadow-2xl md:hidden flex flex-col"
+            >
+              {/* Header with Close Button */}
+              <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-white/5">
+                <div className="flex items-center gap-3">
+                  <Image 
+                    src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                    alt="TUP Seal" 
+                    width={28}
+                    height={28}
+                  />
+                  <span className="font-bold text-lg tracking-tight">TUPV SIT</span>
+                </div>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-full bg-slate-50 dark:bg-white/5 text-slate-500 hover:text-primary transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Scrollable Content */}
+              <div className="flex-1 overflow-y-auto px-6 py-8">
+                <div className="space-y-8">
+                  {/* Portals Section */}
+                  <div>
+                    <h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 px-1">
+                      Access Terminals
+                    </h3>
+                    <div className="space-y-3">
+                      {portals.map((portal, idx) => (
+                        <motion.div
+                          key={portal.title}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 + idx * 0.1 }}
+                        >
+                          <Link 
+                            href={portal.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 hover:border-primary/30 transition-all active:scale-[0.98] group"
+                          >
+                            <div className="h-12 w-12 flex items-center justify-center bg-white dark:bg-white/10 text-primary rounded-xl shadow-sm border border-slate-200/50 dark:border-white/5 group-hover:scale-110 transition-transform">
+                              <portal.icon className="h-5 w-5" />
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-slate-900 dark:text-white">
+                                {portal.title} Portal
+                              </span>
+                              <span className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
+                                {portal.description}
+                              </span>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Navigation Links */}
+                  <div>
+                    <h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 px-1">
+                      Navigation
+                    </h3>
+                    <div className="grid grid-cols-1 gap-1">
+                      {["News", "Placements", "Resources", "Partners", "About", "FAQ"].map((item, idx) => (
+                        <motion.div
+                          key={item}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.4 + idx * 0.05 }}
+                        >
+                          <Link 
+                            className="text-base font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group" 
+                            href={`/${item.toLowerCase()}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {item}
+                            <ArrowRight className="h-4 w-4 text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="h-px bg-black/10 dark:bg-white/10 my-4" />
-
-              <div className="flex flex-col gap-2">
-                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/news" onClick={() => setIsMobileMenuOpen(false)}>
-                  News <ArrowRight className="h-4 w-4 text-primary" />
+              {/* Bottom Action */}
+              <div className="p-6 border-t border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02]">
+                <Link 
+                  href="/login" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 py-4 bg-primary text-white rounded-xl font-bold text-sm shadow-xl shadow-primary/20 active:scale-[0.98] transition-transform"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  Secure System Login
                 </Link>
-                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/placements" onClick={() => setIsMobileMenuOpen(false)}>
-                  Placements <ArrowRight className="h-4 w-4 text-primary" />
-                </Link>
-                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/resources" onClick={() => setIsMobileMenuOpen(false)}>
-                  Resources <ArrowRight className="h-4 w-4 text-primary" />
-                </Link>
-                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/partners" onClick={() => setIsMobileMenuOpen(false)}>
-                  Partners <ArrowRight className="h-4 w-4 text-primary" />
-                </Link>
-                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/about" onClick={() => setIsMobileMenuOpen(false)}>
-                  About <ArrowRight className="h-4 w-4 text-primary" />
-                </Link>
-                <Link className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex justify-between items-center py-3 px-2 rounded-sm hover:bg-black/5 dark:hover:bg-white/5" href="/faq" onClick={() => setIsMobileMenuOpen(false)}>
-                  FAQ <ArrowRight className="h-4 w-4 text-primary" />
-                </Link>
+                <p className="text-center text-[10px] text-slate-400 dark:text-slate-500 mt-4 font-medium tracking-wide">
+                  TUPV SIT MANAGEMENT SYSTEM v1.0
+                </p>
               </div>
-              
-              <div className="flex flex-col gap-4 mt-8">
-                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-5 bg-primary text-white text-center rounded-sm font-black text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-primary/20">
-                  Secure Login
-                </Link>
-              </div>
-            </nav>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
