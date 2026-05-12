@@ -5,6 +5,7 @@ import Marquee from "@/components/ui/marquee";
 import { Building2 } from "lucide-react";
 import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type Partner = {
   id: string;
@@ -82,10 +83,12 @@ export function PartnersMarquee() {
             >
               <div className="relative h-20 w-64 flex items-center justify-center">
                 {partner.logoUrl ? (
-                  <img
+                  <Image
                     src={partner.logoUrl}
                     alt={partner.name}
-                    className="h-full w-full object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700 hover:scale-110"
+                    fill
+                    className="object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 256px"
                   />
                 ) : (
                   <div className="flex items-center gap-4 grayscale opacity-40 hover:opacity-100 hover:scale-110 transition-all duration-700">

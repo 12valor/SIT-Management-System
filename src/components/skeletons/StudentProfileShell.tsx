@@ -4,15 +4,10 @@ import { Skeleton } from "boneyard-js/react";
 import { useState, useTransition, useEffect } from "react";
 import { 
   User as UserIcon, 
-  Mail, 
-  GraduationCap, 
   Save, 
-  CheckCircle2, 
   Loader2, 
   ShieldCheck, 
-  Clock,
   Camera,
-  CalendarDays
 } from "lucide-react";
 import { updateStudentProfile, updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";

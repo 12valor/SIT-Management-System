@@ -1,16 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { 
-  Camera, 
   ArrowLeft,
-  Loader2,
   User as UserIcon
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { updateStudentImage } from "./actions";
 
 interface StudentProfileHeaderProps {
   student: {
