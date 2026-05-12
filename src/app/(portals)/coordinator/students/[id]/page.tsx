@@ -150,7 +150,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
                        student.logbookEntries.map((entry) => (
                           <tr key={entry.id} className="hover:bg-muted/30 transition-colors">
                              <td className="px-6 py-4 font-medium whitespace-nowrap">{new Date(entry.date).toLocaleDateString()}</td>
-                             <td className="px-6 py-4 text-muted-foreground line-clamp-1 max-w-xs">{entry.description}</td>
+                             <td className="px-6 py-4 text-muted-foreground line-clamp-1 max-w-xs">{entry.tasks}</td>
                              <td className="px-6 py-4 font-bold tabular-nums">{entry.hours}h</td>
                              <td className="px-6 py-4 text-right">
                                 <span className={cn(
