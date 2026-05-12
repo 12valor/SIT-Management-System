@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroCarousel } from "@/components/HeroCarousel";
+import { PartnersMarquee } from "@/components/marketing/PartnersMarquee";
 import { Reveal } from "@/components/Reveal";
 import prisma from "@/lib/prisma";
 
@@ -32,6 +33,9 @@ export default async function Home() {
         <section className="bg-white dark:bg-[#050505]">
           <HeroCarousel slides={customSlides} />
         </section>
+
+        {/* Partners Marquee Section */}
+        <PartnersMarquee />
 
         {/* Section 02 — Gateway Cards */}
         <section className="py-40 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
