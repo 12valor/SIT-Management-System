@@ -51,27 +51,6 @@ export async function getCoordinatorStats() {
       orderBy: { joinedAt: 'desc' }
     });
 
-    return {
-      success: true,
-      data: {
-        totalStudents,
-        hiredStudents,
-        totalCompanies,
-        verifiedCompanies,
-        graduationReady,
-        recentPlacements: recentPlacements.map(app => ({
-          id: app.id,
-          studentName: app.student.name,
-          studentEmail: app.student.email,
-          postingTitle: app.posting.title,
-          companyName: app.posting.company.name,
-        })),
-        pendingCompanies: pendingCompanies.map(c => ({
-          id: c.id,
-          name: c.name,
-          industry: c.industry,
-          joinedAt: c.joinedAt.toISOString()
-        })),
     // Fetch real Placement Trend (Last 6 Months)
     const placementTrend = [];
     const now = new Date();
