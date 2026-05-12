@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Download, ExternalLink } from "lucide-react";
+import { Search, Download, ExternalLink, User as UserIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type Student = {
   id: string;
@@ -16,6 +17,7 @@ type Student = {
   company: string;
   role: string;
   joinedAt: Date;
+  image: string | null;
 };
 
 interface StudentManifestClientProps {
