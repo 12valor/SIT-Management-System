@@ -133,12 +133,36 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           {/* Trend Chart */}
           <div className="lg:col-span-2 bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
             <div className="flex items-center justify-between border-b border-border pb-4">
-              <h3 className="text-sm font-semibold text-foreground">Program Momentum</h3>
-              <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">6-Month Enrollment vs Placement</p>
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-foreground">Program Momentum</h3>
+                <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">
+                  {timeframe === 'monthly' ? '6-Month' : timeframe === 'weekly' ? '8-Week' : '14-Day'} Enrollment vs Placement
+                </p>
+              </div>
+
+              {/* Timeframe Filter */}
+              <div className="flex items-center bg-muted/50 p-1 rounded-lg border border-border/50">
+                {(['monthly', 'weekly', 'daily'] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => handleTimeframeChange(t)}
+                    disabled={isPending}
+                    className={cn(
+                      "px-3 py-1 text-[10px] font-bold rounded-md transition-all duration-200",
+                      timeframe === t 
+                        ? "bg-background text-foreground shadow-sm scale-105" 
+                        : "text-foreground/40 hover:text-foreground/70"
+                    )}
+                  >
+                    {t === 'monthly' ? 'M' : t === 'weekly' ? 'W' : 'D'}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="h-[240px] w-full">
+            
+            <div className={cn("h-[240px] w-full transition-opacity duration-300", isPending && "opacity-50")}>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={data?.placementTrend}>
+                <AreaChart data={trendData}>
                   <defs>
                     <linearGradient id="colorStudents" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
