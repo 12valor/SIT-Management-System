@@ -9,18 +9,18 @@ import Image from "next/image";
 const defaultSlides = [
   {
     image: "/images/hero/industrial-1.png",
-    title: "The Digital Bridge to Industrial Excellence",
-    description: "The official platform for managing Supervised Industrial Training at the Technological University of the Philippines Visayas."
+    title: "Master Your SIT Requirements",
+    description: "The official portal for TUPV students to manage logbooks, track training hours, and streamline internship documentation."
   },
   {
     image: "/images/hero/industrial-2.png",
-    title: "Transitioning Classroom Logic to Practice",
-    description: "Standardized industrial immersion programs designed for professional engineering excellence and institutional integrity."
+    title: "Bridge Classroom to Career",
+    description: "Access standardized training programs designed to transition your academic foundation into professional engineering expertise."
   },
   {
     image: "/images/hero/industrial-3.png",
-    title: "Centralized Oversight for Global Partners",
-    description: "A secure archival ecosystem for trainee verification, progress monitoring, and cross-sectoral coordination."
+    title: "Seamless Partner Coordination",
+    description: "A secure platform for employers and coordinators to verify progress, manage placements, and maintain training standards."
   }
 ];
 

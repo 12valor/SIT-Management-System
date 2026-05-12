@@ -70,7 +70,7 @@ export default function PartnersPage() {
             </h1>
             
             <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-              Meet the organizations collaborating with TUPV to shape the next generation of technical leaders through supervised industrial training.
+              Connecting TUPV students with leading organizations for hands-on industrial training and professional career growth.
             </p>
           </motion.div>
 
@@ -276,7 +276,7 @@ export default function PartnersPage() {
                 Become an Industry Partner
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto font-serif">
-                Join our network of forward-thinking organizations. Together, we can shape the next generation of technological leaders through immersive, hands-on industrial training.
+                Join our network of industry leaders to mentor TUPV students and find talented trainees for your technical teams.
               </p>
               
               <Link

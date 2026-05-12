@@ -36,7 +36,7 @@ export default function AboutContent() {
             The Digital Bridge
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
-            The official platform for managing Supervised Industrial Training at the Technological University of the Philippines Visayas.
+            Streamlining Supervised Industrial Training at TUP Visayas through real-time documentation and industry coordination.
           </p>
         </motion.header>
 
@@ -45,7 +45,7 @@ export default function AboutContent() {
           <motion.section variants={fadeInUp}>
             <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-8">Our Mission</h2>
             <p className="text-3xl font-serif leading-snug text-slate-800 dark:text-slate-200">
-              To provide a streamlined, transparent, and high-performance digital environment where TUPV students transition seamlessly into their professional careers by automating the administrative burden of SIT and enhancing industrial engagement.
+              To provide a transparent and efficient platform where TUPV students transition into their professional careers by simplifying SIT administration and strengthening industrial partnerships.
             </p>
           </motion.section>
 

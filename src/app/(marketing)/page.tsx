@@ -44,7 +44,7 @@ export default async function Home() {
                 Select Your Gateway
               </h2>
               <p className="text-slate-600 dark:text-slate-400 font-serif max-w-2xl mx-auto text-lg leading-relaxed">
-                The official technological entry point for TUPV students and industrial partners. Designed for academic integrity and professional growth.
+                Empowering TUPV students to manage their internships with ease while providing industrial partners a secure platform for verification and recruitment.
               </p>
             </Reveal>
 
@@ -57,7 +57,7 @@ export default async function Home() {
                       Student Terminal
                     </h3>
                     <p className="text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                      Official gateway for trainees to document performance and manage SIT placements.
+                      Your personal terminal for tracking training hours, managing logbooks, and accessing internship opportunities.
                     </p>
                   </header>
 
@@ -95,7 +95,7 @@ export default async function Home() {
                       Partner Verification
                     </h3>
                     <p className="text-slate-600 dark:text-slate-400 font-serif leading-relaxed">
-                      Official portal for industrial partners to authenticate trainee performance and records.
+                      Securely verify student logbooks, evaluate performance, and find the next generation of technical talent for your organization.
                     </p>
                   </header>
 
@@ -182,7 +182,7 @@ export default async function Home() {
                 How It Works
               </h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-serif max-w-2xl mx-auto">
-                The institutional journey from academic training to industrial integration, mapped across three strategic phases.
+                Follow our streamlined process to transition from your academic studies into a professional industrial environment.
               </p>
             </header>
 
@@ -191,9 +191,9 @@ export default async function Home() {
               <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-white/10 -translate-x-1/2 hidden md:block" />
 
               {[
-                { phase: "01", title: "Institutional Onboarding", desc: "Initialize your professional dossier. Authentication via university credentials establishes your digital identity within the SIT ecosystem, ensuring all records are tied to your official academic history." },
-                { phase: "02", title: "Industrial Deployment", desc: "Strategic matching with pre-vetted corporate partners. Trainees are deployed to environments that optimize for their specific technical specialization and career trajectory." },
-                { phase: "03", title: "Technical Audit", desc: "Real-time performance verification. Continuous logging and periodic institutional audits ensure academic standards are maintained in the field through a rigorous digital verification process." },
+                { phase: "01", title: "Start Your Profile", desc: "Set up your digital dossier using your TUPV credentials to track your entire internship history and SIT documentation in one place." },
+                { phase: "02", title: "Find Your Placement", desc: "Get matched with pre-vetted industry partners that align with your technical specialization and future professional career goals." },
+                { phase: "03", title: "Verify Your Progress", desc: "Submit daily logbook entries for real-time verification by your industry supervisors and university coordinators." },
               ].map((item, i) => (
                 <Reveal key={item.phase} delay={i * 0.1} className={`relative flex flex-col md:flex-row gap-12 items-center ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
                   {/* Step Number Circle */}
