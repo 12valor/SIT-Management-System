@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma";
 
+import { revalidatePath } from "next/cache";
+
 export async function getStudentManifest() {
   const students = await prisma.user.findMany({
     where: { role: "STUDENT", isApproved: true },
@@ -11,6 +13,7 @@ export async function getStudentManifest() {
       email: true,
       course: true,
       createdAt: true,
+      image: true,
       logbookEntries: {
         where: { status: "APPROVED" },
         select: { hours: true },
@@ -50,4 +53,13 @@ export async function getStudentManifest() {
       joinedAt: s.createdAt,
     };
   });
+}
+
+export async function updateStudentImage(userId: string, imageData: string) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { image: imageData },
+  });
+  revalidatePath(`/coordinator/students/${userId}`);
+  revalidatePath("/coordinator/students");
 }

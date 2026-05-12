@@ -5,12 +5,11 @@ import {
   Building2, 
   Clock, 
   CheckCircle2, 
-  ArrowLeft,
   Calendar,
   FileText
 } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import StudentProfileHeader from "../StudentProfileHeader";
 
 export default async function StudentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -44,29 +43,16 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="flex-1 space-y-8 pb-24">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-border pb-6">
-        <div className="flex items-center gap-4">
-          <Link 
-            href="/coordinator/students"
-            className="h-9 w-9 flex items-center justify-center rounded-lg border border-border bg-card hover:bg-muted transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-          <div>
-            <h2 className="text-xl font-bold text-foreground uppercase tracking-tight">{student.name}</h2>
-            <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">{student.course}</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-           <span className={cn(
-              "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border",
-              placement ? "bg-primary/10 text-primary border-primary/20" : "bg-muted text-muted-foreground border-border"
-           )}>
-             {placement ? "Active Placement" : "Seeking Placement"}
-           </span>
-        </div>
-      </div>
+      {/* Dynamic Header with Image Upload */}
+      <StudentProfileHeader 
+        student={{
+          id: student.id,
+          name: student.name,
+          image: student.image,
+          course: student.course
+        }} 
+        isHired={!!placement} 
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Profile Card */}

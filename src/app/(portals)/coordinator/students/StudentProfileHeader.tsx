@@ -1,0 +1,111 @@
+"use client";
+
+import { useState } from "react";
+import { 
+  Camera, 
+  ArrowLeft,
+  Loader2,
+  User as UserIcon
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { updateStudentImage } from "./actions";
+
+interface StudentProfileHeaderProps {
+  student: {
+    id: string;
+    name: string | null;
+    image: string | null;
+    course: string | null;
+  };
+  isHired: boolean;
+}
+
+export default function StudentProfileHeader({ student, isHired }: StudentProfileHeaderProps) {
+  const [isUploading, setIsUploading] = useState(false);
+  const [preview, setPreview] = useState<string | null>(student.image);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64 = reader.result as string;
+      setPreview(base64);
+      try {
+        await updateStudentImage(student.id, base64);
+      } catch (error) {
+        console.error("Failed to update image:", error);
+      } finally {
+        setIsUploading(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="flex items-center justify-between border-b border-border pb-6">
+      <div className="flex items-center gap-6">
+        <Link 
+          href="/coordinator/students"
+          className="h-9 w-9 flex items-center justify-center rounded-lg border border-border bg-card hover:bg-muted transition-colors shrink-0"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
+        
+        <div className="flex items-center gap-4">
+          <div className="relative group">
+            <div className="h-16 w-16 rounded-2xl bg-muted border border-border overflow-hidden relative shadow-sm">
+              {preview ? (
+                <Image 
+                  src={preview} 
+                  alt={student.name || "Student"} 
+                  fill 
+                  className="object-cover"
+                  unoptimized
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-foreground/20">
+                  <UserIcon className="h-8 w-8" />
+                </div>
+              )}
+              {isUploading && (
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center">
+                  <Loader2 className="h-5 w-5 text-white animate-spin" />
+                </div>
+              )}
+            </div>
+            <label className="absolute -bottom-1 -right-1 h-6 w-6 bg-primary text-primary-foreground rounded-lg border-2 border-background flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg">
+              <Camera className="h-3 w-3" />
+              <input 
+                type="file" 
+                accept="image/*" 
+                className="hidden" 
+                onChange={handleImageUpload}
+                disabled={isUploading}
+              />
+            </label>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-foreground uppercase tracking-tight">{student.name}</h2>
+            <div className="flex items-center gap-2 mt-1">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold bg-muted px-2 py-0.5 rounded">
+                {student.course || "No Course"}
+              </p>
+              <span className={cn(
+                "px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border",
+                isHired ? "bg-primary/5 text-primary border-primary/20" : "bg-muted text-muted-foreground border-border"
+              )}>
+                {isHired ? "Interning" : "Seeking"}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
