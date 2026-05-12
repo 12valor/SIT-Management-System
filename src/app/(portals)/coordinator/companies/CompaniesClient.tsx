@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2 } from "lucide-react";
-import { setCompanyVerification, addCompany, updateCompany, deleteCompany, getCompanies } from "./actions";
+import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2, LayoutTemplate } from "lucide-react";
+import { setCompanyVerification, addCompany, updateCompany, deleteCompany, getCompanies, toggleCompanyMarquee } from "./actions";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import NextImage from "next/image";
@@ -18,6 +18,7 @@ type Company = {
   logoUrl?: string | null;
   bannerUrl?: string | null;
   isVerified: boolean;
+  showInMarquee: boolean;
   joinedAt: Date;
   _count: { employers: number; postings: number };
 };
@@ -57,6 +58,13 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
   const handleVerify = async (id: string, status: boolean) => {
     setProcessing(id);
     await setCompanyVerification(id, status);
+    await load();
+    setProcessing(null);
+  };
+
+  const handleMarqueeToggle = async (id: string, status: boolean) => {
+    setProcessing(`marquee-${id}`);
+    await toggleCompanyMarquee(id, status);
     await load();
     setProcessing(null);
   };
@@ -325,6 +333,19 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
                   <div className="mt-4 flex gap-2">
                     <button onClick={() => handleEdit(c)} className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-primary hover:border-primary/30 transition-all flex items-center justify-center" title="Edit Partner"><Edit className="h-3.5 w-3.5" /></button>
                     <button onClick={() => handleDelete(c.id, c.name)} className="h-8 w-8 rounded-lg border border-border bg-card text-foreground/60 hover:text-destructive hover:border-destructive/30 transition-all flex items-center justify-center" title="Remove Partner">{processing === c.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}</button>
+                    <button 
+                      onClick={() => handleMarqueeToggle(c.id, !c.showInMarquee)} 
+                      disabled={processing === `marquee-${c.id}`}
+                      className={cn(
+                        "h-8 w-8 rounded-lg border transition-all flex items-center justify-center",
+                        c.showInMarquee 
+                          ? "bg-primary/10 border-primary/20 text-primary" 
+                          : "bg-card border-border text-foreground/30 hover:text-primary hover:border-primary/30"
+                      )}
+                      title={c.showInMarquee ? "Remove from Marquee" : "Feature in Marquee"}
+                    >
+                      {processing === `marquee-${c.id}` ? <Loader2 className="h-3 w-3 animate-spin" /> : <LayoutTemplate className="h-3.5 w-3.5" />}
+                    </button>
                     <button onClick={() => handleVerify(c.id, !c.isVerified)} disabled={processing === c.id} className={cn("flex-1 h-8 rounded-lg border text-[10px] font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5", c.isVerified ? "border-border bg-muted text-foreground/60 hover:bg-destructive/10 hover:text-destructive" : "border-primary bg-primary text-primary-foreground hover:opacity-90")}>
                       {processing === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : (c.isVerified ? <Clock className="h-3 w-3" /> : <ShieldCheck className="h-3 w-3" />)}
                       {c.isVerified ? "Revoke" : "Verify"}

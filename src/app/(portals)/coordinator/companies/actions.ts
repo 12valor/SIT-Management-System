@@ -143,9 +143,22 @@ export async function addCompany(data: {
   }
 }
 
+export async function toggleCompanyMarquee(companyId: string, showInMarquee: boolean) {
+  await prisma.company.update({
+    where: { id: companyId },
+    data: { showInMarquee },
+  });
+  revalidatePath("/coordinator/companies");
+  revalidatePath("/"); // Revalidate home page where marquee lives
+  return { success: true };
+}
+
 export async function getPublicPartners() {
   return await prisma.company.findMany({
-    where: { isVerified: true },
+    where: { 
+      isVerified: true,
+      showInMarquee: true 
+    },
     orderBy: { joinedAt: "desc" },
   });
 }

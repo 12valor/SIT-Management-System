@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Marquee from "@/components/ui/marquee";
 import { Building2 } from "lucide-react";
 import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
+import { getMarqueeSettings } from "@/app/(portals)/coordinator/settings/general/actions";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -14,22 +15,35 @@ type Partner = {
   logoUrl: string | null;
 };
 
+type MarqueeSettings = {
+  enabled: boolean;
+  title: string;
+  label: string;
+  speed: number;
+  showInAbout: boolean;
+};
+
 export function PartnersMarquee() {
   const [partners, setPartners] = useState<Partner[]>([]);
+  const [settings, setSettings] = useState<MarqueeSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function loadPartners() {
+    async function load() {
       try {
-        const data = await getPublicPartners();
-        setPartners(data as Partner[]);
+        const [partnerData, settingsData] = await Promise.all([
+          getPublicPartners(),
+          getMarqueeSettings()
+        ]);
+        setPartners(partnerData as Partner[]);
+        setSettings(settingsData);
       } catch (error) {
-        console.error("Failed to load marquee partners:", error);
+        console.error("Failed to load marquee data:", error);
       } finally {
         setIsLoading(false);
       }
     }
-    loadPartners();
+    load();
   }, []);
 
   // Fallback partners if none in DB
@@ -56,6 +70,8 @@ export function PartnersMarquee() {
     );
   }
 
+  if (settings && !settings.enabled) return null;
+
   return (
     <section className="py-32 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5">
       <div className="container mx-auto px-6 mb-16 text-center">
@@ -66,16 +82,16 @@ export function PartnersMarquee() {
           transition={{ duration: 0.5 }}
         >
           <span className="text-[11px] font-black uppercase tracking-[0.4em] text-primary/60 mb-3 block">
-            Industrial Network
+            {settings?.label || "Industrial Network"}
           </span>
           <h2 className="text-3xl font-serif font-medium text-slate-800 dark:text-slate-200">
-            Trusted by Leading Organizations
+            {settings?.title || "Trusted by Leading Organizations"}
           </h2>
         </motion.div>
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <Marquee pauseOnHover className="[--duration:50s] [--gap:3rem]">
+        <Marquee pauseOnHover className={cn("py-4", `[--duration:${settings?.speed || 50}s]`, "[--gap:3rem]")}>
           {displayPartners.map((partner) => (
             <div
               key={partner.id}

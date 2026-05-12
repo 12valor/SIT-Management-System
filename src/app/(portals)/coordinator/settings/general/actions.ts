@@ -65,3 +65,48 @@ export async function getHeroSlides() {
         return null;
     }
 }
+
+export async function getMarqueeSettings() {
+    try {
+        const setting = await prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'marquee_settings' LIMIT 1`;
+        if (setting && setting.length > 0) return JSON.parse(setting[0].value);
+        return {
+            enabled: true,
+            title: "Trusted by Leading Organizations",
+            label: "Industrial Network",
+            speed: 50,
+            showInAbout: true
+        };
+    } catch (error) {
+        console.error("Error fetching marquee settings:", error);
+        return null;
+    }
+}
+
+export async function updateMarqueeSettings(data: {
+    enabled: boolean;
+    title: string;
+    label: string;
+    speed: number;
+    showInAbout: boolean;
+}) {
+    try {
+        const newValue = JSON.stringify(data);
+        const existingSetting = await prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'marquee_settings' LIMIT 1`;
+        
+        if (existingSetting && existingSetting.length > 0) {
+            await prisma.$executeRaw`UPDATE "SystemSetting" SET value = ${newValue}, "updatedAt" = NOW() WHERE key = 'marquee_settings'`;
+        } else {
+            const newId = `marquee_${Date.now()}`;
+            await prisma.$executeRaw`INSERT INTO "SystemSetting" (id, key, value, "updatedAt") VALUES (${newId}, 'marquee_settings', ${newValue}, NOW())`;
+        }
+
+        revalidatePath("/");
+        revalidatePath("/about");
+        revalidatePath("/coordinator/settings");
+        return { success: true };
+    } catch (error) {
+        console.error("Error updating marquee settings:", error);
+        return { success: false };
+    }
+}

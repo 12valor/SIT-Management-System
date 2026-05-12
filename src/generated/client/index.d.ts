@@ -6679,6 +6679,7 @@ export namespace Prisma {
     instagramUrl: string | null
     slots: number | null
     isVerified: boolean | null
+    showInMarquee: boolean | null
     joinedAt: Date | null
     updatedAt: Date | null
   }
@@ -6699,6 +6700,7 @@ export namespace Prisma {
     instagramUrl: string | null
     slots: number | null
     isVerified: boolean | null
+    showInMarquee: boolean | null
     joinedAt: Date | null
     updatedAt: Date | null
   }
@@ -6719,6 +6721,7 @@ export namespace Prisma {
     instagramUrl: number
     slots: number
     isVerified: number
+    showInMarquee: number
     joinedAt: number
     updatedAt: number
     _all: number
@@ -6749,6 +6752,7 @@ export namespace Prisma {
     instagramUrl?: true
     slots?: true
     isVerified?: true
+    showInMarquee?: true
     joinedAt?: true
     updatedAt?: true
   }
@@ -6769,6 +6773,7 @@ export namespace Prisma {
     instagramUrl?: true
     slots?: true
     isVerified?: true
+    showInMarquee?: true
     joinedAt?: true
     updatedAt?: true
   }
@@ -6789,6 +6794,7 @@ export namespace Prisma {
     instagramUrl?: true
     slots?: true
     isVerified?: true
+    showInMarquee?: true
     joinedAt?: true
     updatedAt?: true
     _all?: true
@@ -6896,6 +6902,7 @@ export namespace Prisma {
     instagramUrl: string | null
     slots: number
     isVerified: boolean
+    showInMarquee: boolean
     joinedAt: Date
     updatedAt: Date
     _count: CompanyCountAggregateOutputType | null
@@ -6935,6 +6942,7 @@ export namespace Prisma {
     instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: boolean
     updatedAt?: boolean
     employers?: boolean | Company$employersArgs<ExtArgs>
@@ -6958,6 +6966,7 @@ export namespace Prisma {
     instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -6978,6 +6987,7 @@ export namespace Prisma {
     instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -6998,11 +7008,12 @@ export namespace Prisma {
     instagramUrl?: boolean
     slots?: boolean
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "industry" | "description" | "location" | "logoUrl" | "bannerUrl" | "websiteUrl" | "facebookUrl" | "linkedinUrl" | "twitterUrl" | "instagramUrl" | "slots" | "isVerified" | "joinedAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "industry" | "description" | "location" | "logoUrl" | "bannerUrl" | "websiteUrl" | "facebookUrl" | "linkedinUrl" | "twitterUrl" | "instagramUrl" | "slots" | "isVerified" | "showInMarquee" | "joinedAt" | "updatedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employers?: boolean | Company$employersArgs<ExtArgs>
     postings?: boolean | Company$postingsArgs<ExtArgs>
@@ -7033,6 +7044,7 @@ export namespace Prisma {
       instagramUrl: string | null
       slots: number
       isVerified: boolean
+      showInMarquee: boolean
       joinedAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["company"]>
@@ -7475,6 +7487,7 @@ export namespace Prisma {
     readonly instagramUrl: FieldRef<"Company", 'String'>
     readonly slots: FieldRef<"Company", 'Int'>
     readonly isVerified: FieldRef<"Company", 'Boolean'>
+    readonly showInMarquee: FieldRef<"Company", 'Boolean'>
     readonly joinedAt: FieldRef<"Company", 'DateTime'>
     readonly updatedAt: FieldRef<"Company", 'DateTime'>
   }
@@ -15753,6 +15766,7 @@ export namespace Prisma {
     instagramUrl: 'instagramUrl',
     slots: 'slots',
     isVerified: 'isVerified',
+    showInMarquee: 'showInMarquee',
     joinedAt: 'joinedAt',
     updatedAt: 'updatedAt'
   };
@@ -16347,6 +16361,7 @@ export namespace Prisma {
     instagramUrl?: StringNullableFilter<"Company"> | string | null
     slots?: IntFilter<"Company"> | number
     isVerified?: BoolFilter<"Company"> | boolean
+    showInMarquee?: BoolFilter<"Company"> | boolean
     joinedAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
     employers?: UserListRelationFilter
@@ -16369,6 +16384,7 @@ export namespace Prisma {
     instagramUrl?: SortOrderInput | SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
+    showInMarquee?: SortOrder
     joinedAt?: SortOrder
     updatedAt?: SortOrder
     employers?: UserOrderByRelationAggregateInput
@@ -16394,6 +16410,7 @@ export namespace Prisma {
     instagramUrl?: StringNullableFilter<"Company"> | string | null
     slots?: IntFilter<"Company"> | number
     isVerified?: BoolFilter<"Company"> | boolean
+    showInMarquee?: BoolFilter<"Company"> | boolean
     joinedAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
     employers?: UserListRelationFilter
@@ -16416,6 +16433,7 @@ export namespace Prisma {
     instagramUrl?: SortOrderInput | SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
+    showInMarquee?: SortOrder
     joinedAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CompanyCountOrderByAggregateInput
@@ -16444,6 +16462,7 @@ export namespace Prisma {
     instagramUrl?: StringNullableWithAggregatesFilter<"Company"> | string | null
     slots?: IntWithAggregatesFilter<"Company"> | number
     isVerified?: BoolWithAggregatesFilter<"Company"> | boolean
+    showInMarquee?: BoolWithAggregatesFilter<"Company"> | boolean
     joinedAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
   }
@@ -17322,6 +17341,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
     employers?: UserCreateNestedManyWithoutCompanyInput
@@ -17344,6 +17364,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
     employers?: UserUncheckedCreateNestedManyWithoutCompanyInput
@@ -17366,6 +17387,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employers?: UserUpdateManyWithoutCompanyNestedInput
@@ -17388,6 +17410,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employers?: UserUncheckedUpdateManyWithoutCompanyNestedInput
@@ -17410,6 +17433,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17430,6 +17454,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17450,6 +17475,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18476,6 +18502,7 @@ export namespace Prisma {
     instagramUrl?: SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
+    showInMarquee?: SortOrder
     joinedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18500,6 +18527,7 @@ export namespace Prisma {
     instagramUrl?: SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
+    showInMarquee?: SortOrder
     joinedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18520,6 +18548,7 @@ export namespace Prisma {
     instagramUrl?: SortOrder
     slots?: SortOrder
     isVerified?: SortOrder
+    showInMarquee?: SortOrder
     joinedAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20229,6 +20258,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
     postings?: SITPostingCreateNestedManyWithoutCompanyInput
@@ -20250,6 +20280,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
     postings?: SITPostingUncheckedCreateNestedManyWithoutCompanyInput
@@ -20547,6 +20578,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postings?: SITPostingUpdateManyWithoutCompanyNestedInput
@@ -20568,6 +20600,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postings?: SITPostingUncheckedUpdateManyWithoutCompanyNestedInput
@@ -20977,6 +21010,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
     employers?: UserCreateNestedManyWithoutCompanyInput
@@ -20998,6 +21032,7 @@ export namespace Prisma {
     instagramUrl?: string | null
     slots?: number
     isVerified?: boolean
+    showInMarquee?: boolean
     joinedAt?: Date | string
     updatedAt?: Date | string
     employers?: UserUncheckedCreateNestedManyWithoutCompanyInput
@@ -21118,6 +21153,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employers?: UserUpdateManyWithoutCompanyNestedInput
@@ -21139,6 +21175,7 @@ export namespace Prisma {
     instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
     slots?: IntFieldUpdateOperationsInput | number
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    showInMarquee?: BoolFieldUpdateOperationsInput | boolean
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employers?: UserUncheckedUpdateManyWithoutCompanyNestedInput

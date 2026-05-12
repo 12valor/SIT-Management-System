@@ -176,6 +176,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
   instagramUrl: 'instagramUrl',
   slots: 'slots',
   isVerified: 'isVerified',
+  showInMarquee: 'showInMarquee',
   joinedAt: 'joinedAt',
   updatedAt: 'updatedAt'
 };

@@ -10,15 +10,17 @@ import {
   Upload, 
   Loader2, 
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  LayoutTemplate
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { updateHeroSlides, getHeroSlides } from "./general/actions";
+import { updateHeroSlides, getHeroSlides, getMarqueeSettings } from "./general/actions";
 
 const TABS = [
   { id: "website", name: "Hero Carousel", icon: Globe },
+  { id: "marquee", name: "Partners Marquee", icon: LayoutTemplate },
   { id: "security", name: "Security", icon: Lock },
   { id: "registry", name: "Registry", icon: Shield },
   { id: "database", name: "Database", icon: Database },
@@ -34,6 +36,13 @@ interface HeroSlide {
 export function SettingsTabs() {
   const [activeTab, setActiveTab] = useState("website");
   const [slides, setSlides] = useState<HeroSlide[]>([]);
+  const [marqueeSettings, setMarqueeSettings] = useState({
+    enabled: true,
+    title: "",
+    label: "",
+    speed: 50,
+    showInAbout: true
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
@@ -41,7 +50,6 @@ export function SettingsTabs() {
 
   useEffect(() => {
     async function load() {
-      const data = await getHeroSlides();
       if (data) setSlides(data);
       setIsLoading(false);
     }
@@ -222,14 +230,98 @@ export function SettingsTabs() {
             </div>
           )}
 
-          {activeTab !== "website" && (
-            <div className="h-[400px] flex flex-col items-center justify-center text-center space-y-4">
-              <div className="h-12 w-12 bg-muted rounded-full flex items-center justify-center text-muted-foreground">
-                <Lock className="h-6 w-6" />
+          {activeTab === "marquee" && (
+            <div className="space-y-10 animate-in-fade">
+              <div className="pb-4 border-b border-border">
+                <h3 className="text-lg font-semibold text-foreground">Partners Marquee Settings</h3>
+                <p className="text-sm text-muted-foreground mt-1">Configure how industrial partner logos appear on the landing page.</p>
               </div>
-              <div className="space-y-1">
-                <h3 className="text-base font-semibold text-foreground capitalize">{activeTab} Settings</h3>
-                <p className="text-sm text-muted-foreground max-w-xs">This module is currently unavailable.</p>
+
+              {message && (
+                <div className={cn(
+                  "p-4 rounded-lg border flex items-center gap-3",
+                  message.type === 'success' 
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-700" 
+                    : "bg-rose-50 border-rose-200 text-rose-700"
+                )}>
+                  {message.type === 'success' ? <CheckCircle2 className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
+                  <span className="text-sm font-medium">{message.text}</span>
+                </div>
+              )}
+
+              <div className="space-y-8 max-w-2xl">
+                <div className="flex items-center justify-between p-4 bg-muted/30 rounded-xl border border-border">
+                  <div className="space-y-0.5">
+                    <label className="text-sm font-semibold text-foreground">Display Marquee</label>
+                    <p className="text-xs text-muted-foreground">Show the partners section on the Home Page.</p>
+                  </div>
+                  <button 
+                    onClick={() => setMarqueeSettings(prev => ({ ...prev, enabled: !prev.enabled }))}
+                    className={cn(
+                      "relative inline-flex h-6 w-11 items-center rounded-full transition-colors outline-none",
+                      marqueeSettings.enabled ? "bg-primary" : "bg-muted-foreground/30"
+                    )}
+                  >
+                    <span className={cn("inline-block h-4 w-4 transform rounded-full bg-white transition-transform", marqueeSettings.enabled ? "translate-x-6" : "translate-x-1")} />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Section Title</label>
+                      <input 
+                        value={marqueeSettings.title} 
+                        onChange={e => setMarqueeSettings(prev => ({ ...prev, title: e.target.value }))}
+                        className="w-full h-10 px-3 rounded-lg border border-border bg-background text-sm outline-none focus:border-primary"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Upper Label</label>
+                      <input 
+                        value={marqueeSettings.label} 
+                        onChange={e => setMarqueeSettings(prev => ({ ...prev, label: e.target.value }))}
+                        className="w-full h-10 px-3 rounded-lg border border-border bg-background text-sm outline-none focus:border-primary"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Scroll Speed (Seconds)</label>
+                    <div className="flex items-center gap-4">
+                      <input 
+                        type="range" min="10" max="100" step="5"
+                        value={marqueeSettings.speed} 
+                        onChange={e => setMarqueeSettings(prev => ({ ...prev, speed: parseInt(e.target.value) }))}
+                        className="flex-1 accent-primary"
+                      />
+                      <span className="text-xs font-mono font-bold text-primary">{marqueeSettings.speed}s</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-8 border-t border-border">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={async () => {
+                      setIsSaving(true);
+                      const res = await updateMarqueeSettings(marqueeSettings);
+                      setIsSaving(false);
+                      if (res.success) {
+                        setMessage({ type: 'success', text: "Marquee settings updated successfully" });
+                        setTimeout(() => setMessage(null), 3000);
+                      } else {
+                        setMessage({ type: 'error', text: "Failed to update settings" });
+                      }
+                    }}
+                    disabled={isSaving}
+                    className="inline-flex items-center justify-center h-10 px-8 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-all shadow-sm"
+                  >
+                    {isSaving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                    Save Marquee Settings
+                  </motion.button>
+                </div>
               </div>
             </div>
           )}
