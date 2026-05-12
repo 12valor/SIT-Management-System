@@ -144,28 +144,28 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                       <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--foreground))" opacity={0.1} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff" opacity={0.1} />
                   <XAxis 
                     dataKey="month" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', opacity: 0.8 }}
+                    tick={{ fontSize: 10, fill: '#ffffff', opacity: 0.9 }}
                     dy={10}
                   />
                   <YAxis 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', opacity: 0.8 }}
+                    tick={{ fontSize: 10, fill: '#ffffff', opacity: 0.9 }}
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: 'hsl(var(--background))', 
-                      border: '1px solid hsl(var(--border))',
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #333333',
                       borderRadius: '8px',
                       fontSize: '12px',
-                      color: 'hsl(var(--foreground))'
+                      color: '#ffffff'
                     }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    itemStyle={{ color: '#ffffff' }}
                   />
                   <Area 
                     type="monotone" 
@@ -178,11 +178,11 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                   <Area 
                     type="monotone" 
                     dataKey="placements" 
-                    stroke="hsl(var(--foreground))" 
+                    stroke="#ffffff" 
                     fillOpacity={0} 
                     strokeWidth={2}
                     strokeDasharray="5 5"
-                    opacity={0.6}
+                    opacity={0.8}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -198,33 +198,33 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
             <div className="h-[240px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data?.industryStats} layout="vertical" margin={{ left: -20 }}>
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--foreground))" opacity={0.1} />
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#ffffff" opacity={0.1} />
                   <XAxis type="number" hide />
                   <YAxis 
                     dataKey="name" 
                     type="category" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fontSize: 10, fill: 'hsl(var(--foreground))', fontWeight: 'bold', opacity: 0.9 }}
+                    tick={{ fontSize: 10, fill: '#ffffff', fontWeight: 'bold', opacity: 1 }}
                     width={80}
                   />
                   <Tooltip 
-                    cursor={{ fill: 'hsl(var(--muted))', opacity: 0.2 }}
+                    cursor={{ fill: '#ffffff', opacity: 0.1 }}
                     contentStyle={{ 
-                      backgroundColor: 'hsl(var(--background))', 
-                      border: '1px solid hsl(var(--border))',
+                      backgroundColor: '#1a1a1a', 
+                      border: '1px solid #333333',
                       borderRadius: '8px',
                       fontSize: '12px',
-                      color: 'hsl(var(--foreground))'
+                      color: '#ffffff'
                     }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    itemStyle={{ color: '#ffffff' }}
                   />
                   <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={20}>
                     {data?.industryStats?.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
-                        fill={index === 0 ? 'hsl(var(--primary))' : 'hsl(var(--foreground))'} 
-                        fillOpacity={index === 0 ? 1 : 0.4 - (index * 0.05)} 
+                        fill={index === 0 ? 'hsl(var(--primary))' : '#ffffff'} 
+                        fillOpacity={index === 0 ? 1 : 0.7 - (index * 0.15)} 
                       />
                     ))}
                   </Bar>
