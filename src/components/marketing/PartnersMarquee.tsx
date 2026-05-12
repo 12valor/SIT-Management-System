@@ -74,30 +74,27 @@ export function PartnersMarquee() {
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <Marquee pauseOnHover className="[--duration:30s]">
+        <Marquee pauseOnHover className="[--duration:40s]">
           {displayPartners.map((partner) => (
             <div
               key={partner.id}
-              className="group relative flex items-center gap-4 px-8 py-4 bg-slate-50/50 dark:bg-white/[0.02] border border-slate-200/50 dark:border-white/5 rounded-2xl transition-all duration-300 hover:border-primary/30 hover:bg-white dark:hover:bg-white/[0.04]"
+              className="flex items-center justify-center px-12 py-4"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white dark:bg-[#0f0f0f] shadow-sm border border-slate-100 dark:border-white/10 overflow-hidden shrink-0">
+              <div className="relative h-12 w-32 flex items-center justify-center">
                 {partner.logoUrl ? (
                   <img
                     src={partner.logoUrl}
                     alt={partner.name}
-                    className="h-full w-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                    className="h-full w-full object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
                   />
                 ) : (
-                  <Building2 className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors duration-500" />
+                  <div className="flex items-center gap-3 grayscale opacity-40 hover:opacity-100 transition-opacity">
+                    <Building2 className="h-6 w-6 text-slate-400" />
+                    <span className="text-sm font-serif font-semibold tracking-tighter text-slate-500 uppercase">
+                      {partner.name.split(' ')[0]}
+                    </span>
+                  </div>
                 )}
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-medium text-slate-900 dark:text-white whitespace-nowrap">
-                  {partner.name}
-                </span>
-                <span className="text-[10px] font-bold text-primary/50 uppercase tracking-tighter">
-                  {partner.industry}
-                </span>
               </div>
             </div>
           ))}
