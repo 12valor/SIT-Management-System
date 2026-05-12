@@ -74,13 +74,13 @@ export function PartnersMarquee() {
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <Marquee pauseOnHover className="[--duration:40s] [--gap:1.5rem]">
+        <Marquee pauseOnHover className="[--duration:50s] [--gap:3rem]">
           {displayPartners.map((partner) => (
             <div
               key={partner.id}
-              className="flex items-center justify-center px-6 py-6"
+              className="flex items-center justify-center py-6"
             >
-              <div className="relative h-20 w-52 flex items-center justify-center">
+              <div className="relative h-20 w-64 flex items-center justify-center">
                 {partner.logoUrl ? (
                   <img
                     src={partner.logoUrl}
