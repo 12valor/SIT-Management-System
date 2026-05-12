@@ -142,8 +142,27 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
                   filtered.map((s) => (
                     <tr key={s.id} className="hover:bg-muted/30 transition-colors group">
                       <td className="px-6 py-4">
-                        <p className="font-semibold text-foreground tracking-tight leading-none">{s.name}</p>
-                        <p className="text-[10px] text-foreground/50 font-medium mt-1">{s.email}</p>
+                        <div className="flex items-center gap-3">
+                          <div className="h-9 w-9 rounded-lg bg-muted border border-border overflow-hidden relative shrink-0">
+                            {s.image ? (
+                              <Image 
+                                src={s.image} 
+                                alt={s.name} 
+                                fill 
+                                className="object-cover" 
+                                unoptimized 
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-foreground/20">
+                                <UserIcon className="h-5 w-5" />
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground tracking-tight leading-none">{s.name}</p>
+                            <p className="text-[10px] text-foreground/50 font-medium mt-1">{s.email}</p>
+                          </div>
+                        </div>
                       </td>
                       <td className="px-6 py-4 hidden lg:table-cell">
                         <span className="text-xs text-foreground/70 font-medium">{s.course}</span>

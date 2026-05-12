@@ -51,6 +51,7 @@ export async function getStudentManifest() {
       company: isHired ? latestApp.posting.company?.name || "N/A" : "—",
       role: isHired ? latestApp.posting.title : "—",
       joinedAt: s.createdAt,
+      image: s.image,
     };
   });
 }
