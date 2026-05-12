@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { 
   GraduationCap, 
@@ -12,8 +12,8 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export default async function StudentDetailPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function StudentDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   const student = await prisma.user.findUnique({
     where: { id },
