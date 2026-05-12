@@ -19,6 +19,8 @@ export interface CoordinatorStats {
   totalCompanies: number;
   verifiedCompanies: number;
   graduationReady: number;
+  pendingLogbooks: number;
+  topHiringCompanies: { name: string; count: number }[];
   recentPlacements: RecentPlacement[];
   pendingCompanies: PendingCompany[];
 }

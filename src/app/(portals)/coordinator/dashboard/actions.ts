@@ -87,8 +87,36 @@ export async function getCoordinatorStats() {
         take: 3,
         orderBy: { joinedAt: 'desc' }
       }),
+      prisma.logbookEntry.count({ where: { status: 'PENDING' } }),
       getPlacementTrend('monthly')
     ]);
+
+    // Calculate Top Hiring Companies
+    const topHiringRes = await prisma.company.findMany({
+      select: {
+        name: true,
+        postings: {
+          select: {
+            _count: {
+              select: {
+                applications: {
+                  where: { status: 'ACCEPTED' }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const topHiringCompanies = topHiringRes
+      .map(c => ({
+        name: c.name,
+        count: c.postings.reduce((acc, p) => acc + (p._count?.applications || 0), 0)
+      }))
+      .filter(c => c.count > 0)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
 
     // Fetch real Industry Distribution
     const industryGroups = await prisma.company.groupBy({
@@ -126,6 +154,8 @@ export async function getCoordinatorStats() {
         totalCompanies,
         verifiedCompanies,
         graduationReady,
+        pendingLogbooks,
+        topHiringCompanies,
         recentPlacements: recentPlacements.map(app => ({
           id: app.id,
           studentName: app.student.name,

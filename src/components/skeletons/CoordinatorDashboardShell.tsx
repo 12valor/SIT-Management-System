@@ -43,6 +43,8 @@ interface CoordinatorDashboardData {
   totalCompanies: number;
   verifiedCompanies: number;
   graduationReady: number;
+  pendingLogbooks: number;
+  topHiringCompanies: { name: string; count: number }[];
   recentPlacements: RecentPlacement[];
   pendingCompanies: PendingCompany[];
   placementTrend?: TrendData[];
@@ -120,7 +122,7 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-8">
             <h3 className="text-sm font-semibold text-foreground border-b border-border pb-2">Students</h3>
             
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-3 gap-8">
               <div>
                 <p className="text-xs text-foreground/70 mb-1">Enrolled students</p>
                 <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.totalStudents ?? 0}</p>
@@ -128,6 +130,10 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
               <div>
                 <p className="text-xs text-foreground/70 mb-1">Hours complete</p>
                 <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.graduationReady ?? 0}</p>
+              </div>
+              <div>
+                <p className="text-xs text-foreground/70 mb-1">Logbook backlog</p>
+                <p className="text-3xl font-semibold text-foreground tracking-tight text-primary">{data?.pendingLogbooks ?? 0}</p>
               </div>
             </div>
 
@@ -298,35 +304,79 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           </div>
         </div>
 
-        {/* 4. Placement History Card */}
-        <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-border pb-4">
-            <h3 className="text-sm font-semibold text-foreground">Placement History</h3>
-            <div className="text-xs text-foreground/80">
-              Placement rate: <span className="font-semibold text-foreground">{placementRate}%</span>
+        {/* 4. Bottom Grid: History & Partners */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Placement History */}
+          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <h3 className="text-sm font-semibold text-foreground">Placement History</h3>
+              <div className="text-xs text-foreground/80">
+                Placement rate: <span className="font-semibold text-foreground">{placementRate}%</span>
+              </div>
+            </div>
+
+            <div className="divide-y divide-border">
+              {!data?.recentPlacements.length ? (
+                <div className="py-12 text-center">
+                  <p className="text-sm text-foreground/50 italic">No recent placement activity recorded.</p>
+                </div>
+              ) : (
+                data.recentPlacements.map((p) => (
+                  <div key={p.id} className="py-4 flex items-center justify-between first:pt-0 last:pb-0">
+                    <div className="space-y-1">
+                      <p className="text-sm font-semibold text-foreground">{p.studentName}</p>
+                      <p className="text-xs text-foreground/70">
+                        {p.postingTitle} at <span className="font-medium text-foreground">{p.companyName}</span>
+                      </p>
+                    </div>
+                    <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50">
+                      Active
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
-          <div className="divide-y divide-border">
-            {!data?.recentPlacements.length ? (
-              <div className="py-12 text-center">
-                <p className="text-sm text-foreground/50 italic">No recent placement activity recorded.</p>
+          {/* Top Hiring Partners */}
+          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-foreground">Top Hiring Partners</h3>
+                <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">By Placement Volume</p>
               </div>
-            ) : (
-              data.recentPlacements.map((p) => (
-                <div key={p.id} className="py-4 flex items-center justify-between first:pt-0 last:pb-0">
-                  <div className="space-y-1">
-                    <p className="text-sm font-semibold text-foreground">{p.studentName}</p>
-                    <p className="text-xs text-foreground/70">
-                      {p.postingTitle} at <span className="font-medium text-foreground">{p.companyName}</span>
-                    </p>
-                  </div>
-                  <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50">
-                    Active
-                  </div>
+            </div>
+
+            <div className="space-y-4">
+              {!data?.topHiringCompanies.length ? (
+                <div className="py-12 text-center">
+                  <p className="text-sm text-foreground/50 italic">No hiring data available yet.</p>
                 </div>
-              ))
-            )}
+              ) : (
+                data.topHiringCompanies.map((company, idx) => (
+                  <div key={idx} className="flex items-center justify-between group">
+                    <div className="flex items-center gap-4">
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-xs font-bold text-foreground/60 border border-border group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        {idx + 1}
+                      </div>
+                      <p className="text-sm font-medium text-foreground">{company.name}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-24 bg-muted rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-primary" 
+                          style={{ 
+                            width: `${(company.count / data.topHiringCompanies[0].count) * 100}%`,
+                            opacity: 1 - (idx * 0.15)
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs font-mono font-bold text-foreground w-4 text-right">{company.count}</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
