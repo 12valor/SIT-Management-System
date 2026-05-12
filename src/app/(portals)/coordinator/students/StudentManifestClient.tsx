@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Search, Download, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type Student = {
   id: string;
@@ -23,6 +24,7 @@ interface StudentManifestClientProps {
 
 export default function StudentManifestClient({ initialStudents }: StudentManifestClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
   const students = initialStudents;
 
   const filtered = students.filter((s) =>
@@ -30,6 +32,31 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
     s.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     s.course.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const exportToCSV = () => {
+    const headers = ["Name", "Email", "Course", "Status", "Company", "Role", "Total Hours", "Progress (%)"];
+    const rows = filtered.map(s => [
+      s.name,
+      s.email,
+      s.course,
+      s.status,
+      s.company,
+      s.role,
+      s.totalHours,
+      s.progress.toFixed(2)
+    ]);
+
+    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `student_manifest_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const hiredCount = students.filter((s) => s.status === "HIRED").length;
   const completedCount = students.filter((s) => s.progress >= 100).length;
@@ -80,7 +107,10 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
                 className="w-full pl-9 pr-4 h-9 rounded-lg border border-border bg-card text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
               />
             </div>
-            <button className="h-9 px-4 rounded-lg bg-card border border-border flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-foreground/60 hover:text-foreground hover:border-primary/30 transition-all shadow-sm">
+            <button 
+              onClick={exportToCSV}
+              className="h-9 px-4 rounded-lg bg-card border border-border flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-foreground/60 hover:text-foreground hover:border-primary/30 transition-all shadow-sm"
+            >
               <Download className="h-3.5 w-3.5" /> Export
             </button>
           </div>
@@ -146,7 +176,10 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
                         </div>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button className="h-8 w-8 inline-flex items-center justify-center rounded-lg border border-border bg-card text-foreground/30 hover:text-primary hover:border-primary/30 transition-all shadow-sm">
+                        <button 
+                          onClick={() => router.push(`/coordinator/students/${s.id}`)}
+                          className="h-8 w-8 inline-flex items-center justify-center rounded-lg border border-border bg-card text-foreground/30 hover:text-primary hover:border-primary/30 transition-all shadow-sm"
+                        >
                           <ExternalLink className="h-3.5 w-3.5" />
                         </button>
                       </td>
