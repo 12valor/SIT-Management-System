@@ -1,10 +1,13 @@
 "use client";
 
+import { useState, useTransition, useEffect } from "react";
 import { Skeleton } from "boneyard-js/react";
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Cell
 } from "recharts";
+import { getPlacementTrend } from "@/app/(portals)/coordinator/dashboard/actions";
+import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface RecentPlacement {
@@ -53,9 +56,29 @@ interface Props {
 
 // ─── Shell Component ─────────────────────────────────────────────────────────
 export function CoordinatorDashboardShell({ data, userName }: Props) {
+  const [timeframe, setTimeframe] = useState<'monthly' | 'weekly' | 'daily'>('monthly');
+  const [trendData, setTrendData] = useState<TrendData[]>(data?.placementTrend ?? []);
+  const [isPending, startTransition] = useTransition();
+
   const placementRate = data && data.totalStudents > 0
     ? Math.round((data.hiredStudents / data.totalStudents) * 100)
     : 0;
+
+  useEffect(() => {
+    if (data?.placementTrend) {
+      setTrendData(data.placementTrend);
+    }
+  }, [data?.placementTrend]);
+
+  const handleTimeframeChange = (newTimeframe: 'monthly' | 'weekly' | 'daily') => {
+    setTimeframe(newTimeframe);
+    startTransition(async () => {
+      const res = await getPlacementTrend(newTimeframe);
+      if (res.success && res.data) {
+        setTrendData(res.data);
+      }
+    });
+  };
 
   return (
     <Skeleton
