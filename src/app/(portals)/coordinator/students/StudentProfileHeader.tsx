@@ -23,29 +23,6 @@ interface StudentProfileHeaderProps {
 }
 
 export default function StudentProfileHeader({ student, isHired }: StudentProfileHeaderProps) {
-  const [isUploading, setIsUploading] = useState(false);
-  const [preview, setPreview] = useState<string | null>(student.image);
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setIsUploading(true);
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64 = reader.result as string;
-      setPreview(base64);
-      try {
-        await updateStudentImage(student.id, base64);
-      } catch (error) {
-        console.error("Failed to update image:", error);
-      } finally {
-        setIsUploading(false);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
   return (
     <div className="flex items-center justify-between border-b border-border pb-6">
       <div className="flex items-center gap-6">
@@ -57,37 +34,20 @@ export default function StudentProfileHeader({ student, isHired }: StudentProfil
         </Link>
         
         <div className="flex items-center gap-4">
-          <div className="relative group">
-            <div className="h-16 w-16 rounded-2xl bg-muted border border-border overflow-hidden relative shadow-sm">
-              {preview ? (
-                <Image 
-                  src={preview} 
-                  alt={student.name || "Student"} 
-                  fill 
-                  className="object-cover"
-                  unoptimized
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-foreground/20">
-                  <UserIcon className="h-8 w-8" />
-                </div>
-              )}
-              {isUploading && (
-                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center">
-                  <Loader2 className="h-5 w-5 text-white animate-spin" />
-                </div>
-              )}
-            </div>
-            <label className="absolute -bottom-1 -right-1 h-6 w-6 bg-primary text-primary-foreground rounded-lg border-2 border-background flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg">
-              <Camera className="h-3 w-3" />
-              <input 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                onChange={handleImageUpload}
-                disabled={isUploading}
+          <div className="h-16 w-16 rounded-2xl bg-muted border border-border overflow-hidden relative shadow-sm">
+            {student.image ? (
+              <Image 
+                src={student.image} 
+                alt={student.name || "Student"} 
+                fill 
+                className="object-cover"
+                unoptimized
               />
-            </label>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-foreground/20">
+                <UserIcon className="h-8 w-8" />
+              </div>
+            )}
           </div>
 
           <div>

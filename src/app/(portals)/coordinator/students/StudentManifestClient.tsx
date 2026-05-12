@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Download, ExternalLink, User as UserIcon } from "lucide-react";
+import { Search, Download, ExternalLink, User as UserIcon, Camera, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { updateStudentImage } from "./actions";
 
 type Student = {
   id: string;
@@ -26,8 +27,29 @@ interface StudentManifestClientProps {
 
 export default function StudentManifestClient({ initialStudents }: StudentManifestClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isUploading, setIsUploading] = useState<string | null>(null);
   const router = useRouter();
   const students = initialStudents;
+
+  const handleImageUpload = async (userId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(userId);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64 = reader.result as string;
+      try {
+        await updateStudentImage(userId, base64);
+        router.refresh();
+      } catch (error) {
+        console.error("Failed to update image:", error);
+      } finally {
+        setIsUploading(null);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const filtered = students.filter((s) =>
     s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -145,7 +167,7 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
                     <tr key={s.id} className="hover:bg-muted/30 transition-colors group">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-9 w-9 rounded-lg bg-muted border border-border overflow-hidden relative shrink-0">
+                          <div className="h-10 w-10 rounded-lg bg-muted border border-border overflow-hidden relative shrink-0">
                             {s.image ? (
                               <Image 
                                 src={s.image} 

@@ -2,16 +2,28 @@
 
 import { Skeleton } from "boneyard-js/react";
 import { useState, useTransition, useEffect } from "react";
-import { User as UserIcon, Mail, GraduationCap, Save, CheckCircle2, Loader2, ShieldCheck, Clock } from "lucide-react";
-import { updateStudentProfile } from "@/app/(portals)/student/profile/actions";
+import { 
+  User as UserIcon, 
+  Mail, 
+  GraduationCap, 
+  Save, 
+  CheckCircle2, 
+  Loader2, 
+  ShieldCheck, 
+  Clock,
+  Camera
+} from "lucide-react";
+import { updateStudentProfile, updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";
 import { COURSE_OPTIONS, isCourseCode } from "@/lib/courses";
+import Image from "next/image";
 
 export type ProfileData = {
   id: string;
   name: string | null;
   email: string | null;
   course: string | null;
+  image: string | null;
   createdAt: Date;
   isApproved: boolean;
   applications: { status: string }[];
@@ -21,12 +33,37 @@ export type ProfileData = {
 export function StudentProfileShell({ initialData }: { initialData: ProfileData | null }) {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [isImageUploading, setIsImageUploading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (initialData) setProfile(initialData);
+    if (initialData) {
+      setProfile(initialData);
+      setImagePreview(initialData.image);
+    }
   }, [initialData]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsImageUploading(true);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64 = reader.result as string;
+      setImagePreview(base64);
+      try {
+        await updateStudentOwnImage(base64);
+      } catch (err) {
+        console.error("Image update failed", err);
+      } finally {
+        setIsImageUploading(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const totalHours = profile?.logbookEntries?.reduce((a, e) => a + e.hours, 0) ?? 0;
   const appCount = profile?.applications?.length ?? 0;
@@ -41,7 +78,6 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
       if (res.success) {
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
-        // Optimistically update
         setProfile(prev => prev ? {
           ...prev,
           name: typeof fd.get("name") === "string" ? fd.get("name") as string : prev.name,
@@ -71,39 +107,58 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
       animate="shimmer"
       stagger={80}
       transition={300}
-      snapshotConfig={{
-        excludeSelectors: ["svg", "[data-no-skeleton]"],
-        excludeTags: ["nav", "footer"],
-      }}
       fallback={
         <div className="space-y-8 max-w-5xl mx-auto pb-24">
           <div className="pb-8 border-b border-slate-100 mb-8 space-y-4">
             <div className="h-8 w-64 bg-slate-200 rounded-lg animate-pulse" />
             <div className="h-4 w-96 bg-slate-100 rounded-lg animate-pulse" />
           </div>
-
-          <div className="space-y-8">
-             <div className="h-28 bg-slate-100 rounded-xl animate-pulse" />
-             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-               {[1,2,3].map(i => <div key={i} className="h-24 bg-slate-100 rounded-xl animate-pulse" />)}
-             </div>
-             <div className="h-96 bg-slate-100 rounded-xl animate-pulse" />
+          <div className="h-28 bg-slate-100 rounded-xl animate-pulse" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[1,2,3].map(i => <div key={i} className="h-24 bg-slate-100 rounded-xl animate-pulse" />)}
           </div>
         </div>
       }
     >
     <div className="space-y-8 animate-in-fade">
-      {/* Header */}
       <div className="pb-8 border-b border-border mb-8">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Account Profile</h1>
         <p className="text-sm text-muted-foreground font-medium">Manage your industrial training identity and academic credentials.</p>
       </div>
 
       <div className="space-y-8">
-        {/* Identity Strip */}
         <div className="bg-card p-6 rounded-xl border border-border shadow-sm flex items-center gap-6">
-          <div className="w-16 h-16 rounded-xl bg-muted border border-border flex items-center justify-center text-2xl font-bold text-primary shrink-0">
-            {safeProfile.name?.charAt(0).toUpperCase() ?? "?"}
+          <div className="relative group">
+            <div className="h-16 w-16 rounded-xl bg-muted border border-border overflow-hidden relative shadow-sm flex items-center justify-center">
+              {imagePreview ? (
+                <Image 
+                  src={imagePreview} 
+                  alt={safeProfile.name || "Student"} 
+                  fill 
+                  className="object-cover"
+                  unoptimized
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-primary/40 font-bold text-2xl">
+                  {safeProfile.name?.charAt(0).toUpperCase() ?? "?"}
+                </div>
+              )}
+              {isImageUploading && (
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center">
+                  <Loader2 className="h-5 w-5 text-white animate-spin" />
+                </div>
+              )}
+            </div>
+            <label className="absolute -bottom-1 -right-1 h-6 w-6 bg-primary text-primary-foreground rounded-lg border-2 border-background flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg">
+              <Camera className="h-3.5 w-3.5" />
+              <input 
+                type="file" 
+                accept="image/*" 
+                className="hidden" 
+                onChange={handleImageUpload}
+                disabled={isImageUploading}
+              />
+            </label>
           </div>
           <div className="flex-1 min-w-0">
             <h2 className="text-xl font-bold text-foreground truncate">{safeProfile.name}</h2>
@@ -118,7 +173,6 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
           </div>
         </div>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Logbook Hours",   value: `${totalHours.toFixed(0)}/300`, icon: Clock },
@@ -135,7 +189,6 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
           ))}
         </div>
 
-        {/* Edit Form */}
         <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-border bg-muted/30">
             <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">Edit Personal Information</h3>
@@ -218,7 +271,6 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
           </form>
         </div>
 
-        {/* Support Note */}
         <div className="p-4 rounded-xl border border-border bg-muted/30 flex items-center gap-4">
            <div className="p-2 bg-card rounded-lg border border-border">
               <Mail className="h-4 w-4 text-muted-foreground/40" />

@@ -16,6 +16,7 @@ export async function getStudentProfile() {
       name: true,
       email: true,
       course: true,
+      image: true,
       createdAt: true,
       isApproved: true,
       applications: {
@@ -27,6 +28,20 @@ export async function getStudentProfile() {
       },
     },
   });
+}
+
+export async function updateStudentOwnImage(imageData: string) {
+  const session = await auth();
+  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+
+  await prisma.user.update({
+    where: { id: session.user.id },
+    data: { image: imageData },
+  });
+
+  revalidatePath("/student/profile");
+  revalidatePath("/coordinator/students"); // So coordinator sees the update
+  return { success: true };
 }
 
 export async function updateStudentProfile(formData: FormData) {
