@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { getCoordinatorStats } from "./actions";
 import { CoordinatorDashboardShell } from "@/components/skeletons/CoordinatorDashboardShell";
+export const dynamic = "force-dynamic";
 
 export default async function CoordinatorDashboardPage() {
   const [session, res] = await Promise.all([
