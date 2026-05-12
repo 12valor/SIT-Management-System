@@ -4,16 +4,17 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function getPendingRegistrations() {
-  const users = await prisma.user.findMany({
-    where: { isApproved: false },
-    include: { company: true },
-    orderBy: { createdAt: "desc" },
-  });
-
-  const companies = await prisma.company.findMany({
-    where: { isVerified: false },
-    orderBy: { joinedAt: "desc" },
-  });
+  const [users, companies] = await Promise.all([
+    prisma.user.findMany({
+      where: { isApproved: false },
+      include: { company: true },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.company.findMany({
+      where: { isVerified: false },
+      orderBy: { joinedAt: "desc" },
+    }),
+  ]);
 
   return { users, companies };
 }
