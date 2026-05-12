@@ -147,17 +147,26 @@
     filter: invert(21%) sepia(91%) saturate(3500%) hue-rotate(341deg) brightness(90%) contrast(110%);
   }
 
+  .animate-marquee {
+    animation: marquee var(--duration, 40s) linear infinite;
+  }
+
+  .animate-marquee-vertical {
+    animation: marquee-vertical var(--duration, 40s) linear infinite;
+  }
+
+  .pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+
   @keyframes marquee {
     from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    to { transform: translateX(calc(-50% - var(--gap, 1rem) / 2)); }
   }
 
-  .animate-marquee {
-    animation: marquee 40s linear infinite;
-  }
-
-  .animate-marquee:hover {
-    animation-play-state: paused;
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-50% - var(--gap, 1rem) / 2)); }
   }
 }
 
