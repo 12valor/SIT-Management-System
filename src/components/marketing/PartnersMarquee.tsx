@@ -56,41 +56,41 @@ export function PartnersMarquee() {
   }
 
   return (
-    <section className="py-24 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5">
-      <div className="container mx-auto px-6 mb-12 text-center">
+    <section className="py-32 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5">
+      <div className="container mx-auto px-6 mb-16 text-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/60 mb-2 block">
+          <span className="text-[11px] font-black uppercase tracking-[0.4em] text-primary/60 mb-3 block">
             Industrial Network
           </span>
-          <h2 className="text-2xl font-serif font-medium text-slate-800 dark:text-slate-200">
+          <h2 className="text-3xl font-serif font-medium text-slate-800 dark:text-slate-200">
             Trusted by Leading Organizations
           </h2>
         </motion.div>
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <Marquee pauseOnHover className="[--duration:40s]">
+        <Marquee pauseOnHover className="[--duration:50s] [--gap:4rem]">
           {displayPartners.map((partner) => (
             <div
               key={partner.id}
-              className="flex items-center justify-center px-12 py-4"
+              className="flex items-center justify-center px-16 py-6"
             >
-              <div className="relative h-12 w-32 flex items-center justify-center">
+              <div className="relative h-20 w-52 flex items-center justify-center">
                 {partner.logoUrl ? (
                   <img
                     src={partner.logoUrl}
                     alt={partner.name}
-                    className="h-full w-full object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                    className="h-full w-full object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700 hover:scale-110"
                   />
                 ) : (
-                  <div className="flex items-center gap-3 grayscale opacity-40 hover:opacity-100 transition-opacity">
-                    <Building2 className="h-6 w-6 text-slate-400" />
-                    <span className="text-sm font-serif font-semibold tracking-tighter text-slate-500 uppercase">
+                  <div className="flex items-center gap-4 grayscale opacity-40 hover:opacity-100 hover:scale-110 transition-all duration-700">
+                    <Building2 className="h-10 w-10 text-slate-400" />
+                    <span className="text-xl font-serif font-semibold tracking-tighter text-slate-500 uppercase">
                       {partner.name.split(' ')[0]}
                     </span>
                   </div>
