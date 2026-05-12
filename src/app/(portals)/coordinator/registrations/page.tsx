@@ -7,7 +7,7 @@ export default async function CoordinatorRegistrationsPage() {
 
   return (
     <Suspense fallback={<RegistrationsSkeleton />}>
-      <RegistrationsClient initialData={data as any} />
+      <RegistrationsClient initialData={data} />
     </Suspense>
   );
 }

@@ -23,7 +23,7 @@ interface RegistrationsClientProps {
 }
 
 export default function RegistrationsClient({ initialData }: RegistrationsClientProps) {
-  const [data, setData] = useState<RegistrationData>(initialData);
+  const [data] = useState<RegistrationData>(initialData);
   const [actionId, setActionId] = useState<string | null>(null);
 
   // In a real app, you'd re-fetch or use router.refresh() after actions

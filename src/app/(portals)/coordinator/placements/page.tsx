@@ -7,7 +7,7 @@ export default async function CoordinatorPlacementsPage() {
 
   return (
     <Suspense fallback={<PlacementsSkeleton />}>
-      <PlacementsClient initialPlacements={placements as any} />
+      <PlacementsClient initialPlacements={placements} />
     </Suspense>
   );
 }

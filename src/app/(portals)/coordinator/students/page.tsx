@@ -7,7 +7,7 @@ export default async function CoordinatorStudentsPage() {
 
   return (
     <Suspense fallback={<StudentManifestSkeleton />}>
-      <StudentManifestClient initialStudents={students as any} />
+      <StudentManifestClient initialStudents={students} />
     </Suspense>
   );
 }

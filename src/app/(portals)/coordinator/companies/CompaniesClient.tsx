@@ -1,6 +1,5 @@
 "use client";
 
-import { Skeleton } from "boneyard-js/react";
 import { useState, useCallback } from "react";
 import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2 } from "lucide-react";
 import { setCompanyVerification, addCompany, updateCompany, deleteCompany, getCompanies } from "./actions";
@@ -29,7 +28,6 @@ interface CompaniesClientProps {
 
 export default function CompaniesClient({ initialCompanies }: CompaniesClientProps) {
   const [companies, setCompanies] = useState<Company[]>(initialCompanies);
-  const [isLoading, setIsLoading] = useState(false);
   const [processing, setProcessing] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   

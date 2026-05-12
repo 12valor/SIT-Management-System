@@ -7,7 +7,7 @@ export default async function CoordinatorCompaniesPage() {
 
   return (
     <Suspense fallback={<CompaniesSkeleton />}>
-      <CompaniesClient initialCompanies={companies as any} />
+      <CompaniesClient initialCompanies={companies} />
     </Suspense>
   );
 }
