@@ -94,6 +94,20 @@ export async function getCoordinatorStats() {
     });
 
     const topIndustries = industryGroups.map(ig => ig.industry);
+    
+    // Fetch names of industries in the "Other" category
+    const otherIndustries = await prisma.company.findMany({
+      where: {
+        NOT: {
+          industry: { in: topIndustries }
+        }
+      },
+      select: {
+        industry: true
+      },
+      distinct: ['industry']
+    });
+
     const otherIndustriesCount = await prisma.company.count({
       where: {
         NOT: {
@@ -107,7 +121,11 @@ export async function getCoordinatorStats() {
         name: ig.industry,
         count: ig._count.industry
       })),
-      ...(otherIndustriesCount > 0 ? [{ name: 'Other', count: otherIndustriesCount }] : [])
+      ...(otherIndustriesCount > 0 ? [{ 
+        name: 'Other', 
+        count: otherIndustriesCount,
+        subIndustries: otherIndustries.map(oi => oi.industry)
+      }] : [])
     ];
 
     return {

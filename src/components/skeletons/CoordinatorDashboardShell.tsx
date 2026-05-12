@@ -31,6 +31,7 @@ interface TrendData {
 interface IndustryStat {
   name: string;
   count: number;
+  subIndustries?: string[];
 }
 
 interface CoordinatorDashboardData {
@@ -210,14 +211,30 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                   />
                   <Tooltip 
                     cursor={{ fill: 'var(--muted)', opacity: 0.2 }}
-                    contentStyle={{ 
-                      backgroundColor: 'var(--background)', 
-                      border: '1px solid var(--border)',
-                      borderRadius: '12px',
-                      fontSize: '12px',
-                      color: 'var(--foreground)'
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload as IndustryStat;
+                        return (
+                          <div className="bg-background border border-border p-3 rounded-xl shadow-xl min-w-[120px]">
+                            <p className="text-xs font-bold text-foreground mb-1">{data.name}</p>
+                            <p className="text-[10px] text-foreground/70">Partners: <span className="text-foreground font-medium">{data.count}</span></p>
+                            {data.name === 'Other' && data.subIndustries && data.subIndustries.length > 0 && (
+                              <div className="mt-2 pt-2 border-t border-border">
+                                <p className="text-[9px] font-mono uppercase text-foreground/40 mb-1">Includes:</p>
+                                <div className="flex flex-wrap gap-1">
+                                  {data.subIndustries.map((si, i) => (
+                                    <span key={i} className="text-[9px] px-1.5 py-0.5 bg-muted rounded text-foreground/80">
+                                      {si}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+                      return null;
                     }}
-                    itemStyle={{ color: 'var(--foreground)' }}
                   />
                   <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={20}>
                     {data?.industryStats?.map((entry, index) => (
