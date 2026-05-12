@@ -44,7 +44,7 @@ export async function getStudentManifest() {
       course: s.course || "N/A",
       totalHours,
       progress: Math.min((totalHours / 300) * 100, 100),
-      status: isHired ? "HIRED" : "SEEKING",
+      status: (isHired ? "HIRED" : "SEEKING") as "HIRED" | "SEEKING",
       company: isHired ? latestApp.posting.company?.name || "N/A" : "—",
       role: isHired ? latestApp.posting.title : "—",
       joinedAt: s.createdAt,
