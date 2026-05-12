@@ -39,7 +39,6 @@ export function Footer() {
               />
                <div className="flex flex-col uppercase">
                   <h5 className="text-xl font-bold text-[#1A202C] dark:text-white leading-none tracking-tight">TUP-V SIT</h5>
-                  <span className="text-[11px] font-semibold text-primary tracking-[0.2em] mt-1">Institutional Link</span>
                </div>
             </div>
              <p className="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm font-normal">
