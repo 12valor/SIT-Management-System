@@ -30,9 +30,7 @@ export default async function Home() {
     <div className="flex flex-col">
       <main>
         {/* Section 01 — Hero */}
-        <section className="bg-white dark:bg-[#050505]">
-          <HeroCarousel slides={customSlides} />
-        </section>
+        <HeroCarousel slides={customSlides} />
 
         {/* Partners Marquee Section */}
         <PartnersMarquee />

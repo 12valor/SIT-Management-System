@@ -37,7 +37,7 @@ export function HeroCarousel({ slides: customSlides }: { slides?: { image: strin
   }, [activeSlides.length]);
 
   return (
-    <section className="relative h-[90vh] md:h-screen w-full overflow-hidden bg-black flex items-end pb-24 md:pb-32">
+    <section className="relative h-screen md:h-screen w-full overflow-hidden bg-black flex items-center md:items-end pb-12 md:pb-32">
       
       {/* Background Images */}
       <AnimatePresence mode="wait">
@@ -64,7 +64,7 @@ export function HeroCarousel({ slides: customSlides }: { slides?: { image: strin
       </AnimatePresence>
 
       {/* Content Overlay */}
-      <div className="container mx-auto px-6 lg:px-12 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-12">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-12 pt-20 md:pt-0">
         
         {/* Left Side: Text and Buttons */}
         <div className="flex-1 max-w-4xl">

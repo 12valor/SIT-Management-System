@@ -58,7 +58,7 @@ export function SmartNavbar() {
 
         {/* Main Navigation */}
         <div className={`bg-white dark:bg-[#050505] border-b border-border/40 transition-all duration-300 relative z-10 ${scrolled ? "py-1" : "py-0"}`}>
-          <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="container mx-auto px-6 h-14 md:h-16 flex items-center justify-between">
             
             {/* Left side: Logo + Navigation */}
             <div className="flex items-center gap-10">
@@ -78,7 +78,7 @@ export function SmartNavbar() {
               <nav className="hidden md:flex items-center gap-6">
                 {/* Dynamic Portals Dropdown */}
                 <div 
-                  className="relative h-16 flex items-center"
+                  className="relative h-14 md:h-16 flex items-center"
                   onMouseEnter={() => setActiveDropdown("portals")}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
