@@ -5,7 +5,6 @@ import { Search, Download, ExternalLink, User as UserIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { updateStudentImage } from "./actions";
 
 type Student = {
   id: string;

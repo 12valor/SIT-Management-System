@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { updateHeroSlides, getHeroSlides, getMarqueeSettings } from "./general/actions";
+import { updateHeroSlides, getHeroSlides, getMarqueeSettings, updateMarqueeSettings } from "./general/actions";
 
 const TABS = [
   { id: "website", name: "Hero Carousel", icon: Globe },
@@ -50,7 +50,12 @@ export function SettingsTabs() {
 
   useEffect(() => {
     async function load() {
-      if (data) setSlides(data);
+      const slideData = await getHeroSlides();
+      if (slideData) setSlides(slideData);
+      
+      const mData = await getMarqueeSettings();
+      if (mData) setMarqueeSettings(mData);
+      
       setIsLoading(false);
     }
     load();
