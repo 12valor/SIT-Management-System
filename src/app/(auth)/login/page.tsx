@@ -11,8 +11,6 @@ const roles = [
     description: "Access your SIT logbook, track your internship hours, and manage your daily journals.",
     icon: GraduationCap,
     href: "/login/student",
-    accent: "text-blue-500",
-    bg: "bg-blue-50/50 dark:bg-blue-500/5",
   },
   {
     id: "TERM_P_02",
@@ -20,8 +18,6 @@ const roles = [
     description: "Review trainee attendance, evaluate field performance, and manage site supervisors.",
     icon: Building2,
     href: "/login/employer",
-    accent: "text-emerald-500",
-    bg: "bg-emerald-50/50 dark:bg-emerald-500/5",
   },
   {
     id: "TERM_C_03",
@@ -29,8 +25,6 @@ const roles = [
     description: "Monitor student placements, manage institutional records, and generate SIT reports.",
     icon: ShieldCheck,
     href: "/login/coordinator",
-    accent: "text-primary",
-    bg: "bg-primary/5 dark:bg-primary/5",
   },
 ];
 
@@ -91,8 +85,8 @@ export default function LoginGatePage() {
                 className="group relative flex flex-col h-full bg-card/50 backdrop-blur-sm border border-border/60 p-8 rounded-[2rem] transition-all duration-500 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 hover:bg-card active:scale-[0.98]"
               >
                 {/* Icon Box */}
-                <div className={`w-14 h-14 rounded-2xl ${role.bg} flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-                  <role.icon className={`w-7 h-7 ${role.accent}`} strokeWidth={1.5} />
+                <div className="w-14 h-14 rounded-2xl bg-secondary border border-border/50 flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-primary group-hover:border-primary">
+                  <role.icon className="w-7 h-7 text-muted-foreground group-hover:text-primary-foreground transition-colors duration-300" strokeWidth={1.5} />
                 </div>
 
                 {/* Content */}
