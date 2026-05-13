@@ -89,8 +89,10 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans overflow-x-hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
+    width: 100%;
+    position: relative;
   }
 
   ::selection {

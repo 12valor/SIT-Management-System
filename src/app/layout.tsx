@@ -45,9 +45,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppins.variable} ${montserrat.variable} ${outfit.variable} h-full antialiased`}
+      className={`${poppins.variable} ${montserrat.variable} ${outfit.variable} h-full antialiased overflow-x-hidden`}
     >
-      <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 antialiased">
+      <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden relative">
         <NextTopLoader 
           color="hsl(348 83% 40%)"
           showSpinner={false}
