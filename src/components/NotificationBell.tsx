@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { getNotifications, markAsRead, markAllAsRead } from "@/lib/actions/notifications";
+import { formatDistanceToNow } from "date-fns";
 
 interface Notification {
   id: string;
