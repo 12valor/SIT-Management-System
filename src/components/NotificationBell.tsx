@@ -74,48 +74,52 @@ export function NotificationBell() {
         {isOpen && (
           <>
             <div 
-              className="fixed inset-0 z-40 bg-transparent" 
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px] md:bg-transparent md:backdrop-blur-none" 
               onClick={() => setIsOpen(false)} 
             />
             <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="absolute right-0 mt-2 w-80 sm:w-96 bg-card border border-border rounded-2xl shadow-2xl z-50 overflow-hidden"
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              className="fixed inset-x-4 top-[80px] md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 w-auto md:w-96 bg-card border border-border rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-50 overflow-hidden"
             >
-              <div className="p-4 border-b border-border flex items-center justify-between bg-muted/30">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xs font-black uppercase tracking-widest text-foreground">Communications</h3>
-                  {unreadCount > 0 && (
-                    <span className="px-1.5 py-0.5 rounded-md bg-primary text-primary-foreground text-[10px] font-black">
-                      {unreadCount}
-                    </span>
-                  )}
+              <div className="p-5 border-b border-border flex items-center justify-between bg-muted/30">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Bell className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-foreground">Notifications</h3>
+                    <p className="text-[10px] font-medium text-muted-foreground">{unreadCount} unread transmissions</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   {unreadCount > 0 && (
                     <button 
                       onClick={handleMarkAllAsRead}
-                      className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground hover:text-primary transition-colors"
+                      className="text-[10px] font-black uppercase tracking-tighter text-primary hover:opacity-70 transition-opacity"
                     >
                       Clear All
                     </button>
                   )}
-                  <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-muted rounded-lg">
-                    <X className="h-3.5 w-3.5 text-muted-foreground" />
+                  <button 
+                    onClick={() => setIsOpen(false)} 
+                    className="h-8 w-8 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
+                  >
+                    <X className="h-4 w-4 text-muted-foreground" />
                   </button>
                 </div>
               </div>
 
-              <div className="max-h-[400px] overflow-y-auto">
+              <div className="max-h-[60vh] md:max-h-[450px] overflow-y-auto custom-scrollbar">
                 {notifications.length > 0 ? (
                   <div className="divide-y divide-border/40">
                     {notifications.map((notification) => (
                       <div 
                         key={notification.id}
                         className={cn(
-                          "p-4 hover:bg-muted/50 transition-all group relative cursor-pointer",
-                          !notification.isRead && "bg-primary/[0.02]"
+                          "p-5 hover:bg-muted/50 transition-all group relative cursor-pointer",
+                          !notification.isRead && "bg-primary/[0.03]"
                         )}
                         onClick={() => handleMarkAsRead(notification.id, notification.link)}
                       >
@@ -123,48 +127,62 @@ export function NotificationBell() {
                           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
                         )}
                         <div className="flex items-start justify-between gap-4">
-                          <div className="space-y-1">
+                          <div className="space-y-1.5 flex-1 min-w-0">
                             <h4 className={cn(
-                              "text-sm font-bold leading-none tracking-tight",
+                              "text-[13px] font-bold leading-tight tracking-tight",
                               !notification.isRead ? "text-foreground" : "text-muted-foreground"
                             )}>
                               {notification.title}
                             </h4>
-                            <p className="text-xs text-muted-foreground leading-relaxed">
+                            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                               {notification.message}
                             </p>
-                            <p className="text-[10px] text-muted-foreground/40 font-medium">
-                              {new Date(notification.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {new Date(notification.createdAt).toLocaleDateString()}
-                            </p>
+                            <div className="flex items-center gap-2 pt-1">
+                              <span className="text-[10px] text-muted-foreground/50 font-bold uppercase tracking-wider">
+                                {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
+                              </span>
+                              {!notification.isRead && (
+                                <span className="h-1 w-1 rounded-full bg-primary" />
+                              )}
+                            </div>
                           </div>
-                          <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            {notification.link && (
-                              <button className="h-7 w-7 rounded-lg bg-card border border-border flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
-                                <ExternalLink className="h-3.5 w-3.5" />
-                              </button>
-                            )}
-                          </div>
+                          {notification.link && (
+                            <div className="shrink-0">
+                              <div className="h-9 w-9 rounded-xl bg-secondary border border-border/50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                                <ExternalLink className="h-4 w-4" />
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="py-20 text-center space-y-4">
-                    <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mx-auto opacity-40">
-                      <Bell className="h-6 w-6 text-muted-foreground" />
+                  <div className="py-24 text-center space-y-4 px-6">
+                    <div className="h-16 w-16 rounded-3xl bg-muted flex items-center justify-center mx-auto rotate-12 opacity-40">
+                      <Bell className="h-8 w-8 text-muted-foreground" />
                     </div>
-                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                      Zero Transmission Detected
-                    </p>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-foreground">All caught up</p>
+                      <p className="text-xs text-muted-foreground max-w-[200px] mx-auto leading-relaxed">
+                        No new institutional updates detected in your transmission logs.
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
 
               {notifications.length > 0 && (
-                <div className="p-3 bg-muted/10 border-t border-border text-center">
-                  <p className="text-[10px] font-medium text-muted-foreground/60 italic">
-                    Institutional notifications are archived for 30 days.
-                  </p>
+                <div className="p-4 bg-muted/30 border-t border-border">
+                  <button 
+                    onClick={() => {
+                      setIsOpen(false);
+                      router.push('/notifications'); // Assuming a dedicated page exists or will exist
+                    }}
+                    className="w-full h-10 flex items-center justify-center rounded-xl bg-secondary hover:bg-secondary/80 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground transition-all"
+                  >
+                    View All Archives
+                  </button>
                 </div>
               )}
             </motion.div>
