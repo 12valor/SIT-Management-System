@@ -125,10 +125,13 @@ export default function LoginGatePage() {
           </p>
           <Link 
             href="/faq"
-            className="group flex items-center gap-3 px-8 h-12 bg-foreground text-background font-semibold rounded-full transition-all hover:bg-primary hover:shadow-lg active:scale-95"
+            className="group relative inline-flex items-center justify-center h-14 px-10 bg-primary dark:bg-white text-white dark:text-slate-950 font-bold rounded-full overflow-hidden transition-all active:scale-95 shadow-lg shadow-primary/20"
           >
-            Consult Support Center
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
+              Consult Support Center
+              <ArrowUpRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </span>
+            <div className="absolute inset-0 bg-slate-950 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
           </Link>
         </motion.footer>
       </motion.div>
