@@ -6,6 +6,7 @@ import { Building2 } from "lucide-react";
 import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
 import { getMarqueeSettings } from "@/app/(portals)/coordinator/settings/general/actions";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 type Partner = {
