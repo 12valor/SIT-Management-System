@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generateSITCertificate } from "@/lib/pdf-generator";
+import { getCourseName } from "@/lib/courses";
 
 export interface CompletionData {
   totalHours: number;
@@ -53,7 +54,7 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
     
     generateSITCertificate({
        studentName: studentName,
-       course: studentCourse,
+       course: getCourseName(studentCourse),
        companyName: evaluationData.companyName,
        totalHours: totalHours,
        grade: evaluationData.overallGrade,

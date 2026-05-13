@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { updateStudentProfile, updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";
-import { COURSE_OPTIONS, isCourseCode } from "@/lib/courses";
+import { COURSES, isCourseCode } from "@/lib/courses";
 import Image from "next/image";
 
 export type ProfileData = {
@@ -206,8 +206,10 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
                     {hasLegacyCourse && (
                       <option value={safeProfile.course ?? ""}>Current: {safeProfile.course}</option>
                     )}
-                    {COURSE_OPTIONS.map((course) => (
-                      <option key={course} value={course}>{course}</option>
+                    {COURSES.map((course) => (
+                      <option key={course.code} value={course.code}>
+                        {course.code} - {course.name}
+                      </option>
                     ))}
                   </select>
                 </div>
