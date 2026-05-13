@@ -229,7 +229,7 @@ export function SmartNavbar() {
                   {/* Portals Section */}
                   <div>
                     <h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 px-1">
-                      Access Terminals
+                      Portals
                     </h3>
                     <div className="space-y-3">
                       {portals.map((portal, idx) => (
@@ -264,7 +264,7 @@ export function SmartNavbar() {
                   {/* Navigation Links */}
                   <div>
                     <h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 px-1">
-                      Navigation
+                      Menu
                     </h3>
                     <div className="grid grid-cols-1 gap-1">
                       {["Home", "News", "Placements", "Resources", "Partners", "About", "FAQ"].map((item, idx) => (
@@ -296,8 +296,7 @@ export function SmartNavbar() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="w-full flex items-center justify-center gap-2 py-4 bg-primary text-white rounded-xl font-bold text-sm shadow-xl shadow-primary/20 active:scale-[0.98] transition-transform"
                 >
-                  <ShieldCheck className="w-4 h-4" />
-                  Secure System Login
+                  Login
                 </Link>
                 <p className="text-center text-[10px] text-slate-400 dark:text-slate-500 mt-4 font-medium tracking-wide">
                   TUPV SIT MANAGEMENT SYSTEM v1.0
