@@ -143,24 +143,30 @@ export function StudentDashboardShell({ data, userName }: Props) {
               ) : (
                 <div className="w-full divide-y">
                   {data.applications.slice(0, 5).map((app) => (
-                    <div key={app.id} className="py-4 flex items-center justify-between text-left group">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-lg bg-slate-50 dark:bg-white/5 border flex items-center justify-center text-slate-600 dark:text-white font-bold text-sm">
+                    <div key={app.id} className="py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-left group">
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                        <div className="shrink-0 w-10 h-10 rounded-lg bg-slate-50 dark:bg-white/5 border flex items-center justify-center text-slate-600 dark:text-white font-bold text-sm">
                           {app.companyName[0]}
                         </div>
-                        <div>
-                          <p className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{app.postingTitle}</p>
-                          <p className="text-xs text-slate-500 font-medium">{app.companyName}</p>
+                        <div className="min-w-0">
+                          <p className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors truncate">
+                            {app.postingTitle}
+                          </p>
+                          <p className="text-xs text-slate-500 font-medium truncate">
+                            {app.companyName}
+                          </p>
                         </div>
                       </div>
-                      <span className={cn(
-                        "px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider",
-                        app.status === "ACCEPTED" ? "bg-emerald-500 text-white" :
-                        app.status === "REJECTED" ? "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400" :
-                        "bg-primary/10 text-primary"
-                      )}>
-                        {app.status}
-                      </span>
+                      <div className="flex sm:block shrink-0">
+                        <span className={cn(
+                          "px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider whitespace-nowrap inline-block",
+                          app.status === "ACCEPTED" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20" :
+                          app.status === "REJECTED" ? "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400" :
+                          "bg-primary/10 text-primary"
+                        )}>
+                          {app.status}
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
