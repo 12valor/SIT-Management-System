@@ -206,7 +206,7 @@ export function SmartNavbar() {
             >
               {/* Header with Close Button */}
               <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-white/5">
-                <div className="flex items-center gap-3">
+                <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 active:scale-95 transition-transform">
                   <Image 
                     src="/Technological_University_of_the_Philippines_Seal.svg.png" 
                     alt="TUP Seal" 
@@ -214,7 +214,7 @@ export function SmartNavbar() {
                     height={28}
                   />
                   <span className="font-bold text-lg tracking-tight">TUPV SIT</span>
-                </div>
+                </Link>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 rounded-full bg-slate-50 dark:bg-white/5 text-slate-500 hover:text-primary transition-colors"
@@ -267,7 +267,7 @@ export function SmartNavbar() {
                       Navigation
                     </h3>
                     <div className="grid grid-cols-1 gap-1">
-                      {["News", "Placements", "Resources", "Partners", "About", "FAQ"].map((item, idx) => (
+                      {["Home", "News", "Placements", "Resources", "Partners", "About", "FAQ"].map((item, idx) => (
                         <motion.div
                           key={item}
                           initial={{ opacity: 0, x: -10 }}
@@ -276,7 +276,7 @@ export function SmartNavbar() {
                         >
                           <Link 
                             className="text-base font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group" 
-                            href={`/${item.toLowerCase()}`}
+                            href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {item}
