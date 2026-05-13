@@ -10,12 +10,14 @@ import {
   Briefcase, 
   Monitor, 
   Loader2,
-  Inbox
+  Inbox,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getNotifications, markAsRead, markAllAsRead } from "@/lib/actions/notifications";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { motion } from "framer-motion";
 
 type Notification = {
   id: string;
