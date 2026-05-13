@@ -1,37 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Building2, ShieldCheck, ArrowRight } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck, ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const roles = [
   {
     id: "TERM_S_01",
     title: "Student",
-    description: "Manage your SIT logbook, journals, and view your evaluation reports.",
+    description: "Access your SIT logbook, track your internship hours, and manage your daily journals.",
     icon: GraduationCap,
     href: "/login/student",
+    accent: "text-blue-500",
+    bg: "bg-blue-50/50 dark:bg-blue-500/5",
   },
   {
     id: "TERM_P_02",
     title: "Industry Partner",
-    description: "Verify trainee attendance and evaluate student performance in the field.",
+    description: "Review trainee attendance, evaluate field performance, and manage site supervisors.",
     icon: Building2,
     href: "/login/employer",
+    accent: "text-emerald-500",
+    bg: "bg-emerald-50/50 dark:bg-emerald-500/5",
   },
   {
     id: "TERM_C_03",
     title: "Coordinator",
-    description: "Institutional oversight, SIT management, and student placement monitoring.",
+    description: "Monitor student placements, manage institutional records, and generate SIT reports.",
     icon: ShieldCheck,
     href: "/login/coordinator",
+    accent: "text-primary",
+    bg: "bg-primary/5 dark:bg-primary/5",
   },
 ];
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
 };
 
 const staggerContainer = {
@@ -44,29 +50,36 @@ const staggerContainer = {
 
 export default function LoginGatePage() {
   return (
-    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
+    <main className="min-h-screen relative overflow-hidden bg-background">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+      
+      {/* Background Decorative Gradients */}
+      <div className="absolute top-0 -left-4 w-72 h-72 bg-primary/5 rounded-full blur-[128px] -z-10" />
+      <div className="absolute bottom-0 -right-4 w-96 h-96 bg-primary/5 rounded-full blur-[128px] -z-10" />
+
       <motion.div 
-        className="container mx-auto max-w-6xl"
+        className="container mx-auto max-w-6xl px-6 pt-32 pb-24"
         initial="initial"
         animate="animate"
         variants={staggerContainer}
       >
         {/* HEADER */}
-        <motion.header className="mb-24 text-center" variants={fadeInUp}>
-          <div className="flex flex-col items-center justify-center mb-16">
-            <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
-              Authentication Gateway
-            </span>
-            <h1 className="text-5xl md:text-7xl font-serif font-medium text-slate-900 dark:text-white mb-6">
+        <motion.header className="mb-20" variants={fadeInUp}>
+          <div className="flex flex-col items-center text-center space-y-4">
+            <div className="px-4 py-1.5 rounded-full bg-secondary border border-border/50 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Institutional Gateway
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
               Portal Selection
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto font-serif">
-              Select the appropriate digital terminal to begin your institutional session.
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Choose your designated portal to securely access the Supervised Industrial Training management system.
             </p>
           </div>
         </motion.header>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {roles.map((role) => (
             <motion.div
               key={role.title}
@@ -75,57 +88,58 @@ export default function LoginGatePage() {
             >
               <Link 
                 href={role.href}
-                className="group flex flex-col h-full bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 rounded-2xl transition-all duration-300 hover:border-primary/40 hover:bg-slate-50/50 dark:hover:bg-white/[0.04] active:scale-[0.98] hover:shadow-2xl hover:shadow-primary/5"
+                className="group relative flex flex-col h-full bg-card/50 backdrop-blur-sm border border-border/60 p-8 rounded-[2rem] transition-all duration-500 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 hover:bg-card active:scale-[0.98]"
               >
-                {/* Clean, unboxed icon */}
-                <div className="mb-8 text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors duration-300">
-                  <role.icon className="w-10 h-10" strokeWidth={1.25} />
+                {/* Icon Box */}
+                <div className={`w-14 h-14 rounded-2xl ${role.bg} flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+                  <role.icon className={`w-7 h-7 ${role.accent}`} strokeWidth={1.5} />
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 mb-12">
-                  <h3 className="text-2xl font-serif font-medium text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors duration-300">
+                <div className="flex-1 space-y-4">
+                  <h3 className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors duration-300">
                     {role.title}
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 font-serif leading-relaxed text-[15px]">
+                  <p className="text-muted-foreground leading-relaxed text-[15px]">
                     {role.description}
                   </p>
                 </div>
 
-                {/* Understated Editorial CTA */}
-                <div className="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-white/10 pt-6">
-                  <span className="text-[10px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors duration-300">
-                    Enter Gateway
+                {/* Action Link */}
+                <div className="mt-12 flex items-center justify-between group-hover:translate-x-1 transition-transform duration-300">
+                  <span className="text-sm font-semibold tracking-wide text-foreground/80 group-hover:text-primary transition-colors duration-300">
+                    Access Portal
                   </span>
-                  <div className="w-8 h-8 rounded-full border border-transparent group-hover:border-primary/20 flex items-center justify-center transition-all duration-300 bg-slate-50 dark:bg-white/5 group-hover:bg-primary/5">
-                    <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-primary transition-transform duration-300 group-hover:translate-x-0.5" strokeWidth={1.5} />
+                  <div className="w-10 h-10 rounded-full bg-secondary border border-border/50 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary-foreground transition-all duration-300" strokeWidth={2} />
                   </div>
                 </div>
+
+                {/* Subtle Hover Glow */}
+                <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </Link>
             </motion.div>
           ))}
         </section>
 
         <motion.footer 
-          className="mt-24 pt-12 border-t border-slate-200 dark:border-white/10 text-center"
+          className="mt-20 pt-12 border-t border-border/50 flex flex-col items-center gap-8"
           variants={fadeInUp}
         >
-          <p className="text-slate-500 dark:text-slate-400 mb-6 font-serif">
+          <p className="text-muted-foreground text-sm">
             Need technical assistance or portal access?
           </p>
           <Link 
             href="/faq"
-            className="group relative inline-flex items-center justify-center h-14 px-10 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium rounded-full overflow-hidden transition-transform active:scale-95 shadow-lg font-serif"
+            className="group flex items-center gap-3 px-8 h-12 bg-foreground text-background font-semibold rounded-full transition-all hover:bg-primary hover:shadow-lg active:scale-95"
           >
-            <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
-              Consult FAQ Registry
-              <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            Consult Support Center
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </motion.footer>
       </motion.div>
     </main>
   );
 }
+
 
