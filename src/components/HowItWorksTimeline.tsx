@@ -90,7 +90,7 @@ export function HowItWorksTimeline() {
     { 
       step: "1", 
       title: "Profile Setup", 
-      desc: "Initialize your institutional SIT profile through authenticated GSFE credentials.", 
+      desc: "Initialize your institutional SIT profile through authenticated student credentials.", 
       icon: ShieldCheck,
       align: "left",
       scrollStart: 0.1,

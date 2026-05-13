@@ -18,13 +18,13 @@ export function StudentLoginForm() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthStatus("loading");
-    setAuthMessage("Validating GSFE credentials...");
+    setAuthMessage("Validating student credentials...");
 
     try {
       const result = await signIn("credentials", { email, password, redirect: false });
       if (result?.error) {
         setAuthStatus("error");
-        setAuthMessage("Invalid GSFE credentials.");
+        setAuthMessage("Invalid student credentials.");
         return;
       }
       const res = await fetch("/api/auth/session");
@@ -37,7 +37,7 @@ export function StudentLoginForm() {
         }, 800);
       } else {
         setAuthStatus("error");
-        setAuthMessage("Restricted Access: Valid GSFE identity required.");
+        setAuthMessage("Restricted Access: Valid student identity required.");
       }
     } catch {
       setAuthStatus("error");
