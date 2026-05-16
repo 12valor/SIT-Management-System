@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT Management · Use Case Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;1,400&family=Poppins:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #ffffff;
+      --color-paper-2: #fef5f6;
+      --color-ink:     #2f050b;
+      --color-muted:   #95505b;
+      --color-soft:    #b07a82;
+      --color-accent:  #bd112d;
+      --font-sans:     'Poppins', system-ui, sans-serif;
+      --font-serif:    'Montserrat', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1000px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .diagram-container {
+      background: var(--color-paper-2);
+      border: 1px solid rgba(47,5,11,0.12);
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid rgba(47,5,11,0.12);
+      border-radius: 6px;
+      padding: 1.25rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .card-list li {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      line-height: 1.5;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--color-soft);
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Architecture · Diagram Design</p>
+    <h1>SIT Management Use Cases</h1>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1000 680" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.9" fill="rgba(47,5,11,0.10)"/>
+          </pattern>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#95505b"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bd112d"/></marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <rect width="100%" height="100%" fill="url(#dots)" opacity="0.6"/>
+
+        <!-- Connections -->
+        <!-- Student Bus -->
+        <path d="M 224 132 L 280 132" fill="none" stroke="#95505b" stroke-width="1.2"/>
+        <path d="M 280 112 L 280 400" fill="none" stroke="#95505b" stroke-width="1.2"/>
+        <line x1="280" y1="112" x2="360" y2="112" stroke="#95505b" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="280" y1="208" x2="360" y2="208" stroke="#95505b" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="280" y1="292" x2="360" y2="292" stroke="#95505b" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="280" y1="400" x2="360" y2="400" stroke="#95505b" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Student Labels -->
+        <rect x="300" y="106" width="40" height="12" rx="2" fill="#ffffff"/>
+        <text x="320" y="115" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">APPLY</text>
+        <rect x="300" y="202" width="44" height="12" rx="2" fill="#ffffff"/>
+        <text x="322" y="211" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">SUBMIT</text>
+
+        <!-- Employer Bus -->
+        <path d="M 224 332 L 320 332" fill="none" stroke="#bd112d" stroke-width="1.2"/>
+        <path d="M 320 128 L 320 332" fill="none" stroke="#bd112d" stroke-width="1.2"/>
+        <line x1="320" y1="128" x2="360" y2="128" stroke="#bd112d" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+        <line x1="320" y1="316" x2="360" y2="316" stroke="#bd112d" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+        <!-- Employer Labels -->
+        <rect x="326" y="122" width="28" height="12" rx="2" fill="#ffffff"/>
+        <text x="340" y="131" fill="#bd112d" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">POST</text>
+        <rect x="326" y="310" width="36" height="12" rx="2" fill="#ffffff"/>
+        <text x="344" y="319" fill="#bd112d" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">GRADE</text>
+
+        <!-- Coordinator Bus -->
+        <path d="M 680 332 L 620 332" fill="none" stroke="#95505b" stroke-width="1.2"/>
+        <path d="M 620 208 L 620 496" fill="none" stroke="#95505b" stroke-width="1.2"/>
+        <line x1="620" y1="208" x2="560" y2="208" stroke="#95505b" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="620" y1="496" x2="560" y2="496" stroke="#95505b" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Coordinator Labels -->
+        <rect x="566" y="202" width="48" height="12" rx="2" fill="#ffffff"/>
+        <text x="590" y="211" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">APPROVE</text>
+        <rect x="568" y="490" width="44" height="12" rx="2" fill="#ffffff"/>
+        <text x="590" y="499" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">VERIFY</text>
+
+        <!-- System Boundary -->
+        <rect x="340" y="40" width="240" height="520" rx="8" fill="transparent" stroke="rgba(47,5,11,0.20)" stroke-width="1.2" stroke-dasharray="4,4"/>
+        <rect x="348" y="34" width="144" height="12" rx="2" fill="#ffffff"/>
+        <text x="420" y="43" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">SIT MANAGEMENT CORE</text>
+
+        <!-- Actors -->
+        <!-- Student -->
+        <rect x="80" y="120" width="144" height="64" rx="6" fill="#ffffff"/>
+        <rect x="80" y="120" width="144" height="64" rx="6" fill="rgba(149,80,91,0.10)" stroke="#b07a82" stroke-width="1"/>
+        <rect x="88" y="128" width="28" height="12" rx="2" fill="transparent" stroke="rgba(176,122,130,0.40)" stroke-width="0.8"/>
+        <text x="102" y="137" fill="#b07a82" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ACTOR</text>
+        <text x="152" y="156" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Student</text>
+        <text x="152" y="172" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Intern Candidate</text>
+
+        <!-- Employer -->
+        <rect x="80" y="320" width="144" height="64" rx="6" fill="#ffffff"/>
+        <rect x="80" y="320" width="144" height="64" rx="6" fill="rgba(149,80,91,0.10)" stroke="#b07a82" stroke-width="1"/>
+        <rect x="88" y="328" width="28" height="12" rx="2" fill="transparent" stroke="rgba(176,122,130,0.40)" stroke-width="0.8"/>
+        <text x="102" y="337" fill="#b07a82" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ACTOR</text>
+        <text x="152" y="356" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Employer</text>
+        <text x="152" y="372" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Company Partner</text>
+
+        <!-- Coordinator -->
+        <rect x="680" y="300" width="144" height="64" rx="6" fill="#ffffff"/>
+        <rect x="680" y="300" width="144" height="64" rx="6" fill="rgba(149,80,91,0.10)" stroke="#b07a82" stroke-width="1"/>
+        <rect x="688" y="308" width="28" height="12" rx="2" fill="transparent" stroke="rgba(176,122,130,0.40)" stroke-width="0.8"/>
+        <text x="702" y="317" fill="#b07a82" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ACTOR</text>
+        <text x="752" y="336" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Coordinator</text>
+        <text x="752" y="352" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">System Admin</text>
+
+        <!-- Use Cases -->
+        <!-- Placement Hub -->
+        <rect x="360" y="80" width="200" height="64" rx="6" fill="#ffffff"/>
+        <rect x="360" y="80" width="200" height="64" rx="6" fill="rgba(189,17,45,0.08)" stroke="#bd112d" stroke-width="1"/>
+        <rect x="368" y="88" width="32" height="12" rx="2" fill="transparent" stroke="rgba(189,17,45,0.50)" stroke-width="0.8"/>
+        <text x="384" y="97" fill="#bd112d" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CORE</text>
+        <text x="460" y="116" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Placement Hub</text>
+        <text x="460" y="132" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Postings &amp; Applications</text>
+
+        <!-- Logbook System -->
+        <rect x="360" y="176" width="200" height="64" rx="6" fill="#ffffff"/>
+        <rect x="360" y="176" width="200" height="64" rx="6" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <rect x="368" y="184" width="48" height="12" rx="2" fill="transparent" stroke="rgba(47,5,11,0.40)" stroke-width="0.8"/>
+        <text x="392" y="193" fill="#2f050b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">TRACKING</text>
+        <text x="460" y="212" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Logbook System</text>
+        <text x="460" y="228" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Hours &amp; Tasks Approval</text>
+
+        <!-- Evaluation Center -->
+        <rect x="360" y="272" width="200" height="64" rx="6" fill="#ffffff"/>
+        <rect x="360" y="272" width="200" height="64" rx="6" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <rect x="368" y="280" width="44" height="12" rx="2" fill="transparent" stroke="rgba(47,5,11,0.40)" stroke-width="0.8"/>
+        <text x="390" y="289" fill="#2f050b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">GRADING</text>
+        <text x="460" y="308" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Evaluation Center</text>
+        <text x="460" y="324" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Performance Metrics</text>
+
+        <!-- Document Management -->
+        <rect x="360" y="368" width="200" height="64" rx="6" fill="#ffffff"/>
+        <rect x="360" y="368" width="200" height="64" rx="6" fill="rgba(47,5,11,0.05)" stroke="#95505b" stroke-width="1"/>
+        <rect x="368" y="376" width="56" height="12" rx="2" fill="transparent" stroke="rgba(149,80,91,0.50)" stroke-width="0.8"/>
+        <text x="396" y="385" fill="#95505b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">COMPLIANCE</text>
+        <text x="460" y="404" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Document Management</text>
+        <text x="460" y="420" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Waivers &amp; Resumes</text>
+
+        <!-- Platform Admin -->
+        <rect x="360" y="464" width="200" height="64" rx="6" fill="#ffffff"/>
+        <rect x="360" y="464" width="200" height="64" rx="6" fill="rgba(189,17,45,0.05)" stroke="rgba(189,17,45,0.50)" stroke-width="1" stroke-dasharray="4,4"/>
+        <rect x="368" y="472" width="36" height="12" rx="2" fill="transparent" stroke="rgba(189,17,45,0.40)" stroke-width="0.8"/>
+        <text x="386" y="481" fill="#bd112d" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ADMIN</text>
+        <text x="460" y="500" fill="#2f050b" font-size="12" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Platform Admin</text>
+        <text x="460" y="516" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Verification &amp; Settings</text>
+
+        <!-- Legend strip -->
+        <line x1="40" y1="608" x2="960" y2="608" stroke="rgba(47,5,11,0.10)" stroke-width="0.8"/>
+        <text x="40" y="624" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+        <rect x="40" y="640" width="14" height="10" rx="2" fill="rgba(189,17,45,0.08)" stroke="#bd112d" stroke-width="1"/>
+        <text x="60" y="648" fill="#95505b" font-size="8.5" font-family="'Poppins', sans-serif">Focal Use Case</text>
+
+        <rect x="180" y="640" width="14" height="10" rx="2" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <text x="200" y="648" fill="#95505b" font-size="8.5" font-family="'Poppins', sans-serif">Standard Process</text>
+
+        <rect x="340" y="640" width="14" height="10" rx="2" fill="rgba(47,5,11,0.05)" stroke="#95505b" stroke-width="1"/>
+        <text x="360" y="648" fill="#95505b" font-size="8.5" font-family="'Poppins', sans-serif">Data Store / Documents</text>
+
+        <rect x="530" y="640" width="14" height="10" rx="2" fill="rgba(189,17,45,0.05)" stroke="rgba(189,17,45,0.50)" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="550" y="648" fill="#95505b" font-size="8.5" font-family="'Poppins', sans-serif">Security Boundary</text>
+
+        <rect x="700" y="640" width="14" height="10" rx="2" fill="rgba(149,80,91,0.10)" stroke="#b07a82" stroke-width="1"/>
+        <text x="720" y="648" fill="#95505b" font-size="8.5" font-family="'Poppins', sans-serif">System Actor</text>
+      </svg>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <p class="eyebrow">INTERNSHIPS</p>
+        <div class="card-header">
+          <span class="card-dot" style="background: var(--color-accent)"></span>
+          <h3>Placement Hub</h3>
+        </div>
+        <ul class="card-list">
+          <li>Students discover and apply for on-site, hybrid, and remote OJT opportunities.</li>
+          <li>Employers publish tailored postings with detailed skill requirements and slot allocations.</li>
+          <li>Acts as the primary intersection between candidates and company partners.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="eyebrow">PROGRESS</p>
+        <div class="card-header">
+          <span class="card-dot" style="background: var(--color-ink)"></span>
+          <h3>Logbook &amp; Evaluations</h3>
+        </div>
+        <ul class="card-list">
+          <li>Students consistently log daily tasks and rendering hours for tracking.</li>
+          <li>Coordinators review and approve submitted logbook entries to ensure compliance.</li>
+          <li>Employers submit formal evaluations affecting the student's final OJT grade.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="eyebrow">OVERSIGHT</p>
+        <div class="card-header">
+          <span class="card-dot" style="background: var(--color-muted)"></span>
+          <h3>Administration</h3>
+        </div>
+        <ul class="card-list">
+          <li>Coordinators verify company accounts and validate student registrations.</li>
+          <li>Maintains the integrity of the ecosystem by monitoring overarching metrics.</li>
+          <li>Students can upload mandatory documents (e.g., waivers) securely to the system.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
