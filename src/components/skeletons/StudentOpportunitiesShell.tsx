@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 import { applyForOpportunity } from "@/app/(portals)/student/opportunities/actions";
 import { SITOpportunity } from "@/app/(portals)/student/opportunities/types";
 
@@ -44,7 +45,13 @@ export function StudentOpportunitiesShell({
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const deepLinkHandled = useRef(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   useEffect(() => {
     if (initialData) setPostings(initialData);
@@ -254,148 +261,151 @@ export function StudentOpportunitiesShell({
       </div>
     </Skeleton>
         {/* Full Post Details Modal */}
-        <AnimatePresence>
-          {viewingDetails && (
-            <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-6 bg-background/40 backdrop-blur-md animate-in fade-in duration-300">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative w-full max-w-3xl bg-card border border-border rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
-              >
-                {/* Modal Header */}
-                <div className="px-8 py-6 border-b border-border flex justify-between items-start bg-muted/10 sticky top-0 z-20 backdrop-blur-md">
-                  <div className="flex gap-5 items-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl font-bold text-primary shadow-inner border border-primary/10">
-                      {viewingDetails.company.name[0]}
+        {mounted && createPortal(
+          <AnimatePresence>
+            {viewingDetails && (
+              <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-6 bg-black/50 animate-in fade-in duration-300">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  className="relative w-full max-w-3xl bg-card border border-border rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                >
+                  {/* Modal Header */}
+                  <div className="px-8 py-6 border-b border-border flex justify-between items-start bg-muted/10 sticky top-0 z-20">
+                    <div className="flex gap-5 items-center">
+                      <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl font-bold text-primary shadow-inner border border-primary/10">
+                        {viewingDetails.company.name[0]}
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-2xl font-bold text-foreground leading-tight">{viewingDetails.title}</h3>
+                        <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
+                          <Building2 className="h-4 w-4 opacity-60" /> {viewingDetails.company.name} 
+                          <span className="mx-2 opacity-30">•</span>
+                          <MapPin className="h-4 w-4 opacity-60" /> {viewingDetails.location}
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-1">
-                      <h3 className="text-2xl font-bold text-foreground leading-tight">{viewingDetails.title}</h3>
-                      <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
-                        <Building2 className="h-4 w-4 opacity-60" /> {viewingDetails.company.name} 
-                        <span className="mx-2 opacity-30">•</span>
-                        <MapPin className="h-4 w-4 opacity-60" /> {viewingDetails.location}
+                    <button 
+                      onClick={() => setViewingDetails(null)}
+                      className="h-10 w-10 rounded-xl hover:bg-muted flex items-center justify-center transition-all text-muted-foreground hover:text-foreground border border-transparent hover:border-border"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+
+                  {/* Modal Content - Scrollable */}
+                  <div className="flex-1 overflow-y-auto p-8 space-y-10 custom-scrollbar">
+                    {/* Quick Specs */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 bg-muted/30 rounded-2xl border border-border/50">
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Training Load</p>
+                        <div className="flex items-center gap-2">
+                          <Activity className="h-4 w-4 text-primary" />
+                          <p className="text-lg font-bold text-foreground">{viewingDetails.requiredHours} Hours</p>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Placement Type</p>
+                        <div className="flex items-center gap-2">
+                          <Briefcase className="h-4 w-4 text-primary" />
+                          <p className="text-lg font-bold text-foreground uppercase text-sm">{viewingDetails.type.replace('_', ' ')}</p>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5 hidden md:block">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Posted On</p>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-primary" />
+                          <p className="text-lg font-bold text-foreground">{new Date(viewingDetails.postedAt).toLocaleDateString()}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 text-primary">
+                        <Info className="h-5 w-5" />
+                        <h4 className="text-sm font-bold uppercase tracking-widest">About the Role</h4>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-serif text-lg italic">
+                        &quot;{viewingDetails.description}&quot;
                       </p>
                     </div>
-                  </div>
-                  <button 
-                    onClick={() => setViewingDetails(null)}
-                    className="h-10 w-10 rounded-xl hover:bg-muted flex items-center justify-center transition-all text-muted-foreground hover:text-foreground border border-transparent hover:border-border"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
 
-                {/* Modal Content - Scrollable */}
-                <div className="flex-1 overflow-y-auto p-8 space-y-10 custom-scrollbar">
-                  {/* Quick Specs */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 bg-muted/30 rounded-2xl border border-border/50">
-                    <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Training Load</p>
-                      <div className="flex items-center gap-2">
-                        <Activity className="h-4 w-4 text-primary" />
-                        <p className="text-lg font-bold text-foreground">{viewingDetails.requiredHours} Hours</p>
+                    {/* Requirements & Responsibilities Grid */}
+                    <div className="grid md:grid-cols-2 gap-10">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-primary">
+                          <Target className="h-5 w-5" />
+                          <h4 className="text-sm font-bold uppercase tracking-widest">Responsibilities</h4>
+                        </div>
+                        <ul className="space-y-3">
+                          {viewingDetails.responsibilities.map((item, i) => (
+                            <li key={i} className="flex gap-3 text-sm font-medium text-muted-foreground leading-relaxed">
+                              <span className="h-1.5 w-1.5 rounded-full bg-primary/40 mt-2 shrink-0" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Placement Type</p>
-                      <div className="flex items-center gap-2">
-                        <Briefcase className="h-4 w-4 text-primary" />
-                        <p className="text-lg font-bold text-foreground uppercase text-sm">{viewingDetails.type.replace('_', ' ')}</p>
-                      </div>
-                    </div>
-                    <div className="space-y-1.5 hidden md:block">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Posted On</p>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-primary" />
-                        <p className="text-lg font-bold text-foreground">{new Date(viewingDetails.postedAt).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Description */}
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2 text-primary">
-                      <Info className="h-5 w-5" />
-                      <h4 className="text-sm font-bold uppercase tracking-widest">About the Role</h4>
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-primary">
+                          <ListChecks className="h-5 w-5" />
+                          <h4 className="text-sm font-bold uppercase tracking-widest">Requirements</h4>
+                        </div>
+                        <ul className="space-y-3">
+                          {viewingDetails.requirements.map((item, i) => (
+                            <li key={i} className="flex gap-3 text-sm font-medium text-muted-foreground leading-relaxed">
+                              <CheckCircle2 className="h-4 w-4 text-primary/40 shrink-0" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-serif text-lg italic">
-                      &quot;{viewingDetails.description}&quot;
-                    </p>
                   </div>
 
-                  {/* Requirements & Responsibilities Grid */}
-                  <div className="grid md:grid-cols-2 gap-10">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-primary">
-                        <Target className="h-5 w-5" />
-                        <h4 className="text-sm font-bold uppercase tracking-widest">Responsibilities</h4>
-                      </div>
-                      <ul className="space-y-3">
-                        {viewingDetails.responsibilities.map((item, i) => (
-                          <li key={i} className="flex gap-3 text-sm font-medium text-muted-foreground leading-relaxed">
-                            <span className="h-1.5 w-1.5 rounded-full bg-primary/40 mt-2 shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-primary">
-                        <ListChecks className="h-5 w-5" />
-                        <h4 className="text-sm font-bold uppercase tracking-widest">Requirements</h4>
-                      </div>
-                      <ul className="space-y-3">
-                        {viewingDetails.requirements.map((item, i) => (
-                          <li key={i} className="flex gap-3 text-sm font-medium text-muted-foreground leading-relaxed">
-                            <CheckCircle2 className="h-4 w-4 text-primary/40 shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  {/* Modal Footer */}
+                  <div className="p-8 bg-muted/10 border-t border-border flex items-center justify-between gap-6">
+                    <button 
+                      onClick={() => setViewingDetails(null)}
+                      className="h-12 px-8 rounded-xl border border-border font-bold text-sm hover:bg-muted transition-colors"
+                    >
+                      Close
+                    </button>
+                    <button 
+                      onClick={() => {
+                        const alreadyApplied = viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN");
+                        if (!alreadyApplied) {
+                          setApplyingTo(viewingDetails);
+                          setViewingDetails(null);
+                        }
+                      }}
+                      disabled={viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN")}
+                      className={cn(
+                        "flex-1 h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg",
+                        viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN")
+                        ? "bg-muted text-muted-foreground cursor-not-allowed"
+                        : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20"
+                      )}
+                    >
+                      {viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN") ? (
+                        <><CheckCircle2 className="h-4 w-4" /> Already Applied</>
+                      ) : (
+                        <>Apply for this Position <ArrowRight className="h-4 w-4" /></>
+                      )}
+                    </button>
                   </div>
-                </div>
-
-                {/* Modal Footer */}
-                <div className="p-8 bg-muted/10 border-t border-border flex items-center justify-between gap-6">
-                  <button 
-                    onClick={() => setViewingDetails(null)}
-                    className="h-12 px-8 rounded-xl border border-border font-bold text-sm hover:bg-muted transition-colors"
-                  >
-                    Close
-                  </button>
-                  <button 
-                    onClick={() => {
-                      const alreadyApplied = viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN");
-                      if (!alreadyApplied) {
-                        setApplyingTo(viewingDetails);
-                        setViewingDetails(null);
-                      }
-                    }}
-                    disabled={viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN")}
-                    className={cn(
-                      "flex-1 h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg",
-                      viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN")
-                      ? "bg-muted text-muted-foreground cursor-not-allowed"
-                      : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20"
-                    )}
-                  >
-                    {viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN") ? (
-                      <><CheckCircle2 className="h-4 w-4" /> Already Applied</>
-                    ) : (
-                      <>Apply for this Position <ArrowRight className="h-4 w-4" /></>
-                    )}
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
         {/* Application Modal */}
-        {applyingTo && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in transition-all">
+        {mounted && applyingTo && createPortal(
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/50 animate-in fade-in transition-all">
             <div className="relative w-full max-w-md bg-card border border-border rounded-xl shadow-xl overflow-hidden animate-in zoom-in-95 duration-200">
               {isSuccess ? (
                 <div className="p-8 text-center space-y-4">
@@ -491,44 +501,48 @@ export function StudentOpportunitiesShell({
                 </div>
               )}
             </div>
-          </div>
+          </div>,
+          document.body
         )}
         {/* Poster Modal */}
-        <AnimatePresence>
-          {selectedPoster && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedPoster(null)}
-              className="fixed inset-0 z-[200] bg-background/90 backdrop-blur-md flex items-center justify-center p-6 cursor-zoom-out"
-            >
+        {mounted && createPortal(
+          <AnimatePresence>
+            {selectedPoster && (
               <motion.div 
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
-                onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedPoster(null)}
+                className="fixed inset-0 z-[200] bg-black/85 flex items-center justify-center p-6 cursor-zoom-out"
               >
-                <Image 
-                  src={selectedPoster} 
-                  alt="Job Poster" 
-                  width={800}
-                  height={1200}
-                  className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-xl border border-white/10"
-                  unoptimized
-                />
-                
-                <button 
-                  onClick={() => setSelectedPoster(null)}
-                  className="fixed top-8 right-8 h-12 w-12 rounded-full bg-primary/10 hover:bg-primary/20 backdrop-blur-md flex items-center justify-center text-primary transition-all hover:scale-110 active:scale-95 z-[210] border border-primary/20"
+                <motion.div 
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <X className="h-6 w-6" />
-                </button>
+                  <Image 
+                    src={selectedPoster} 
+                    alt="Job Poster" 
+                    width={800}
+                    height={1200}
+                    className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-xl border border-white/10"
+                    unoptimized
+                  />
+                  
+                  <button 
+                    onClick={() => setSelectedPoster(null)}
+                    className="fixed top-8 right-8 h-12 w-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center text-primary transition-all hover:scale-110 active:scale-95 z-[210] border border-primary/20"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </>
   );
 }
