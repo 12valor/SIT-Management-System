@@ -157,7 +157,7 @@
     animation: marquee-vertical var(--duration, 40s) linear infinite;
   }
 
-  .pause-on-hover:hover {
+  .group:hover .pause-on-hover {
     animation-play-state: paused;
   }
 
