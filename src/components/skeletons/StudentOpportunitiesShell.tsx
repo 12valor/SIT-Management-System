@@ -61,7 +61,7 @@ export function StudentOpportunitiesShell({
 
     const target = postings.find(p => p.id === applyId);
     if (target) {
-      const alreadyApplied = target.applications.length > 0;
+      const alreadyApplied = target.applications.some((app: any) => app.status !== "WITHDRAWN");
       if (!alreadyApplied) {
         setApplyingTo(target);
       }
@@ -157,7 +157,7 @@ export function StudentOpportunitiesShell({
         {/* Posting Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPostings.map((posting) => {
-            const applied = posting.applications.length > 0;
+            const applied = posting.applications.some((app: any) => app.status !== "WITHDRAWN");
             return (
               <div key={posting.id} className="group bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20 flex flex-col relative">
                  <div className="p-8 space-y-8 flex-1">
@@ -366,21 +366,21 @@ export function StudentOpportunitiesShell({
                   </button>
                   <button 
                     onClick={() => {
-                      const alreadyApplied = viewingDetails.applications.length > 0;
+                      const alreadyApplied = viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN");
                       if (!alreadyApplied) {
                         setApplyingTo(viewingDetails);
                         setViewingDetails(null);
                       }
                     }}
-                    disabled={viewingDetails.applications.length > 0}
+                    disabled={viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN")}
                     className={cn(
                       "flex-1 h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg",
-                      viewingDetails.applications.length > 0
+                      viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN")
                       ? "bg-muted text-muted-foreground cursor-not-allowed"
                       : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20"
                     )}
                   >
-                    {viewingDetails.applications.length > 0 ? (
+                    {viewingDetails.applications.some((app: any) => app.status !== "WITHDRAWN") ? (
                       <><CheckCircle2 className="h-4 w-4" /> Already Applied</>
                     ) : (
                       <>Apply for this Position <ArrowRight className="h-4 w-4" /></>

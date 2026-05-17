@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 
@@ -60,6 +61,41 @@ export async function getStudentDashboardData() {
     };
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
+  }
+}
+
+export async function withdrawApplication(applicationId: string) {
+  const session = await auth();
+  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+
+  try {
+    const application = await prisma.application.findUnique({
+      where: { id: applicationId },
+    });
+
+    if (!application) {
+      return { success: false, error: "Application not found" };
+    }
+
+    if (application.studentId !== session.user.id) {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    if (application.status !== "PENDING") {
+      return { success: false, error: "Only pending applications can be withdrawn" };
+    }
+
+    await prisma.application.update({
+      where: { id: applicationId },
+      data: { status: "WITHDRAWN" },
+    });
+
+    revalidatePath("/student/dashboard");
+    revalidatePath("/student/opportunities");
+    
+    return { success: true };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to withdraw application";
     return { success: false, error: message };
   }
 }

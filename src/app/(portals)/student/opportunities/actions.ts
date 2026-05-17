@@ -55,7 +55,9 @@ export async function applyForOpportunity(postingId: string) {
       }
     });
 
-    if (existing) return { success: false, error: "Application already exists" };
+    if (existing && existing.status !== "WITHDRAWN") {
+      return { success: false, error: "Application already exists" };
+    }
 
     // Check for CV compliance
     const student = await prisma.user.findUnique({
@@ -66,13 +68,20 @@ export async function applyForOpportunity(postingId: string) {
     const hasCV = student?.documents.some(doc => doc.name === "Student Resume / CV");
     if (!hasCV) return { success: false, error: "Please upload your Student Resume / CV before applying." };
 
-    await prisma.application.create({
-      data: {
-        postingId,
-        studentId: session.user.id,
-        status: 'PENDING'
-      }
-    });
+    if (existing && existing.status === "WITHDRAWN") {
+      await prisma.application.update({
+        where: { id: existing.id },
+        data: { status: 'PENDING', appliedAt: new Date() }
+      });
+    } else {
+      await prisma.application.create({
+        data: {
+          postingId,
+          studentId: session.user.id,
+          status: 'PENDING'
+        }
+      });
+    }
 
     const posting = await prisma.sITPosting.findUnique({
       where: { id: postingId },

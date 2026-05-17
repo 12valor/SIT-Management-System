@@ -297,7 +297,8 @@ exports.PlacementType = exports.$Enums.PlacementType = {
 exports.ApplicationStatus = exports.$Enums.ApplicationStatus = {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN'
 };
 
 exports.LogbookStatus = exports.$Enums.LogbookStatus = {

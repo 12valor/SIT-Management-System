@@ -20,7 +20,8 @@ export async function getEmployerApplicants() {
     // Get all applications for this company's postings
     const applications = await prisma.application.findMany({
       where: {
-        posting: { companyId: employer.companyId }
+        posting: { companyId: employer.companyId },
+        status: { not: 'WITHDRAWN' }
       },
       include: {
         student: true,

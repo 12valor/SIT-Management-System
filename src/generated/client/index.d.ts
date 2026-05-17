@@ -107,7 +107,8 @@ export type PlacementType = (typeof PlacementType)[keyof typeof PlacementType]
 export const ApplicationStatus: {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN'
 };
 
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]

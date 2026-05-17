@@ -7,6 +7,7 @@ import { Greeting } from "@/app/(portals)/student/dashboard/Greeting";
 import { Lock, ArrowUpRight, LayoutDashboard, Clock, FileCheck, Building2, CheckCircle2 } from "lucide-react";
 import { ComplianceCard } from "@/components/student/ComplianceCard";
 import { StudentDashboardData } from "@/app/(portals)/student/dashboard/types";
+import { WithdrawButton } from "@/app/(portals)/student/dashboard/WithdrawButton";
 
 interface Props {
   data: StudentDashboardData | null;
@@ -158,14 +159,20 @@ export function StudentDashboardShell({ data, userName }: Props) {
                         </div>
                       </div>
                       <div className="flex sm:block shrink-0">
-                        <span className={cn(
-                          "px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider whitespace-nowrap inline-block",
-                          app.status === "ACCEPTED" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20" :
-                          app.status === "REJECTED" ? "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400" :
-                          "bg-primary/10 text-primary"
-                        )}>
-                          {app.status}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={cn(
+                            "px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider whitespace-nowrap inline-block",
+                            app.status === "ACCEPTED" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20" :
+                            app.status === "REJECTED" ? "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400" :
+                            app.status === "WITHDRAWN" ? "bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-slate-400" :
+                            "bg-primary/10 text-primary"
+                          )}>
+                            {app.status}
+                          </span>
+                          {app.status === "PENDING" && (
+                            <WithdrawButton applicationId={app.id} />
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
