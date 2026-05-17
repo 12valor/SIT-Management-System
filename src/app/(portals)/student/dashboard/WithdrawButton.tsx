@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { withdrawApplication } from "@/app/(portals)/student/dashboard/actions";
 import { Loader2, X } from "lucide-react";
-import { toast } from "sonner";
 
 export function WithdrawButton({ applicationId }: { applicationId: string }) {
   const [isPending, setIsPending] = useState(false);
@@ -17,12 +16,12 @@ export function WithdrawButton({ applicationId }: { applicationId: string }) {
     try {
       const result = await withdrawApplication(applicationId);
       if (result.success) {
-        toast.success("Application withdrawn successfully");
+        alert("Application withdrawn successfully");
       } else {
-        toast.error(result.error || "Failed to withdraw application");
+        alert(result.error || "Failed to withdraw application");
       }
     } catch (error) {
-      toast.error("An unexpected error occurred");
+      alert("An unexpected error occurred");
     } finally {
       setIsPending(false);
     }
