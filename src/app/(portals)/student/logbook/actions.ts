@@ -82,12 +82,13 @@ export async function submitLogbookEntry(data: {
 
     const totalHoursToday = existingEntries.reduce((sum, entry) => sum + entry.hours, 0);
 
-    if (totalHoursToday + data.hours > 24) {
-      return { 
-        success: false, 
-        error: `Daily limit exceeded. You have already logged ${totalHoursToday} hours for this date. The total cannot exceed 24 hours.` 
-      };
-    }
+    // TEMPORARILY DISABLED FOR ACCREDITATION SYSTEM TESTING
+    // if (totalHoursToday + data.hours > 24) {
+    //   return { 
+    //     success: false, 
+    //     error: `Daily limit exceeded. You have already logged ${totalHoursToday} hours for this date. The total cannot exceed 24 hours.` 
+    //   };
+    // }
 
     await prisma.logbookEntry.create({
       data: {

@@ -36,10 +36,11 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
     e.preventDefault();
     const hoursNum = Number(hours);
     
-    if (hoursNum > 24) {
-      alert("Clock-in Error: A single day contains 24 hours. Please enter a valid duration.");
-      return;
-    }
+    // TEMPORARILY DISABLED FOR ACCREDITATION SYSTEM TESTING
+    // if (hoursNum > 24) {
+    //   alert("Clock-in Error: A single day contains 24 hours. Please enter a valid duration.");
+    //   return;
+    // }
 
     if (hoursNum <= 0) {
       alert("Clock-in Error: Hours must be greater than zero.");
@@ -230,7 +231,7 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
                         className="w-full h-11 px-4 rounded-lg bg-background border border-border text-foreground text-sm focus:ring-2 focus:ring-primary/20 outline-none" 
                         required 
                         min="0.5"
-                        max="24"
+                        max="9999"
                         step="0.5"
                      />
                   </div>
