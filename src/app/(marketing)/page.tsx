@@ -36,9 +36,9 @@ export default async function Home() {
         <PartnersMarquee />
 
         {/* Section 02 — Gateway Cards */}
-        <section className="py-40 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
+        <section className="py-20 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
           <div className="container mx-auto px-6 max-w-6xl">
-            <Reveal className="text-center mb-24">
+            <Reveal className="text-center mb-12">
               <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
                 Portal Access
               </span>
@@ -130,9 +130,9 @@ export default async function Home() {
           </div>
         </section>
         {/* Section 03 — Institutional Impact (By the Numbers) */}
-        <section className="py-24 bg-white dark:bg-background relative transition-colors duration-300">
+        <section className="py-16 bg-white dark:bg-background relative transition-colors duration-300">
           <div className="container mx-auto px-6 max-w-6xl">
-            <Reveal className="text-center mb-16">
+            <Reveal className="text-center mb-10">
               <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
                 Ecosystem Scale
               </span>
@@ -174,9 +174,9 @@ export default async function Home() {
           </div>
         </section>
         {/* Section 04 — Operational Protocol (How It Works) */}
-        <section className="py-40 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
+        <section className="py-20 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
           <div className="container mx-auto px-6 max-w-4xl">
-            <header className="mb-24 text-center">
+            <header className="mb-12 text-center">
               <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
                 Operational Protocol
               </span>
@@ -188,7 +188,7 @@ export default async function Home() {
               </p>
             </header>
 
-            <div className="space-y-24 relative">
+            <div className="space-y-12 relative">
               {/* Vertical Line */}
               <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-white/10 -translate-x-1/2 hidden md:block" />
 
@@ -216,8 +216,8 @@ export default async function Home() {
               ))}
             </div>
 
-            <div className="mt-32 pt-16 border-t border-slate-200 dark:border-white/10 text-center">
-              <p className="text-slate-500 dark:text-slate-400 mb-8 font-serif">
+            <div className="mt-16 pt-12 border-t border-slate-200 dark:border-white/10 text-center">
+              <p className="text-slate-500 dark:text-slate-400 mb-6 font-serif">
                 Ready to begin your institutional onboarding?
               </p>
               <Link 

@@ -61,7 +61,7 @@ export function PartnersMarquee() {
 
   if (isLoading && partners.length === 0) {
     return (
-      <div className="py-20 bg-white dark:bg-background overflow-hidden border-y border-slate-100 dark:border-white/5">
+      <div className="py-12 bg-white dark:bg-background overflow-hidden border-y border-slate-100 dark:border-white/5">
         <div className="flex gap-12 animate-pulse justify-center">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="h-12 w-40 bg-slate-100 dark:bg-white/5 rounded-lg" />
@@ -74,8 +74,8 @@ export function PartnersMarquee() {
   if (settings && !settings.enabled) return null;
 
   return (
-    <section className="py-32 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5">
-      <div className="container mx-auto px-6 mb-16 text-center">
+    <section className="py-16 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5">
+      <div className="container mx-auto px-6 mb-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
