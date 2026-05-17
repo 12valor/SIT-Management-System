@@ -112,8 +112,8 @@ export function StudentDashboardShell({ data, userName }: Props) {
               </span>
             </div>
 
-            <div className="flex-1 flex flex-col justify-center items-center py-16 px-6 text-center">
-              {!data?.applications.length ? (
+            {!data?.applications.length ? (
+              <div className="flex-1 flex flex-col justify-center items-center py-16 px-6 text-center">
                 <div className="space-y-6">
                   <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-white/5 border flex items-center justify-center mx-auto">
                     <Building2 className="h-5 w-5 text-slate-300" />
@@ -141,19 +141,21 @@ export function StudentDashboardShell({ data, userName }: Props) {
                     </Link>
                   )}
                 </div>
-              ) : (
-                <div className="w-full divide-y">
+              </div>
+            ) : (
+              <div className="flex-1 p-6 flex flex-col justify-start">
+                <div className="w-full divide-y divide-slate-100 dark:divide-white/5">
                   {data.applications.slice(0, 5).map((app) => (
-                    <div key={app.id} className="py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-left group">
+                    <div key={app.id} className="py-3.5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-left group">
                       <div className="flex items-center gap-4 min-w-0 flex-1">
-                        <div className="shrink-0 w-10 h-10 rounded-lg bg-slate-50 dark:bg-white/5 border flex items-center justify-center text-slate-600 dark:text-white font-bold text-sm">
+                        <div className="shrink-0 w-10 h-10 rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-white font-bold text-sm shadow-sm transition-colors group-hover:border-primary/20">
                           {app.companyName[0]}
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors truncate">
                             {app.postingTitle}
                           </p>
-                          <p className="text-xs text-slate-500 font-medium truncate">
+                          <p className="text-xs text-slate-500 font-medium truncate mt-0.5">
                             {app.companyName}
                           </p>
                         </div>
@@ -161,7 +163,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
                       <div className="flex sm:block shrink-0">
                         <div className="flex items-center gap-2">
                           <span className={cn(
-                            "px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider whitespace-nowrap inline-block",
+                            "px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider whitespace-nowrap inline-block",
                             app.status === "ACCEPTED" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20" :
                             app.status === "REJECTED" ? "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400" :
                             app.status === "WITHDRAWN" ? "bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-slate-400" :
@@ -177,8 +179,8 @@ export function StudentDashboardShell({ data, userName }: Props) {
                     </div>
                   ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           <div className="space-y-6">
