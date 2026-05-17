@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { PartnersMarquee } from "@/components/marketing/PartnersMarquee";
+
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -83,10 +83,7 @@ export default function AboutContent() {
           </div>
         </motion.section>
 
-        {/* Partners Marquee Section */}
-        <motion.div variants={fadeInUp}>
-          <PartnersMarquee />
-        </motion.div>
+
 
         {/* Institutional Heritage - Boxed Layout */}
         <motion.section 
