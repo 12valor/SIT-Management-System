@@ -96,8 +96,9 @@ export function StudentOpportunitiesShell({
   });
 
   return (
-    <Skeleton 
-      name="student-opportunities" 
+    <>
+      <Skeleton 
+        name="student-opportunities" 
       loading={!initialData}
       animate="shimmer"
       stagger={80}
@@ -250,7 +251,8 @@ export function StudentOpportunitiesShell({
               </div>
           )}
         </div>
-
+      </div>
+    </Skeleton>
         {/* Full Post Details Modal */}
         <AnimatePresence>
           {viewingDetails && (
@@ -391,134 +393,100 @@ export function StudentOpportunitiesShell({
             </div>
           )}
         </AnimatePresence>
-
         {/* Application Modal */}
         {applyingTo && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm animate-in fade-in transition-all">
-            <div className="relative w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in transition-all">
+            <div className="relative w-full max-w-md bg-card border border-border rounded-xl shadow-xl overflow-hidden animate-in zoom-in-95 duration-200">
               {isSuccess ? (
-                <div className="p-16 text-center">
-                  <div className="w-20 h-20 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-sm">
-                    <CheckCircle2 className="h-10 w-10" />
+                <div className="p-8 text-center space-y-4">
+                  <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+                    <CheckCircle2 className="h-6 w-6" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Application Submitted</h3>
-                  <p className="text-muted-foreground font-medium">Your application has been sent to {applyingTo.company.name}. You can track its status on your dashboard.</p>
+                  <div className="space-y-1">
+                    <h3 className="text-lg font-bold text-foreground">Application Submitted</h3>
+                    <p className="text-xs text-muted-foreground">
+                      Your application has been sent to {applyingTo.company.name}.
+                    </p>
+                  </div>
                 </div>
               ) : (
-                <div>
-                  <div className="px-8 py-6 border-b border-border flex justify-between items-center bg-muted/30">
+                <div className="p-6 space-y-6">
+                  {/* Header */}
+                  <div className="flex justify-between items-start">
                     <div className="space-y-1">
                       <h3 className="text-lg font-bold text-foreground">Confirm Application</h3>
-                      <p className="text-xs text-muted-foreground font-medium flex items-center gap-1.5">
-                        <Zap className="h-3.5 w-3.5 text-primary" /> Review your application details
+                      <p className="text-xs text-muted-foreground">
+                        Apply for <span className="font-semibold text-foreground">{applyingTo.title}</span> at {applyingTo.company.name}
                       </p>
                     </div>
                     <button 
                       onClick={() => setApplyingTo(null)}
-                      className="h-8 w-8 rounded-lg hover:bg-muted flex items-center justify-center transition-colors text-muted-foreground/40 hover:text-foreground"
+                      className="text-muted-foreground/60 hover:text-foreground transition-colors p-1"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </div>
-                  <div className="p-8 space-y-8">
-                     <div className="p-5 rounded-xl bg-primary/5 border border-primary/10 text-primary flex items-start gap-4">
-                        <div className="p-2.5 bg-card rounded-lg shadow-sm border border-border">
-                           <Sparkles className="h-5 w-5" />
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-sm font-bold">Standard Disclosure</p>
-                          <p className="text-xs font-medium opacity-80 leading-relaxed">
-                            By confirming, your SIT profile, academic records, and professional details will be shared with the company for review.
-                          </p>
-                        </div>
-                     </div>
 
-                     <div className="grid grid-cols-2 gap-8 py-4 px-2">
-                        <div className="space-y-1">
-                           <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider">Position</p>
-                           <p className="text-lg font-bold text-foreground">{applyingTo.title}</p>
-                        </div>
-                        <div className="space-y-1">
-                           <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider">Requirements</p>
-                           <p className="text-lg font-bold text-foreground">{applyingTo.requiredHours} Hours</p>
-                        </div>
-                     </div>
+                  {/* Body Content */}
+                  <div className="space-y-4">
+                    <div className="bg-muted/50 border rounded-lg p-3 space-y-1 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Requirements:</span>
+                        <span className="font-semibold">{applyingTo.requiredHours} Hours</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Type:</span>
+                        <span className="font-semibold uppercase">{applyingTo.type.replace('_', ' ')}</span>
+                      </div>
+                    </div>
 
-                     {/* Verification Steps */}
-                     <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                          <div className="h-px flex-1 bg-border/50" />
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40 whitespace-nowrap">Verification Protocol</span>
-                          <div className="h-px flex-1 bg-border/50" />
-                        </div>
-
-                        {!hasCV ? (
-                          <div className="group relative p-6 rounded-2xl bg-destructive/5 border border-destructive/10 overflow-hidden transition-all hover:bg-destructive/[0.08]">
-                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                <FileWarning className="h-20 w-20 -rotate-12" />
-                             </div>
-                             <div className="relative flex items-start gap-5">
-                                <div className="h-12 w-12 rounded-xl bg-destructive/10 flex items-center justify-center text-destructive shrink-0 shadow-sm">
-                                   <FileWarning className="h-6 w-6" />
-                                </div>
-                                <div className="space-y-2">
-                                   <h4 className="text-sm font-bold text-destructive uppercase tracking-tight">Institutional Requirement Missing</h4>
-                                   <p className="text-xs text-muted-foreground font-medium leading-relaxed">
-                                     Your official resume (CV) is required for industrial deployment. Access the document repository to initialize your technical dossier.
-                                   </p>
-                                   <Link 
-                                      href="/student/documents"
-                                      className="inline-flex items-center gap-2 text-xs font-bold text-destructive hover:opacity-80 transition-opacity mt-2"
-                                   >
-                                      Initialize Document Upload <ArrowUpRight className="h-3 w-3" />
-                                   </Link>
-                                </div>
-                             </div>
-                          </div>
-                        ) : (
-                          <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between group transition-all hover:bg-emerald-500/[0.08]">
-                             <div className="flex items-center gap-5">
-                                <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0 shadow-sm">
-                                   <CheckCircle2 className="h-6 w-6" />
-                                </div>
-                                <div className="space-y-1">
-                                   <h4 className="text-sm font-bold text-foreground">Technical Resume Verified</h4>
-                                   <p className="text-xs text-muted-foreground font-medium">Your primary dossier is ready for deployment.</p>
-                                </div>
-                             </div>
-                             <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
-                                <Activity className="h-3 w-3" /> Ready
-                             </div>
-                          </div>
-                        )}
-                     </div>
-
-                     <div className="pt-4">
-                        <button
-                          onClick={() => handleApply(applyingTo.id)}
-                          disabled={isSubmitting || !hasCV}
-                          className={cn(
-                            "group/submit relative w-full flex h-14 items-center justify-center rounded-2xl text-sm font-bold uppercase tracking-[0.1em] transition-all overflow-hidden",
-                            isSubmitting || !hasCV
-                            ? "bg-muted text-muted-foreground cursor-not-allowed border border-border"
-                            : "bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-0.5 active:translate-y-0"
-                          )}
+                    {!hasCV ? (
+                      <div className="p-4 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 space-y-2">
+                        <p className="text-xs font-semibold text-red-600 dark:text-red-400">
+                          Resume (CV) Missing
+                        </p>
+                        <p className="text-[11px] text-muted-foreground leading-normal">
+                          You need to upload your Student Resume / CV before applying. Please go to the documents page to upload it.
+                        </p>
+                        <Link 
+                          href="/student/documents"
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-red-600 dark:text-red-400 hover:underline"
                         >
-                          <div className="absolute inset-0 bg-slate-950 translate-y-full group-hover/submit:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-                          <span className="relative z-10 flex items-center gap-3">
-                            {isSubmitting ? (
-                              <Loader2 className="h-5 w-5 animate-spin" />
-                            ) : (
-                              <>Authorize & Deploy Application <Send className="h-4 w-4 transition-transform group-hover/submit:translate-x-1 group-hover/submit:-translate-y-0.5" /></>
-                            )}
-                          </span>
-                        </button>
-                        {!hasCV && (
-                          <p className="text-center mt-4 text-[10px] font-bold text-destructive/60 uppercase tracking-widest">
-                            Authorization Locked • Missing Documentation
-                          </p>
-                        )}
-                     </div>
+                          Go to Documents <ArrowUpRight className="h-3 w-3" />
+                        </Link>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-muted-foreground leading-normal">
+                        Your profile, academic record, and resume will be shared with the company for evaluation.
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Footer Actions */}
+                  <div className="flex gap-3 justify-end pt-2 border-t">
+                    <button
+                      onClick={() => setApplyingTo(null)}
+                      className="px-4 h-9 rounded-lg border border-border text-xs font-bold hover:bg-muted transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => handleApply(applyingTo.id)}
+                      disabled={isSubmitting || !hasCV}
+                      className={cn(
+                        "px-4 h-9 rounded-lg text-xs font-bold text-white bg-primary hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5",
+                        (isSubmitting || !hasCV) && "opacity-50 cursor-not-allowed pointer-events-none"
+                      )}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          Submitting...
+                        </>
+                      ) : (
+                        "Submit Application"
+                      )}
+                    </button>
                   </div>
                 </div>
               )}
@@ -561,7 +529,6 @@ export function StudentOpportunitiesShell({
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </Skeleton>
+    </>
   );
 }

@@ -9,7 +9,7 @@ export default async function StudentDashboardPage() {
   ]);
 
   // Pass null if fetch failed so shell renders fallback skeleton
-  const data = res.success && res.data ? res.data : null;
+  const data = res?.success && res?.data ? res.data : null;
 
   return (
     <StudentDashboardShell
