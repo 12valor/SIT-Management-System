@@ -13,7 +13,8 @@ import {
   LogOut,
   X,
   Settings,
-  ShieldAlert
+  ShieldAlert,
+  ClipboardList
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -50,6 +51,7 @@ export default function CoordinatorLayout({
   const navItems = [
     { name: "Strategic Overview", href: "/coordinator/dashboard", icon: LayoutDashboard },
     { name: "Student Manifest", href: "/coordinator/students", icon: Users },
+    { name: "Employer Evaluations", href: "/coordinator/evaluations", icon: ClipboardList },
     { name: "Industrial Partners", href: "/coordinator/companies", icon: Building },
     { name: "SIT Placements", href: "/coordinator/placements", icon: MapPin },
     { name: "Account Requests", href: "/coordinator/registrations", icon: ShieldAlert },
