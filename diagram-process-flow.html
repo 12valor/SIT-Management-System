@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT Process Workflow · Diagram Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;1,400&family=Poppins:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { 
+      --color-paper: #ffffff; 
+      --color-paper-2: #fef5f6; 
+      --color-ink: #2f050b; 
+      --color-muted: #95505b; 
+      --color-soft: #b07a82; 
+      --color-rule: rgba(47,5,11,0.12); 
+      --color-accent: #bd112d; 
+      --color-link: #3b82f6; 
+      --font-sans: 'Poppins', 'Geist', system-ui, sans-serif; 
+      --font-serif: 'Montserrat', serif; 
+      --font-mono: 'Geist Mono', ui-monospace, monospace; 
+    }
+    body { font-family: var(--font-sans); background: var(--color-paper); min-height: 100vh; padding: 3rem 2rem; color: var(--color-ink); }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { margin-bottom: 2.5rem; }
+    .header-eyebrow { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 0.75rem; }
+    h1 { font-family: var(--font-serif); font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.5rem; }
+    .subtitle { font-size: 1rem; line-height: 1.55; color: var(--color-muted); max-width: 62ch; }
+    .diagram-container { background: var(--color-paper-2); border-radius: 8px; border: 1px solid var(--color-rule); padding: 1.5rem; overflow-x: auto; }
+    svg { width: 100%; min-width: 900px; display: block; }
+    .cards { display: grid; grid-template-columns: 1.1fr 1fr 0.9fr; gap: 1rem; margin-top: 1.5rem; }
+    @media (max-width: 820px) { .cards { grid-template-columns: 1fr; } }
+    .card { background: #ffffff; border-radius: 6px; border: 1px solid var(--color-rule); padding: 1.25rem; }
+    .card .eyebrow { font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 0.5rem; }
+    .card-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.875rem; padding-bottom: 0.875rem; border-bottom: 1px solid rgba(47,5,11,0.08); }
+    .card-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .card-dot.ink { background: var(--color-ink); } .card-dot.muted { background: var(--color-muted); } .card-dot.coral { background: var(--color-accent); }
+    .card h3 { font-size: 0.875rem; font-weight: 600; font-family: var(--font-sans); }
+    .card p, .card ul { color: var(--color-muted); font-size: 0.8125rem; line-height: 1.55; list-style: none; font-family: 'Geist', sans-serif; }
+    .card li { margin-bottom: 0.3rem; padding-left: 0.875rem; position: relative; }
+    .card li::before { content: '—'; position: absolute; left: 0; color: rgba(47,5,11,0.25); font-size: 0.75rem; }
+    .footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(47,5,11,0.10); font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--color-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="diagram-container">
+      <svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.9" fill="rgba(47,5,11,0.08)"/>
+          </pattern>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#95505b"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bd112d"/></marker>
+        </defs>
+
+        <!-- Background -->
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <rect width="100%" height="100%" fill="url(#dots)" opacity="0.8"/>
+
+        <!-- Lane dividers -->
+        <line x1="40" y1="80" x2="960" y2="80" stroke="rgba(47,5,11,0.18)" stroke-width="1"/>
+        <line x1="40" y1="200" x2="960" y2="200" stroke="rgba(47,5,11,0.08)" stroke-width="1"/>
+        <line x1="40" y1="320" x2="960" y2="320" stroke="rgba(47,5,11,0.08)" stroke-width="1"/>
+        <line x1="40" y1="440" x2="960" y2="440" stroke="rgba(47,5,11,0.18)" stroke-width="1"/>
+
+        <!-- Actor column divider -->
+        <line x1="140" y1="80" x2="140" y2="440" stroke="rgba(47,5,11,0.18)" stroke-width="1"/>
+
+        <!-- Lane labels -->
+        <text x="60" y="144" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" letter-spacing="0.18em">STUDENT</text>
+        <text x="60" y="264" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" letter-spacing="0.18em">COMPANY</text>
+        <text x="60" y="384" fill="#95505b" font-size="9" font-family="'Geist Mono', monospace" letter-spacing="0.18em">COORDINATOR</text>
+
+        <!-- Arrows (drawn first) -->
+        <!-- 1. Submit Application → Review & Place -->
+        <line x1="220" y1="168" x2="380" y2="240" stroke="#95505b" stroke-width="1" marker-end="url(#arrow)"/>
+        
+        <!-- 2. Review & Place → Log Hours -->
+        <line x1="380" y1="240" x2="540" y2="168" stroke="#95505b" stroke-width="1" marker-end="url(#arrow)"/>
+
+        <!-- 3. Log Hours → Performance Audit -->
+        <line x1="540" y1="168" x2="700" y2="240" stroke="#95505b" stroke-width="1" marker-end="url(#arrow)"/>
+
+        <!-- 4. Performance Audit → Final Certification (Critical Handoff) -->
+        <line x1="700" y1="288" x2="860" y2="360" stroke="#bd112d" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+
+        <!-- Arrow labels -->
+        <!-- Submit -> Place -->
+        <rect x="276" y="196" width="48" height="12" rx="2" fill="#ffffff"/>
+        <text x="300" y="205" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">APPLY</text>
+
+        <!-- Place -> Log Hours -->
+        <rect x="432" y="196" width="56" height="12" rx="2" fill="#ffffff"/>
+        <text x="460" y="205" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">ONBOARD</text>
+
+        <!-- Log Hours -> Performance Audit -->
+        <rect x="588" y="196" width="64" height="12" rx="2" fill="#ffffff"/>
+        <text x="620" y="205" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">TIMESHEET</text>
+
+        <!-- Audit -> Certification (Accent) -->
+        <rect x="736" y="316" width="88" height="12" rx="2" fill="#ffffff"/>
+        <text x="780" y="325" fill="#bd112d" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">ENDORSE TRAINEE</text>
+
+
+        <!-- Steps -->
+        
+        <!-- Student: Submit Application -->
+        <rect x="160" y="120" width="120" height="48" rx="6" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <text x="220" y="142" fill="#2f050b" font-size="11" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Submit CV</text>
+        <text x="220" y="156" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">student portal</text>
+
+        <!-- Company: Interview & Place -->
+        <rect x="320" y="240" width="120" height="48" rx="6" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <text x="380" y="262" fill="#2f050b" font-size="11" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Accept Placement</text>
+        <text x="380" y="276" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">company portal</text>
+
+        <!-- Student: Log Hours -->
+        <rect x="480" y="120" width="120" height="48" rx="6" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <text x="540" y="142" fill="#2f050b" font-size="11" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Log Hours</text>
+        <text x="540" y="156" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">daily journal</text>
+
+        <!-- Company: Performance Audit -->
+        <rect x="640" y="240" width="120" height="48" rx="6" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <text x="700" y="262" fill="#2f050b" font-size="11" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Validate & Rate</text>
+        <text x="700" y="276" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">supervisor grade</text>
+
+        <!-- Coordinator: Final Certification (Focal) -->
+        <rect x="800" y="360" width="120" height="48" rx="6" fill="rgba(189,17,45,0.08)" stroke="#bd112d" stroke-width="1"/>
+        <text x="860" y="382" fill="#2f050b" font-size="11" font-weight="600" font-family="'Poppins', sans-serif" text-anchor="middle">Certify Graduate</text>
+        <text x="860" y="396" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">coordinator audit</text>
+
+        <!-- Legend -->
+        <line x1="40" y1="468" x2="960" y2="468" stroke="rgba(47,5,11,0.12)" stroke-width="0.8"/>
+        <text x="40" y="484" fill="#95505b" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+        <rect x="40" y="500" width="14" height="10" rx="2" fill="#ffffff" stroke="#2f050b" stroke-width="1"/>
+        <text x="60" y="508" fill="#95505b" font-size="8.5" font-family="'Geist', sans-serif">Standard Process</text>
+
+        <rect x="156" y="500" width="14" height="10" rx="2" fill="rgba(189,17,45,0.08)" stroke="#bd112d" stroke-width="1"/>
+        <text x="176" y="508" fill="#95505b" font-size="8.5" font-family="'Geist', sans-serif">Final Milestone</text>
+
+        <line x1="272" y1="506" x2="300" y2="506" stroke="#95505b" stroke-width="1" marker-end="url(#arrow)"/>
+        <text x="308" y="508" fill="#95505b" font-size="8.5" font-family="'Geist', sans-serif">Normal Handoff</text>
+
+        <line x1="412" y1="506" x2="440" y2="506" stroke="#bd112d" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+        <text x="448" y="508" fill="#95505b" font-size="8.5" font-family="'Geist', sans-serif">Critical Academic Submission</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>
