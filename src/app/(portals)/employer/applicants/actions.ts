@@ -109,6 +109,7 @@ export async function getStudentCredentials(studentId: string, applicationId: st
         email: true,
         course: true,
         image: true,
+        createdAt: true,
         documents: {
           orderBy: { uploadedAt: 'desc' }
         },
