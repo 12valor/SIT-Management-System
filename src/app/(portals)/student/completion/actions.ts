@@ -63,7 +63,7 @@ export async function getCompletionStatus() {
         } : null,
         documentsUploaded: uploadedMandatoryCount,
         totalRequiredDocs: MANDATORY_DOC_NAMES.length,
-        isFullyComplete: totalHours >= 300 && !!evaluation && uploadedMandatoryCount >= MANDATORY_DOC_NAMES.length
+        isFullyComplete: totalHours >= 300
       }
     };
   } catch (error: unknown) {
