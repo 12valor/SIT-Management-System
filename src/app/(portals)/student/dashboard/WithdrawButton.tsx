@@ -20,7 +20,7 @@ export function WithdrawButton({ applicationId }: { applicationId: string }) {
       } else {
         alert(result.error || "Failed to withdraw application");
       }
-    } catch (error) {
+    } catch {
       alert("An unexpected error occurred");
     } finally {
       setIsPending(false);
