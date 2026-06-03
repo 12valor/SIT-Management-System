@@ -3,9 +3,7 @@
 import prisma from "@/lib/prisma";
 import { requireCoordinator } from "@/lib/auth-guards";
 
-export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily' = 'monthly') {
-  await requireCoordinator();
-
+async function getPlacementTrendData(timeframe: 'monthly' | 'weekly' | 'daily' = 'monthly') {
   try {
     const now = new Date();
     const periods: { label: string; start: Date; end: Date }[] = [];
@@ -52,8 +50,13 @@ export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily
   }
 }
 
-export async function getCoordinatorStats() {
+export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily' = 'monthly') {
   await requireCoordinator();
+  return getPlacementTrendData(timeframe);
+}
+
+export async function getCoordinatorStats() {
+  const coordinator = await requireCoordinator();
 
   try {
     const [
@@ -90,7 +93,7 @@ export async function getCoordinatorStats() {
         orderBy: { joinedAt: 'desc' }
       }),
       prisma.logbookEntry.count({ where: { status: 'PENDING' } }),
-      getPlacementTrend('monthly')
+      getPlacementTrendData('monthly')
     ]);
 
     // Calculate Top Hiring Companies
@@ -172,7 +175,8 @@ export async function getCoordinatorStats() {
           joinedAt: c.joinedAt.toISOString()
         })),
         placementTrend: trendRes.success ? trendRes.data : [],
-        industryStats
+        industryStats,
+        userName: coordinator.name
       }
     };
   } catch (error: unknown) {

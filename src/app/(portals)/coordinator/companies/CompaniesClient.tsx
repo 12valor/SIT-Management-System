@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2, LayoutTemplate } from "lucide-react";
-import { setCompanyVerification, addCompany, updateCompany, deleteCompany, getCompanies, toggleCompanyMarquee } from "./actions";
+import { setCompanyVerification, addCompany, updateCompany, deleteCompany, toggleCompanyMarquee } from "./actions";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import NextImage from "next/image";
@@ -50,23 +50,32 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<{id: string, name: string} | null>(null);
 
-  const load = useCallback(async () => {
-    const res = await getCompanies();
-    setCompanies(res as Company[]);
-  }, []);
-
   const handleVerify = async (id: string, status: boolean) => {
     setProcessing(id);
-    await setCompanyVerification(id, status);
-    await load();
-    setProcessing(null);
+    try {
+      await setCompanyVerification(id, status);
+      setCompanies((prev) =>
+        prev.map((company) =>
+          company.id === id ? { ...company, isVerified: status } : company
+        )
+      );
+    } finally {
+      setProcessing(null);
+    }
   };
 
   const handleMarqueeToggle = async (id: string, status: boolean) => {
     setProcessing(`marquee-${id}`);
-    await toggleCompanyMarquee(id, status);
-    await load();
-    setProcessing(null);
+    try {
+      await toggleCompanyMarquee(id, status);
+      setCompanies((prev) =>
+        prev.map((company) =>
+          company.id === id ? { ...company, showInMarquee: status } : company
+        )
+      );
+    } finally {
+      setProcessing(null);
+    }
   };
 
   const handleDelete = (id: string, name: string) => {
@@ -81,7 +90,7 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
     setShowDeleteConfirm(false);
     try {
       await deleteCompany(id);
-      await load();
+      setCompanies((prev) => prev.filter((company) => company.id !== id));
     } finally {
       setProcessing(null);
       setItemToDelete(null);
@@ -120,13 +129,20 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
     setIsSubmitting(true);
     try {
       setIsVerifyingPersistence(true);
-      if (editingId) await updateCompany(editingId, formData);
-      else await addCompany(formData);
+      const result = editingId
+        ? await updateCompany(editingId, formData)
+        : await addCompany(formData);
       await new Promise(r => setTimeout(r, 1000));
+      if (result.success && result.company) {
+        setCompanies((prev) =>
+          editingId
+            ? prev.map((company) => (company.id === editingId ? result.company : company))
+            : [result.company, ...prev]
+        );
+      }
       setIsAdding(false);
       setEditingId(null);
       setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "", bannerUrl: "" });
-      await load();
     } finally {
       setIsSubmitting(false);
       setIsVerifyingPersistence(false);

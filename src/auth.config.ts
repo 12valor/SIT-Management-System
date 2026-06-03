@@ -9,6 +9,7 @@ export default {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const userRole = auth?.user?.role?.toLowerCase();
+      const roleDashboard = userRole ? `/${userRole}/dashboard` : "/login";
       
       const isStudentRoute = nextUrl.pathname.startsWith("/student");
       const isEmployerRoute = nextUrl.pathname.startsWith("/employer");
@@ -17,17 +18,18 @@ export default {
 
       if (isStudentRoute || isEmployerRoute || isCoordinatorRoute) {
         if (!isLoggedIn) return false;
+        if (!userRole) return false;
         
         // Role check
-        if (isStudentRoute && userRole !== "student") return Response.redirect(new URL(`/${userRole}/dashboard`, nextUrl));
-        if (isEmployerRoute && userRole !== "employer") return Response.redirect(new URL(`/${userRole}/dashboard`, nextUrl));
-        if (isCoordinatorRoute && userRole !== "coordinator") return Response.redirect(new URL(`/${userRole}/dashboard`, nextUrl));
+        if (isStudentRoute && userRole !== "student") return Response.redirect(new URL(roleDashboard, nextUrl));
+        if (isEmployerRoute && userRole !== "employer") return Response.redirect(new URL(roleDashboard, nextUrl));
+        if (isCoordinatorRoute && userRole !== "coordinator") return Response.redirect(new URL(roleDashboard, nextUrl));
         
         return true;
       }
 
-      if (isAuthRoute && isLoggedIn) {
-        return Response.redirect(new URL(`/${userRole}/dashboard`, nextUrl));
+      if (isAuthRoute && isLoggedIn && userRole) {
+        return Response.redirect(new URL(roleDashboard, nextUrl));
       }
       
       return true;

@@ -9,18 +9,19 @@ export async function getNotifications() {
   if (!session?.user?.id) return { success: false, error: "Unauthorized" };
 
   try {
-    const notifications = await prisma.notification.findMany({
-      where: { userId: session.user.id },
-      orderBy: { createdAt: "desc" },
-      take: 20,
-    });
-
-    const unreadCount = await prisma.notification.count({
-      where: { 
-        userId: session.user.id,
-        isRead: false
-      }
-    });
+    const [notifications, unreadCount] = await Promise.all([
+      prisma.notification.findMany({
+        where: { userId: session.user.id },
+        orderBy: { createdAt: "desc" },
+        take: 20,
+      }),
+      prisma.notification.count({
+        where: { 
+          userId: session.user.id,
+          isRead: false
+        }
+      }),
+    ]);
 
     return { success: true, data: { notifications, unreadCount } };
   } catch (error: unknown) {
@@ -39,7 +40,9 @@ export async function markAsRead(id: string) {
       data: { isRead: true },
     });
 
-    revalidatePath("/"); // Revalidate all layouts
+    revalidatePath("/student", "layout");
+    revalidatePath("/employer", "layout");
+    revalidatePath("/coordinator", "layout");
     return { success: true };
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Notification update error";
@@ -57,7 +60,9 @@ export async function markAllAsRead() {
       data: { isRead: true },
     });
 
-    revalidatePath("/");
+    revalidatePath("/student", "layout");
+    revalidatePath("/employer", "layout");
+    revalidatePath("/coordinator", "layout");
     return { success: true };
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Notification update error";

@@ -60,7 +60,7 @@ export async function updateCompany(id: string, data: {
   await requireCoordinator();
 
   try {
-    await prisma.company.update({
+    const company = await prisma.company.update({
       where: { id },
       data: {
         name: data.name.trim(),
@@ -72,10 +72,13 @@ export async function updateCompany(id: string, data: {
         logoUrl: data.logoUrl,
         bannerUrl: data.bannerUrl,
       },
+      include: {
+        _count: { select: { employers: true, postings: true } },
+      },
     });
 
     revalidatePath("/coordinator/companies");
-    return { success: true };
+    return { success: true, company };
   } catch (error) {
     console.error("Failed to update company:", error);
     
@@ -118,6 +121,9 @@ export async function addCompany(data: {
         bannerUrl: data.bannerUrl,
         isVerified: true,
       },
+      include: {
+        _count: { select: { employers: true, postings: true } },
+      },
     });
 
     // Notify the company since they are auto-verified on creation
@@ -127,7 +133,7 @@ export async function addCompany(data: {
 
     revalidatePath("/coordinator/companies");
     revalidatePath("/partners");
-    return { success: true };
+    return { success: true, company };
   } catch (error) {
     console.error("Failed to add company:", error);
     

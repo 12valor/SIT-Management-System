@@ -23,39 +23,58 @@ interface RegistrationsClientProps {
 }
 
 export default function RegistrationsClient({ initialData }: RegistrationsClientProps) {
-  const [data] = useState<RegistrationData>(initialData);
+  const [data, setData] = useState<RegistrationData>(initialData);
   const [actionId, setActionId] = useState<string | null>(null);
 
-  // In a real app, you'd re-fetch or use router.refresh() after actions
-  // For now, we'll just local-update for perceived speed
-  async function refresh() {
-    // This would be better handled with server actions and revalidatePath
-    // but we can just use the provided actions and refresh the UI state
-    window.location.reload(); 
+  function removeUser(userId: string) {
+    setData((prev) => ({
+      users: prev.users.filter((user) => user.id !== userId),
+      companies: prev.companies,
+    }));
+  }
+
+  function removeCompany(companyId: string) {
+    setData((prev) => ({
+      users: prev.users,
+      companies: prev.companies.filter((company) => company.id !== companyId),
+    }));
   }
 
   async function handleApproveUser(id: string) {
     setActionId(id);
-    await approveUser(id);
-    await refresh();
+    const result = await approveUser(id);
+    if (result.success) removeUser(id);
+    setActionId(null);
   }
 
   async function handleRejectUser(id: string) {
     setActionId(id);
-    await rejectUser(id);
-    await refresh();
+    const companyId = data.users.find((user) => user.id === id)?.companyId;
+    const result = await rejectUser(id);
+    if (result.success) {
+      removeUser(id);
+      if (companyId && !data.users.some((user) => user.id !== id && user.companyId === companyId)) {
+        removeCompany(companyId);
+      }
+    }
+    setActionId(null);
   }
 
   async function handleVerifyCompany(id: string) {
     setActionId(id);
-    await verifyCompany(id);
-    await refresh();
+    const result = await verifyCompany(id);
+    if (result.success) removeCompany(id);
+    setActionId(null);
   }
 
   async function handleVerifyPartnership(userId: string, companyId: string) {
     setActionId(userId);
-    await verifyPartnership(userId, companyId);
-    await refresh();
+    const result = await verifyPartnership(userId, companyId);
+    if (result.success) {
+      removeUser(userId);
+      removeCompany(companyId);
+    }
+    setActionId(null);
   }
 
   const pendingUsers = data?.users || [];

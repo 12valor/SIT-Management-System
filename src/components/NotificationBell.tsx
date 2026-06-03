@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Bell, BellDot, ExternalLink, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -18,31 +18,85 @@ interface Notification {
   createdAt: Date;
 }
 
+const NOTIFICATION_CACHE_TTL = 30_000;
+const NOTIFICATION_POLL_INTERVAL = 120_000;
+
+let notificationCache:
+  | { notifications: Notification[]; unreadCount: number; fetchedAt: number }
+  | null = null;
+let notificationRequest: Promise<{ notifications: Notification[]; unreadCount: number } | null> | null = null;
+
+async function loadNotifications(force = false) {
+  const now = Date.now();
+  if (!force && notificationCache && now - notificationCache.fetchedAt < NOTIFICATION_CACHE_TTL) {
+    return notificationCache;
+  }
+
+  if (!notificationRequest) {
+    notificationRequest = getNotifications()
+      .then((result) => {
+        if (result.success && result.data) {
+          notificationCache = {
+            notifications: result.data.notifications as Notification[],
+            unreadCount: result.data.unreadCount,
+            fetchedAt: Date.now(),
+          };
+          return notificationCache;
+        }
+        return null;
+      })
+      .finally(() => {
+        notificationRequest = null;
+      });
+  }
+
+  return notificationRequest;
+}
+
 export function NotificationBell() {
   const router = useRouter();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const fetchNotifications = async () => {
-    const result = await getNotifications();
-    if (result.success && result.data) {
-      setNotifications(result.data.notifications);
-      setUnreadCount(result.data.unreadCount);
+  const fetchNotifications = useCallback(async (force = false) => {
+    const result = await loadNotifications(force);
+    if (result) {
+      setNotifications(result.notifications);
+      setUnreadCount(result.unreadCount);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchNotifications();
-    // Poll for new notifications every 60 seconds
-    const interval = setInterval(fetchNotifications, 60000);
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        fetchNotifications(true);
+      }
+    }, NOTIFICATION_POLL_INTERVAL);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchNotifications]);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchNotifications();
+    }
+  }, [fetchNotifications, isOpen]);
 
   const handleMarkAsRead = async (id: string, link?: string | null) => {
     await markAsRead(id);
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
-    setUnreadCount(prev => Math.max(0, prev - 1));
+    setNotifications(prev => {
+      const next = prev.map(n => n.id === id ? { ...n, isRead: true } : n);
+      notificationCache = notificationCache
+        ? { ...notificationCache, notifications: next, unreadCount: Math.max(0, notificationCache.unreadCount - 1) }
+        : null;
+      return next;
+    });
+    setUnreadCount(prev => {
+      const next = Math.max(0, prev - 1);
+      if (notificationCache) notificationCache = { ...notificationCache, unreadCount: next };
+      return next;
+    });
     if (link) {
       router.push(link);
       setIsOpen(false);
@@ -51,7 +105,11 @@ export function NotificationBell() {
 
   const handleMarkAllAsRead = async () => {
     await markAllAsRead();
-    setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+    setNotifications(prev => {
+      const next = prev.map(n => ({ ...n, isRead: true }));
+      notificationCache = notificationCache ? { ...notificationCache, notifications: next, unreadCount: 0 } : null;
+      return next;
+    });
     setUnreadCount(0);
   };
 

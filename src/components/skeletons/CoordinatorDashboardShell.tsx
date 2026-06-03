@@ -57,6 +57,7 @@ interface CoordinatorDashboardData {
   verifiedCompanies: number;
   graduationReady: number;
   pendingLogbooks: number;
+  userName?: string | null;
   topHiringCompanies: { name: string; count: number }[];
   recentPlacements: RecentPlacement[];
   pendingCompanies: PendingCompany[];

@@ -27,6 +27,14 @@ const TABS = [
   { id: "infrastructure", name: "System", icon: Server },
 ];
 
+const DEFAULT_MARQUEE_SETTINGS = {
+  enabled: true,
+  title: "",
+  label: "",
+  speed: 50,
+  showInAbout: true
+};
+
 interface HeroSlide {
   image: string;
   title: string;
@@ -36,30 +44,50 @@ interface HeroSlide {
 export function SettingsTabs() {
   const [activeTab, setActiveTab] = useState("website");
   const [slides, setSlides] = useState<HeroSlide[]>([]);
-  const [marqueeSettings, setMarqueeSettings] = useState({
-    enabled: true,
-    title: "",
-    label: "",
-    speed: 50,
-    showInAbout: true
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  const [marqueeSettings, setMarqueeSettings] = useState(DEFAULT_MARQUEE_SETTINGS);
+  const [isHeroLoading, setIsHeroLoading] = useState(true);
+  const [isMarqueeLoading, setIsMarqueeLoading] = useState(false);
+  const [hasLoadedHero, setHasLoadedHero] = useState(false);
+  const [hasLoadedMarquee, setHasLoadedMarquee] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [previews, setPreviews] = useState<string[]>(["", "", ""]);
 
   useEffect(() => {
-    async function load() {
+    let isCancelled = false;
+
+    async function loadHeroSlides() {
+      if (hasLoadedHero) return;
+      setIsHeroLoading(true);
       const slideData = await getHeroSlides();
+      if (isCancelled) return;
       if (slideData) setSlides(slideData);
-      
-      const mData = await getMarqueeSettings();
-      if (mData) setMarqueeSettings(mData);
-      
-      setIsLoading(false);
+      setHasLoadedHero(true);
+      setIsHeroLoading(false);
     }
-    load();
-  }, []);
+
+    async function loadMarqueeSettings() {
+      if (hasLoadedMarquee) return;
+      setIsMarqueeLoading(true);
+      const mData = await getMarqueeSettings();
+      if (isCancelled) return;
+      if (mData) setMarqueeSettings(mData);
+      setHasLoadedMarquee(true);
+      setIsMarqueeLoading(false);
+    }
+
+    if (activeTab === "website") {
+      loadHeroSlides();
+    }
+
+    if (activeTab === "marquee") {
+      loadMarqueeSettings();
+    }
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeTab, hasLoadedHero, hasLoadedMarquee]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = e.target.files?.[0];
@@ -162,7 +190,7 @@ export function SettingsTabs() {
                 </div>
               )}
 
-              {isLoading ? (
+              {isHeroLoading ? (
                 <div className="flex items-center justify-center h-64">
                   <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
@@ -255,6 +283,12 @@ export function SettingsTabs() {
               )}
 
               <div className="space-y-8 max-w-2xl">
+                {!hasLoadedMarquee || isMarqueeLoading ? (
+                  <div className="flex items-center justify-center h-64">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+                ) : (
+                  <>
                 <div className="flex items-center justify-between p-4 bg-muted/30 rounded-xl border border-border">
                   <div className="space-y-0.5">
                     <label className="text-sm font-semibold text-foreground">Display Marquee</label>
@@ -327,6 +361,8 @@ export function SettingsTabs() {
                     Save Marquee Settings
                   </motion.button>
                 </div>
+                  </>
+                )}
               </div>
             </div>
           )}

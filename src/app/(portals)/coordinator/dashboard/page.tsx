@@ -1,13 +1,9 @@
-import { auth } from "@/auth";
 import { getCoordinatorStats } from "./actions";
 import { CoordinatorDashboardShell } from "@/components/skeletons/CoordinatorDashboardShell";
 export const dynamic = "force-dynamic";
 
 export default async function CoordinatorDashboardPage() {
-  const [session, res] = await Promise.all([
-    auth(),
-    getCoordinatorStats()
-  ]);
+  const res = await getCoordinatorStats();
 
   // Pass null if fetch failed so shell renders fallback skeleton
   const data = res.success && res.data ? res.data : null;
@@ -15,7 +11,7 @@ export default async function CoordinatorDashboardPage() {
   return (
     <CoordinatorDashboardShell
       data={data}
-      userName={session?.user?.name ?? undefined}
+      userName={data?.userName ?? undefined}
     />
   );
 }
