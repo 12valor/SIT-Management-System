@@ -5,6 +5,11 @@ import { Prisma, UserRole } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 
+function isAllowedDataImage(value: string | null) {
+  if (!value) return true;
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 4_000_000;
+}
+
 export async function getCompanies() {
   return await prisma.company.findMany({
     orderBy: { name: "asc" },
@@ -13,13 +18,21 @@ export async function getCompanies() {
 }
 
 export async function registerEmployer(formData: FormData) {
-  const email = formData.get("email") as string;
-  const name = formData.get("name") as string;
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const name = String(formData.get("name") || "").trim();
   console.log(`[Registration] Initializing partnership request for ${name} (${email})`);
 
   try {
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (!name || !email.includes("@")) {
+      return { success: false, error: "Please provide a valid name and email address." };
+    }
+
+    if (!password || password.length < 8) {
+      return { success: false, error: "Password must be at least 8 characters." };
+    }
 
     if (password !== confirmPassword) {
       return { success: false, error: "Security validation failed: Passwords do not match." };
@@ -32,11 +45,28 @@ export async function registerEmployer(formData: FormData) {
     const logo = formData.get("logo") as string | null;
     const banner = formData.get("banner") as string | null;
 
+    if (companyMode !== "existing" && companyMode !== "new") {
+      return { success: false, error: "Invalid company registration mode." };
+    }
+
+    if (!isAllowedDataImage(logo) || !isAllowedDataImage(banner)) {
+      return { success: false, error: "Company images must be PNG, JPG, or WebP files under 4MB." };
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const companyName = formData.get("newCompanyName") as string;
-    const industry = formData.get("industry") as string;
+    const companyName = String(formData.get("newCompanyName") || "").trim();
+    const industry = String(formData.get("industry") || "").trim();
     const sanitizedName = companyName?.trim().toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
     const companyEmail = `${sanitizedName}@partner.sit`;
+    const companyId = String(formData.get("companyId") || "");
+
+    if (companyMode === "new" && (!companyName || !industry || !sanitizedName)) {
+      return { success: false, error: "Company name and industry are required." };
+    }
+
+    if (companyMode === "existing" && !companyId) {
+      return { success: false, error: "Please select an existing company." };
+    }
 
     const registrationData = {
       name,
@@ -57,7 +87,7 @@ export async function registerEmployer(formData: FormData) {
           isVerified: false,
         },
       } : {
-        connect: { id: formData.get("companyId") as string },
+        connect: { id: companyId },
       },
     };
 
@@ -122,6 +152,6 @@ export async function checkAvailability(type: "user" | "company", value: string)
     }
   } catch (error) {
     console.error("Availability check failed:", error);
-    return { available: true }; // Fallback to avoid blocking if check fails
+    return { available: false };
   }
 }

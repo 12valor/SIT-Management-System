@@ -1,17 +1,16 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { pushNotification } from "@/lib/actions/notifications";
+import { pushNotification } from "@/lib/notifications";
+import { requireEmployer } from "@/lib/auth-guards";
 
 export async function getEmployerStudentsLogs() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const currentEmployer = await requireEmployer();
 
   try {
     const employer = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: currentEmployer.id },
       include: { 
         company: {
           include: {
@@ -56,10 +55,32 @@ export async function getEmployerStudentsLogs() {
 }
 
 export async function updateLogStatus(entryId: string, status: 'APPROVED' | 'REJECTED', feedback?: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   try {
+    if (!["APPROVED", "REJECTED"].includes(status)) {
+      return { success: false, error: "Invalid logbook status." };
+    }
+
+    const allowedEntry = await prisma.logbookEntry.findFirst({
+      where: {
+        id: entryId,
+        student: {
+          applications: {
+            some: {
+              status: "ACCEPTED",
+              posting: { companyId: employer.companyId },
+            },
+          },
+        },
+      },
+      select: { id: true },
+    });
+
+    if (!allowedEntry) {
+      return { success: false, error: "Logbook entry not found or access denied" };
+    }
+
     const entry = await prisma.logbookEntry.update({
       where: { id: entryId },
       data: { status, feedback },

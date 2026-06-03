@@ -1,20 +1,21 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { pushNotification } from "@/lib/actions/notifications";
+import { pushNotification } from "@/lib/notifications";
+import { requireStudent } from "@/lib/auth-guards";
 
 export async function getSITOpportunities() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
     const postings = await prisma.sITPosting.findMany({
       where: {
+        status: "OPEN",
+        company: { isVerified: true },
         applications: {
           none: {
-            studentId: session.user.id,
+            studentId: student.id,
             status: 'ACCEPTED'
           }
         }
@@ -22,7 +23,7 @@ export async function getSITOpportunities() {
       include: {
         company: true,
         applications: {
-          where: { studentId: session.user.id }
+          where: { studentId: student.id }
         }
       },
       orderBy: { postedAt: 'desc' }
@@ -44,14 +45,26 @@ export async function getSITOpportunities() {
 }
 
 export async function applyForOpportunity(postingId: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const studentUser = await requireStudent();
 
   try {
+    const openPosting = await prisma.sITPosting.findFirst({
+      where: {
+        id: postingId,
+        status: "OPEN",
+        company: { isVerified: true },
+      },
+      select: { id: true },
+    });
+
+    if (!openPosting) {
+      return { success: false, error: "Opportunity is closed or unavailable." };
+    }
+
     const existing = await prisma.application.findFirst({
       where: {
         postingId,
-        studentId: session.user.id
+        studentId: studentUser.id
       }
     });
 
@@ -61,7 +74,7 @@ export async function applyForOpportunity(postingId: string) {
 
     // Check for CV compliance
     const student = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: studentUser.id },
       include: { documents: true }
     });
 
@@ -77,7 +90,7 @@ export async function applyForOpportunity(postingId: string) {
       await prisma.application.create({
         data: {
           postingId,
-          studentId: session.user.id,
+          studentId: studentUser.id,
           status: 'PENDING'
         }
       });
@@ -93,7 +106,7 @@ export async function applyForOpportunity(postingId: string) {
     });
 
     if (posting?.company?.employers) {
-      const studentName = session.user.name || "A student";
+      const studentName = studentUser.name || "A student";
       for (const employer of posting.company.employers) {
         await pushNotification({
           userId: employer.id,

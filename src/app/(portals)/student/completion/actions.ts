@@ -1,17 +1,16 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
+import { requireStudent } from "@/lib/auth-guards";
 
 export async function getCompletionStatus() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
     // 1. Calculate Total Approved Hours
     const logbookStats = await prisma.logbookEntry.aggregate({
       where: {
-        studentId: session.user.id,
+        studentId: student.id,
         status: 'APPROVED'
       },
       _sum: {
@@ -23,14 +22,14 @@ export async function getCompletionStatus() {
 
     // 2. Check for Final Evaluation
     const evaluation = await prisma.sITEvaluation.findFirst({
-      where: { studentId: session.user.id },
+      where: { studentId: student.id },
       orderBy: { submittedAt: 'desc' }
     });
 
     // 3. Check for Mandatory Documents
     // Mandatory: SIT Intent Form, Student Resume / CV, Liability Waiver, SIT Recommendation Letter
     const docs = await prisma.sITDocument.findMany({
-      where: { studentId: session.user.id }
+      where: { studentId: student.id }
     });
 
     const MANDATORY_DOC_NAMES = [
@@ -44,7 +43,7 @@ export async function getCompletionStatus() {
 
     // 4. Fetch Student Info for Certificate
     const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: student.id },
       select: { name: true, course: true }
     });
 

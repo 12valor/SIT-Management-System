@@ -1,14 +1,13 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
+import { requireEmployer } from "@/lib/auth-guards";
 
 export async function getEmployerDashboardData() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, data: null };
+  const employer = await requireEmployer();
 
   const postings = await prisma.sITPosting.findMany({
-    where: { employerId: session.user.id },
+    where: { employerId: employer.id },
     include: { applications: true },
     orderBy: { postedAt: "desc" },
   });
@@ -26,7 +25,7 @@ export async function getEmployerDashboardData() {
         applications: {
           some: {
             status: "ACCEPTED",
-            posting: { employerId: session.user.id }
+            posting: { employerId: employer.id }
           }
         }
       }
@@ -35,7 +34,7 @@ export async function getEmployerDashboardData() {
 
   const recentApplications = await prisma.application.findMany({
     where: {
-      posting: { employerId: session.user.id },
+      posting: { employerId: employer.id },
     },
     include: {
       student: { select: { name: true, email: true, course: true } },
@@ -46,7 +45,7 @@ export async function getEmployerDashboardData() {
   });
 
   const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: employer.id },
     include: { company: true },
   });
 

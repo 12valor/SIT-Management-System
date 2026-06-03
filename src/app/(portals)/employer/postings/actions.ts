@@ -1,16 +1,15 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { PlacementType, PostingStatus } from "@/generated/client";
+import { requireEmployer } from "@/lib/auth-guards";
 
 export async function getEmployerPostings() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, data: null };
+  const employer = await requireEmployer();
 
   const postings = await prisma.sITPosting.findMany({
-    where: { employerId: session.user.id },
+    where: { employerId: employer.id },
     include: {
       _count: { select: { applications: true } },
       company: { select: { name: true } },
@@ -30,17 +29,7 @@ export async function getEmployerPostings() {
 }
 
 export async function createSITPosting(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
-
-  const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
-    select: { companyId: true },
-  });
-
-  if (!user?.companyId) {
-    return { success: false, error: "Your account is not linked to a company." };
-  }
+  const employer = await requireEmployer();
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
@@ -56,6 +45,14 @@ export async function createSITPosting(formData: FormData) {
     return { success: false, error: "Title, description, and location are required." };
   }
 
+  if (!["ON_SITE", "REMOTE", "HYBRID"].includes(type)) {
+    return { success: false, error: "Invalid placement type." };
+  }
+
+  if (requiredHours <= 0 || requiredHours > 1000) {
+    return { success: false, error: "Required hours must be between 1 and 1000." };
+  }
+
   await prisma.sITPosting.create({
     data: {
       title,
@@ -68,8 +65,8 @@ export async function createSITPosting(formData: FormData) {
       responsibilities,
       posterUrl,
       status: PostingStatus.OPEN,
-      employerId: session.user.id,
-      companyId: user.companyId,
+      employerId: employer.id,
+      companyId: employer.companyId,
     },
   });
 
@@ -79,13 +76,12 @@ export async function createSITPosting(formData: FormData) {
 }
 
 export async function togglePostingStatus(postingId: string, currentStatus: PostingStatus) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   const newStatus = currentStatus === "OPEN" ? PostingStatus.CLOSED : PostingStatus.OPEN;
 
   await prisma.sITPosting.update({
-    where: { id: postingId, employerId: session.user.id },
+    where: { id: postingId, employerId: employer.id },
     data: { status: newStatus },
   });
 
@@ -95,11 +91,10 @@ export async function togglePostingStatus(postingId: string, currentStatus: Post
 }
 
 export async function deleteSITPosting(postingId: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   await prisma.sITPosting.delete({
-    where: { id: postingId, employerId: session.user.id },
+    where: { id: postingId, employerId: employer.id },
   });
 
   revalidatePath("/employer/postings");

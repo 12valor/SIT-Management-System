@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { requireCoordinator } from "@/lib/auth-guards";
 
 interface SystemSetting {
   id: string;
@@ -10,7 +11,13 @@ interface SystemSetting {
   updatedAt: Date;
 }
 
+function isAllowedDataImage(value: string) {
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 4_000_000;
+}
+
 export async function updateHeroSlides(formData: FormData) {
+  await requireCoordinator();
+
   try {
     const slide1 = formData.get("slide1") as string;
     const slide2 = formData.get("slide2") as string;
@@ -30,9 +37,9 @@ export async function updateHeroSlides(formData: FormData) {
         ];
     }
 
-    if (slide1 && slide1.startsWith('data:')) currentSlides[0].image = slide1;
-    if (slide2 && slide2.startsWith('data:')) currentSlides[1].image = slide2;
-    if (slide3 && slide3.startsWith('data:')) currentSlides[2].image = slide3;
+    if (slide1 && isAllowedDataImage(slide1)) currentSlides[0].image = slide1;
+    if (slide2 && isAllowedDataImage(slide2)) currentSlides[1].image = slide2;
+    if (slide3 && isAllowedDataImage(slide3)) currentSlides[2].image = slide3;
 
     const newValue = JSON.stringify(currentSlides);
     
@@ -90,7 +97,13 @@ export async function updateMarqueeSettings(data: {
     speed: number;
     showInAbout: boolean;
 }) {
+    await requireCoordinator();
+
     try {
+        if (data.speed < 10 || data.speed > 200) {
+            return { success: false, error: "Marquee speed must be between 10 and 200." };
+        }
+
         const newValue = JSON.stringify(data);
         const existingSetting = await prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'marquee_settings' LIMIT 1`;
         

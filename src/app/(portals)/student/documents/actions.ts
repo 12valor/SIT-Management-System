@@ -1,16 +1,30 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { requireStudent } from "@/lib/auth-guards";
+import { REQUIRED_CREDENTIALS } from "@/app/(portals)/student/dashboard/types";
+
+const allowedDocumentNames = new Set(REQUIRED_CREDENTIALS.map((credential) => credential.name));
+const allowedDocumentTypes = new Set(["PDF", "IMAGE"]);
+
+function isAllowedDocumentUrl(url?: string) {
+  if (!url) return true;
+
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "https:" && parsed.hostname === "archive.sit.tupv.edu.ph";
+  } catch {
+    return false;
+  }
+}
 
 export async function getStudentDocuments() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
     const documents = await prisma.sITDocument.findMany({
-      where: { studentId: session.user.id },
+      where: { studentId: student.id },
       orderBy: { uploadedAt: "desc" },
     });
 
@@ -27,13 +41,24 @@ export async function uploadDocumentMetadata(data: {
   type: string;
   url?: string;
 }) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
+    if (!allowedDocumentNames.has(data.name)) {
+      return { success: false, error: "Invalid document name." };
+    }
+
+    if (!allowedDocumentTypes.has(data.type)) {
+      return { success: false, error: "Invalid document type." };
+    }
+
+    if (!isAllowedDocumentUrl(data.url)) {
+      return { success: false, error: "Invalid document URL." };
+    }
+
     const document = await prisma.sITDocument.create({
       data: {
-        studentId: session.user.id,
+        studentId: student.id,
         name: data.name,
         type: data.type,
         url: data.url || null,
@@ -53,8 +78,7 @@ export async function uploadDocumentMetadata(data: {
 }
 
 export async function deleteDocument(id: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
     // Ensure the document belongs to the student
@@ -62,7 +86,7 @@ export async function deleteDocument(id: string) {
       where: { id },
     });
 
-    if (!doc || doc.studentId !== session.user.id) {
+    if (!doc || doc.studentId !== student.id) {
       return { success: false, error: "Document not found or access denied" };
     }
 

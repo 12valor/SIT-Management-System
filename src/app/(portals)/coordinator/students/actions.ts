@@ -1,10 +1,13 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { requireCoordinator } from "@/lib/auth-guards";
 
 import { revalidatePath } from "next/cache";
 
 export async function getStudentManifest() {
+  await requireCoordinator();
+
   const students = await prisma.user.findMany({
     where: { role: "STUDENT", isApproved: true },
     select: {
@@ -57,6 +60,8 @@ export async function getStudentManifest() {
 }
 
 export async function updateStudentImage(userId: string, imageData: string) {
+  await requireCoordinator();
+
   await prisma.user.update({
     where: { id: userId },
     data: { image: imageData },

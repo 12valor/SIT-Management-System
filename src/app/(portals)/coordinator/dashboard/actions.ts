@@ -1,8 +1,11 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { requireCoordinator } from "@/lib/auth-guards";
 
 export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily' = 'monthly') {
+  await requireCoordinator();
+
   try {
     const now = new Date();
     const periods: { label: string; start: Date; end: Date }[] = [];
@@ -50,6 +53,8 @@ export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily
 }
 
 export async function getCoordinatorStats() {
+  await requireCoordinator();
+
   try {
     const [
       totalStudents,

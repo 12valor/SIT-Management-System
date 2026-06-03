@@ -1,13 +1,10 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
+import { requireCoordinator } from "@/lib/auth-guards";
 
 export async function getCoordinatorEvaluations() {
-  const session = await auth();
-  if (!session?.user?.id || session.user.role !== "COORDINATOR") {
-    return { success: false, error: "Unauthorized access. Coordinator permissions required." };
-  }
+  await requireCoordinator();
 
   try {
     // 1. Fetch all submitted evaluations

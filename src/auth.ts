@@ -18,9 +18,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
 
         try {
-          const adminPassword = process.env.ADMIN_PASSWORD || "admin-sit";
+          const email = String(credentials.email).trim().toLowerCase();
+          const password = String(credentials.password);
+          const adminPassword = process.env.ADMIN_PASSWORD;
           
-          if (credentials.email === "coordinator@tupv.edu.ph" && credentials.password === adminPassword) {
+          if (email === "coordinator@tupv.edu.ph" && adminPassword && password === adminPassword) {
             let admin = await prisma.user.findUnique({ where: { email: "coordinator@tupv.edu.ph" } });
             if (!admin) {
               admin = await prisma.user.create({
@@ -42,13 +44,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
 
           const user = await prisma.user.findUnique({
-            where: { email: credentials.email as string },
+            where: { email },
           });
 
           if (!user || !user.password) return null;
 
           const isPasswordCorrect = await bcrypt.compare(
-            credentials.password as string,
+            password,
             user.password
           );
 

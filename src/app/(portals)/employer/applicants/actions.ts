@@ -1,22 +1,14 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { pushNotification } from "@/lib/actions/notifications";
+import { pushNotification } from "@/lib/notifications";
+import { requireEmployer } from "@/lib/auth-guards";
 
 export async function getEmployerApplicants() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   try {
-    const employer = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      include: { company: true }
-    });
-
-    if (!employer?.companyId) return { success: false, error: "Employer has no associated company" };
-
     // Get all applications for this company's postings
     const applications = await prisma.application.findMany({
       where: {
@@ -38,10 +30,25 @@ export async function getEmployerApplicants() {
 }
 
 export async function updateApplicationStatus(id: string, status: 'ACCEPTED' | 'REJECTED') {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   try {
+    if (!["ACCEPTED", "REJECTED"].includes(status)) {
+      return { success: false, error: "Invalid application status." };
+    }
+
+    const allowedApplication = await prisma.application.findFirst({
+      where: {
+        id,
+        posting: { companyId: employer.companyId },
+      },
+      select: { id: true },
+    });
+
+    if (!allowedApplication) {
+      return { success: false, error: "Application not found or access denied" };
+    }
+
     const application = await prisma.application.update({
       where: { id },
       data: { status },
@@ -79,17 +86,9 @@ export async function updateApplicationStatus(id: string, status: 'ACCEPTED' | '
 }
 
 export async function getStudentCredentials(studentId: string, applicationId: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   try {
-    const employer = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      include: { company: true }
-    });
-
-    if (!employer?.companyId) return { success: false, error: "Unauthorized access" };
-
     // Security check: Verify the student actually applied to a posting from this company
     const application = await prisma.application.findFirst({
       where: {

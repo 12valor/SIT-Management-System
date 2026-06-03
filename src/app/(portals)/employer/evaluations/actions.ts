@@ -1,17 +1,16 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { pushNotification } from "@/lib/actions/notifications";
+import { pushNotification } from "@/lib/notifications";
+import { requireEmployer } from "@/lib/auth-guards";
 
 export async function getEmployerTrainees() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const currentEmployer = await requireEmployer();
 
   try {
     const employer = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: currentEmployer.id },
       include: { company: true }
     });
 
@@ -62,22 +61,60 @@ export async function submitTraineeEvaluation(data: {
   comments: string;
   recommendForHire: boolean;
 }) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const employer = await requireEmployer();
 
   try {
-    const employer = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      include: { company: true }
+    const scores = [
+      data.technicalSkills,
+      data.professionalism,
+      data.punctuality,
+      data.qualityOfWork,
+    ];
+
+    if (scores.some((score) => !Number.isInteger(score) || score < 1 || score > 5)) {
+      return { success: false, error: "Evaluation scores must be between 1 and 5." };
+    }
+
+    if (!data.comments?.trim()) {
+      return { success: false, error: "Evaluation comments are required." };
+    }
+
+    const acceptedPlacement = await prisma.application.findFirst({
+      where: {
+        studentId: data.studentId,
+        status: "ACCEPTED",
+        posting: { companyId: employer.companyId },
+      },
+      include: {
+        posting: {
+          include: { company: true },
+        },
+      },
     });
 
-    const overallGrade = (data.technicalSkills + data.professionalism + data.punctuality + data.qualityOfWork) / 4;
+    if (!acceptedPlacement) {
+      return { success: false, error: "Student is not assigned to your company." };
+    }
+
+    const existingEvaluation = await prisma.sITEvaluation.findFirst({
+      where: {
+        studentId: data.studentId,
+        companyName: acceptedPlacement.posting.company.name,
+      },
+      select: { id: true },
+    });
+
+    if (existingEvaluation) {
+      return { success: false, error: "This trainee already has a final evaluation from your company." };
+    }
+
+    const overallGrade = scores.reduce((sum, score) => sum + score, 0) / scores.length;
 
     const evaluation = await prisma.sITEvaluation.create({
       data: {
         studentId: data.studentId,
-        supervisorName: session.user.name || "Supervisor",
-        companyName: employer?.company?.name || "Partner Company",
+        supervisorName: employer.name || "Supervisor",
+        companyName: acceptedPlacement.posting.company.name,
         technicalSkills: data.technicalSkills,
         professionalism: data.professionalism,
         punctuality: data.punctuality,

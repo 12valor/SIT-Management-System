@@ -2,15 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
+import { requireStudent } from "@/lib/auth-guards";
 
 export async function getStudentDashboardData() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const studentUser = await requireStudent();
 
   try {
     const student = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: studentUser.id },
       include: {
         applications: {
           include: {
@@ -66,8 +65,7 @@ export async function getStudentDashboardData() {
 }
 
 export async function withdrawApplication(applicationId: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
     const application = await prisma.application.findUnique({
@@ -78,7 +76,7 @@ export async function withdrawApplication(applicationId: string) {
       return { success: false, error: "Application not found" };
     }
 
-    if (application.studentId !== session.user.id) {
+    if (application.studentId !== student.id) {
       return { success: false, error: "Unauthorized" };
     }
 

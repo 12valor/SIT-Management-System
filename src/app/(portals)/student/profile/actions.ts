@@ -1,16 +1,19 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { isCourseCode } from "@/lib/courses";
+import { requireStudent } from "@/lib/auth-guards";
+
+function isAllowedProfileImage(imageData: string) {
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(imageData) && imageData.length <= 1_500_000;
+}
 
 export async function getStudentProfile() {
-  const session = await auth();
-  if (!session?.user?.id) return null;
+  const student = await requireStudent();
 
   return await prisma.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: student.id },
     select: {
       id: true,
       name: true,
@@ -31,11 +34,14 @@ export async function getStudentProfile() {
 }
 
 export async function updateStudentOwnImage(imageData: string) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
+
+  if (!isAllowedProfileImage(imageData)) {
+    return { success: false, error: "Profile image must be a PNG, JPG, or WebP under 1.5MB." };
+  }
 
   await prisma.user.update({
-    where: { id: session.user.id },
+    where: { id: student.id },
     data: { image: imageData },
   });
 
@@ -45,8 +51,7 @@ export async function updateStudentOwnImage(imageData: string) {
 }
 
 export async function updateStudentProfile(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   const name = formData.get("name") as string;
   const course = formData.get("course") as string;
@@ -57,7 +62,7 @@ export async function updateStudentProfile(formData: FormData) {
   }
 
   await prisma.user.update({
-    where: { id: session.user.id },
+    where: { id: student.id },
     data: { name: name.trim(), course },
   });
 

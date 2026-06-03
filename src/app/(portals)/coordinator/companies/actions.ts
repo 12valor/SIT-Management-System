@@ -4,8 +4,11 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { sendApprovalEmail } from "@/lib/email";
+import { requireCoordinator } from "@/lib/auth-guards";
 
 export async function getCompanies() {
+  await requireCoordinator();
+
   return await prisma.company.findMany({
     include: {
       _count: { select: { employers: true, postings: true } },
@@ -15,6 +18,8 @@ export async function getCompanies() {
 }
 
 export async function setCompanyVerification(companyId: string, isVerified: boolean) {
+  await requireCoordinator();
+
   const company = await prisma.company.update({
     where: { id: companyId },
     data: { isVerified },
@@ -33,6 +38,8 @@ export async function setCompanyVerification(companyId: string, isVerified: bool
 }
 
 export async function deleteCompany(id: string) {
+  await requireCoordinator();
+
   await prisma.company.deleteMany({
     where: { id },
   });
@@ -50,6 +57,8 @@ export async function updateCompany(id: string, data: {
   logoUrl?: string;
   bannerUrl?: string;
 }) {
+  await requireCoordinator();
+
   try {
     await prisma.company.update({
       where: { id },
@@ -94,6 +103,8 @@ export async function addCompany(data: {
   logoUrl?: string;
   bannerUrl?: string;
 }) {
+  await requireCoordinator();
+
   try {
     const company = await prisma.company.create({
       data: {
@@ -144,6 +155,8 @@ export async function addCompany(data: {
 }
 
 export async function toggleCompanyMarquee(companyId: string, showInMarquee: boolean) {
+  await requireCoordinator();
+
   await prisma.company.update({
     where: { id: companyId },
     data: { showInMarquee },

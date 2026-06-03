@@ -1,17 +1,16 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { pushNotification } from "@/lib/actions/notifications";
+import { pushNotification } from "@/lib/notifications";
+import { requireStudent } from "@/lib/auth-guards";
 
 export async function getStudentLogbook() {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
     const entries = await prisma.logbookEntry.findMany({
-      where: { studentId: session.user.id },
+      where: { studentId: student.id },
       orderBy: { date: 'desc' }
     });
 
@@ -21,7 +20,7 @@ export async function getStudentLogbook() {
 
     const placement = await prisma.application.findFirst({
       where: { 
-        studentId: session.user.id,
+        studentId: student.id,
         status: 'ACCEPTED'
       }
     });
@@ -45,14 +44,17 @@ export async function submitLogbookEntry(data: {
   hours: number;
   tasks: string;
 }) {
-  const session = await auth();
-  if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+  const student = await requireStudent();
 
   try {
+    if (!Number.isFinite(data.hours) || data.hours <= 0 || data.hours > 24) {
+      return { success: false, error: "Hours must be greater than 0 and no more than 24." };
+    }
+
     // Find the associated employer to notify
     const placement = await prisma.application.findFirst({
       where: { 
-        studentId: session.user.id,
+        studentId: student.id,
         status: 'ACCEPTED'
       },
       include: {
@@ -65,6 +67,10 @@ export async function submitLogbookEntry(data: {
     }
 
     const entryDate = new Date(data.date);
+    if (Number.isNaN(entryDate.getTime())) {
+      return { success: false, error: "Invalid logbook date." };
+    }
+
     const startOfDay = new Date(entryDate);
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(entryDate);
@@ -72,7 +78,7 @@ export async function submitLogbookEntry(data: {
 
     const existingEntries = await prisma.logbookEntry.findMany({
       where: {
-        studentId: session.user.id,
+        studentId: student.id,
         date: {
           gte: startOfDay,
           lte: endOfDay,
@@ -82,17 +88,16 @@ export async function submitLogbookEntry(data: {
 
     const totalHoursToday = existingEntries.reduce((sum, entry) => sum + entry.hours, 0);
 
-    // TEMPORARILY DISABLED FOR ACCREDITATION SYSTEM TESTING
-    // if (totalHoursToday + data.hours > 24) {
-    //   return { 
-    //     success: false, 
-    //     error: `Daily limit exceeded. You have already logged ${totalHoursToday} hours for this date. The total cannot exceed 24 hours.` 
-    //   };
-    // }
+    if (totalHoursToday + data.hours > 24) {
+      return {
+        success: false,
+        error: `Daily limit exceeded. You have already logged ${totalHoursToday} hours for this date. The total cannot exceed 24 hours.`,
+      };
+    }
 
     await prisma.logbookEntry.create({
       data: {
-        studentId: session.user.id,
+        studentId: student.id,
         date: entryDate,
         hours: data.hours,
         tasks: data.tasks,
@@ -105,7 +110,7 @@ export async function submitLogbookEntry(data: {
       await pushNotification({
         userId: placement.posting.employerId,
         title: "Industrial Logbook Submission",
-        message: `${session.user.name || 'A trainee'} has submitted a new logbook entry for verification.`,
+        message: `${student.name || 'A trainee'} has submitted a new logbook entry for verification.`,
         type: 'LOGBOOK',
         link: '/employer/logbooks'
       });

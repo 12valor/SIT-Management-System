@@ -6,11 +6,21 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("Starting seeding...");
 
+  const employerSeedPassword = process.env.SEED_EMPLOYER_PASSWORD;
+  const studentSeedPassword = process.env.SEED_STUDENT_PASSWORD;
+  const coordinatorSeedPassword = process.env.SEED_COORDINATOR_PASSWORD;
+
+  if (!employerSeedPassword || !studentSeedPassword || !coordinatorSeedPassword) {
+    throw new Error(
+      "Missing seed passwords. Set SEED_EMPLOYER_PASSWORD, SEED_STUDENT_PASSWORD, and SEED_COORDINATOR_PASSWORD before running prisma seed."
+    );
+  }
+
   // Hashes for the users
   const salt = 12;
-  const password = await bcrypt.hash("admin123", salt);
-  const studentPassword = await bcrypt.hash("TUPV-0909", salt);
-  const adminPassword = await bcrypt.hash("admin-sit", salt);
+  const password = await bcrypt.hash(employerSeedPassword, salt);
+  const studentPassword = await bcrypt.hash(studentSeedPassword, salt);
+  const adminPassword = await bcrypt.hash(coordinatorSeedPassword, salt);
 
   // 1. Create a Company (Industrial Partner)
   const company = await prisma.company.upsert({

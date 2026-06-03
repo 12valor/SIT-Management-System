@@ -1,15 +1,14 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
+import { requireStudent } from "@/lib/auth-guards";
 
 export async function getStudentPlacementStatus() {
-  const session = await auth();
-  if (!session?.user?.id) return { isPlaced: false };
+  const student = await requireStudent();
 
   const acceptedApplication = await prisma.application.findFirst({
     where: {
-      studentId: session.user.id,
+      studentId: student.id,
       status: "ACCEPTED",
     },
   });

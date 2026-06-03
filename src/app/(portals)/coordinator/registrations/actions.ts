@@ -2,8 +2,11 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { requireCoordinator } from "@/lib/auth-guards";
 
 export async function getPendingRegistrations() {
+  await requireCoordinator();
+
   const [users, companies] = await Promise.all([
     prisma.user.findMany({
       where: { 
@@ -26,6 +29,8 @@ export async function getPendingRegistrations() {
 }
 
 export async function approveUser(userId: string) {
+  await requireCoordinator();
+
   try {
     await prisma.user.update({
       where: { id: userId },
@@ -39,6 +44,8 @@ export async function approveUser(userId: string) {
 }
 
 export async function rejectUser(userId: string) {
+  await requireCoordinator();
+
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -85,6 +92,8 @@ export async function rejectUser(userId: string) {
 }
 
 export async function verifyCompany(companyId: string) {
+  await requireCoordinator();
+
   try {
     await prisma.company.update({
       where: { id: companyId },
@@ -99,6 +108,8 @@ export async function verifyCompany(companyId: string) {
 }
 
 export async function verifyPartnership(userId: string, companyId: string) {
+  await requireCoordinator();
+
   try {
     await prisma.$transaction([
       prisma.user.update({
