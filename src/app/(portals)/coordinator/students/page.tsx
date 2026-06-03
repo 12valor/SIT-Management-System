@@ -2,14 +2,17 @@ import { Suspense } from "react";
 import { getStudentManifest } from "./actions";
 import StudentManifestClient from "./StudentManifestClient";
 
-export default async function CoordinatorStudentsPage() {
-  const students = await getStudentManifest();
-
+export default function CoordinatorStudentsPage() {
   return (
     <Suspense fallback={<StudentManifestSkeleton />}>
-      <StudentManifestClient initialStudents={students} />
+      <StudentManifestContent />
     </Suspense>
   );
+}
+
+async function StudentManifestContent() {
+  const students = await getStudentManifest();
+  return <StudentManifestClient initialStudents={students} />;
 }
 
 function StudentManifestSkeleton() {

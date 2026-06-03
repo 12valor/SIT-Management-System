@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Search, ShieldCheck, ShieldAlert, Mail, Globe, Clock, Loader2, Plus, X, Building2, Edit, Trash2, LayoutTemplate } from "lucide-react";
 import { setCompanyVerification, addCompany, updateCompany, deleteCompany, getCompanies, toggleCompanyMarquee } from "./actions";
 import { cn } from "@/lib/utils";
@@ -133,13 +133,23 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
     }
   };
 
-  const filtered = companies.filter((c) =>
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.industry.toLowerCase().includes(searchQuery.toLowerCase())
+  const normalizedSearch = searchQuery.toLowerCase();
+  const filtered = useMemo(
+    () =>
+      companies.filter((c) =>
+        c.name.toLowerCase().includes(normalizedSearch) ||
+        c.industry.toLowerCase().includes(normalizedSearch)
+      ),
+    [companies, normalizedSearch]
   );
 
-  const verifiedCount = companies.filter((c) => c.isVerified).length;
-  const pendingCount = companies.filter((c) => !c.isVerified).length;
+  const { verifiedCount, pendingCount } = useMemo(
+    () => ({
+      verifiedCount: companies.filter((c) => c.isVerified).length,
+      pendingCount: companies.filter((c) => !c.isVerified).length,
+    }),
+    [companies]
+  );
 
   return (
     <div className="flex-1 space-y-12 relative">

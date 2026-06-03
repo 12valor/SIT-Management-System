@@ -2,14 +2,17 @@ import { Suspense } from "react";
 import { getPlacements } from "./actions";
 import PlacementsClient from "./PlacementsClient";
 
-export default async function CoordinatorPlacementsPage() {
-  const placements = await getPlacements();
-
+export default function CoordinatorPlacementsPage() {
   return (
     <Suspense fallback={<PlacementsSkeleton />}>
-      <PlacementsClient initialPlacements={placements} />
+      <PlacementsContent />
     </Suspense>
   );
+}
+
+async function PlacementsContent() {
+  const placements = await getPlacements();
+  return <PlacementsClient initialPlacements={placements} />;
 }
 
 function PlacementsSkeleton() {

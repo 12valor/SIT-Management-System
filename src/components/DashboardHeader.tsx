@@ -1,8 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React from "react";
 import { ThemeToggle } from "./theme-toggle";
-import { NotificationBell } from "./NotificationBell";
+
+const NotificationBell = dynamic(
+  () => import("./NotificationBell").then((mod) => mod.NotificationBell),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="h-10 w-10 rounded-xl bg-muted/50"
+        aria-hidden="true"
+      />
+    ),
+  }
+);
 
 interface Session {
   user?: {

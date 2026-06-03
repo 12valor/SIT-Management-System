@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Search, Download, ExternalLink, User as UserIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -29,11 +29,16 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
   const router = useRouter();
   const students = initialStudents;
 
+  const normalizedSearch = searchQuery.toLowerCase();
 
-  const filtered = students.filter((s) =>
-    s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.course.toLowerCase().includes(searchQuery.toLowerCase())
+  const filtered = useMemo(
+    () =>
+      students.filter((s) =>
+        s.name.toLowerCase().includes(normalizedSearch) ||
+        s.email.toLowerCase().includes(normalizedSearch) ||
+        s.course.toLowerCase().includes(normalizedSearch)
+      ),
+    [students, normalizedSearch]
   );
 
   const exportToCSV = () => {
@@ -61,8 +66,13 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
     document.body.removeChild(link);
   };
 
-  const hiredCount = students.filter((s) => s.status === "HIRED").length;
-  const completedCount = students.filter((s) => s.progress >= 100).length;
+  const { hiredCount, completedCount } = useMemo(
+    () => ({
+      hiredCount: students.filter((s) => s.status === "HIRED").length,
+      completedCount: students.filter((s) => s.progress >= 100).length,
+    }),
+    [students]
+  );
 
   return (
     <div className="flex-1 space-y-12">

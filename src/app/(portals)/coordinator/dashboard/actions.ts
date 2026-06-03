@@ -4,8 +4,8 @@ import prisma from "@/lib/prisma";
 
 export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily' = 'monthly') {
   try {
-    const trendData = [];
     const now = new Date();
+    const periods: { label: string; start: Date; end: Date }[] = [];
 
     if (timeframe === 'monthly') {
       for (let i = 5; i >= 0; i--) {
@@ -13,38 +13,34 @@ export async function getPlacementTrend(timeframe: 'monthly' | 'weekly' | 'daily
         const monthLabel = d.toLocaleString('default', { month: 'short' });
         const start = new Date(d.getFullYear(), d.getMonth(), 1);
         const end = new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
-
-        const [students, placements] = await Promise.all([
-          prisma.user.count({ where: { role: 'STUDENT', createdAt: { gte: start, lte: end } } }),
-          prisma.application.count({ where: { status: 'ACCEPTED', updatedAt: { gte: start, lte: end } } })
-        ]);
-        trendData.push({ month: monthLabel, students, placements });
+        periods.push({ label: monthLabel, start, end });
       }
     } else if (timeframe === 'weekly') {
       for (let i = 7; i >= 0; i--) {
         const start = new Date(now.getTime() - (i + 1) * 7 * 24 * 60 * 60 * 1000);
         const end = new Date(now.getTime() - i * 7 * 24 * 60 * 60 * 1000);
         const label = `W${8 - i}`;
-
-        const [students, placements] = await Promise.all([
-          prisma.user.count({ where: { role: 'STUDENT', createdAt: { gte: start, lte: end } } }),
-          prisma.application.count({ where: { status: 'ACCEPTED', updatedAt: { gte: start, lte: end } } })
-        ]);
-        trendData.push({ month: label, students, placements });
+        periods.push({ label, start, end });
       }
     } else if (timeframe === 'daily') {
       for (let i = 13; i >= 0; i--) {
         const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
         const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i, 23, 59, 59, 999);
         const label = start.getDate().toString();
+        periods.push({ label, start, end });
+      }
+    }
 
+    const trendData = await Promise.all(
+      periods.map(async ({ label, start, end }) => {
         const [students, placements] = await Promise.all([
           prisma.user.count({ where: { role: 'STUDENT', createdAt: { gte: start, lte: end } } }),
           prisma.application.count({ where: { status: 'ACCEPTED', updatedAt: { gte: start, lte: end } } })
         ]);
-        trendData.push({ month: label, students, placements });
-      }
-    }
+
+        return { month: label, students, placements };
+      })
+    );
 
     return { success: true, data: trendData };
   } catch (error) {

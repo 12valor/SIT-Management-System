@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { 
   Search, 
@@ -68,31 +68,45 @@ export default function EvaluationsClient({ initialEvaluations, initialPending }
     return () => setMounted(false);
   }, []);
 
-  // Filtered lists
-  const filteredEvaluations = initialEvaluations.filter((ev) =>
-    ev.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (ev.studentEmail && ev.studentEmail.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    ev.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ev.course.toLowerCase().includes(searchQuery.toLowerCase())
+  const normalizedSearch = searchQuery.toLowerCase();
+
+  const filteredEvaluations = useMemo(
+    () =>
+      initialEvaluations.filter((ev) =>
+        ev.studentName.toLowerCase().includes(normalizedSearch) ||
+        (ev.studentEmail && ev.studentEmail.toLowerCase().includes(normalizedSearch)) ||
+        ev.companyName.toLowerCase().includes(normalizedSearch) ||
+        ev.course.toLowerCase().includes(normalizedSearch)
+      ),
+    [initialEvaluations, normalizedSearch]
   );
 
-  const filteredPending = initialPending.filter((p) =>
-    p.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (p.studentEmail && p.studentEmail.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    p.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.course.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredPending = useMemo(
+    () =>
+      initialPending.filter((p) =>
+        p.studentName.toLowerCase().includes(normalizedSearch) ||
+        (p.studentEmail && p.studentEmail.toLowerCase().includes(normalizedSearch)) ||
+        p.companyName.toLowerCase().includes(normalizedSearch) ||
+        p.course.toLowerCase().includes(normalizedSearch)
+      ),
+    [initialPending, normalizedSearch]
   );
 
   // Statistics calculation
-  const totalEvaluationsCount = initialEvaluations.length;
-  const avgGrade = totalEvaluationsCount > 0 
-    ? initialEvaluations.reduce((sum, ev) => sum + ev.overallGrade, 0) / totalEvaluationsCount
-    : 0;
-  
-  const positiveHireRecommendation = totalEvaluationsCount > 0
-    ? (initialEvaluations.filter(ev => ev.recommendForHire).length / totalEvaluationsCount) * 100
-    : 0;
-
+  const { totalEvaluationsCount, avgGrade, positiveHireRecommendation } = useMemo(() => {
+    const total = initialEvaluations.length;
+    return {
+      totalEvaluationsCount: total,
+      avgGrade:
+        total > 0
+          ? initialEvaluations.reduce((sum, ev) => sum + ev.overallGrade, 0) / total
+          : 0,
+      positiveHireRecommendation:
+        total > 0
+          ? (initialEvaluations.filter((ev) => ev.recommendForHire).length / total) * 100
+          : 0,
+    };
+  }, [initialEvaluations]);
   const totalAwaitingCount = initialPending.length;
 
   const exportEvaluationsToCSV = () => {

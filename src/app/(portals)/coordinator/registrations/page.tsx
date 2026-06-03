@@ -2,14 +2,17 @@ import { Suspense } from "react";
 import { getPendingRegistrations } from "./actions";
 import RegistrationsClient from "./RegistrationsClient";
 
-export default async function CoordinatorRegistrationsPage() {
-  const data = await getPendingRegistrations();
-
+export default function CoordinatorRegistrationsPage() {
   return (
     <Suspense fallback={<RegistrationsSkeleton />}>
-      <RegistrationsClient initialData={data} />
+      <RegistrationsContent />
     </Suspense>
   );
+}
+
+async function RegistrationsContent() {
+  const data = await getPendingRegistrations();
+  return <RegistrationsClient initialData={data} />;
 }
 
 function RegistrationsSkeleton() {

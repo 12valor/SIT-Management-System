@@ -30,10 +30,7 @@ export const metadata: Metadata = {
 };
 
 import { AuthProvider } from "@/components/providers/session-provider";
-import { Footer } from "@/components/Footer";
-import { SmartNavbar } from "@/components/SmartNavbar";
-import { FloatingThemeToggle } from "@/components/FloatingThemeToggle";
-import { FloatingFAQ } from "@/components/FloatingFAQ";
+import { AppShell } from "@/components/AppShell";
 import NextTopLoader from "nextjs-toploader";
 
 export default function RootLayout({
@@ -60,13 +57,9 @@ export default function RootLayout({
             enableSystem={false}
             disableTransitionOnChange
           >
-            <SmartNavbar />
-            <div className="flex-1 flex flex-col">
+            <AppShell>
               {children}
-            </div>
-            <Footer />
-            <FloatingFAQ />
-            <FloatingThemeToggle />
+            </AppShell>
           </ThemeProvider>
         </AuthProvider>
       </body>

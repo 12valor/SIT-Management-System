@@ -3,16 +3,20 @@ import { getCoordinatorEvaluations } from "./actions";
 import EvaluationsClient from "./EvaluationsClient";
 import { Loader2 } from "lucide-react";
 
-export default async function CoordinatorEvaluationsPage() {
+export default function CoordinatorEvaluationsPage() {
+  return (
+    <Suspense fallback={<EvaluationsSkeleton />}>
+      <EvaluationsContent />
+    </Suspense>
+  );
+}
+
+async function EvaluationsContent() {
   const result = await getCoordinatorEvaluations();
   const evaluations = result.success && result.evaluations ? result.evaluations : [];
   const pending = result.success && result.pending ? result.pending : [];
 
-  return (
-    <Suspense fallback={<EvaluationsSkeleton />}>
-      <EvaluationsClient initialEvaluations={evaluations} initialPending={pending} />
-    </Suspense>
-  );
+  return <EvaluationsClient initialEvaluations={evaluations} initialPending={pending} />;
 }
 
 function EvaluationsSkeleton() {

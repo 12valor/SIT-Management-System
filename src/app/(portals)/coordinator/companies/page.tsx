@@ -2,14 +2,17 @@ import { Suspense } from "react";
 import { getCompanies } from "./actions";
 import CompaniesClient from "./CompaniesClient";
 
-export default async function CoordinatorCompaniesPage() {
-  const companies = await getCompanies();
-
+export default function CoordinatorCompaniesPage() {
   return (
     <Suspense fallback={<CompaniesSkeleton />}>
-      <CompaniesClient initialCompanies={companies} />
+      <CompaniesContent />
     </Suspense>
   );
+}
+
+async function CompaniesContent() {
+  const companies = await getCompanies();
+  return <CompaniesClient initialCompanies={companies} />;
 }
 
 function CompaniesSkeleton() {
