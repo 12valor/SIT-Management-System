@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,12 +12,37 @@ export function SmartNavbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
+  const scrolledRef = useRef(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    let frame = 0;
+
+    const updateScrolled = () => {
+      frame = 0;
+      const nextScrolled = window.scrollY > 20;
+
+      if (scrolledRef.current !== nextScrolled) {
+        scrolledRef.current = nextScrolled;
+        setScrolled(nextScrolled);
+      }
+    };
+
+    const handleScroll = () => {
+      if (frame === 0) {
+        frame = window.requestAnimationFrame(updateScrolled);
+      }
+    };
+
+    updateScrolled();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame !== 0) {
+        window.cancelAnimationFrame(frame);
+      }
+    };
   }, []);
 
   const portals = [
@@ -37,7 +62,7 @@ export function SmartNavbar() {
 
   return (
     <>
-      <header className={`fixed top-0 w-full z-50 flex flex-col transition-all duration-300 ${scrolled ? "bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-white dark:bg-[#050505]"}`}>
+      <header className={`fixed top-0 w-full z-50 flex flex-col transition-all duration-300 ${scrolled ? "bg-white/95 dark:bg-[#050505]/95 border-b border-border/50 shadow-sm" : "bg-white dark:bg-[#050505]"}`}>
         {/* Top Announcement Banner */}
         {showBanner && (
           <div className="bg-primary text-white py-2 px-6 flex justify-between items-center text-[11px] md:text-xs relative z-20">

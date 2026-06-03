@@ -5,7 +5,6 @@ import Marquee from "@/components/ui/marquee";
 import { Building2 } from "lucide-react";
 import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
 import { getMarqueeSettings } from "@/app/(portals)/coordinator/settings/general/actions";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -61,7 +60,7 @@ export function PartnersMarquee() {
 
   if (isLoading && partners.length === 0) {
     return (
-      <div className="py-12 bg-white dark:bg-background overflow-hidden border-y border-slate-100 dark:border-white/5">
+      <div className="py-12 bg-white dark:bg-background overflow-hidden border-y border-slate-100 dark:border-white/5 [content-visibility:auto] [contain-intrinsic-size:180px]">
         <div className="flex gap-12 animate-pulse justify-center">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="h-12 w-40 bg-slate-100 dark:bg-white/5 rounded-lg" />
@@ -74,25 +73,20 @@ export function PartnersMarquee() {
   if (settings && !settings.enabled) return null;
 
   return (
-    <section className="py-16 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5">
+    <section className="py-16 bg-white dark:bg-background relative overflow-hidden border-y border-slate-100 dark:border-white/5 [content-visibility:auto] [contain-intrinsic-size:260px]">
       <div className="container mx-auto px-6 mb-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <div>
           <span className="text-[11px] font-black uppercase tracking-[0.4em] text-primary/60 mb-3 block">
             {settings?.label || "Industrial Network"}
           </span>
           <h2 className="text-3xl font-serif font-medium text-slate-800 dark:text-slate-200">
             {settings?.title || "Trusted by Leading Organizations"}
           </h2>
-        </motion.div>
+        </div>
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <Marquee pauseOnHover className={cn("py-4", `[--duration:${settings?.speed || 50}s]`, "[--gap:3rem]")}>
+        <Marquee repeat={2} pauseOnHover className={cn("py-4", `[--duration:${settings?.speed || 50}s]`, "[--gap:3rem]")}>
           {displayPartners.map((partner) => (
             <div
               key={partner.id}

@@ -28,8 +28,11 @@ export function HeroCarousel({ slides: customSlides }: { slides?: { image: strin
   const [index, setIndex] = useState(0);
 
   const activeSlides = customSlides && customSlides.length > 0 ? customSlides : defaultSlides;
+  const activeSlide = activeSlides[index] ?? activeSlides[0];
 
   useEffect(() => {
+    if (activeSlides.length < 2) return;
+
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % activeSlides.length);
     }, 10000);
@@ -43,18 +46,20 @@ export function HeroCarousel({ slides: customSlides }: { slides?: { image: strin
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="absolute inset-0 z-0"
         >
           <Image
-            src={activeSlides[index].image}
-            alt={activeSlides[index].title}
+            src={activeSlide.image}
+            alt={activeSlide.title}
             fill
             className="object-cover"
-            priority
+            priority={index === 0}
+            quality={78}
+            sizes="100vw"
           />
           {/* Overlays for Text Legibility */}
           <div className="absolute inset-0 bg-black/20" />
@@ -78,11 +83,11 @@ export function HeroCarousel({ slides: customSlides }: { slides?: { image: strin
               className="space-y-6"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-white leading-[1.1] tracking-tight">
-                {activeSlides[index].title}
+                {activeSlide.title}
               </h1>
 
               <p className="text-lg sm:text-xl text-white/80 font-serif leading-relaxed max-w-2xl">
-                {activeSlides[index].description}
+                {activeSlide.description}
               </p>
 
               <div className="flex flex-wrap items-center gap-5 pt-8">

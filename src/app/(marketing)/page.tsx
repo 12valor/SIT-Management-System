@@ -36,7 +36,7 @@ export default async function Home() {
         <PartnersMarquee />
 
         {/* Section 02 — Gateway Cards */}
-        <section className="py-20 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
+        <section className="py-20 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300 [content-visibility:auto] [contain-intrinsic-size:900px]">
           <div className="container mx-auto px-6 max-w-6xl">
             <Reveal className="text-center mb-12">
               <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
@@ -130,7 +130,7 @@ export default async function Home() {
           </div>
         </section>
         {/* Section 03 — Institutional Impact (By the Numbers) */}
-        <section className="py-16 bg-white dark:bg-background relative transition-colors duration-300">
+        <section className="py-16 bg-white dark:bg-background relative transition-colors duration-300 [content-visibility:auto] [contain-intrinsic-size:520px]">
           <div className="container mx-auto px-6 max-w-6xl">
             <Reveal className="text-center mb-10">
               <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
@@ -174,7 +174,7 @@ export default async function Home() {
           </div>
         </section>
         {/* Section 04 — Operational Protocol (How It Works) */}
-        <section className="py-20 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
+        <section className="py-20 bg-[#fafaf9] dark:bg-background relative overflow-hidden border-t border-slate-200 dark:border-white/10 transition-colors duration-300 [content-visibility:auto] [contain-intrinsic-size:780px]">
           <div className="container mx-auto px-6 max-w-4xl">
             <header className="mb-12 text-center">
               <span className="text-primary font-medium tracking-widest uppercase text-xs mb-4 block">
@@ -234,4 +234,3 @@ export default async function Home() {
     </div>
   );
 }
-

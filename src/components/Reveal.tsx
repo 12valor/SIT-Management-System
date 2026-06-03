@@ -1,39 +1,55 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export function Reveal({
   children,
   delay = 0,
   className,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  // Sensible bottom-only margin so it triggers when the top of the element enters the viewport,
-  // even if the element is taller than the viewport.
-  const inView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Impeccable Motion Law: Exponential Ease-Out
-  const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -50px 0px", threshold: 0.01 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={className}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ 
-        duration: 0.8, 
-        delay, 
-        ease: EASE_EXPO,
-        opacity: { duration: 1.0 }
-      }}
+      className={cn(
+        "motion-safe:transition-[opacity,transform] motion-safe:duration-700 motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)]",
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0",
+        className,
+      )}
+      style={{ transitionDelay: delay ? `${delay}s` : undefined }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
