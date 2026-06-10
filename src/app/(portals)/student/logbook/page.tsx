@@ -11,7 +11,7 @@ export default async function LogbookPage() {
 
   const initialData: LogbookData = result.success && result.data 
     ? result.data 
-    : { entries: [], totalApprovedHours: 0, hasPlacement: false };
+    : { entries: [], totalApprovedHours: 0, hasPlacement: false, targetHours: 300 };
 
   return (
     <LogbookClient 
