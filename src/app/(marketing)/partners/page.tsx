@@ -5,7 +5,7 @@ import { Building2, MapPin, ArrowRight, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { Skeleton } from "boneyard-js/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
+import { getVerifiedPartners } from "@/app/(portals)/coordinator/companies/actions";
 
 type Partner = {
   id: string;
@@ -25,7 +25,7 @@ export default function PartnersPage() {
 
   const loadPartners = useCallback(async () => {
     try {
-      const data = await getPublicPartners();
+      const data = await getVerifiedPartners();
       setPartners(data as Partner[]);
     } catch (error) {
       console.error("Failed to load partners:", error);

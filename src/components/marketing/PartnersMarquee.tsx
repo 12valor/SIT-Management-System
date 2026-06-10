@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Marquee from "@/components/ui/marquee";
 import { Building2 } from "lucide-react";
-import { getPublicPartners } from "@/app/(portals)/coordinator/companies/actions";
+import { getMarqueePartners } from "@/app/(portals)/coordinator/companies/actions";
 import { getMarqueeSettings } from "@/app/(portals)/coordinator/settings/general/actions";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -32,7 +32,7 @@ export function PartnersMarquee() {
     async function load() {
       try {
         const [partnerData, settingsData] = await Promise.all([
-          getPublicPartners(),
+          getMarqueePartners(),
           getMarqueeSettings()
         ]);
         setPartners(partnerData as Partner[]);

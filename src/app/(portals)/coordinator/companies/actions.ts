@@ -172,12 +172,21 @@ export async function toggleCompanyMarquee(companyId: string, showInMarquee: boo
   return { success: true };
 }
 
-export async function getPublicPartners() {
+export async function getMarqueePartners() {
   return await prisma.company.findMany({
     where: { 
       isVerified: true,
       showInMarquee: true 
     },
     orderBy: { joinedAt: "desc" },
+  });
+}
+
+export async function getVerifiedPartners() {
+  return await prisma.company.findMany({
+    where: { 
+      isVerified: true 
+    },
+    orderBy: { name: "asc" },
   });
 }
