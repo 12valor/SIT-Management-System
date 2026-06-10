@@ -12,5 +12,4 @@ export interface LogbookData {
   entries: LogbookEntry[];
   totalApprovedHours: number;
   hasPlacement: boolean;
-  targetHours: number;
 }

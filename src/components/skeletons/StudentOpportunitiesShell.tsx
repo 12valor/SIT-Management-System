@@ -186,11 +186,7 @@ export function StudentOpportunitiesShell({
                        </div>
                     </div>
  
-                    <div className="flex items-center justify-between border-t border-border pt-6">
-                       <div className="space-y-0.5">
-                          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60">Training Load</p>
-                          <p className="text-xl font-bold text-foreground tabular-nums">{posting.requiredHours}<span className="text-xs ml-1 font-medium opacity-50">HRS</span></p>
-                       </div>
+                    <div className="flex items-center justify-end border-t border-border pt-6">
                        <div className="flex flex-col gap-3">
                           <button 
                             onClick={() => setViewingDetails(posting)}
@@ -298,7 +294,7 @@ export function StudentOpportunitiesShell({
                         <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">Training Load</p>
                         <div className="flex items-center gap-2">
                           <Activity className="h-4 w-4 text-primary" />
-                          <p className="text-lg font-bold text-foreground">{viewingDetails.requiredHours} Hours</p>
+                          <p className="text-lg font-bold text-foreground">300 Hours</p>
                         </div>
                       </div>
                       <div className="space-y-1.5">
@@ -437,7 +433,7 @@ export function StudentOpportunitiesShell({
                     <div className="bg-muted/50 border rounded-lg p-3 space-y-1 text-xs">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Requirements:</span>
-                        <span className="font-semibold">{applyingTo.requiredHours} Hours</span>
+                        <span className="font-semibold">300 Hours</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Type:</span>

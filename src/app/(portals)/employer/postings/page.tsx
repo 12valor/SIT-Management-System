@@ -259,9 +259,6 @@ export default function EmployerPostingsPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2 mb-6">
-                    <div className="px-2 py-0.5 bg-muted rounded-md text-[9px] font-bold text-muted-foreground flex items-center gap-1">
-                       <Clock className="h-2.5 w-2.5" /> {p.requiredHours}h
-                    </div>
                     <div className="px-2 py-0.5 bg-primary/10 rounded-md text-[9px] font-bold text-primary uppercase">
                        {TYPE_LABEL[p.type]}
                     </div>
@@ -298,7 +295,6 @@ export default function EmployerPostingsPage() {
                   <tr className="bg-muted/30 border-b border-border">
                     <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Title</th>
                     <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Type</th>
-                    <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left hidden md:table-cell">Hours</th>
                     <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-left">Applied</th>
                     <th className="px-6 py-4 text-[9px] font-bold uppercase tracking-wider text-muted-foreground/60 text-right">Actions</th>
                   </tr>
@@ -318,7 +314,6 @@ export default function EmployerPostingsPage() {
                         <td className="px-6 py-3 hidden md:table-cell">
                           <span className="text-[9px] font-bold text-primary uppercase">{TYPE_LABEL[p.type]}</span>
                         </td>
-                        <td className="px-6 py-3 hidden md:table-cell font-bold text-muted-foreground text-xs">{p.requiredHours}h</td>
                         <td className="px-6 py-3">
                           <span className="text-xs font-bold text-foreground">{p._count.applications}</span>
                         </td>
@@ -378,23 +373,16 @@ export default function EmployerPostingsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Location Type *</label>
-                  <div className="relative">
-                    <select name="type" defaultValue="ON_SITE"
-                      className="w-full h-11 pl-4 pr-10 rounded-xl border border-border/60 bg-muted/20 text-sm appearance-none cursor-pointer focus:border-primary transition-all">
-                      <option value="ON_SITE">On-site</option>
-                      <option value="REMOTE">Remote</option>
-                      <option value="HYBRID">Hybrid</option>
-                    </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Training Hours *</label>
-                  <input name="requiredHours" required type="number" defaultValue={300}
-                    className="w-full h-11 px-4 rounded-xl border border-border/60 bg-muted/20 text-sm outline-none focus:border-primary transition-all" />
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Location Type *</label>
+                <div className="relative">
+                  <select name="type" defaultValue="ON_SITE"
+                    className="w-full h-11 pl-4 pr-10 rounded-xl border border-border/60 bg-muted/20 text-sm appearance-none cursor-pointer focus:border-primary transition-all">
+                    <option value="ON_SITE">On-site</option>
+                    <option value="REMOTE">Remote</option>
+                    <option value="HYBRID">Hybrid</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
                 </div>
               </div>
 

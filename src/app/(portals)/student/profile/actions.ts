@@ -24,8 +24,7 @@ export async function getStudentProfile() {
       isApproved: true,
       applications: {
         select: { 
-          status: true,
-          posting: { select: { requiredHours: true } }
+          status: true
         },
       },
       logbookEntries: {

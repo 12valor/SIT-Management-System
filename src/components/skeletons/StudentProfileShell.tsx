@@ -22,7 +22,7 @@ export type ProfileData = {
   image: string | null;
   createdAt: Date;
   isApproved: boolean;
-  applications: { status: string; posting?: { requiredHours: number } }[];
+  applications: { status: string; }[];
   logbookEntries: { hours: number }[];
 };
 
@@ -60,7 +60,7 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
 
   const totalHours = profile?.logbookEntries?.reduce((a, e) => a + e.hours, 0) ?? 0;
   const appCount = profile?.applications?.length ?? 0;
-  const requiredHours = profile?.applications?.find(a => a.status === "ACCEPTED")?.posting?.requiredHours ?? 300;
+  const requiredHours = 300;
 
 
 

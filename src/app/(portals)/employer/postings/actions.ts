@@ -35,7 +35,7 @@ export async function createSITPosting(formData: FormData) {
   const description = formData.get("description") as string;
   const location = formData.get("location") as string;
   const type = (formData.get("type") as string).toUpperCase().replace("-", "_") as PlacementType;
-  const requiredHours = parseInt(formData.get("requiredHours") as string) || 300;
+  const requiredHours = 300;
   const tags = (formData.get("tags") as string || "").split(",").map(t => t.trim()).filter(Boolean);
   const requirements = (formData.get("requirements") as string || "").split("\n").map(t => t.trim()).filter(Boolean);
   const responsibilities = (formData.get("responsibilities") as string || "").split("\n").map(t => t.trim()).filter(Boolean);
@@ -47,10 +47,6 @@ export async function createSITPosting(formData: FormData) {
 
   if (!["ON_SITE", "REMOTE", "HYBRID"].includes(type)) {
     return { success: false, error: "Invalid placement type." };
-  }
-
-  if (requiredHours <= 0 || requiredHours > 1000) {
-    return { success: false, error: "Required hours must be between 1 and 1000." };
   }
 
   await prisma.sITPosting.create({
