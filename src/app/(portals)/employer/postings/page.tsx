@@ -20,7 +20,7 @@ import {
   Image as ImageIcon
 } from "lucide-react";
 import { getEmployerPostings, createSITPosting, togglePostingStatus, deleteSITPosting } from "./actions";
-import { SITPosting, PlacementType, PostingStatus } from "@/generated/client";
+import { SITPosting, PlacementType, PostingStatus } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 

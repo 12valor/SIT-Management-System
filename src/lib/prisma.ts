@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/client";
+import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
   if (!process.env.DATABASE_URL) {

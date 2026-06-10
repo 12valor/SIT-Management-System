@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { PlacementType, PostingStatus } from "@/generated/client";
+import { PlacementType, PostingStatus } from "@prisma/client";
 import { requireEmployer } from "@/lib/auth-guards";
 
 export async function getEmployerPostings() {
