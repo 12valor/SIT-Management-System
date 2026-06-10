@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
-import { registerEmployer, getCompanies } from "./actions";
+import { registerEmployer, getCompanies, checkAvailability } from "./actions";
 import { cn } from "@/lib/utils";
 import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,7 +38,6 @@ export default function EmployerSignupPage() {
       return;
     }
     setEmailStatus("checking");
-    const { checkAvailability } = await import("./actions");
     const result = await checkAvailability("user", email);
     setEmailStatus(result.available ? "available" : "taken");
   };
@@ -50,7 +49,6 @@ export default function EmployerSignupPage() {
       return;
     }
     setCompanyStatus("checking");
-    const { checkAvailability } = await import("./actions");
     const result = await checkAvailability("company", name);
     setCompanyStatus(result.available ? "available" : "taken");
     setGeneratedEmail(result.generatedEmail || null);

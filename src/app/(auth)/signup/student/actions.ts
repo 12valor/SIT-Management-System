@@ -16,9 +16,14 @@ const studentSchema = z.object({
   path: ["confirmPassword"],
 });
 
+import { UserRole } from "@prisma/client";
+
 export async function registerStudent(formData: FormData) {
   try {
     const rawData = Object.fromEntries(formData.entries());
+    if (typeof rawData.email === "string") {
+      rawData.email = rawData.email.trim().toLowerCase();
+    }
     const validatedData = studentSchema.parse(rawData);
 
     // Check if user already exists
@@ -38,15 +43,19 @@ export async function registerStudent(formData: FormData) {
         email: validatedData.email,
         password: hashedPassword,
         course: validatedData.course,
-        role: "STUDENT",
+        role: UserRole.STUDENT,
         isApproved: false, // Explicitly false for new registrations
       },
     });
 
     return { success: true };
   } catch (error) {
+    console.error("Student registration error:", error);
     if (error instanceof z.ZodError) {
       return { success: false, error: error.issues[0].message };
+    }
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
     }
     return { success: false, error: "Registration failed. Please try again." };
   }
