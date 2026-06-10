@@ -22,15 +22,23 @@ export async function getStudentLogbook() {
       where: { 
         studentId: student.id,
         status: 'ACCEPTED'
+      },
+      include: {
+        posting: {
+          select: { requiredHours: true }
+        }
       }
     });
+
+    const targetHours = placement?.posting?.requiredHours ?? 300;
 
     return {
       success: true,
       data: {
         entries,
         totalApprovedHours,
-        hasPlacement: !!placement
+        hasPlacement: !!placement,
+        targetHours
       }
     };
   } catch (error: unknown) {

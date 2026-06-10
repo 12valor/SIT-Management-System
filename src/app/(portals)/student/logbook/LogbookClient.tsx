@@ -67,7 +67,12 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
     setIsSubmitting(false);
   };
 
-  const progress = Math.min((data.totalApprovedHours / 300) * 100, 100);
+  const targetHours = data.targetHours || 300;
+  const currentCycleHours = data.totalApprovedHours % targetHours;
+  // If they have exactly targetHours, it resets to 0. But if they have 0, we don't want it to show 0 if they haven't done any yet, wait 0 is 0.
+  // Actually, if data.totalApprovedHours > 0 and currentCycleHours === 0, it means they completed a cycle exactly.
+  // Let's just use currentCycleHours for the progress display.
+  const progress = Math.min((currentCycleHours / targetHours) * 100, 100);
 
   return (
       <div className="space-y-12 max-w-6xl mx-auto pb-24 animate-in-fade">
@@ -120,11 +125,11 @@ export function LogbookClient({ initialData }: LogbookClientProps) {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
                <div className="space-y-1">
                   <p className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-wider">Target Hours</p>
-                  <p className="text-2xl font-bold text-foreground">300.00</p>
+                  <p className="text-2xl font-bold text-foreground">{targetHours.toFixed(2)}</p>
                </div>
                <div className="space-y-1">
                   <p className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-wider">Approved</p>
-                  <p className="text-2xl font-bold text-primary">{data.totalApprovedHours.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-primary">{currentCycleHours.toFixed(2)}</p>
                </div>
             </div>
             <div className="p-4 rounded-lg bg-muted border border-border flex items-center gap-4">

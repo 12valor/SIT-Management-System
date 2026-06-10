@@ -15,7 +15,9 @@ interface Props {
 }
 
 export function StudentDashboardShell({ data, userName }: Props) {
-  const hoursPct = data ? Math.min(Math.round((data.totalHours / (data.requiredHours || 300)) * 100), 100) : 0;
+  const targetHours = data?.requiredHours || 300;
+  const currentCycleHours = data ? data.totalHours % targetHours : 0;
+  const hoursPct = data ? Math.min(Math.round((currentCycleHours / targetHours) * 100), 100) : 0;
 
   return (
     <Skeleton
@@ -61,8 +63,8 @@ export function StudentDashboardShell({ data, userName }: Props) {
               <Clock className="h-4 w-4 text-slate-400" />
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white tabular-nums">{data?.totalHours ?? 0}</span>
-              <span className="text-xs font-medium text-slate-400">/ {data?.requiredHours ?? 300}</span>
+              <span className="text-3xl font-bold text-slate-900 dark:text-white tabular-nums">{currentCycleHours}</span>
+              <span className="text-xs font-medium text-slate-400">/ {targetHours}</span>
             </div>
             <Link href="/student/logbook" className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline">
               View Logbook <ArrowUpRight className="h-3 w-3" />
@@ -190,7 +192,7 @@ export function StudentDashboardShell({ data, userName }: Props) {
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">Training Progress</h3>
               <div>
                 <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-lg font-bold text-slate-900 dark:text-white tabular-nums">{data?.totalHours ?? 0} / {data?.requiredHours ?? 300}</span>
+                  <span className="text-lg font-bold text-slate-900 dark:text-white tabular-nums">{currentCycleHours} / {targetHours}</span>
                   <span className="text-xs font-bold text-slate-500">{hoursPct}%</span>
                 </div>
                 <div className="h-2 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
