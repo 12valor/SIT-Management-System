@@ -16,9 +16,10 @@ interface StudentProfileHeaderProps {
     course: string | null;
   };
   isHired: boolean;
+  isCompleted?: boolean;
 }
 
-export default function StudentProfileHeader({ student, isHired }: StudentProfileHeaderProps) {
+export default function StudentProfileHeader({ student, isHired, isCompleted }: StudentProfileHeaderProps) {
   return (
     <div className="flex items-center justify-between border-b border-border pb-6">
       <div className="flex items-center gap-6">
@@ -54,9 +55,10 @@ export default function StudentProfileHeader({ student, isHired }: StudentProfil
               </p>
               <span className={cn(
                 "px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border",
-                isHired ? "bg-primary/5 text-primary border-primary/20" : "bg-muted text-muted-foreground border-border"
+                isCompleted ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:text-emerald-400"
+                : isHired ? "bg-primary/5 text-primary border-primary/20" : "bg-muted text-muted-foreground border-border"
               )}>
-                {isHired ? "Interning" : "Seeking"}
+                {isCompleted ? "Completed" : isHired ? "Interning" : "Seeking"}
               </span>
             </div>
           </div>

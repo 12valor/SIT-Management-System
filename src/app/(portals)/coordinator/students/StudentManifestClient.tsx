@@ -183,12 +183,19 @@ export default function StudentManifestClient({ initialStudents }: StudentManife
                       <td className="px-6 py-4">
                         <span className={cn(
                           "inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border shadow-sm",
-                          s.status === "HIRED"
-                            ? "bg-primary/5 text-primary border-primary/10"
-                            : "bg-muted text-foreground/60 border-border/50"
+                          s.progress >= 100
+                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:text-emerald-400"
+                            : s.status === "HIRED"
+                              ? "bg-primary/5 text-primary border-primary/10"
+                              : "bg-muted text-foreground/60 border-border/50"
                         )}>
-                          <div className={cn("w-1 h-1 rounded-full", s.status === "HIRED" ? "bg-primary" : "bg-foreground/40")} />
-                          {s.status === "HIRED" ? "Interning" : "Seeking"}
+                          <div className={cn(
+                            "w-1 h-1 rounded-full", 
+                            s.progress >= 100
+                              ? "bg-emerald-500"
+                              : s.status === "HIRED" ? "bg-primary" : "bg-foreground/40"
+                          )} />
+                          {s.progress >= 100 ? "Completed" : s.status === "HIRED" ? "Interning" : "Seeking"}
                         </span>
                       </td>
                       <td className="px-6 py-4 hidden md:table-cell">

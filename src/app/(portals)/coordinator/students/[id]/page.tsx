@@ -53,6 +53,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
           course: student.course
         }} 
         isHired={!!placement} 
+        isCompleted={totalHours >= requiredHours}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
