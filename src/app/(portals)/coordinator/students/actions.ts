@@ -27,6 +27,7 @@ export async function getStudentManifest() {
           posting: {
             select: {
               title: true,
+              requiredHours: true,
               company: { select: { name: true } },
             },
           },
@@ -42,6 +43,7 @@ export async function getStudentManifest() {
     const totalHours = s.logbookEntries.reduce((acc, e) => acc + e.hours, 0);
     const latestApp = s.applications[0];
     const isHired = latestApp?.status === "ACCEPTED";
+    const requiredHours = isHired ? latestApp.posting.requiredHours : 300;
 
     return {
       id: s.id,
@@ -49,7 +51,8 @@ export async function getStudentManifest() {
       email: s.email || "",
       course: s.course || "N/A",
       totalHours,
-      progress: Math.min((totalHours / 300) * 100, 100),
+      requiredHours,
+      progress: Math.min((totalHours / requiredHours) * 100, 100),
       status: (isHired ? "HIRED" : "SEEKING") as "HIRED" | "SEEKING",
       company: isHired ? latestApp.posting.company?.name || "N/A" : "—",
       role: isHired ? latestApp.posting.title : "—",

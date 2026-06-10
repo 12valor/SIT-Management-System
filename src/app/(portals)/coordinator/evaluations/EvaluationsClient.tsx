@@ -49,6 +49,7 @@ interface PendingEvaluation {
   course: string;
   companyName: string;
   totalHours: number;
+  requiredHours: number;
 }
 
 interface EvaluationsClientProps {
@@ -425,8 +426,9 @@ export default function EvaluationsClient({ initialEvaluations, initialPending }
                     </tr>
                   ) : (
                     filteredPending.map((p) => {
-                      const progressPct = Math.min((p.totalHours / 300) * 100, 100);
-                      const isComplete = p.totalHours >= 280;
+                      const requiredHours = p.requiredHours || 300;
+                      const progressPct = Math.min((p.totalHours / requiredHours) * 100, 100);
+                      const isComplete = p.totalHours >= (requiredHours - 20);
 
                       return (
                         <tr key={p.studentId} className="hover:bg-muted/30 transition-colors group">
@@ -453,7 +455,7 @@ export default function EvaluationsClient({ initialEvaluations, initialPending }
                             <div className="space-y-1.5 max-w-[140px]">
                               <div className="flex items-center justify-between gap-2">
                                 <span className="text-[10px] font-semibold text-foreground tabular-nums">
-                                  {p.totalHours} <span className="text-foreground/30 font-medium">/ 300h</span>
+                                  {p.totalHours} <span className="text-foreground/30 font-medium">/ {p.requiredHours || 300}h</span>
                                 </span>
                                 <span className="text-[9px] font-semibold text-foreground/40">{Math.round(progressPct)}%</span>
                               </div>

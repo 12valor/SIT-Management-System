@@ -22,7 +22,7 @@ export type ProfileData = {
   image: string | null;
   createdAt: Date;
   isApproved: boolean;
-  applications: { status: string }[];
+  applications: { status: string; posting?: { requiredHours: number } }[];
   logbookEntries: { hours: number }[];
 };
 
@@ -63,6 +63,7 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
 
   const totalHours = profile?.logbookEntries?.reduce((a, e) => a + e.hours, 0) ?? 0;
   const appCount = profile?.applications?.length ?? 0;
+  const requiredHours = profile?.applications?.find(a => a.status === "ACCEPTED")?.posting?.requiredHours ?? 300;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -167,7 +168,7 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
              <div>
                 <p className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider mb-1">Training Hours</p>
                 <p className="text-xl font-bold text-foreground tracking-tight">
-                  {totalHours.toFixed(0)}<span className="text-[10px] opacity-30 ml-0.5">/300</span>
+                  {totalHours.toFixed(0)}<span className="text-[10px] opacity-30 ml-0.5">/{requiredHours}</span>
                 </p>
              </div>
              <div>

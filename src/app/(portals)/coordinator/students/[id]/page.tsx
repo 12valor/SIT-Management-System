@@ -40,6 +40,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
     .reduce((sum, e) => sum + e.hours, 0);
   
   const placement = student.applications[0];
+  const requiredHours = placement?.posting.requiredHours || 300;
 
   return (
     <div className="flex-1 space-y-8 pb-24">
@@ -98,11 +99,11 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
           <div className="bg-card border border-border rounded-xl p-6 shadow-sm space-y-2">
              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Training Completion</p>
              <div className="flex items-end justify-between">
-                <span className="text-3xl font-bold text-foreground tabular-nums">{totalHours} <span className="text-sm font-medium text-muted-foreground">/ 300h</span></span>
-                <span className="text-sm font-bold text-primary">{Math.round((totalHours/300)*100)}%</span>
+                <span className="text-3xl font-bold text-foreground tabular-nums">{totalHours} <span className="text-sm font-medium text-muted-foreground">/ {requiredHours}h</span></span>
+                <span className="text-sm font-bold text-primary">{Math.round((totalHours/requiredHours)*100)}%</span>
              </div>
              <div className="h-2 w-full bg-muted rounded-full overflow-hidden border border-border/50">
-                <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${Math.min((totalHours/300)*100, 100)}%` }} />
+                <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${Math.min((totalHours/requiredHours)*100, 100)}%` }} />
              </div>
           </div>
         </div>

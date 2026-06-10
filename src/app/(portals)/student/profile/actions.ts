@@ -23,7 +23,10 @@ export async function getStudentProfile() {
       createdAt: true,
       isApproved: true,
       applications: {
-        select: { status: true },
+        select: { 
+          status: true,
+          posting: { select: { requiredHours: true } }
+        },
       },
       logbookEntries: {
         where: { status: "APPROVED" },

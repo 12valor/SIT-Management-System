@@ -24,6 +24,7 @@ export interface StudentDashboardData {
   applications: StudentApplication[];
   hiredPlacement: HiredPlacement | null;
   documents: StudentDocument[];
+  requiredHours: number;
 }
 
 export const REQUIRED_CREDENTIALS = [

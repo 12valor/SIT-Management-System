@@ -23,6 +23,7 @@ export async function getEmployerTrainees() {
         status: 'ACCEPTED'
       },
       include: {
+        posting: true,
         student: {
           include: {
             logbookEntries: {
@@ -42,6 +43,7 @@ export async function getEmployerTrainees() {
         studentName: t.student.name,
         studentEmail: t.student.email,
         totalHours: t.student.logbookEntries.reduce((acc, curr) => acc + curr.hours, 0),
+        requiredHours: t.posting.requiredHours,
         evaluation: t.student.evaluations[0] || null,
         companyName: employer.company?.name
       }))

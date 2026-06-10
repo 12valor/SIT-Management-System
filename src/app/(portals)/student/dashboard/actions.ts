@@ -55,7 +55,8 @@ export async function getStudentDashboardData() {
         documents: student.documents.map(doc => ({
           name: doc.name,
           url: doc.url,
-        }))
+        })),
+        requiredHours: acceptedApp ? acceptedApp.posting.requiredHours : 300
       }
     };
   } catch (error: unknown) {

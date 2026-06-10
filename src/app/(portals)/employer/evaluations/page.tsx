@@ -262,12 +262,12 @@ export default function EmployerEvaluationsPage() {
         {trainees.map((trainee) => {
           const hours = trainee.totalHours;
           const evaluation = trainee.evaluation;
-          const isEligible = hours >= 280; 
+          const isEligible = hours >= (trainee.requiredHours - 20); 
 
           return (
             <div key={trainee.id} className="group bg-card border border-border rounded-xl p-8 shadow-sm hover:shadow-md hover:border-primary/20 transition-all flex flex-col items-center text-center relative overflow-hidden">
                <div className="absolute top-0 left-0 w-full h-1.5 bg-muted" />
-               <div className="absolute top-0 left-0 h-1.5 bg-primary transition-all duration-1000 shadow-sm" style={{ width: `${Math.min((hours/300)*100, 100)}%` }} />
+               <div className="absolute top-0 left-0 h-1.5 bg-primary transition-all duration-1000 shadow-sm" style={{ width: `${Math.min((hours/(trainee.requiredHours || 300))*100, 100)}%` }} />
 
                <div className="mb-6 relative">
                   <div className="w-20 h-20 rounded-xl bg-muted border border-border flex items-center justify-center text-3xl font-bold text-muted-foreground/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all transform group-hover:scale-105 shadow-sm">
@@ -289,7 +289,7 @@ export default function EmployerEvaluationsPage() {
                   <div className="space-y-1 border-r border-border/50">
                      <p className="text-[9px] font-bold uppercase text-muted-foreground/60 tracking-wider">Validated Hours</p>
                      <p className="text-xl font-bold text-foreground flex items-center justify-center gap-1.5 tracking-tight">
-                        {hours} <span className="text-[10px] text-muted-foreground/40 font-medium">/ 300</span>
+                        {hours} <span className="text-[10px] text-muted-foreground/40 font-medium">/ {trainee.requiredHours || 300}</span>
                      </p>
                   </div>
                   <div className="space-y-1 flex flex-col items-center justify-center">

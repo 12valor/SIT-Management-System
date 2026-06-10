@@ -44,8 +44,19 @@ export async function getCompletionStatus() {
     // 4. Fetch Student Info for Certificate
     const user = await prisma.user.findUnique({
       where: { id: student.id },
-      select: { name: true, course: true }
+      select: { 
+        name: true, 
+        course: true,
+        applications: {
+          where: { status: 'ACCEPTED' },
+          select: {
+            posting: { select: { requiredHours: true } }
+          }
+        }
+      }
     });
+
+    const requiredHours = user?.applications?.[0]?.posting?.requiredHours ?? 300;
 
     return {
       success: true,
@@ -53,7 +64,7 @@ export async function getCompletionStatus() {
         studentName: user?.name || "Unknown Graduate",
         studentCourse: user?.course || "Information Technology",
         totalHours,
-        hourGoal: 300,
+        hourGoal: requiredHours,
         hasEvaluation: !!evaluation,
         evaluationData: evaluation ? {
           overallGrade: evaluation.overallGrade,
@@ -62,7 +73,7 @@ export async function getCompletionStatus() {
         } : null,
         documentsUploaded: uploadedMandatoryCount,
         totalRequiredDocs: MANDATORY_DOC_NAMES.length,
-        isFullyComplete: totalHours >= 300
+        isFullyComplete: totalHours >= requiredHours
       }
     };
   } catch (error: unknown) {

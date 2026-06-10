@@ -63,7 +63,8 @@ export async function getCoordinatorEvaluations() {
         studentEmail: p.student.email,
         course: p.student.course || "N/A",
         companyName: p.posting.company.name,
-        totalHours: p.student.logbookEntries.reduce((acc, curr) => acc + curr.hours, 0)
+        totalHours: p.student.logbookEntries.reduce((acc, curr) => acc + curr.hours, 0),
+        requiredHours: p.posting.requiredHours
       }));
 
     const formattedEvaluations = evaluations.map((ev) => {

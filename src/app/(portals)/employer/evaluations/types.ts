@@ -18,4 +18,5 @@ export interface Trainee {
   totalHours: number;
   evaluation: EvaluationData | null;
   companyName: string | undefined;
+  requiredHours: number;
 }
