@@ -41,6 +41,7 @@ export default function EmployerPostingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [respInput, setRespInput] = useState("");
   const [resps, setResps] = useState<string[]>([]);
@@ -77,6 +78,14 @@ export default function EmployerPostingsPage() {
     }
   };
 
+  const handleTagKey = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && tagInput.trim()) {
+      e.preventDefault();
+      if (!tags.includes(tagInput.trim())) setTags([...tags, tagInput.trim()]);
+      setTagInput("");
+    }
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -104,6 +113,7 @@ export default function EmployerPostingsPage() {
     
     if (respInput.trim() && !finalResps.includes(respInput.trim())) finalResps.push(respInput.trim());
     if (reqInput.trim() && !finalReqs.includes(reqInput.trim())) finalReqs.push(reqInput.trim());
+    if (tagInput.trim() && !finalTags.includes(tagInput.trim())) finalTags.push(tagInput.trim());
 
     fd.append("tags", finalTags.join(","));
     fd.append("responsibilities", finalResps.join("\n"));
@@ -118,6 +128,7 @@ export default function EmployerPostingsPage() {
       setReqs([]);
       setRespInput("");
       setReqInput("");
+      setTagInput("");
       setPosterPreview(null);
       await loadPostings();
     } else {
@@ -393,7 +404,7 @@ export default function EmployerPostingsPage() {
                   className="w-full p-4 rounded-xl border border-border/60 bg-muted/20 text-sm outline-none focus:border-primary resize-none transition-all" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Responsibilities (Enter)</label>
                   <div className="min-h-[100px] border border-border/60 rounded-xl bg-muted/10 p-3 flex flex-col">
@@ -409,7 +420,7 @@ export default function EmployerPostingsPage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Requirements (Enter)</label>
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Qualifications (Enter)</label>
                   <div className="min-h-[100px] border border-border/60 rounded-xl bg-muted/10 p-3 flex flex-col">
                     <div className="flex flex-wrap gap-2 mb-2">
                       {reqs.map((r) => (
@@ -419,6 +430,20 @@ export default function EmployerPostingsPage() {
                       ))}
                     </div>
                     <input value={reqInput} onChange={(e) => setReqInput(e.target.value)} onKeyDown={handleReqKey}
+                      placeholder="Add qualification..." className="bg-transparent outline-none text-sm w-full" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest ml-1">Skills (Enter)</label>
+                  <div className="min-h-[100px] border border-border/60 rounded-xl bg-muted/10 p-3 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {tags.map((t) => (
+                        <span key={t} className="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-lg flex items-center gap-1.5">
+                          {t} <X className="h-3 w-3 cursor-pointer" onClick={() => setTags(tags.filter(x => x !== t))} />
+                        </span>
+                      ))}
+                    </div>
+                    <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKey}
                       placeholder="Add skill..." className="bg-transparent outline-none text-sm w-full" />
                   </div>
                 </div>
