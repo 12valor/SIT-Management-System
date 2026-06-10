@@ -9,7 +9,7 @@ import {
   ShieldCheck, 
   Camera,
 } from "lucide-react";
-import { updateStudentProfile, updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
+import { updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";
 import { COURSES, isCourseCode } from "@/lib/courses";
 import Image from "next/image";
@@ -28,10 +28,7 @@ export type ProfileData = {
 
 export function StudentProfileShell({ initialData }: { initialData: ProfileData | null }) {
   const [profile, setProfile] = useState<ProfileData | null>(null);
-  const [isPending, startTransition] = useTransition();
   const [isImageUploading, setIsImageUploading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
@@ -65,26 +62,7 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
   const appCount = profile?.applications?.length ?? 0;
   const requiredHours = profile?.applications?.find(a => a.status === "ACCEPTED")?.posting?.requiredHours ?? 300;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setSuccess(false);
-    const fd = new FormData(e.currentTarget);
-    startTransition(async () => {
-      const res = await updateStudentProfile(fd);
-      if (res.success) {
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
-        setProfile(prev => prev ? {
-          ...prev,
-          name: typeof fd.get("name") === "string" ? fd.get("name") as string : prev.name,
-          course: typeof fd.get("course") === "string" ? fd.get("course") as string : prev.course
-        } : null);
-      } else {
-        setError(res.error || "Update failed.");
-      }
-    });
-  };
+
 
   const safeProfile = profile || {
     id: '...',
@@ -181,17 +159,15 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
              </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-10">
-            {error && <div className="text-xs text-red-500 font-bold mb-4">{error}</div>}
-            
+          <div className="space-y-10">
             <div className="space-y-8">
               <div className="space-y-2">
                 <label className="text-[11px] font-bold uppercase text-foreground/50 tracking-[0.2em] ml-0.5">Full Name</label>
                 <input
                   name="name"
-                  required
-                  defaultValue={safeProfile.name ?? ""}
-                  className="w-full h-11 border-b border-border/60 bg-transparent text-sm font-medium text-foreground outline-none focus:border-primary transition-colors"
+                  readOnly
+                  value={safeProfile.name ?? ""}
+                  className="w-full h-11 border-b border-border/60 bg-transparent text-sm font-medium text-foreground outline-none transition-colors opacity-60 cursor-not-allowed"
                 />
               </div>
 
@@ -200,8 +176,9 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
                 <div className="relative">
                   <select
                     name="course"
-                    defaultValue={safeProfile.course ?? ""}
-                    className="w-full h-11 border-b border-border/60 bg-transparent text-sm font-medium text-foreground outline-none appearance-none cursor-pointer transition-colors focus:border-primary"
+                    value={safeProfile.course ?? ""}
+                    disabled
+                    className="w-full h-11 border-b border-border/60 bg-transparent text-sm font-medium text-foreground outline-none appearance-none transition-colors opacity-60 cursor-not-allowed"
                   >
                     <option value="" disabled>Select program...</option>
                     {hasLegacyCourse && (
@@ -218,19 +195,9 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
             </div>
 
             <div className="flex items-center gap-6 pt-4">
-              <button
-                type="submit"
-                disabled={isPending}
-                className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.3em] text-primary hover:text-primary/80 transition-all active:scale-95 disabled:opacity-50"
-              >
-                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                Save Changes
-              </button>
-              {success && (
-                <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest animate-in fade-in">Sync Complete</p>
-              )}
+               <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Profile Locked</p>
             </div>
-          </form>
+          </div>
 
           <div className="flex items-center gap-4 px-1 opacity-40">
              <ShieldCheck className="h-4 w-4" />

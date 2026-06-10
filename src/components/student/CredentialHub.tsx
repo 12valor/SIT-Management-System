@@ -42,7 +42,7 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
     }
     
     await new Promise(resolve => setTimeout(resolve, 1500));
-    const mockUrl = `https://archive.sit.tupv.edu.ph/manifests/${file.name.replace(/\s+/g, '_')}`;
+    const mockUrl = `https://example.com/manifests/${file.name.replace(/\s+/g, '_')}`;
 
     const result = await uploadDocumentMetadata({
       name: docName,
@@ -152,7 +152,13 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                         className="flex items-center gap-2"
                       >
                         <button 
-                          onClick={() => doc.url && window.open(doc.url, '_blank')}
+                          onClick={() => {
+                            if (doc.url && doc.url.includes("example.com/manifests")) {
+                              alert("This is a mock document. In a real environment, this would open the uploaded file.");
+                            } else if (doc.url) {
+                              window.open(doc.url, '_blank');
+                            }
+                          }}
                           className="h-10 px-4 text-xs font-bold border border-border rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />

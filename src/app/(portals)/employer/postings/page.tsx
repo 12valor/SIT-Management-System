@@ -97,16 +97,27 @@ export default function EmployerPostingsPage() {
     setIsSubmitting(true);
     setError("");
     const fd = new FormData(e.currentTarget);
-    fd.append("tags", tags.join(","));
-    fd.append("responsibilities", resps.join("\n"));
-    fd.append("requirements", reqs.join("\n"));
+    
+    const finalTags = [...tags];
+    const finalResps = [...resps];
+    const finalReqs = [...reqs];
+    
+    if (respInput.trim() && !finalResps.includes(respInput.trim())) finalResps.push(respInput.trim());
+    if (reqInput.trim() && !finalReqs.includes(reqInput.trim())) finalReqs.push(reqInput.trim());
+
+    fd.append("tags", finalTags.join(","));
+    fd.append("responsibilities", finalResps.join("\n"));
+    fd.append("requirements", finalReqs.join("\n"));
     if (posterPreview) fd.append("poster", posterPreview);
+    
     const res = await createSITPosting(fd);
     if (res.success) {
       setShowModal(false);
       setTags([]);
       setResps([]);
       setReqs([]);
+      setRespInput("");
+      setReqInput("");
       setPosterPreview(null);
       await loadPostings();
     } else {
