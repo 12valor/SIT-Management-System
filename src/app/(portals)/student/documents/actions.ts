@@ -12,6 +12,7 @@ function isAllowedDocumentUrl(url?: string) {
   if (!url) return true;
 
   try {
+    if (url.startsWith("data:")) return true;
     const parsed = new URL(url);
     return parsed.protocol === "https:" && (parsed.hostname === "archive.sit.tupv.edu.ph" || parsed.hostname === "example.com");
   } catch {

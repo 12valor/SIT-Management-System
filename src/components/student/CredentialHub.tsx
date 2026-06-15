@@ -41,13 +41,17 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
       await deleteDocument(existingDoc.id);
     }
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    const mockUrl = `https://example.com/manifests/${file.name.replace(/\s+/g, '_')}`;
+    const base64Url = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
 
     const result = await uploadDocumentMetadata({
       name: docName,
       type: file.type.includes("image") ? "IMAGE" : "PDF",
-      url: mockUrl
+      url: base64Url
     });
 
     if (result.success && result.data) {
@@ -155,6 +159,13 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                           onClick={() => {
                             if (doc.url && doc.url.includes("example.com/manifests")) {
                               alert("This is a mock document. In a real environment, this would open the uploaded file.");
+                            } else if (doc.url && doc.url.startsWith("data:")) {
+                              const a = document.createElement("a");
+                              a.href = doc.url;
+                              a.download = doc.name;
+                              document.body.appendChild(a);
+                              a.click();
+                              document.body.removeChild(a);
                             } else if (doc.url) {
                               window.open(doc.url, '_blank');
                             }

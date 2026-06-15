@@ -210,7 +210,20 @@ export function CredentialInspector({
                           <div 
                             key={doc.id} 
                             className="group flex items-center justify-between p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-muted/30 transition-all cursor-pointer"
-                            onClick={() => doc.url && window.open(doc.url, '_blank')}
+                            onClick={() => {
+                              if (doc.url && doc.url.includes("example.com/manifests")) {
+                                alert("This is a mock document.");
+                              } else if (doc.url && doc.url.startsWith("data:")) {
+                                const a = document.createElement("a");
+                                a.href = doc.url;
+                                a.download = doc.name;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                              } else if (doc.url) {
+                                window.open(doc.url, '_blank');
+                              }
+                            }}
                           >
                             <div className="flex items-center gap-3 overflow-hidden">
                               <div className="h-10 w-10 shrink-0 rounded-lg bg-foreground/5 flex items-center justify-center text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">
