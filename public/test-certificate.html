@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Certificate</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; background: #e0e0e0; min-height: 100vh; font-family: 'Helvetica', Arial, sans-serif; }
+        .cert-container {
+            width: 1122px; /* 297mm at 96dpi */
+            height: 793px; /* 210mm at 96dpi */
+            background: white;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .left-col {
+            width: 283px; /* 75mm */
+            background: #800000;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        .gold-line {
+            width: 11px; /* 3mm */
+            background: #DAA520;
+            height: 100%;
+        }
+        .right-col {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            margin-top: 75px; /* 20mm */
+            width: 151px; /* 40mm */
+            height: 151px; /* 40mm */
+            background-image: url('/Technological_University_of_the_Philippines_Seal.svg.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .uni-text {
+            margin-top: 75px; /* 80mm - 40mm(logo) - 20mm = 20mm diff */
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+        .uni-sub {
+            margin-top: 75px;
+            font-size: 14px;
+            color: #dcdcdc;
+            line-height: 1.4;
+            font-weight: normal;
+        }
+        .header {
+            margin-top: 110px; /* 40mm */
+            color: #800000;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .sub-header {
+            margin-top: 10px;
+            color: black;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .certify-text {
+            margin-top: 80px; /* 75mm */
+            color: #323232;
+            font-size: 18px;
+            font-style: italic;
+        }
+        .student-name {
+            margin-top: 40px; /* 95mm */
+            color: #800000;
+            font-size: 48px;
+            font-weight: bold;
+        }
+        .candidate-id {
+            margin-top: 10px;
+            color: #646464;
+            font-size: 16px;
+        }
+        .reason-text {
+            margin-top: 40px; /* 125mm */
+            color: #323232;
+            font-size: 18px;
+        }
+        .course-name {
+            margin-top: 20px; /* 138mm */
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .details-row {
+            margin-top: 45px; /* 150mm */
+            width: 100%;
+            border-top: 1px solid #c8c8c8;
+            padding-top: 30px; /* 160mm */
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .detail-item h4 {
+            color: #800000;
+            font-size: 14px;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+        .detail-item p {
+            color: black;
+            font-size: 16px;
+            margin: 0;
+        }
+        .signatures {
+            position: absolute;
+            bottom: 60px; /* 195mm -> ~15mm from bottom */
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-line {
+            width: 180px;
+            border-top: 1px solid black;
+            text-align: center;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 30px; /* 202mm */
+            color: #969696;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cert-container">
+        <div class="left-col">
+            <div class="logo"></div>
+            <div class="uni-text">
+                TECHNOLOGICAL<br>UNIVERSITY OF<br>THE PHILIPPINES
+            </div>
+            <div class="uni-sub">
+                Ayala Blvd, Ermita<br>Manila, 1000 Metro Manila
+            </div>
+        </div>
+        <div class="gold-line"></div>
+        <div class="right-col">
+            <div class="header">SUPERVISED INDUSTRIAL TRAINING</div>
+            <div class="sub-header">CERTIFICATE OF COMPLETION</div>
+
+            <div class="certify-text">This is to proudly certify that</div>
+            <div class="student-name">JOHN DOE</div>
+            <div class="candidate-id">Candidate ID: SIT-TEST1234</div>
+
+            <div class="reason-text">has successfully fulfilled the prescribed hours and industrial protocols for</div>
+            <div class="course-name">BS Computer Science</div>
+
+            <div class="details-row">
+                <div class="detail-item">
+                    <h4>PARTNER INSTITUTION</h4>
+                    <p>Tech Corp Inc.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>VERIFIED HOURS</h4>
+                    <p>300 Hours</p>
+                </div>
+                <div class="detail-item">
+                    <h4>PERFORMANCE GRADE</h4>
+                    <p>4.8 / 5.0</p>
+                </div>
+            </div>
+
+            <div class="signatures">
+                <div class="signature-line">OFFICE OF THE REGISTRAR</div>
+                <div class="signature-line">INDUSTRIAL SUPERVISOR</div>
+            </div>
+
+            <div class="footer">Issued on June 15, 2026 | Official SIT Manifest</div>
+        </div>
+    </div>
+</body>
+</html>
