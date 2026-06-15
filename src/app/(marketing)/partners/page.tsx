@@ -280,7 +280,7 @@ export default function PartnersPage() {
               </p>
               
               <Link
-                href="#"
+                href="/signup/employer"
                 className="group relative inline-flex items-center justify-center h-14 px-10 bg-primary text-white font-medium rounded-full overflow-hidden transition-transform active:scale-95 shadow-lg shadow-primary/20"
               >
                 <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
