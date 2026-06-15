@@ -29,7 +29,11 @@ export default {
       }
 
       if (isAuthRoute && isLoggedIn && userRole) {
-        return Response.redirect(new URL(roleDashboard, nextUrl));
+        const redirectParam = nextUrl.searchParams.get("redirect");
+        const targetUrl = redirectParam && redirectParam.startsWith("/") 
+          ? redirectParam 
+          : roleDashboard;
+        return Response.redirect(new URL(targetUrl, nextUrl));
       }
       
       return true;
