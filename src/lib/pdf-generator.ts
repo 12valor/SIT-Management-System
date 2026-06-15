@@ -16,6 +16,7 @@ interface CertificateData {
   grade: number;
   date: string;
   certificateId: string;
+  logoBase64?: string;
 }
 
 export const generateSITCertificate = (data: CertificateData) => {
@@ -25,88 +26,120 @@ export const generateSITCertificate = (data: CertificateData) => {
     format: "a4",
   });
 
-  const width = doc.internal.pageSize.getWidth();
-  const height = doc.internal.pageSize.getHeight();
+  const width = doc.internal.pageSize.getWidth(); // 297
+  const height = doc.internal.pageSize.getHeight(); // 210
 
-  // 1. Premium Border
-  doc.setDrawColor(79, 70, 229); // Indigo 600
-  doc.setLineWidth(2);
-  doc.rect(5, 5, width - 10, height - 10);
-  
-  doc.setDrawColor(15, 23, 42); // Slate 900
-  doc.setLineWidth(0.5);
-  doc.rect(7, 7, width - 14, height - 14);
+  const primaryRed = { r: 128, g: 0, b: 0 }; // TUP Maroon
+  const goldAccent = { r: 218, g: 165, b: 32 };
 
-  // 2. Corner Decorations
-  doc.setFillColor(79, 70, 229);
-  doc.triangle(5, 5, 25, 5, 5, 25, "F"); // Top Left
-  doc.triangle(width - 5, 5, width - 25, 5, width - 5, 25, "F"); // Top Right
-  doc.triangle(5, height - 5, 25, height - 5, 5, height - 25, "F"); // Bottom Left
-  doc.triangle(width - 5, height - 5, width - 25, height - 5, width - 5, height - 25, "F"); // Bottom Right
+  // 1. Backgrounds
+  doc.setFillColor(255, 255, 255);
+  doc.rect(0, 0, width, height, "F");
+
+  // Left Side Red Column
+  const sideWidth = 75;
+  doc.setFillColor(primaryRed.r, primaryRed.g, primaryRed.b);
+  doc.rect(0, 0, sideWidth, height, "F");
+
+  // Gold Accent Line
+  doc.setFillColor(goldAccent.r, goldAccent.g, goldAccent.b);
+  doc.rect(sideWidth, 0, 3, height, "F");
+
+  // Logo
+  if (data.logoBase64) {
+    // 40x40 logo centered in the 75mm wide column -> x = (75-40)/2 = 17.5
+    doc.addImage(data.logoBase64, "PNG", 17.5, 20, 40, 40);
+  }
+
+  // Text on the red column
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("TECHNOLOGICAL", sideWidth / 2, 80, { align: "center" });
+  doc.text("UNIVERSITY OF", sideWidth / 2, 88, { align: "center" });
+  doc.text("THE PHILIPPINES", sideWidth / 2, 96, { align: "center" });
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(220, 220, 220);
+  doc.text("Ayala Blvd, Ermita", sideWidth / 2, 115, { align: "center" });
+  doc.text("Manila, 1000 Metro Manila", sideWidth / 2, 120, { align: "center" });
+
+  // Right Side Content Area
+  const contentXCenter = sideWidth + 3 + (width - sideWidth - 3) / 2; // ~187.5
 
   // 3. Header
-  doc.setTextColor(15, 23, 42);
+  doc.setTextColor(primaryRed.r, primaryRed.g, primaryRed.b);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(28);
-  doc.text("SUPERVISED INDUSTRIAL TRAINING", width / 2, 40, { align: "center" });
+  doc.setFontSize(26);
+  doc.text("SUPERVISED INDUSTRIAL TRAINING", contentXCenter, 40, { align: "center" });
   
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(71, 85, 105); // Slate 500
-  doc.text("OFFICIAL COMPLETION CERTIFICATE", width / 2, 50, { align: "center" });
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 0); 
+  doc.text("CERTIFICATE OF COMPLETION", contentXCenter, 50, { align: "center" });
 
   // 4. Main Body
-  doc.setFontSize(16);
-  doc.setTextColor(15, 23, 42);
-  doc.text("This is to certify that", width / 2, 75, { align: "center" });
-
-  doc.setFontSize(32);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(79, 70, 229);
-  doc.text(data.studentName.toUpperCase(), width / 2, 95, { align: "center" });
-
   doc.setFontSize(14);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(71, 85, 105);
-  doc.text(`Candidate ID: ${data.certificateId}`, width / 2, 105, { align: "center" });
+  doc.setFont("helvetica", "italic");
+  doc.setTextColor(50, 50, 50);
+  doc.text("This is to proudly certify that", contentXCenter, 75, { align: "center" });
 
-  doc.setFontSize(16);
-  doc.setTextColor(15, 23, 42);
-  doc.text("has successfully completed the assigned industrial protocols for", width / 2, 125, { align: "center" });
-
-  doc.setFontSize(20);
+  doc.setFontSize(36);
   doc.setFont("helvetica", "bold");
-  doc.text(data.course, width / 2, 140, { align: "center" });
-
-  // 5. Training Details
-  doc.setDrawColor(226, 232, 240); // Slate 200
-  doc.line(width / 4, 150, (3 * width) / 4, 150);
+  doc.setTextColor(primaryRed.r, primaryRed.g, primaryRed.b);
+  doc.text(data.studentName.toUpperCase(), contentXCenter, 95, { align: "center" });
 
   doc.setFontSize(12);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(79, 70, 229);
-  doc.text("PARTNER INSTITUTION", width / 4, 165, { align: "center" });
-  doc.text("VERIFIED HOURS", width / 2, 165, { align: "center" });
-  doc.text("PERFORMANCE GRADE", (3 * width) / 4, 165, { align: "center" });
-
-  doc.setTextColor(15, 23, 42);
   doc.setFont("helvetica", "normal");
-  doc.text(data.companyName, width / 4, 175, { align: "center" });
-  doc.text(`${data.totalHours} Hours`, width / 2, 175, { align: "center" });
-  doc.text(`${data.grade.toFixed(1)} / 5.0`, (3 * width) / 4, 175, { align: "center" });
+  doc.setTextColor(100, 100, 100);
+  doc.text(`Candidate ID: ${data.certificateId}`, contentXCenter, 105, { align: "center" });
+
+  doc.setFontSize(14);
+  doc.setTextColor(50, 50, 50);
+  doc.text("has successfully fulfilled the prescribed hours and industrial protocols for", contentXCenter, 125, { align: "center" });
+
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 0);
+  doc.text(data.course, contentXCenter, 138, { align: "center" });
+
+  // 5. Training Details
+  doc.setDrawColor(200, 200, 200); 
+  doc.line(sideWidth + 20, 150, width - 20, 150);
+
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(primaryRed.r, primaryRed.g, primaryRed.b);
+  
+  // Three columns within the right section
+  const col1 = sideWidth + 3 + (width - sideWidth - 3) * 0.25; // ~133
+  const col2 = sideWidth + 3 + (width - sideWidth - 3) * 0.5;  // ~187.5
+  const col3 = sideWidth + 3 + (width - sideWidth - 3) * 0.75; // ~242
+
+  doc.text("PARTNER INSTITUTION", col1, 160, { align: "center" });
+  doc.text("VERIFIED HOURS", col2, 160, { align: "center" });
+  doc.text("PERFORMANCE GRADE", col3, 160, { align: "center" });
+
+  doc.setTextColor(0, 0, 0);
+  doc.setFont("helvetica", "normal");
+  doc.text(data.companyName, col1, 168, { align: "center", maxWidth: 50 });
+  doc.text(`${data.totalHours} Hours`, col2, 168, { align: "center" });
+  doc.text(`${data.grade.toFixed(1)} / 5.0`, col3, 168, { align: "center" });
 
   // 6. Signatures
-  doc.line(40, 195, 100, 195);
-  doc.line(width - 100, 195, width - 40, 195);
+  doc.setDrawColor(0, 0, 0);
+  doc.line(col1 - 25, 195, col1 + 25, 195);
+  doc.line(col3 - 25, 195, col3 + 25, 195);
 
   doc.setFontSize(10);
-  doc.text("OFFICE OF THE REGISTRAR", 70, 202, { align: "center" });
-  doc.text("INDUSTRIAL SUPERVISOR", width - 70, 202, { align: "center" });
+  doc.text("OFFICE OF THE REGISTRAR", col1, 202, { align: "center" });
+  doc.text("INDUSTRIAL SUPERVISOR", col3, 202, { align: "center" });
 
   // 7. Footer Meta
   doc.setFontSize(8);
-  doc.setTextColor(148, 163, 184); // Slate 400
-  doc.text(`Issued on ${data.date} | SIT-OS Industrial Manifest v1.0`, width / 2, height - 15, { align: "center" });
+  doc.setTextColor(150, 150, 150); 
+  doc.text(`Issued on ${data.date} | Official SIT Manifest`, col2, height - 8, { align: "center" });
 
   // 8. Save
   doc.save(`SIT_Certificate_${data.studentName.replace(/\s+/g, "_")}.pdf`);
@@ -131,7 +164,7 @@ export const generateCoordinatorReport = (title: string, data: string[][], colum
     head: [columns],
     body: data,
     theme: "striped",
-    headStyles: { fillColor: [79, 70, 229], textColor: 255 },
+    headStyles: { fillColor: [128, 0, 0], textColor: 255 },
     alternateRowStyles: { fillColor: [248, 250, 252] },
     margin: { top: 45 },
   });

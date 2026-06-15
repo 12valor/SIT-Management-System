@@ -43,8 +43,22 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
   const isHoursComplete = totalHours >= hourGoal;
   const isDocsComplete = documentsUploaded >= totalRequiredDocs;
 
-  const handleDownloadCertificate = () => {
+  const handleDownloadCertificate = async () => {
     if (!isHoursComplete) return;
+
+    let base64data = "";
+    try {
+      const response = await fetch('/Technological_University_of_the_Philippines_Seal.svg.png');
+      const blob = await response.blob();
+      base64data = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (e) {
+      console.error("Failed to load logo", e);
+    }
     
     generateSITCertificate({
        studentName: studentName,
@@ -53,7 +67,8 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
        totalHours: totalHours,
        grade: evaluationData?.overallGrade || 0,
        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-       certificateId: `SIT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`
+       certificateId: `SIT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+       logoBase64: base64data
     });
   };
 
