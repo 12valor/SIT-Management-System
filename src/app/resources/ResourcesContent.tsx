@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Download, Gavel, BookOpen, ShieldCheck } from "lucide-react";
+import { Download, Gavel, BookOpen, ShieldCheck, Loader2 } from "lucide-react";
+import { generateResourceDocument } from "@/lib/pdf-generator";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -37,6 +38,31 @@ const DOCUMENTS = [
 ];
 
 export default function ResourcesContent() {
+  const [downloading, setDownloading] = useState<string | null>(null);
+
+  const handleDownload = async (docName: string, docDesc: string) => {
+    setDownloading(docName);
+    try {
+      let base64data = "";
+      try {
+        const response = await fetch('/Technological_University_of_the_Philippines_Seal.svg.png');
+        const blob = await response.blob();
+        base64data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      } catch (e) {
+        console.error("Failed to load logo", e);
+      }
+      
+      generateResourceDocument(docName, docDesc, base64data);
+    } finally {
+      setDownloading(null);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-32 pb-24 px-6 transition-colors duration-300">
       <motion.div 
@@ -81,9 +107,17 @@ export default function ResourcesContent() {
                     
                     <div className="flex items-center gap-6 self-start md:self-center">
                       <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{doc.format}</span>
-                      <button className="group/btn relative h-12 w-12 flex items-center justify-center rounded-full bg-primary text-white overflow-hidden transition-transform active:scale-90 shadow-lg shadow-primary/20">
+                      <button 
+                        onClick={() => handleDownload(doc.name, doc.desc)}
+                        disabled={downloading === doc.name}
+                        className="group/btn relative h-12 w-12 flex items-center justify-center rounded-full bg-primary text-white overflow-hidden transition-transform active:scale-90 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
                         <span className="relative z-10">
-                          <Download className="h-5 w-5" />
+                          {downloading === doc.name ? (
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                          ) : (
+                            <Download className="h-5 w-5" />
+                          )}
                         </span>
                         <div className="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.22,1,0.36,1]" />
                       </button>
