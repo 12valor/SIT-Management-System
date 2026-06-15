@@ -51,7 +51,7 @@ export default function LoginGatePage() {
       >
         <motion.header className="mb-16 text-center md:text-left border-b border-slate-200 dark:border-white/10 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-8" variants={fadeUp}>
           <div className="space-y-3">
-            <span className="text-sm font-semibold tracking-[0.15em] text-[#800000] dark:text-red-400 uppercase">
+            <span className="text-sm font-semibold tracking-[0.15em] text-[#C52C3C] dark:text-red-400 uppercase">
               Technological University of the Philippines
             </span>
             <h1 className="text-4xl md:text-5xl font-serif text-slate-900 dark:text-[#F5F0E8] leading-tight">
@@ -68,14 +68,14 @@ export default function LoginGatePage() {
             <motion.div key={role.title} variants={fadeUp} className="h-full">
               <Link 
                 href={role.href}
-                className="group flex flex-col h-full bg-white dark:bg-[#1A242D] border border-slate-200 dark:border-white/10 p-8 rounded-xl transition-all hover:border-[#800000]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
+                className="group flex flex-col h-full bg-white dark:bg-[#1A242D] border border-slate-200 dark:border-white/10 p-8 rounded-xl transition-all hover:border-[#C52C3C]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
               >
-                <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-[#FAFAF7] dark:bg-[#0F1923] border border-slate-100 dark:border-white/5 mb-6 text-slate-600 dark:text-slate-400 group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">
+                <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-[#FAFAF7] dark:bg-[#0F1923] border border-slate-100 dark:border-white/5 mb-6 text-slate-600 dark:text-slate-400 group-hover:text-[#C52C3C] dark:group-hover:text-red-400 transition-colors">
                   <role.icon className="w-6 h-6" strokeWidth={1.5} />
                 </div>
                 
                 <div className="flex-1 space-y-3">
-                  <h3 className="text-xl font-serif font-medium text-slate-900 dark:text-[#F5F0E8] group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">
+                  <h3 className="text-xl font-serif font-medium text-slate-900 dark:text-[#F5F0E8] group-hover:text-[#C52C3C] dark:group-hover:text-red-400 transition-colors">
                     {role.title}
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
@@ -83,7 +83,7 @@ export default function LoginGatePage() {
                   </p>
                 </div>
 
-                <div className="mt-10 flex items-center gap-3 text-sm font-medium text-slate-500 dark:text-slate-500 group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">
+                <div className="mt-10 flex items-center gap-3 text-sm font-medium text-slate-500 dark:text-slate-500 group-hover:text-[#C52C3C] dark:group-hover:text-red-400 transition-colors">
                   <span>Enter Portal</span>
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -98,7 +98,7 @@ export default function LoginGatePage() {
           </p>
           <Link 
             href="/faq"
-            className="group relative inline-flex items-center justify-center h-14 px-10 bg-[#800000] dark:bg-red-900 text-white font-bold rounded-full overflow-hidden transition-all active:scale-95 shadow-lg shadow-[#800000]/20"
+            className="group relative inline-flex items-center justify-center h-14 px-10 bg-[#C52C3C] dark:bg-red-900 text-white font-bold rounded-full overflow-hidden transition-all active:scale-95 shadow-lg shadow-[#C52C3C]/20"
           >
             <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
               Contact the Registrar
