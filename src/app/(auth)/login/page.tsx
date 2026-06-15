@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Building2, ShieldCheck, ArrowRight } from "lucide-react";
+import { GraduationCap, Building2, ShieldCheck, ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const roles = [
@@ -98,9 +98,13 @@ export default function LoginGatePage() {
           </p>
           <Link 
             href="/faq"
-            className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+            className="group relative inline-flex items-center justify-center h-14 px-10 bg-[#800000] dark:bg-red-900 text-white font-bold rounded-full overflow-hidden transition-all active:scale-95 shadow-lg shadow-[#800000]/20"
           >
-            Contact the Registrar
+            <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
+              Contact the Registrar
+              <ArrowUpRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </span>
+            <div className="absolute inset-0 bg-slate-950 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
           </Link>
         </motion.footer>
       </motion.div>
