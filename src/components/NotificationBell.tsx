@@ -53,7 +53,7 @@ async function loadNotifications(force = false) {
   return notificationRequest;
 }
 
-export function NotificationBell() {
+export function NotificationBell({ rolePath = "student" }: { rolePath?: string }) {
   const router = useRouter();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -83,8 +83,8 @@ export function NotificationBell() {
     }
   }, [fetchNotifications, isOpen]);
 
-  const handleMarkAsRead = async (id: string, link?: string | null) => {
-    await markAsRead(id);
+  const handleMarkAsRead = (id: string, link?: string | null) => {
+    // Optimistic update
     setNotifications(prev => {
       const next = prev.map(n => n.id === id ? { ...n, isRead: true } : n);
       notificationCache = notificationCache
@@ -97,10 +97,14 @@ export function NotificationBell() {
       if (notificationCache) notificationCache = { ...notificationCache, unreadCount: next };
       return next;
     });
+
     if (link) {
       router.push(link);
       setIsOpen(false);
     }
+
+    // Fire and forget
+    markAsRead(id).catch(console.error);
   };
 
   const handleMarkAllAsRead = async () => {
@@ -236,7 +240,7 @@ export function NotificationBell() {
                   <button 
                     onClick={() => {
                       setIsOpen(false);
-                      router.push('/notifications'); // Assuming a dedicated page exists or will exist
+                      router.push(`/${rolePath}/notifications`);
                     }}
                     className="w-full h-10 flex items-center justify-center rounded-xl bg-secondary hover:bg-secondary/80 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground transition-all"
                   >

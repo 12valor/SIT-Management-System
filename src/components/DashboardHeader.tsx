@@ -67,7 +67,7 @@ export function DashboardHeader({
       </div>
  
       <div className="flex items-center gap-4 sm:gap-6">
-        <NotificationBell />
+        <NotificationBell rolePath={pathname.split('/')[1] || "student"} />
         <ThemeToggle />
         <div className="h-6 w-px bg-border hidden sm:block" />
         <div className="text-right hidden sm:block">
