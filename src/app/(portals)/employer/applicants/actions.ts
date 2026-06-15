@@ -60,10 +60,10 @@ export async function updateApplicationStatus(id: string, status: 'ACCEPTED' | '
 
     // Notify Student
     if (application.studentId) {
-      const title = status === 'ACCEPTED' ? "SIT Placement Accepted!" : "Status Update: SIT Application";
+      const title = status === 'ACCEPTED' ? "Application Accepted!" : "Application Rejected";
       const message = status === 'ACCEPTED'
-        ? `Congratulations! ${application.posting.title} application has been accepted. Welcome to the team.`
-        : `Thank you for your interest in the ${application.posting.title} position. Regrettably, we are going with other candidates at this time.`;
+        ? `Congratulations! Your application for ${application.posting.title} has been accepted. Welcome to the team.`
+        : `Your application for ${application.posting.title} has been rejected. We appreciate your interest and wish you the best.`;
 
       await pushNotification({
         userId: application.studentId,
