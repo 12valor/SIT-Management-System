@@ -23,6 +23,8 @@ interface SITDocument {
   name: string;
   type: string;
   url: string | null;
+  status: "PENDING" | "VERIFIED" | "REJECTED";
+  feedback: string | null;
   uploadedAt: Date;
 }
 
@@ -74,6 +76,10 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
   };
 
   const findDoc = (name: string) => documents.find(d => d.name === name);
+  const requiredDocs = REQUIRED_CREDENTIALS.filter((credential) => credential.required);
+  const verifiedRequiredCount = requiredDocs.filter((credential) =>
+    documents.some((doc) => doc.name === credential.name && doc.status === "VERIFIED")
+  ).length;
 
   return (
     <div className="max-w-5xl mx-auto space-y-12 pb-20">
@@ -93,11 +99,11 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
               <div className="h-2 w-24 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-primary transition-all duration-500" 
-                  style={{ width: `${(documents.filter(d => REQUIRED_CREDENTIALS.find(r => r.name === d.name)?.required).length / REQUIRED_CREDENTIALS.filter(r => r.required).length) * 100}%` }}
+                  style={{ width: `${(verifiedRequiredCount / requiredDocs.length) * 100}%` }}
                 />
               </div>
               <span className="text-sm font-bold text-slate-900 dark:text-white">
-                {Math.round((documents.filter(d => REQUIRED_CREDENTIALS.find(r => r.name === d.name)?.required).length / REQUIRED_CREDENTIALS.filter(r => r.required).length) * 100)}%
+                {Math.round((verifiedRequiredCount / requiredDocs.length) * 100)}%
               </span>
             </div>
           </div>
@@ -138,10 +144,18 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                       {cred.description}
                     </p>
                     {doc && (
-                      <p className="text-xs text-slate-400 mt-2 flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3 w-3 text-emerald-500" />
-                        Uploaded on {new Date(doc.uploadedAt).toLocaleDateString()}
-                      </p>
+                      <div className="mt-2 space-y-1">
+                        <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                          <CheckCircle2 className={cn(
+                            "h-3 w-3",
+                            doc.status === "VERIFIED" ? "text-emerald-500" : doc.status === "REJECTED" ? "text-red-500" : "text-amber-500"
+                          )} />
+                          Uploaded on {new Date(doc.uploadedAt).toLocaleDateString()} · {doc.status.toLowerCase()}
+                        </p>
+                        {doc.feedback && (
+                          <p className="text-xs text-red-500">{doc.feedback}</p>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -249,14 +263,14 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
           <div className="space-y-1">
             <h4 className="font-bold text-slate-900 dark:text-white">Security Protocol</h4>
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Only PDF and image formats are accepted. Files are encrypted and visible to authorized industrial partners only.
+              Only PDF and image formats are accepted. Documents must be reviewed by the coordinator before completion clearance.
             </p>
           </div>
         </div>
         
         <div className="flex items-center gap-2 text-slate-400 bg-white dark:bg-white/[0.03] border px-4 py-2 rounded-lg">
           <AlertCircle className="h-4 w-4" />
-          <span className="text-[10px] font-bold uppercase tracking-widest">Institution Verified</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest">Coordinator Review</span>
         </div>
       </div>
     </div>

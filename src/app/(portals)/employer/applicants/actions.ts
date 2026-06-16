@@ -42,20 +42,85 @@ export async function updateApplicationStatus(id: string, status: 'ACCEPTED' | '
         id,
         posting: { companyId: employer.companyId },
       },
-      select: { id: true },
+      include: {
+        student: true,
+        posting: true,
+      },
     });
 
     if (!allowedApplication) {
       return { success: false, error: "Application not found or access denied" };
     }
 
-    const application = await prisma.application.update({
-      where: { id },
-      data: { status },
-      include: { 
-        student: true,
-        posting: true
+    if (status === "ACCEPTED") {
+      const activePlacement = await prisma.sITPlacement.findFirst({
+        where: {
+          studentId: allowedApplication.studentId,
+          status: "ACTIVE",
+          applicationId: { not: id },
+        },
+        include: { company: true },
+      });
+
+      if (activePlacement) {
+        return {
+          success: false,
+          error: `This student already has an active placement with ${activePlacement.company.name}.`,
+        };
       }
+
+      const otherAccepted = await prisma.application.findFirst({
+        where: {
+          studentId: allowedApplication.studentId,
+          status: "ACCEPTED",
+          id: { not: id },
+        },
+      });
+
+      if (otherAccepted) {
+        return { success: false, error: "This student already has an accepted placement." };
+      }
+    }
+
+    const application = await prisma.$transaction(async (tx) => {
+      const updated = await tx.application.update({
+        where: { id },
+        data: { status },
+        include: {
+          student: true,
+          posting: true,
+        },
+      });
+
+      if (status === "ACCEPTED") {
+        await tx.sITPlacement.upsert({
+          where: { applicationId: id },
+          update: {
+            status: "ACTIVE",
+            endedAt: null,
+            studentId: updated.studentId,
+            postingId: updated.postingId,
+            companyId: updated.posting.companyId,
+          },
+          create: {
+            applicationId: id,
+            studentId: updated.studentId,
+            postingId: updated.postingId,
+            companyId: updated.posting.companyId,
+          },
+        });
+
+        await tx.application.updateMany({
+          where: {
+            studentId: updated.studentId,
+            id: { not: id },
+            status: "PENDING",
+          },
+          data: { status: "REJECTED" },
+        });
+      }
+
+      return updated;
     });
 
     // Notify Student
@@ -75,8 +140,11 @@ export async function updateApplicationStatus(id: string, status: 'ACCEPTED' | '
     }
 
     revalidatePath("/employer/applicants");
+    revalidatePath("/employer/logbooks");
+    revalidatePath("/employer/evaluations");
     revalidatePath("/student/opportunities");
     revalidatePath("/student/dashboard");
+    revalidatePath("/student/logbook");
     
     return { success: true };
   } catch (error) {

@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StudentProfileHeader from "../StudentProfileHeader";
+import { updateStudentDocumentStatus } from "../actions";
 
 export default async function StudentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -19,6 +20,16 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
     include: {
       logbookEntries: {
         orderBy: { date: "desc" },
+      },
+      placements: {
+        where: { status: "ACTIVE" },
+        include: {
+          posting: {
+            include: { company: true },
+          },
+        },
+        orderBy: { startedAt: "desc" },
+        take: 1,
       },
       applications: {
         where: { status: "ACCEPTED" },
@@ -30,6 +41,9 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
         orderBy: { appliedAt: "desc" },
         take: 1,
       },
+      documents: {
+        orderBy: { uploadedAt: "desc" },
+      },
     },
   });
 
@@ -39,8 +53,10 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
     .filter(e => e.status === "APPROVED")
     .reduce((sum, e) => sum + e.hours, 0);
   
-  const placement = student.applications[0];
-  const requiredHours = placement?.posting.requiredHours || 300;
+  const activePlacement = student.placements[0];
+  const acceptedApplication = student.applications[0];
+  const placementPosting = activePlacement?.posting ?? acceptedApplication?.posting;
+  const requiredHours = placementPosting?.requiredHours || 300;
 
   return (
     <div className="flex-1 space-y-8 pb-24">
@@ -52,7 +68,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
           image: student.image,
           course: student.course
         }} 
-        isHired={!!placement} 
+        isHired={!!placementPosting}
         isCompleted={totalHours >= requiredHours}
       />
 
@@ -78,19 +94,19 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
                 </div>
              </div>
 
-             {placement && (
+             {placementPosting && (
                 <div className="space-y-4 pt-4 border-t border-border">
                    <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border pb-2">Industrial Placement</h3>
                    <div className="space-y-3">
                       <div className="flex items-center gap-3 text-sm text-foreground">
                          <Building2 className="h-4 w-4 text-primary" />
-                         <span className="font-semibold">{placement.posting.company.name}</span>
+                         <span className="font-semibold">{placementPosting.company.name}</span>
                       </div>
                       <div className="flex items-center gap-3 text-xs text-muted-foreground ml-7">
-                         <span>{placement.posting.title}</span>
+                         <span>{placementPosting.title}</span>
                       </div>
                       <div className="flex items-center gap-3 text-xs text-muted-foreground ml-7">
-                         <span>{placement.posting.location}</span>
+                         <span>{placementPosting.location}</span>
                       </div>
                    </div>
                 </div>
@@ -106,6 +122,69 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
              <div className="h-2 w-full bg-muted rounded-full overflow-hidden border border-border/50">
                 <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${Math.min((totalHours/requiredHours)*100, 100)}%` }} />
              </div>
+          </div>
+
+          <div className="bg-card border border-border rounded-xl p-6 shadow-sm space-y-4">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Document Review</h3>
+              <span className="text-[10px] font-bold text-muted-foreground">{student.documents.length} Files</span>
+            </div>
+            {student.documents.length === 0 ? (
+              <p className="text-xs text-muted-foreground">No submitted credentials yet.</p>
+            ) : (
+              <div className="space-y-4">
+                {student.documents.map((doc) => (
+                  <div key={doc.id} className="space-y-3 rounded-lg border border-border/70 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{doc.name}</p>
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                          {doc.type} - {new Date(doc.uploadedAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <span className={cn(
+                        "rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider border",
+                        doc.status === "VERIFIED" && "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+                        doc.status === "REJECTED" && "bg-red-500/10 text-red-600 border-red-500/20",
+                        doc.status === "PENDING" && "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                      )}>
+                        {doc.status}
+                      </span>
+                    </div>
+
+                    {doc.feedback && (
+                      <p className="text-xs text-red-500">{doc.feedback}</p>
+                    )}
+
+                    <div className="flex flex-col gap-2">
+                      <form action={updateStudentDocumentStatus.bind(null, doc.id, "VERIFIED")}>
+                        <button
+                          type="submit"
+                          disabled={doc.status === "VERIFIED"}
+                          className="w-full rounded-md bg-primary px-3 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50"
+                        >
+                          Verify Document
+                        </button>
+                      </form>
+                      <form action={updateStudentDocumentStatus.bind(null, doc.id, "REJECTED")} className="space-y-2">
+                        <input
+                          name="feedback"
+                          placeholder="Feedback for rejection"
+                          className="w-full rounded-md border border-border bg-background px-3 py-2 text-xs outline-none focus:border-primary"
+                        />
+                        <button
+                          type="submit"
+                          disabled={doc.status === "REJECTED"}
+                          className="w-full rounded-md border border-red-200 px-3 py-2 text-xs font-bold text-red-600 disabled:opacity-50"
+                        >
+                          Reject Document
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

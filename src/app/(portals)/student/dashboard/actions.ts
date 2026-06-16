@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { requireStudent } from "@/lib/auth-guards";
+import { getOrCreateActivePlacement } from "@/lib/placements";
 
 export async function getStudentDashboardData() {
   const studentUser = await requireStudent();
@@ -32,7 +33,7 @@ export async function getStudentDashboardData() {
       .filter(e => e.status === 'APPROVED')
       .reduce((acc, curr) => acc + curr.hours, 0);
 
-    const acceptedApp = student.applications.find(a => a.status === 'ACCEPTED');
+    const activePlacement = await getOrCreateActivePlacement(student.id);
 
     return {
       success: true,
@@ -47,14 +48,15 @@ export async function getStudentDashboardData() {
           postingTitle: app.posting.title,
           companyName: app.posting.company.name,
         })),
-        hiredPlacement: acceptedApp ? {
-          title: acceptedApp.posting.title,
-          company: acceptedApp.posting.company.name,
-          location: acceptedApp.posting.location
+        hiredPlacement: activePlacement ? {
+          title: activePlacement.posting.title,
+          company: activePlacement.posting.company.name,
+          location: activePlacement.posting.location
         } : null,
         documents: student.documents.map(doc => ({
           name: doc.name,
           url: doc.url,
+          status: doc.status,
         }))
       }
     };

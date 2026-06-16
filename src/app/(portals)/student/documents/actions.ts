@@ -63,6 +63,7 @@ export async function uploadDocumentMetadata(data: {
         name: data.name,
         type: data.type,
         url: data.url || null,
+        status: "PENDING",
       },
     });
 

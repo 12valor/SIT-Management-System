@@ -1,9 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { requireCoordinator } from "@/lib/auth-guards";
-
-import { revalidatePath } from "next/cache";
 
 export async function getStudentManifest() {
   await requireCoordinator();
@@ -20,6 +19,20 @@ export async function getStudentManifest() {
       logbookEntries: {
         where: { status: "APPROVED" },
         select: { hours: true },
+      },
+      placements: {
+        where: { status: "ACTIVE" },
+        select: {
+          posting: {
+            select: {
+              title: true,
+              requiredHours: true,
+              company: { select: { name: true } },
+            },
+          },
+        },
+        orderBy: { startedAt: "desc" },
+        take: 1,
       },
       applications: {
         select: {
@@ -39,25 +52,29 @@ export async function getStudentManifest() {
     orderBy: { createdAt: "desc" },
   });
 
-  return students.map((s) => {
-    const totalHours = s.logbookEntries.reduce((acc, e) => acc + e.hours, 0);
-    const latestApp = s.applications[0];
-    const isHired = latestApp?.status === "ACCEPTED";
-    const requiredHours = isHired ? latestApp.posting.requiredHours : 300;
+  return students.map((student) => {
+    const totalHours = student.logbookEntries.reduce((acc, entry) => acc + entry.hours, 0);
+    const activePlacement = student.placements[0];
+    const latestApplication = student.applications[0];
+    const placementPosting =
+      activePlacement?.posting ??
+      (latestApplication?.status === "ACCEPTED" ? latestApplication.posting : null);
+    const requiredHours = placementPosting?.requiredHours ?? 300;
+    const isHired = !!placementPosting;
 
     return {
-      id: s.id,
-      name: s.name || "Unknown",
-      email: s.email || "",
-      course: s.course || "N/A",
+      id: student.id,
+      name: student.name || "Unknown",
+      email: student.email || "",
+      course: student.course || "N/A",
       totalHours,
       requiredHours,
       progress: Math.min((totalHours / requiredHours) * 100, 100),
       status: (isHired ? "HIRED" : "SEEKING") as "HIRED" | "SEEKING",
-      company: isHired ? latestApp.posting.company?.name || "N/A" : "—",
-      role: isHired ? latestApp.posting.title : "—",
-      joinedAt: s.createdAt,
-      image: s.image,
+      company: placementPosting?.company?.name || "N/A",
+      role: placementPosting?.title || "N/A",
+      joinedAt: student.createdAt,
+      image: student.image,
     };
   });
 }
@@ -71,4 +88,29 @@ export async function updateStudentImage(userId: string, imageData: string) {
   });
   revalidatePath(`/coordinator/students/${userId}`);
   revalidatePath("/coordinator/students");
+}
+
+export async function updateStudentDocumentStatus(
+  documentId: string,
+  status: "VERIFIED" | "REJECTED",
+  formData?: FormData
+) {
+  const coordinator = await requireCoordinator();
+  const feedback = String(formData?.get("feedback") || "").trim();
+
+  const document = await prisma.sITDocument.update({
+    where: { id: documentId },
+    data: {
+      status,
+      feedback: status === "REJECTED" ? feedback || "Please upload a clearer or valid document." : null,
+      reviewedAt: new Date(),
+      reviewedById: coordinator.id,
+    },
+    select: { studentId: true },
+  });
+
+  revalidatePath(`/coordinator/students/${document.studentId}`);
+  revalidatePath("/coordinator/students");
+  revalidatePath("/student/documents");
+  revalidatePath("/student/completion");
 }

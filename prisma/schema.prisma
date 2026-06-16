@@ -41,6 +41,23 @@ enum LogbookStatus {
   REJECTED
 }
 
+enum PlacementStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum DocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum CertificateStatus {
+  ISSUED
+  REVOKED
+}
+
 // --- Auth.js Models (NextAuth) ---
 
 model Account {
@@ -103,43 +120,46 @@ model User {
 
   applications    Application[]
   logbookEntries  LogbookEntry[]
-  createdPostings SITPosting[]    @relation("EmployerPostings")
-  evaluations     SITEvaluation[] @relation("StudentEvaluations")
+  createdPostings SITPosting[]     @relation("EmployerPostings")
+  evaluations     SITEvaluation[]  @relation("StudentEvaluations")
+  placements      SITPlacement[]   @relation("StudentPlacements")
   documents       SITDocument[]
+  certificates    SITCertificate[] @relation("StudentCertificates")
   notifications   Notification[]
 }
 
 model Company {
-  id          String   @id @default(cuid())
-  name        String
-  email       String   @unique
-  industry    String
-  description String?  @db.Text
-  location    String?
-  logoUrl     String?
-  bannerUrl   String?
-  websiteUrl  String?
-  facebookUrl String?
-  linkedinUrl String?
-  twitterUrl  String?
-  instagramUrl String?
-  slots       Int      @default(0)
-  isVerified  Boolean  @default(false)
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  industry      String
+  description   String?  @db.Text
+  location      String?
+  logoUrl       String?
+  bannerUrl     String?
+  websiteUrl    String?
+  facebookUrl   String?
+  linkedinUrl   String?
+  twitterUrl    String?
+  instagramUrl  String?
+  slots         Int      @default(0)
+  isVerified    Boolean  @default(false)
   showInMarquee Boolean  @default(false)
-  joinedAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  joinedAt      DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
-  employers User[]
-  postings  SITPosting[]
+  employers  User[]
+  postings   SITPosting[]
+  placements SITPlacement[]
 }
 
 model SITPosting {
-  id            String        @id @default(cuid())
-  title         String
-  description   String        @db.Text
-  requiredHours Int           @default(300)
-  status        PostingStatus @default(OPEN)
+  id               String        @id @default(cuid())
+  title            String
+  description      String        @db.Text
+  requiredHours    Int           @default(300)
+  status           PostingStatus @default(OPEN)
   location         String
   type             PlacementType @default(ON_SITE)
   tags             String[]      @default([])
@@ -150,11 +170,12 @@ model SITPosting {
   updatedAt        DateTime      @updatedAt
 
   // Relations
-  employer     User          @relation("EmployerPostings", fields: [employerId], references: [id])
+  employer     User           @relation("EmployerPostings", fields: [employerId], references: [id])
   employerId   String
-  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company      Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String
   applications Application[]
+  placements   SITPlacement[]
 }
 
 model Application {
@@ -165,12 +186,38 @@ model Application {
   updatedAt DateTime          @updatedAt
 
   // Relations
-  posting   SITPosting @relation(fields: [postingId], references: [id], onDelete: Cascade)
+  posting   SITPosting    @relation(fields: [postingId], references: [id], onDelete: Cascade)
   postingId String
-  student   User       @relation(fields: [studentId], references: [id])
+  student   User          @relation(fields: [studentId], references: [id])
   studentId String
+  placement SITPlacement?
 
   @@unique([postingId, studentId])
+}
+
+model SITPlacement {
+  id        String          @id @default(cuid())
+  status    PlacementStatus @default(ACTIVE)
+  startedAt DateTime        @default(now())
+  endedAt   DateTime?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String      @unique
+  student       User        @relation("StudentPlacements", fields: [studentId], references: [id])
+  studentId     String
+  posting       SITPosting  @relation(fields: [postingId], references: [id])
+  postingId     String
+  company       Company     @relation(fields: [companyId], references: [id])
+  companyId     String
+
+  logbookEntries LogbookEntry[]
+  evaluations    SITEvaluation[]
+  certificates   SITCertificate[]
+
+  @@index([studentId, status])
+  @@index([companyId, status])
 }
 
 model LogbookEntry {
@@ -184,8 +231,10 @@ model LogbookEntry {
   updatedAt DateTime      @updatedAt
 
   // Relations
-  student   User   @relation(fields: [studentId], references: [id])
-  studentId String
+  student     User          @relation(fields: [studentId], references: [id])
+  studentId   String
+  placement   SITPlacement? @relation(fields: [placementId], references: [id])
+  placementId String?
 }
 
 model SITEvaluation {
@@ -202,20 +251,45 @@ model SITEvaluation {
   submittedAt      DateTime @default(now())
 
   // Relations
-  student   User   @relation("StudentEvaluations", fields: [studentId], references: [id])
-  studentId String
+  student     User          @relation("StudentEvaluations", fields: [studentId], references: [id])
+  studentId   String
+  placement   SITPlacement? @relation(fields: [placementId], references: [id])
+  placementId String?
 }
 
 model SITDocument {
-  id         String   @id @default(cuid())
-  name       String
-  type       String
-  url        String? // If using external storage like Vercel Blob
-  uploadedAt DateTime @default(now())
+  id           String         @id @default(cuid())
+  name         String
+  type         String
+  url          String? // If using external storage like Vercel Blob
+  status       DocumentStatus @default(PENDING)
+  feedback     String?        @db.Text
+  reviewedAt   DateTime?
+  reviewedById String?
+  uploadedAt   DateTime       @default(now())
 
   // Relations
   student   User   @relation(fields: [studentId], references: [id])
   studentId String
+}
+
+model SITCertificate {
+  id            String            @id @default(cuid())
+  certificateId String            @unique
+  studentName   String
+  course        String
+  companyName   String
+  totalHours    Float
+  grade         Float
+  status        CertificateStatus @default(ISSUED)
+  issuedAt      DateTime          @default(now())
+
+  student     User          @relation("StudentCertificates", fields: [studentId], references: [id])
+  studentId   String
+  placement   SITPlacement? @relation(fields: [placementId], references: [id])
+  placementId String?
+
+  @@index([studentId])
 }
 
 model Notification {

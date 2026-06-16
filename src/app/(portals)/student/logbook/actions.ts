@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { pushNotification } from "@/lib/notifications";
 import { requireStudent } from "@/lib/auth-guards";
+import { getOrCreateActivePlacement } from "@/lib/placements";
 
 export async function getStudentLogbook() {
   const student = await requireStudent();
@@ -18,12 +19,7 @@ export async function getStudentLogbook() {
       .filter(e => e.status === 'APPROVED')
       .reduce((acc, curr) => acc + curr.hours, 0);
 
-    const placement = await prisma.application.findFirst({
-      where: { 
-        studentId: student.id,
-        status: 'ACCEPTED'
-      }
-    });
+    const placement = await getOrCreateActivePlacement(student.id);
 
     return {
       success: true,
@@ -52,15 +48,7 @@ export async function submitLogbookEntry(data: {
     }
 
     // Find the associated employer to notify
-    const placement = await prisma.application.findFirst({
-      where: { 
-        studentId: student.id,
-        status: 'ACCEPTED'
-      },
-      include: {
-        posting: true
-      }
-    });
+    const placement = await getOrCreateActivePlacement(student.id);
 
     if (!placement) {
       return { success: false, error: "No active industrial placement detected. Logbook entries require an active assignment." };
@@ -101,6 +89,7 @@ export async function submitLogbookEntry(data: {
         date: entryDate,
         hours: data.hours,
         tasks: data.tasks,
+        placementId: placement.id,
         status: 'PENDING'
       }
     });

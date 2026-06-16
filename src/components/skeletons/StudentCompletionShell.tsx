@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Skeleton } from "boneyard-js/react";
 import { 
   Trophy, 
@@ -9,6 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { generateSITCertificate } from "@/lib/pdf-generator";
 import { getCourseName } from "@/lib/courses";
+import { issueCompletionCertificate } from "@/app/(portals)/student/completion/actions";
 
 export interface CompletionData {
   totalHours: number;
@@ -22,29 +24,43 @@ export interface CompletionData {
   documentsUploaded: number;
   totalRequiredDocs: number;
   isFullyComplete: boolean;
+  certificateId: string | null;
   studentName: string;
   studentCourse: string;
 }
 
 export function StudentCompletionShell({ data, userName }: { data: CompletionData | null, userName?: string }) {
+  const [isIssuing, setIsIssuing] = useState(false);
+  const [issueError, setIssueError] = useState("");
   const safeData = data || {
     totalHours: 0,
     hourGoal: 300,
     hasEvaluation: false,
     evaluationData: null,
     documentsUploaded: 0,
-    totalRequiredDocs: 3,
+    totalRequiredDocs: 4,
     isFullyComplete: false,
+    certificateId: null,
     studentName: userName || 'Student Name',
     studentCourse: 'Course'
   };
 
-  const { totalHours, hourGoal, hasEvaluation, evaluationData, documentsUploaded, totalRequiredDocs, isFullyComplete, studentName, studentCourse } = safeData;
+  const { totalHours, hourGoal, hasEvaluation, documentsUploaded, totalRequiredDocs, isFullyComplete, certificateId } = safeData;
   const isHoursComplete = totalHours >= hourGoal;
   const isDocsComplete = documentsUploaded >= totalRequiredDocs;
 
   const handleDownloadCertificate = async () => {
-    if (!isHoursComplete) return;
+    if (!isFullyComplete || isIssuing) return;
+    setIsIssuing(true);
+    setIssueError("");
+
+    const issuance = await issueCompletionCertificate();
+    setIsIssuing(false);
+
+    if (!issuance.success || !issuance.data) {
+      setIssueError(issuance.error || "Certificate could not be issued.");
+      return;
+    }
 
     let base64data = "";
     try {
@@ -61,13 +77,13 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
     }
     
     generateSITCertificate({
-       studentName: studentName,
-       course: getCourseName(studentCourse),
-       companyName: evaluationData?.companyName || "SIT Partner Company",
-       totalHours: totalHours,
-       grade: evaluationData?.overallGrade || 0,
+       studentName: issuance.data.studentName,
+       course: getCourseName(issuance.data.course),
+       companyName: issuance.data.companyName,
+       totalHours: issuance.data.totalHours,
+       grade: issuance.data.grade,
        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-       certificateId: `SIT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+       certificateId: issuance.data.certificateId,
        logoBase64: base64data
     });
   };
@@ -98,9 +114,9 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
         <div className="text-center space-y-3">
           <div className={cn(
             "w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-colors duration-500",
-            isHoursComplete ? "bg-emerald-100 text-emerald-600" : "bg-slate-100 text-slate-400"
+            isFullyComplete ? "bg-emerald-100 text-emerald-600" : "bg-slate-100 text-slate-400"
           )}>
-             {isHoursComplete ? <Award className="h-8 w-8" /> : <Trophy className="h-8 w-8" />}
+             {isFullyComplete ? <Award className="h-8 w-8" /> : <Trophy className="h-8 w-8" />}
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">Accreditation Status</h1>
           <p className="text-slate-500 max-w-lg mx-auto">
@@ -136,31 +152,34 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
           {/* Action Area */}
           <div className={cn(
             "rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left transition-colors",
-            isHoursComplete ? "bg-emerald-50 border border-emerald-100" : "bg-slate-50 border border-slate-100"
+            isFullyComplete ? "bg-emerald-50 border border-emerald-100" : "bg-slate-50 border border-slate-100"
           )}>
             <div>
-              <h3 className={cn("font-bold mb-1", isHoursComplete ? "text-emerald-900" : "text-slate-700")}>
-                {isHoursComplete ? "Ready for Accreditation" : "Keep Going!"}
+              <h3 className={cn("font-bold mb-1", isFullyComplete ? "text-emerald-900" : "text-slate-700")}>
+                {isFullyComplete ? "Ready for Accreditation" : "Verification In Progress"}
               </h3>
-              <p className={cn("text-sm", isHoursComplete ? "text-emerald-700" : "text-slate-500")}>
-                {isHoursComplete 
-                  ? "You have fulfilled the required hours. Your certificate is ready to be generated." 
-                  : `You need ${Math.max(0, hourGoal - totalHours)} more hours to unlock your certificate.`}
+              <p className={cn("text-sm", isFullyComplete ? "text-emerald-700" : "text-slate-500")}>
+                {isFullyComplete
+                  ? certificateId
+                    ? `Certificate ${certificateId} is ready for download.`
+                    : "Your hours, documents, and final evaluation are verified."
+                  : `Requirements: ${isHoursComplete ? "hours complete" : `${Math.max(0, hourGoal - totalHours)} hours remaining`}, ${isDocsComplete ? "documents verified" : "documents awaiting verification"}, ${hasEvaluation ? "evaluation submitted" : "evaluation pending"}.`}
               </p>
+              {issueError && <p className="mt-2 text-xs font-semibold text-red-600">{issueError}</p>}
             </div>
             
             <button 
               onClick={handleDownloadCertificate}
-              disabled={!isHoursComplete}
+              disabled={!isFullyComplete || isIssuing}
               className={cn(
                 "flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all whitespace-nowrap",
-                isHoursComplete 
+                isFullyComplete
                   ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg" 
                   : "bg-slate-200 text-slate-400 cursor-not-allowed"
               )}
             >
               <Download className="h-4 w-4" />
-              Download Certificate
+              {isIssuing ? "Issuing..." : "Download Certificate"}
             </button>
           </div>
         </div>

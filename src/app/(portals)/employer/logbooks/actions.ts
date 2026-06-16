@@ -9,43 +9,57 @@ export async function getEmployerStudentsLogs() {
   const currentEmployer = await requireEmployer();
 
   try {
-    const employer = await prisma.user.findUnique({
-      where: { id: currentEmployer.id },
-      include: { 
-        company: {
-          include: {
-            postings: {
-              include: {
-                applications: {
-                  where: { status: 'ACCEPTED' },
-                  include: {
-                    student: {
-                      include: {
-                        logbookEntries: {
-                          orderBy: { date: 'desc' }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+    const acceptedApplications = await prisma.application.findMany({
+      where: {
+        status: "ACCEPTED",
+        placement: null,
+        posting: { companyId: currentEmployer.companyId },
+      },
+      select: {
+        id: true,
+        studentId: true,
+        postingId: true,
+        posting: { select: { companyId: true } },
+      },
     });
 
-    if (!employer?.company) return { success: false, error: "No associated company" };
+    for (const application of acceptedApplications) {
+      await prisma.sITPlacement.create({
+        data: {
+          applicationId: application.id,
+          studentId: application.studentId,
+          postingId: application.postingId,
+          companyId: application.posting.companyId,
+        },
+      });
+    }
 
-    const trainees = employer.company.postings.flatMap(p => 
-      p.applications.map(app => ({
-        id: app.id,
-        studentId: app.student.id,
-        studentName: app.student.name,
-        studentEmail: app.student.email,
-        logs: app.student.logbookEntries
-      }))
-    );
+    const placements = await prisma.sITPlacement.findMany({
+      where: {
+        companyId: currentEmployer.companyId,
+        status: "ACTIVE",
+      },
+      include: {
+        student: {
+          include: {
+            logbookEntries: {
+              orderBy: { date: "desc" },
+            },
+          },
+        },
+      },
+      orderBy: { startedAt: "desc" },
+    });
+
+    const trainees = placements.map((placement) => ({
+      id: placement.id,
+      studentId: placement.student.id,
+      studentName: placement.student.name,
+      studentEmail: placement.student.email,
+      logs: placement.student.logbookEntries.filter(
+        (entry) => !entry.placementId || entry.placementId === placement.id
+      ),
+    }));
 
     return { success: true, data: trainees };
   } catch (error: unknown) {
@@ -65,25 +79,47 @@ export async function updateLogStatus(entryId: string, status: 'APPROVED' | 'REJ
     const allowedEntry = await prisma.logbookEntry.findFirst({
       where: {
         id: entryId,
-        student: {
-          applications: {
-            some: {
-              status: "ACCEPTED",
-              posting: { companyId: employer.companyId },
+        OR: [
+          {
+            placement: {
+              companyId: employer.companyId,
+              status: "ACTIVE",
             },
           },
-        },
+          {
+            placementId: null,
+            student: {
+              placements: {
+                some: {
+                  companyId: employer.companyId,
+                  status: "ACTIVE",
+                },
+              },
+            },
+          },
+        ],
       },
-      select: { id: true },
+      select: { id: true, placementId: true, studentId: true },
     });
 
     if (!allowedEntry) {
       return { success: false, error: "Logbook entry not found or access denied" };
     }
 
+    const activePlacement = allowedEntry.placementId
+      ? null
+      : await prisma.sITPlacement.findFirst({
+          where: {
+            studentId: allowedEntry.studentId,
+            companyId: employer.companyId,
+            status: "ACTIVE",
+          },
+          select: { id: true },
+        });
+
     const entry = await prisma.logbookEntry.update({
       where: { id: entryId },
-      data: { status, feedback },
+      data: { status, feedback, placementId: allowedEntry.placementId || activePlacement?.id },
       include: { student: true }
     });
 

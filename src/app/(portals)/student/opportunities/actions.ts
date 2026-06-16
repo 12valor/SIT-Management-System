@@ -9,6 +9,11 @@ export async function getSITOpportunities() {
   const student = await requireStudent();
 
   try {
+    const activePlacement = await prisma.sITPlacement.findFirst({
+      where: { studentId: student.id, status: "ACTIVE" },
+      select: { id: true },
+    });
+
     const postings = await prisma.sITPosting.findMany({
       where: {
         status: "OPEN",
@@ -31,7 +36,7 @@ export async function getSITOpportunities() {
 
     return { 
       success: true, 
-      data: postings.map(p => ({
+      data: activePlacement ? [] : postings.map(p => ({
         ...p,
         requirements: p.requirements || [],
         responsibilities: p.responsibilities || [],
@@ -48,6 +53,24 @@ export async function applyForOpportunity(postingId: string) {
   const studentUser = await requireStudent();
 
   try {
+    const activePlacement = await prisma.sITPlacement.findFirst({
+      where: { studentId: studentUser.id, status: "ACTIVE" },
+      select: { id: true },
+    });
+
+    if (activePlacement) {
+      return { success: false, error: "You already have an active industrial placement." };
+    }
+
+    const acceptedApplication = await prisma.application.findFirst({
+      where: { studentId: studentUser.id, status: "ACCEPTED" },
+      select: { id: true },
+    });
+
+    if (acceptedApplication) {
+      return { success: false, error: "You already have an accepted industrial placement." };
+    }
+
     const openPosting = await prisma.sITPosting.findFirst({
       where: {
         id: postingId,
@@ -78,7 +101,9 @@ export async function applyForOpportunity(postingId: string) {
       include: { documents: true }
     });
 
-    const hasCV = student?.documents.some(doc => doc.name === "Student Resume / CV");
+    const hasCV = student?.documents.some(
+      (doc) => doc.name === "Student Resume / CV" && doc.status !== "REJECTED"
+    );
     if (!hasCV) return { success: false, error: "Please upload your Student Resume / CV before applying." };
 
     if (existing && existing.status === "WITHDRAWN") {

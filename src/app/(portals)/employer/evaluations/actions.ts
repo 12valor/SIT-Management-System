@@ -9,27 +9,46 @@ export async function getEmployerTrainees() {
   const currentEmployer = await requireEmployer();
 
   try {
-    const employer = await prisma.user.findUnique({
-      where: { id: currentEmployer.id },
-      include: { company: true }
+    const acceptedApplications = await prisma.application.findMany({
+      where: {
+        status: "ACCEPTED",
+        placement: null,
+        posting: { companyId: currentEmployer.companyId },
+      },
+      select: {
+        id: true,
+        studentId: true,
+        postingId: true,
+        posting: { select: { companyId: true } },
+      },
     });
 
-    if (!employer?.companyId) return { success: false, error: "Employer has no associated company" };
+    for (const application of acceptedApplications) {
+      await prisma.sITPlacement.create({
+        data: {
+          applicationId: application.id,
+          studentId: application.studentId,
+          postingId: application.postingId,
+          companyId: application.posting.companyId,
+        },
+      });
+    }
 
-    // Get applications accepted by this employer's company
-    const trainees = await prisma.application.findMany({
+    const placements = await prisma.sITPlacement.findMany({
       where: {
-        posting: { companyId: employer.companyId },
-        status: 'ACCEPTED'
+        companyId: currentEmployer.companyId,
+        status: "ACTIVE",
       },
       include: {
-        posting: true,
+        posting: { include: { company: true } },
         student: {
           include: {
             logbookEntries: {
               where: { status: 'APPROVED' }
             },
-            evaluations: true
+            evaluations: {
+              orderBy: { submittedAt: "desc" },
+            }
           }
         }
       }
@@ -37,15 +56,17 @@ export async function getEmployerTrainees() {
 
     return {
       success: true,
-      data: trainees.map(t => ({
-        id: t.id,
-        studentId: t.student.id,
-        studentName: t.student.name,
-        studentEmail: t.student.email,
-        totalHours: t.student.logbookEntries.reduce((acc, curr) => acc + curr.hours, 0),
-        requiredHours: t.posting.requiredHours,
-        evaluation: t.student.evaluations[0] || null,
-        companyName: employer.company?.name
+      data: placements.map((placement) => ({
+        id: placement.id,
+        studentId: placement.student.id,
+        studentName: placement.student.name,
+        studentEmail: placement.student.email,
+        totalHours: placement.student.logbookEntries
+          .filter((entry) => !entry.placementId || entry.placementId === placement.id)
+          .reduce((acc, curr) => acc + curr.hours, 0),
+        requiredHours: placement.posting.requiredHours,
+        evaluation: placement.student.evaluations.find((item) => item.placementId === placement.id) || null,
+        companyName: placement.posting.company.name
       }))
     };
   } catch (error: unknown) {
@@ -81,11 +102,11 @@ export async function submitTraineeEvaluation(data: {
       return { success: false, error: "Evaluation comments are required." };
     }
 
-    const acceptedPlacement = await prisma.application.findFirst({
+    const acceptedPlacement = await prisma.sITPlacement.findFirst({
       where: {
         studentId: data.studentId,
-        status: "ACCEPTED",
-        posting: { companyId: employer.companyId },
+        status: "ACTIVE",
+        companyId: employer.companyId,
       },
       include: {
         posting: {
@@ -101,7 +122,10 @@ export async function submitTraineeEvaluation(data: {
     const existingEvaluation = await prisma.sITEvaluation.findFirst({
       where: {
         studentId: data.studentId,
-        companyName: acceptedPlacement.posting.company.name,
+        OR: [
+          { placementId: acceptedPlacement.id },
+          { companyName: acceptedPlacement.posting.company.name },
+        ],
       },
       select: { id: true },
     });
@@ -115,6 +139,7 @@ export async function submitTraineeEvaluation(data: {
     const evaluation = await prisma.sITEvaluation.create({
       data: {
         studentId: data.studentId,
+        placementId: acceptedPlacement.id,
         supervisorName: employer.name || "Supervisor",
         companyName: acceptedPlacement.posting.company.name,
         technicalSkills: data.technicalSkills,

@@ -1,22 +1,55 @@
-import { Construction, Sparkles } from "lucide-react";
+import { LockKeyhole, Save, Settings } from "lucide-react";
+import { getEmployerSettings, updateEmployerSettings } from "./actions";
 
-export default function PlaceholderPage() {
+export default async function EmployerSettingsPage() {
+  const settings = await getEmployerSettings();
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 bg-card border border-dashed border-border rounded-xl animate-in-fade">
-      <div className="w-16 h-16 bg-blue-600/10 rounded-xl flex items-center justify-center mb-6 text-blue-600">
-         <Construction className="h-8 w-8" />
+    <div className="max-w-3xl space-y-8">
+      <div className="flex items-center gap-3">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <Settings className="h-6 w-6" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-black tracking-tight text-foreground">Account Settings</h1>
+          <p className="text-sm text-muted-foreground">Update supervisor identity and password controls.</p>
+        </div>
       </div>
-      <h2 className="text-3xl font-black tracking-tight mb-2 flex items-center gap-3">
-        Settings Under Construction <Sparkles className="h-6 w-6 text-blue-500 fill-blue-500" />
-      </h2>
-      <p className="text-muted-foreground font-medium max-w-sm mb-8">
-        We&apos;re working hard to bring this feature to the SIT platform. Stay tuned for updates!
-      </p>
-      <div className="flex gap-2">
-         <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce shadow-sm shadow-blue-600/40" />
-         <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce [animation-delay:-0.15s] shadow-sm shadow-blue-600/40" />
-         <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce [animation-delay:-0.3s] shadow-sm shadow-blue-600/40" />
-      </div>
+
+      <form action={updateEmployerSettings} className="space-y-6 rounded-xl border border-border bg-card p-6 shadow-sm">
+        <div className="grid gap-5 md:grid-cols-2">
+          <label className="space-y-2 text-sm font-semibold">
+            Supervisor Name
+            <input name="name" defaultValue={settings?.name || ""} required className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary" />
+          </label>
+          <label className="space-y-2 text-sm font-semibold">
+            Email Address
+            <input value={settings?.email || ""} readOnly className="h-11 w-full rounded-lg border border-border bg-muted px-3 text-sm text-muted-foreground outline-none" />
+          </label>
+        </div>
+
+        <div className="rounded-lg border border-border bg-muted/30 p-5">
+          <div className="mb-4 flex items-center gap-2 text-sm font-bold">
+            <LockKeyhole className="h-4 w-4 text-primary" />
+            Password Update
+          </div>
+          <div className="grid gap-5 md:grid-cols-2">
+            <label className="space-y-2 text-sm font-semibold">
+              Current Password
+              <input name="currentPassword" type="password" className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary" />
+            </label>
+            <label className="space-y-2 text-sm font-semibold">
+              New Password
+              <input name="newPassword" type="password" minLength={8} className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary" />
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-bold text-primary-foreground">
+          <Save className="h-4 w-4" />
+          Save Settings
+        </button>
+      </form>
     </div>
   );
 }
