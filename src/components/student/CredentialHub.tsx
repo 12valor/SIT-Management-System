@@ -14,15 +14,16 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { uploadDocumentMetadata, deleteDocument } from "@/app/(portals)/student/documents/actions";
+import { getStudentDocumentUrl, uploadDocumentMetadata, deleteDocument } from "@/app/(portals)/student/documents/actions";
 import { DocumentUploadZone } from "./DocumentUploadZone";
 import { REQUIRED_CREDENTIALS } from "@/app/(portals)/student/dashboard/types";
+import { fileToOptimizedDataUrl } from "@/lib/client-media";
 
 interface SITDocument {
   id: string;
   name: string;
   type: string;
-  url: string | null;
+  hasFile?: boolean;
   status: "PENDING" | "VERIFIED" | "REJECTED";
   feedback: string | null;
   uploadedAt: Date;
@@ -43,17 +44,16 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
       await deleteDocument(existingDoc.id);
     }
     
-    const base64Url = await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+    const fileUrl = await fileToOptimizedDataUrl(file, {
+      maxWidth: 1400,
+      maxHeight: 1800,
+      quality: 0.7,
     });
 
     const result = await uploadDocumentMetadata({
       name: docName,
       type: file.type.includes("image") ? "IMAGE" : "PDF",
-      url: base64Url
+      url: fileUrl
     });
 
     if (result.success && result.data) {
@@ -76,6 +76,23 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
   };
 
   const findDoc = (name: string) => documents.find(d => d.name === name);
+  const handleViewDocument = async (doc: SITDocument) => {
+    const result = await getStudentDocumentUrl(doc.id);
+    if (!result.success || !result.url) return;
+
+    if (result.url.includes("example.com/manifests")) {
+      alert("This is a mock document. In a real environment, this would open the uploaded file.");
+    } else if (result.url.startsWith("data:")) {
+      const a = document.createElement("a");
+      a.href = result.url;
+      a.download = doc.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      window.open(result.url, "_blank");
+    }
+  };
   const requiredDocs = REQUIRED_CREDENTIALS.filter((credential) => credential.required);
   const verifiedRequiredCount = requiredDocs.filter((credential) =>
     documents.some((doc) => doc.name === credential.name && doc.status === "VERIFIED")
@@ -170,20 +187,7 @@ export function CredentialHub({ initialData }: { initialData: SITDocument[] | nu
                         className="flex items-center gap-2"
                       >
                         <button 
-                          onClick={() => {
-                            if (doc.url && doc.url.includes("example.com/manifests")) {
-                              alert("This is a mock document. In a real environment, this would open the uploaded file.");
-                            } else if (doc.url && doc.url.startsWith("data:")) {
-                              const a = document.createElement("a");
-                              a.href = doc.url;
-                              a.download = doc.name;
-                              document.body.appendChild(a);
-                              a.click();
-                              document.body.removeChild(a);
-                            } else if (doc.url) {
-                              window.open(doc.url, '_blank');
-                            }
-                          }}
+                          onClick={() => handleViewDocument(doc)}
                           className="h-10 px-4 text-xs font-bold border border-border rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all flex items-center gap-2 shadow-sm"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />

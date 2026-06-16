@@ -29,14 +29,23 @@ export default async function Home() {
   ]);
 
   const verifiedHours = hoursResult._sum.hours || 0;
+  const defaultHeroImages = [
+    "/images/hero/industrial-1.webp",
+    "/images/hero/industrial-2.webp",
+    "/images/hero/industrial-3.webp",
+  ];
   const customSlides = heroSetting && heroSetting.length > 0
-    ? JSON.parse(heroSetting[0].value).map((slide: { image: string; title: string; description: string }) => ({
-        ...slide,
-        image: slide.image
+    ? JSON.parse(heroSetting[0].value).map((slide: { image: string; title: string; description: string }, index: number) => {
+        const normalizedImage = slide.image
           .replace("/images/hero/industrial-1.png", "/images/hero/industrial-1.webp")
           .replace("/images/hero/industrial-2.png", "/images/hero/industrial-2.webp")
-          .replace("/images/hero/industrial-3.png", "/images/hero/industrial-3.webp"),
-      }))
+          .replace("/images/hero/industrial-3.png", "/images/hero/industrial-3.webp");
+
+        return {
+          ...slide,
+          image: getPublicImageUrl(normalizedImage) ?? defaultHeroImages[index] ?? defaultHeroImages[0],
+        };
+      })
     : null;
 
   return (

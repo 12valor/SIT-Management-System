@@ -1,10 +1,9 @@
 "use client";
 
 import { Skeleton } from "boneyard-js/react";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { 
   User as UserIcon, 
-  Save, 
   Loader2, 
   ShieldCheck, 
   Camera,
@@ -13,6 +12,7 @@ import { updateStudentOwnImage } from "@/app/(portals)/student/profile/actions";
 import { cn } from "@/lib/utils";
 import { COURSES, isCourseCode } from "@/lib/courses";
 import Image from "next/image";
+import { fileToOptimizedDataUrl } from "@/lib/client-media";
 
 export type ProfileData = {
   id: string;
@@ -43,19 +43,19 @@ export function StudentProfileShell({ initialData }: { initialData: ProfileData 
     if (!file) return;
 
     setIsImageUploading(true);
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64 = reader.result as string;
+    try {
+      const base64 = await fileToOptimizedDataUrl(file, {
+        maxWidth: 512,
+        maxHeight: 512,
+        quality: 0.72,
+      });
       setImagePreview(base64);
-      try {
-        await updateStudentOwnImage(base64);
-      } catch (err) {
-        console.error("Image update failed", err);
-      } finally {
-        setIsImageUploading(false);
-      }
-    };
-    reader.readAsDataURL(file);
+      await updateStudentOwnImage(base64);
+    } catch (err) {
+      console.error("Image update failed", err);
+    } finally {
+      setIsImageUploading(false);
+    }
   };
 
   const totalHours = profile?.logbookEntries?.reduce((a, e) => a + e.hours, 0) ?? 0;

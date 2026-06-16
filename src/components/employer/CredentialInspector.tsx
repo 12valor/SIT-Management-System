@@ -17,7 +17,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import Image from "next/image";
-import { getStudentCredentials } from "@/app/(portals)/employer/applicants/actions";
+import { getStudentCredentialDocumentUrl, getStudentCredentials } from "@/app/(portals)/employer/applicants/actions";
 
 interface CredentialInspectorProps {
   isOpen: boolean;
@@ -31,7 +31,6 @@ interface StudentDocument {
   id: string;
   name: string;
   type: string;
-  url: string | null;
   uploadedAt: Date | string;
 }
 
@@ -65,6 +64,7 @@ export function CredentialInspector({
   const [data, setData] = useState<StudentData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [loadingDocumentId, setLoadingDocumentId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen && studentId) {
@@ -82,6 +82,27 @@ export function CredentialInspector({
       fetchData();
     }
   }, [isOpen, studentId, applicationId]);
+
+  const handleOpenDocument = async (doc: StudentDocument) => {
+    setLoadingDocumentId(doc.id);
+    const result = await getStudentCredentialDocumentUrl(studentId, applicationId, doc.id);
+    setLoadingDocumentId(null);
+
+    if (!result.success || !result.url) return;
+
+    if (result.url.includes("example.com/manifests")) {
+      alert("This is a mock document.");
+    } else if (result.url.startsWith("data:")) {
+      const a = document.createElement("a");
+      a.href = result.url;
+      a.download = doc.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      window.open(result.url, "_blank");
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -210,20 +231,7 @@ export function CredentialInspector({
                           <div 
                             key={doc.id} 
                             className="group flex items-center justify-between p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-muted/30 transition-all cursor-pointer"
-                            onClick={() => {
-                              if (doc.url && doc.url.includes("example.com/manifests")) {
-                                alert("This is a mock document.");
-                              } else if (doc.url && doc.url.startsWith("data:")) {
-                                const a = document.createElement("a");
-                                a.href = doc.url;
-                                a.download = doc.name;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                              } else if (doc.url) {
-                                window.open(doc.url, '_blank');
-                              }
-                            }}
+                            onClick={() => handleOpenDocument(doc)}
                           >
                             <div className="flex items-center gap-3 overflow-hidden">
                               <div className="h-10 w-10 shrink-0 rounded-lg bg-foreground/5 flex items-center justify-center text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">
@@ -234,7 +242,11 @@ export function CredentialInspector({
                                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{doc.type}</p>
                               </div>
                             </div>
-                            <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/30 group-hover:text-primary transition-colors" />
+                            {loadingDocumentId === doc.id ? (
+                              <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
+                            ) : (
+                              <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/30 group-hover:text-primary transition-colors" />
+                            )}
                           </div>
                         ))
                       ) : (

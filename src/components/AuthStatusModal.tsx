@@ -51,7 +51,7 @@ export function AuthStatusModal({ status, message, onClose }: AuthStatusModalPro
               
               {status === "loading" && (
                 <Image 
-                  src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                  src="/tup-seal-128.webp"
                   alt="TUP Seal" 
                   width={80}
                   height={80}

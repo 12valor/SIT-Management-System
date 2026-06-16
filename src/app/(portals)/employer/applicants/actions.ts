@@ -178,6 +178,12 @@ export async function getStudentCredentials(studentId: string, applicationId: st
         image: true,
         createdAt: true,
         documents: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            uploadedAt: true,
+          },
           orderBy: { uploadedAt: 'desc' }
         },
         evaluations: {
@@ -194,4 +200,36 @@ export async function getStudentCredentials(studentId: string, applicationId: st
     const message = error instanceof Error ? error.message : "Failed to fetch credentials";
     return { success: false, error: message };
   }
+}
+
+export async function getStudentCredentialDocumentUrl(
+  studentId: string,
+  applicationId: string,
+  documentId: string
+) {
+  const employer = await requireEmployer();
+
+  const application = await prisma.application.findFirst({
+    where: {
+      id: applicationId,
+      studentId,
+      posting: { companyId: employer.companyId },
+    },
+    select: { id: true },
+  });
+
+  if (!application) {
+    return { success: false, error: "Credential record not found or access denied" };
+  }
+
+  const document = await prisma.sITDocument.findFirst({
+    where: { id: documentId, studentId },
+    select: { url: true },
+  });
+
+  if (!document?.url) {
+    return { success: false, error: "Document file not found." };
+  }
+
+  return { success: true, url: document.url };
 }

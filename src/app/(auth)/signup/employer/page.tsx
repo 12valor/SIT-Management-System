@@ -9,6 +9,7 @@ import { registerEmployer, getCompanies, checkAvailability } from "./actions";
 import { cn } from "@/lib/utils";
 import { AuthStatusModal, type AuthStatus } from "@/components/AuthStatusModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { fileToOptimizedDataUrl } from "@/lib/client-media";
 
 export default function EmployerSignupPage() {
   const [error, setError] = useState("");
@@ -90,7 +91,7 @@ export default function EmployerSignupPage() {
     }
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
     const file = e.target.files?.[0];
     if (file) {
       const MAX_SIZE = 2 * 1024 * 1024; // 2MB
@@ -101,12 +102,13 @@ export default function EmployerSignupPage() {
         return;
       }
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (type === "logo") setLogoPreview(reader.result as string);
-        else setBannerPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      const optimized = await fileToOptimizedDataUrl(file, {
+        maxWidth: type === "logo" ? 512 : 1400,
+        maxHeight: type === "logo" ? 512 : 700,
+        quality: 0.72,
+      });
+      if (type === "logo") setLogoPreview(optimized);
+      else setBannerPreview(optimized);
     }
   };
 

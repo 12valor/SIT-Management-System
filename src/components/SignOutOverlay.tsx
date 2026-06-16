@@ -28,7 +28,7 @@ export function SignOutOverlay({ isVisible }: SignOutOverlayProps) {
             >
               <div className="absolute inset-0 bg-primary/10 rounded-full blur-2xl animate-pulse" />
               <Image 
-                src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                src="/tup-seal-128.webp"
                 alt="TUP Seal" 
                 width={80}
                 height={80}

@@ -17,6 +17,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { updateHeroSlides, getHeroSlides, getMarqueeSettings, updateMarqueeSettings } from "./general/actions";
+import { fileToOptimizedDataUrl } from "@/lib/client-media";
 
 const TABS = [
   { id: "website", name: "Hero Carousel", icon: Globe },
@@ -89,7 +90,7 @@ export function SettingsTabs() {
     };
   }, [activeTab, hasLoadedHero, hasLoadedMarquee]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = e.target.files?.[0];
     if (file) {
       const MAX_SIZE = 4 * 1024 * 1024;
@@ -98,13 +99,15 @@ export function SettingsTabs() {
         e.target.value = "";
         return;
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newPreviews = [...previews];
-        newPreviews[index] = reader.result as string;
-        setPreviews(newPreviews);
-      };
-      reader.readAsDataURL(file);
+
+      const dataUrl = await fileToOptimizedDataUrl(file, {
+        maxWidth: 1600,
+        maxHeight: 900,
+        quality: 0.72,
+      });
+      const newPreviews = [...previews];
+      newPreviews[index] = dataUrl;
+      setPreviews(newPreviews);
     }
   };
 

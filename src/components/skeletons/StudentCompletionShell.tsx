@@ -64,7 +64,7 @@ export function StudentCompletionShell({ data, userName }: { data: CompletionDat
 
     let base64data = "";
     try {
-      const response = await fetch('/Technological_University_of_the_Philippines_Seal.svg.png');
+      const response = await fetch('/tup-seal-96.png');
       const blob = await response.blob();
       base64data = await new Promise((resolve, reject) => {
         const reader = new FileReader();

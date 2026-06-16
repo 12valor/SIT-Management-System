@@ -31,7 +31,7 @@ export function Footer() {
           <div className="flex flex-col gap-6 lg:w-[28%]">
             <div className="flex items-center gap-5">
               <Image 
-                src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                src="/tup-seal-128.webp"
                 alt="TUP Seal" 
                 width={70}
                 height={70}
@@ -127,6 +127,5 @@ export function Footer() {
     </footer>
   );
 }
-
 
 

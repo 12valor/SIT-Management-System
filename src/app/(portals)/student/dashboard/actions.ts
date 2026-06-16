@@ -55,7 +55,6 @@ export async function getStudentDashboardData() {
         } : null,
         documents: student.documents.map(doc => ({
           name: doc.name,
-          url: doc.url,
           status: doc.status,
         }))
       }

@@ -14,7 +14,6 @@ export interface HiredPlacement {
 
 export interface StudentDocument {
   name: string;
-  url: string | null;
   status?: string;
 }
 

@@ -12,7 +12,7 @@ interface SystemSetting {
 }
 
 function isAllowedDataImage(value: string) {
-  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 4_000_000;
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_200_000;
 }
 
 export async function updateHeroSlides(formData: FormData) {

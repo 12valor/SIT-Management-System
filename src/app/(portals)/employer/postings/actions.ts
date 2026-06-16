@@ -21,11 +21,27 @@ export async function getEmployerPostings() {
     success: true, 
     data: postings.map(p => ({
       ...p,
+      posterUrl: p.posterUrl ? "__HAS_POSTER__" : null,
       requirements: p.requirements || [],
       responsibilities: p.responsibilities || [],
       tags: p.tags || []
     }))
   };
+}
+
+export async function getEmployerPostingPosterUrl(postingId: string) {
+  const employer = await requireEmployer();
+
+  const posting = await prisma.sITPosting.findFirst({
+    where: { id: postingId, employerId: employer.id },
+    select: { posterUrl: true },
+  });
+
+  if (!posting?.posterUrl) {
+    return { success: false, error: "Poster not found." };
+  }
+
+  return { success: true, url: posting.posterUrl };
 }
 
 export async function createSITPosting(formData: FormData) {

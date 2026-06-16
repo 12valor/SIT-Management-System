@@ -89,7 +89,7 @@ export function SmartNavbar() {
             <div className="flex items-center gap-10">
               <Link href="/" className="flex items-center gap-3 group">
                 <Image 
-                  src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                  src="/tup-seal-128.webp"
                   alt="TUP Seal" 
                   width={32}
                   height={32}
@@ -233,7 +233,7 @@ export function SmartNavbar() {
               <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-white/5">
                 <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 active:scale-95 transition-transform">
                   <Image 
-                    src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+                    src="/tup-seal-128.webp"
                     alt="TUP Seal" 
                     width={28}
                     height={28}

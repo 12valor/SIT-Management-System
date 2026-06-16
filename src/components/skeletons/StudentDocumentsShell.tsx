@@ -14,7 +14,18 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { uploadDocumentMetadata, deleteDocument } from "@/app/(portals)/student/documents/actions";
-import { SITDocument } from "@prisma/client";
+import type { DocumentStatus } from "@prisma/client";
+
+type StudentDocument = {
+  id: string;
+  name: string;
+  type: string;
+  status: DocumentStatus;
+  feedback: string | null;
+  uploadedAt: Date;
+  url: string | null;
+  hasFile?: boolean;
+};
 
 const REQUIRED_DOCS = [
   { name: "SIT Intent Form", type: "Application" },
@@ -23,8 +34,8 @@ const REQUIRED_DOCS = [
   { name: "SIT Recommendation Letter", type: "Reference" },
 ];
 
-export function StudentDocumentsShell({ data }: { data: SITDocument[] | null }) {
-  const [documents, setDocuments] = useState<SITDocument[]>([]);
+export function StudentDocumentsShell({ data }: { data: StudentDocument[] | null }) {
+  const [documents, setDocuments] = useState<StudentDocument[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedDocType, setSelectedDocType] = useState<string | null>(null);
 
@@ -48,7 +59,7 @@ export function StudentDocumentsShell({ data }: { data: SITDocument[] | null }) 
     });
 
     if (result.success && result.data) {
-      setDocuments(prev => [result.data as SITDocument, ...prev]);
+      setDocuments(prev => [result.data, ...prev]);
     }
 
     setIsUploading(false);

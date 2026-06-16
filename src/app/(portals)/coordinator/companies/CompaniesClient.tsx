@@ -6,6 +6,7 @@ import { setCompanyVerification, addCompany, updateCompany, deleteCompany, toggl
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import NextImage from "next/image";
+import { fileToOptimizedDataUrl } from "@/lib/client-media";
 
 type Company = {
   id: string;
@@ -100,13 +101,13 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "banner") => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const dataUrl = reader.result as string;
-      if (type === "logo") setFormData(prev => ({ ...prev, logoUrl: dataUrl }));
-      else setFormData(prev => ({ ...prev, bannerUrl: dataUrl }));
-    };
-    reader.readAsDataURL(file);
+    const dataUrl = await fileToOptimizedDataUrl(file, {
+      maxWidth: type === "logo" ? 512 : 1400,
+      maxHeight: type === "logo" ? 512 : 700,
+      quality: 0.72,
+    });
+    if (type === "logo") setFormData(prev => ({ ...prev, logoUrl: dataUrl }));
+    else setFormData(prev => ({ ...prev, bannerUrl: dataUrl }));
   };
 
   const handleEdit = (company: Company) => {

@@ -7,7 +7,6 @@ import {
   Plus, 
   Search, 
   MapPin, 
-  Clock, 
   X, 
   Loader2, 
   ChevronDown, 
@@ -19,10 +18,11 @@ import {
   Table as TableIcon,
   Image as ImageIcon
 } from "lucide-react";
-import { getEmployerPostings, createSITPosting, togglePostingStatus, deleteSITPosting } from "./actions";
+import { getEmployerPostingPosterUrl, getEmployerPostings, createSITPosting, togglePostingStatus, deleteSITPosting } from "./actions";
 import { SITPosting, PlacementType, PostingStatus } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { fileToOptimizedDataUrl } from "@/lib/client-media";
 
 type PostingWithCount = SITPosting & {
   _count: { applications: number };
@@ -86,7 +86,7 @@ export default function EmployerPostingsPage() {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const MAX_SIZE = 3 * 1024 * 1024;
@@ -95,9 +95,12 @@ export default function EmployerPostingsPage() {
         e.target.value = "";
         return;
       }
-      const reader = new FileReader();
-      reader.onloadend = () => setPosterPreview(reader.result as string);
-      reader.readAsDataURL(file);
+      const optimized = await fileToOptimizedDataUrl(file, {
+        maxWidth: 1200,
+        maxHeight: 1600,
+        quality: 0.72,
+      });
+      setPosterPreview(optimized);
     }
   };
 
@@ -146,6 +149,13 @@ export default function EmployerPostingsPage() {
     if (confirm("Delete this posting? This cannot be undone.")) {
       const res = await deleteSITPosting(id);
       if (res.success) await loadPostings();
+    }
+  };
+
+  const handleShowPoster = async (postingId: string) => {
+    const result = await getEmployerPostingPosterUrl(postingId);
+    if (result.success && result.url) {
+      setSelectedPoster(result.url);
     }
   };
 
@@ -271,7 +281,7 @@ export default function EmployerPostingsPage() {
                     </div>
                     {p.posterUrl && (
                       <button 
-                        onClick={() => setSelectedPoster(p.posterUrl)}
+                        onClick={() => handleShowPoster(p.id)}
                         className="text-[9px] font-bold text-primary hover:underline uppercase tracking-widest"
                       >
                         View Poster

@@ -38,6 +38,7 @@ export async function getSITOpportunities() {
       success: true, 
       data: activePlacement ? [] : postings.map(p => ({
         ...p,
+        posterUrl: p.posterUrl ? "__HAS_POSTER__" : null,
         requirements: p.requirements || [],
         responsibilities: p.responsibilities || [],
         tags: p.tags || []
@@ -47,6 +48,25 @@ export async function getSITOpportunities() {
     const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
     return { success: false, error: message };
   }
+}
+
+export async function getOpportunityPosterUrl(postingId: string) {
+  await requireStudent();
+
+  const posting = await prisma.sITPosting.findFirst({
+    where: {
+      id: postingId,
+      status: "OPEN",
+      company: { isVerified: true },
+    },
+    select: { posterUrl: true },
+  });
+
+  if (!posting?.posterUrl) {
+    return { success: false, error: "Poster not found." };
+  }
+
+  return { success: true, url: posting.posterUrl };
 }
 
 export async function applyForOpportunity(postingId: string) {

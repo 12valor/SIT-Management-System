@@ -6,7 +6,7 @@ import { isCourseCode } from "@/lib/courses";
 import { requireStudent } from "@/lib/auth-guards";
 
 function isAllowedProfileImage(imageData: string) {
-  return /^data:image\/(png|jpe?g|webp);base64,/i.test(imageData) && imageData.length <= 1_500_000;
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(imageData) && imageData.length <= 500_000;
 }
 
 export async function getStudentProfile() {
@@ -39,7 +39,7 @@ export async function updateStudentOwnImage(imageData: string) {
   const student = await requireStudent();
 
   if (!isAllowedProfileImage(imageData)) {
-    return { success: false, error: "Profile image must be a PNG, JPG, or WebP under 1.5MB." };
+    return { success: false, error: "Profile image must be a PNG, JPG, or WebP under 500KB." };
   }
 
   await prisma.user.update({

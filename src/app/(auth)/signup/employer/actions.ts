@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 
 function isAllowedDataImage(value: string | null) {
   if (!value) return true;
-  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 4_000_000;
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_200_000;
 }
 
 export async function getCompanies() {
@@ -50,7 +50,7 @@ export async function registerEmployer(formData: FormData) {
     }
 
     if (!isAllowedDataImage(logo) || !isAllowedDataImage(banner)) {
-      return { success: false, error: "Company images must be PNG, JPG, or WebP files under 4MB." };
+      return { success: false, error: "Company images must be PNG, JPG, or WebP files under 1.2MB." };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

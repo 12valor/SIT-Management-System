@@ -84,7 +84,7 @@ export default function StudentLayout({
         {/* Logo/Branding Section */}
         <div className="flex h-20 items-center px-6 gap-3 mb-4">
           <Image 
-            src="/Technological_University_of_the_Philippines_Seal.svg.png" 
+            src="/tup-seal-128.webp"
             alt="TUP Seal" 
             width={36}
             height={36}

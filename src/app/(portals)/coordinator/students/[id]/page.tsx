@@ -42,6 +42,14 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
         take: 1,
       },
       documents: {
+        select: {
+          id: true,
+          name: true,
+          type: true,
+          status: true,
+          feedback: true,
+          uploadedAt: true,
+        },
         orderBy: { uploadedAt: "desc" },
       },
     },

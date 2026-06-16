@@ -12,7 +12,7 @@ function isAllowedDocumentUrl(url?: string) {
   if (!url) return true;
 
   try {
-    if (url.startsWith("data:")) return true;
+    if (url.startsWith("data:")) return url.length <= 7_000_000;
     const parsed = new URL(url);
     return parsed.protocol === "https:" && (parsed.hostname === "archive.sit.tupv.edu.ph" || parsed.hostname === "example.com");
   } catch {
@@ -26,15 +26,46 @@ export async function getStudentDocuments() {
   try {
     const documents = await prisma.sITDocument.findMany({
       where: { studentId: student.id },
+      select: {
+        id: true,
+        name: true,
+        type: true,
+        status: true,
+        feedback: true,
+        uploadedAt: true,
+        url: true,
+      },
       orderBy: { uploadedAt: "desc" },
     });
 
-    return { success: true, data: documents };
+    return {
+      success: true,
+      data: documents.map((document) => ({
+        ...document,
+        url: null,
+        hasFile: !!document.url,
+      })),
+    };
   } catch (error: unknown) {
     console.error("Historical trace failure in fetching documents:", error);
     const message = error instanceof Error ? error.message : "An unknown industrial error occurred";
     return { success: false, error: message };
   }
+}
+
+export async function getStudentDocumentUrl(id: string) {
+  const student = await requireStudent();
+
+  const document = await prisma.sITDocument.findFirst({
+    where: { id, studentId: student.id },
+    select: { url: true },
+  });
+
+  if (!document?.url) {
+    return { success: false, error: "Document file not found." };
+  }
+
+  return { success: true, url: document.url };
 }
 
 export async function uploadDocumentMetadata(data: {
@@ -71,7 +102,19 @@ export async function uploadDocumentMetadata(data: {
     revalidatePath("/student/dashboard");
     revalidatePath("/student/completion");
     
-    return { success: true, data: document };
+    return {
+      success: true,
+      data: {
+        id: document.id,
+        name: document.name,
+        type: document.type,
+        status: document.status,
+        feedback: document.feedback,
+        uploadedAt: document.uploadedAt,
+        url: null,
+        hasFile: !!document.url,
+      },
+    };
   } catch (error: unknown) {
     console.error("Industrial data persistence failure:", error);
     const message = error instanceof Error ? error.message : "An unknown industrial error occurred";

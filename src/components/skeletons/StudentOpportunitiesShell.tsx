@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
-import { applyForOpportunity } from "@/app/(portals)/student/opportunities/actions";
+import { applyForOpportunity, getOpportunityPosterUrl } from "@/app/(portals)/student/opportunities/actions";
 import { SITOpportunity, OpportunityApplication } from "@/app/(portals)/student/opportunities/types";
 
 export function StudentOpportunitiesShell({ 
@@ -90,6 +90,13 @@ export function StudentOpportunitiesShell({
       alert("Error: " + result.error);
     }
     setIsSubmitting(false);
+  };
+
+  const handleShowPoster = async (postingId: string) => {
+    const result = await getOpportunityPosterUrl(postingId);
+    if (result.success && result.url) {
+      setSelectedPoster(result.url);
+    }
   };
 
   const filteredPostings = postings.filter((p: SITOpportunity) => {
@@ -197,7 +204,7 @@ export function StudentOpportunitiesShell({
                           </button>
                           {posting.posterUrl && (
                             <button 
-                              onClick={() => setSelectedPoster(posting.posterUrl)}
+                              onClick={() => handleShowPoster(posting.id)}
                               className="h-10 px-4 rounded-xl border border-border bg-muted/30 hover:bg-muted hover:border-muted-foreground/20 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider transition-all"
                             >
                               <Activity className="h-3.5 w-3.5" />
