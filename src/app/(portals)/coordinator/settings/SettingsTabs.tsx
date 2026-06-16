@@ -132,9 +132,9 @@ export function SettingsTabs() {
   };
 
   const defaultSlides = [
-    { title: "Slide 1", image: "/images/hero/industrial-1.png", description: "" },
-    { title: "Slide 2", image: "/images/hero/industrial-2.png", description: "" },
-    { title: "Slide 3", image: "/images/hero/industrial-3.png", description: "" },
+    { title: "Slide 1", image: "/images/hero/industrial-1.webp", description: "" },
+    { title: "Slide 2", image: "/images/hero/industrial-2.webp", description: "" },
+    { title: "Slide 3", image: "/images/hero/industrial-3.webp", description: "" },
   ];
 
   const currentSlides = slides.length > 0 ? slides : defaultSlides;

@@ -31,9 +31,9 @@ export async function updateHeroSlides(formData: FormData) {
         currentSlides = JSON.parse(existingSetting[0].value);
     } else {
         currentSlides = [
-            { image: "/images/hero/industrial-1.png", title: "The Digital Bridge to Industrial Excellence", description: "The official platform for managing Supervised Industrial Training at the Technological University of the Philippines Visayas." },
-            { image: "/images/hero/industrial-2.png", title: "Transitioning Classroom Logic to Practice", description: "Standardized industrial immersion programs designed for professional engineering excellence and institutional integrity." },
-            { image: "/images/hero/industrial-3.png", title: "Centralized Oversight for Global Partners", description: "A secure archival ecosystem for trainee verification, progress monitoring, and cross-sectoral coordination." }
+            { image: "/images/hero/industrial-1.webp", title: "The Digital Bridge to Industrial Excellence", description: "The official platform for managing Supervised Industrial Training at the Technological University of the Philippines Visayas." },
+            { image: "/images/hero/industrial-2.webp", title: "Transitioning Classroom Logic to Practice", description: "Standardized industrial immersion programs designed for professional engineering excellence and institutional integrity." },
+            { image: "/images/hero/industrial-3.webp", title: "Centralized Oversight for Global Partners", description: "A secure archival ecosystem for trainee verification, progress monitoring, and cross-sectoral coordination." }
         ];
     }
 

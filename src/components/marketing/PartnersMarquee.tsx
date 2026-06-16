@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Marquee from "@/components/ui/marquee";
 import { Building2 } from "lucide-react";
-import { getMarqueePartners } from "@/app/(portals)/coordinator/companies/actions";
-import { getMarqueeSettings } from "@/app/(portals)/coordinator/settings/general/actions";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -23,29 +21,15 @@ type MarqueeSettings = {
   showInAbout: boolean;
 };
 
-export function PartnersMarquee() {
-  const [partners, setPartners] = useState<Partner[]>([]);
-  const [settings, setSettings] = useState<MarqueeSettings | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const [partnerData, settingsData] = await Promise.all([
-          getMarqueePartners(),
-          getMarqueeSettings()
-        ]);
-        setPartners(partnerData as Partner[]);
-        setSettings(settingsData);
-      } catch (error) {
-        console.error("Failed to load marquee data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    load();
-  }, []);
-
+export function PartnersMarquee({
+  initialPartners,
+  initialSettings,
+}: {
+  initialPartners?: Partner[];
+  initialSettings?: MarqueeSettings | null;
+}) {
+  const partners = initialPartners || [];
+  const settings = initialSettings || null;
   // Fallback partners if none in DB
   const displayPartners = partners.length > 0 ? partners : [
     { id: "1", name: "Global Tech Solutions", industry: "IT Services", logoUrl: null },
@@ -57,18 +41,6 @@ export function PartnersMarquee() {
     { id: "7", name: "Prime Logistics", industry: "Transportation", logoUrl: null },
     { id: "8", name: "Alpha Robotics", industry: "Automation", logoUrl: null },
   ];
-
-  if (isLoading && partners.length === 0) {
-    return (
-      <div className="py-12 bg-white dark:bg-background overflow-hidden border-y border-slate-100 dark:border-white/5 [content-visibility:auto] [contain-intrinsic-size:180px]">
-        <div className="flex gap-12 animate-pulse justify-center">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-12 w-40 bg-slate-100 dark:bg-white/5 rounded-lg" />
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   if (settings && !settings.enabled) return null;
 

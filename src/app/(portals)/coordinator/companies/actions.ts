@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { sendApprovalEmail } from "@/lib/email";
 import { requireCoordinator } from "@/lib/auth-guards";
+import { getPublicImageUrl } from "@/lib/public-media";
 
 export async function getCompanies() {
   await requireCoordinator();
@@ -173,20 +174,47 @@ export async function toggleCompanyMarquee(companyId: string, showInMarquee: boo
 }
 
 export async function getMarqueePartners() {
-  return await prisma.company.findMany({
+  const partners = await prisma.company.findMany({
     where: { 
       isVerified: true,
       showInMarquee: true 
     },
+    select: {
+      id: true,
+      name: true,
+      industry: true,
+      logoUrl: true,
+    },
     orderBy: { joinedAt: "desc" },
   });
+
+  return partners.map((partner) => ({
+    ...partner,
+    logoUrl: getPublicImageUrl(partner.logoUrl),
+  }));
 }
 
 export async function getVerifiedPartners() {
-  return await prisma.company.findMany({
+  const partners = await prisma.company.findMany({
     where: { 
       isVerified: true 
     },
+    select: {
+      id: true,
+      name: true,
+      industry: true,
+      location: true,
+      slots: true,
+      description: true,
+      logoUrl: true,
+      bannerUrl: true,
+    },
     orderBy: { name: "asc" },
   });
+
+  return partners.map((partner) => ({
+    ...partner,
+    logoUrl: getPublicImageUrl(partner.logoUrl),
+    bannerUrl: getPublicImageUrl(partner.bannerUrl),
+  }));
 }

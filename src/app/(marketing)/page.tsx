@@ -3,8 +3,11 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { PartnersMarquee } from "@/components/marketing/PartnersMarquee";
 import { Reveal } from "@/components/Reveal";
 import prisma from "@/lib/prisma";
+import { getMarqueePartners } from "@/app/(portals)/coordinator/companies/actions";
+import { getMarqueeSettings } from "@/app/(portals)/coordinator/settings/general/actions";
+import { getPublicImageUrl } from "@/lib/public-media";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function Home() {
   interface SystemSetting {
@@ -12,7 +15,7 @@ export default async function Home() {
     value: string;
   }
 
-  const [activePlacements, verifiedPartners, jobPostings, hoursResult, heroSetting] = await Promise.all([
+  const [activePlacements, verifiedPartners, jobPostings, hoursResult, heroSetting, marqueePartners, marqueeSettings] = await Promise.all([
     prisma.application.count({ where: { status: "ACCEPTED" } }),
     prisma.company.count({ where: { isVerified: true } }),
     prisma.sITPosting.count({ where: { status: "OPEN" } }),
@@ -21,10 +24,20 @@ export default async function Home() {
       where: { status: "APPROVED" },
     }),
     prisma.$queryRaw<SystemSetting[]>`SELECT * FROM "SystemSetting" WHERE key = 'hero_slides' LIMIT 1`.catch(() => null),
+    getMarqueePartners(),
+    getMarqueeSettings(),
   ]);
 
   const verifiedHours = hoursResult._sum.hours || 0;
-  const customSlides = heroSetting && heroSetting.length > 0 ? JSON.parse(heroSetting[0].value) : null;
+  const customSlides = heroSetting && heroSetting.length > 0
+    ? JSON.parse(heroSetting[0].value).map((slide: { image: string; title: string; description: string }) => ({
+        ...slide,
+        image: slide.image
+          .replace("/images/hero/industrial-1.png", "/images/hero/industrial-1.webp")
+          .replace("/images/hero/industrial-2.png", "/images/hero/industrial-2.webp")
+          .replace("/images/hero/industrial-3.png", "/images/hero/industrial-3.webp"),
+      }))
+    : null;
 
   return (
     <div className="flex flex-col">
@@ -33,7 +46,13 @@ export default async function Home() {
         <HeroCarousel slides={customSlides} />
 
         {/* Partners Marquee Section */}
-        <PartnersMarquee />
+        <PartnersMarquee
+          initialPartners={marqueePartners.map((partner) => ({
+            ...partner,
+            logoUrl: getPublicImageUrl(partner.logoUrl),
+          }))}
+          initialSettings={marqueeSettings}
+        />
 
         {/* Section 02 — Gateway Cards */}
         <section className="py-20 relative bg-white dark:bg-background overflow-hidden border-y border-slate-200 dark:border-white/10 transition-colors duration-300 [content-visibility:auto] [contain-intrinsic-size:900px]">
