@@ -60,6 +60,7 @@ export function HeroCarousel({ slides: customSlides }: { slides?: { image: strin
             priority={index === 0}
             quality={78}
             sizes="100vw"
+            unoptimized={activeSlide.image.startsWith("data:")}
           />
           {/* Overlays for Text Legibility */}
           <div className="absolute inset-0 bg-black/20" />
