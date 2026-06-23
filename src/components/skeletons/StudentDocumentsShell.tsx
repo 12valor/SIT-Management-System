@@ -28,10 +28,11 @@ type StudentDocument = {
 };
 
 const REQUIRED_DOCS = [
-  { name: "SIT Intent Form", type: "Application" },
-  { name: "Student Resume / CV", type: "Identification" },
-  { name: "Liability Waiver", type: "Legal" },
-  { name: "SIT Recommendation Letter", type: "Reference" },
+  { name: "Personal Data Form", type: "Application" },
+  { name: "Resume", type: "Identification" },
+  { name: "Police Clearance", type: "Legal" },
+  { name: "Medical Certificate", type: "Medical" },
+  { name: "Parent's Waiver", type: "Legal" },
 ];
 
 export function StudentDocumentsShell({ data }: { data: StudentDocument[] | null }) {

@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { pushNotification } from "@/lib/notifications";
 import { requireStudent } from "@/lib/auth-guards";
+import { MANDATORY_DOC_NAMES } from "@/lib/constants";
 
 export async function getSITOpportunities() {
   const student = await requireStudent();
@@ -115,16 +116,21 @@ export async function applyForOpportunity(postingId: string) {
       return { success: false, error: "Application already exists" };
     }
 
-    // Check for CV compliance
+    // Check for mandatory document compliance
     const student = await prisma.user.findUnique({
       where: { id: studentUser.id },
       include: { documents: true }
     });
 
-    const hasCV = student?.documents.some(
-      (doc) => doc.name === "Student Resume / CV" && doc.status !== "REJECTED"
-    );
-    if (!hasCV) return { success: false, error: "Please upload your Student Resume / CV before applying." };
+    const verifiedDocs = student?.documents.filter(doc => doc.status === "VERIFIED").map(doc => doc.name) || [];
+    const missingDocs = MANDATORY_DOC_NAMES.filter(name => !verifiedDocs.includes(name));
+
+    if (missingDocs.length > 0) {
+      return { 
+        success: false, 
+        error: `Please ensure all mandatory documents are uploaded and verified by your coordinator before applying. Missing/Unverified: ${missingDocs.join(', ')}` 
+      };
+    }
 
     if (existing && existing.status === "WITHDRAWN") {
       await prisma.application.update({

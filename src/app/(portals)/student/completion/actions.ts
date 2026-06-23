@@ -3,13 +3,7 @@
 import prisma from "@/lib/prisma";
 import { requireStudent } from "@/lib/auth-guards";
 import { getOrCreateActivePlacement } from "@/lib/placements";
-
-const MANDATORY_DOC_NAMES = [
-  "SIT Intent Form",
-  "Student Resume / CV",
-  "Liability Waiver",
-  "SIT Recommendation Letter",
-];
+import { MANDATORY_DOC_NAMES } from "@/lib/constants";
 
 function createCertificateId() {
   return `SIT-${Date.now().toString(36).toUpperCase()}-${Math.random()
@@ -48,7 +42,7 @@ export async function getCompletionStatus() {
     });
 
     // 3. Check for Mandatory Documents
-    // Mandatory: SIT Intent Form, Student Resume / CV, Liability Waiver, SIT Recommendation Letter
+    // Mandatory: Personal Data Form, Resume, Police Clearance, Medical Certificate, Parent's Waiver
     const docs = await prisma.sITDocument.findMany({
       where: { studentId: student.id }
     });
