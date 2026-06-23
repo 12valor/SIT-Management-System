@@ -1,24 +1,18 @@
 import type { Metadata } from "next";
-import { Poppins, Montserrat, Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -42,7 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppins.variable} ${montserrat.variable} ${outfit.variable} h-full antialiased overflow-x-hidden`}
+      className={`${plusJakartaSans.variable} ${montserrat.variable} h-full antialiased overflow-x-hidden`}
     >
       <body className="min-h-screen flex flex-col font-sans bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden relative">
         <NextTopLoader 

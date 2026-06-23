@@ -77,10 +77,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --font-sans: var(--font-poppins);
-  --font-heading: var(--font-poppins);
-  --font-premium: var(--font-poppins);
-  --font-serif: var(--font-poppins);
+  --font-sans: var(--font-plus-jakarta-sans);
+  --font-heading: var(--font-plus-jakarta-sans);
+  --font-premium: var(--font-plus-jakarta-sans);
+  --font-serif: var(--font-plus-jakarta-sans);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 

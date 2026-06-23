@@ -81,3 +81,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+// Force dev server restart to clear font cache
