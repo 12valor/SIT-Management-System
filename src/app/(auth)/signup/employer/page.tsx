@@ -102,13 +102,20 @@ export default function EmployerSignupPage() {
         return;
       }
 
-      const optimized = await fileToOptimizedDataUrl(file, {
-        maxWidth: type === "logo" ? 512 : 1400,
-        maxHeight: type === "logo" ? 512 : 700,
-        quality: 0.72,
-      });
-      if (type === "logo") setLogoPreview(optimized);
-      else setBannerPreview(optimized);
+      try {
+        const optimized = await fileToOptimizedDataUrl(file, {
+          maxWidth: type === "logo" ? 512 : 1400,
+          maxHeight: type === "logo" ? 512 : 700,
+          quality: 0.72,
+        });
+        if (type === "logo") setLogoPreview(optimized);
+        else setBannerPreview(optimized);
+      } catch (err) {
+        console.error("Image optimization failed:", err);
+        setAuthStatus("error");
+        setAuthMessage(`Failed to optimize the ${type} image. Please try another file.`);
+        e.target.value = "";
+      }
     }
   };
 

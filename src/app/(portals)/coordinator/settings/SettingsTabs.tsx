@@ -3,10 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { 
   Globe, 
-  Shield, 
-  Database, 
-  Lock, 
-  Server, 
   Upload, 
   Loader2, 
   CheckCircle2,
@@ -22,10 +18,6 @@ import { fileToOptimizedDataUrl } from "@/lib/client-media";
 const TABS = [
   { id: "website", name: "Hero Carousel", icon: Globe },
   { id: "marquee", name: "Partners Marquee", icon: LayoutTemplate },
-  { id: "security", name: "Security", icon: Lock },
-  { id: "registry", name: "Registry", icon: Shield },
-  { id: "database", name: "Database", icon: Database },
-  { id: "infrastructure", name: "System", icon: Server },
 ];
 
 const DEFAULT_MARQUEE_SETTINGS = {
