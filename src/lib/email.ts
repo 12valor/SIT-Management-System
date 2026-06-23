@@ -72,3 +72,63 @@ export async function sendApprovalEmail(to: string, companyName: string) {
     return { success: false, error };
   }
 }
+
+export async function sendActivationEmail(to: string, activationLink: string) {
+  try {
+    const info = await transporter.sendMail({
+      from: `"SIT Management System" <${process.env.EMAIL_FROM}>`,
+      to: to,
+      subject: "INSTITUTIONAL NOTICE: Verify and Activate Your SIT Account",
+      html: `
+        <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 20px auto; padding: 40px; border: 1px solid #e2e8f0; background-color: #ffffff;">
+          <div style="border-top: 4px solid #8c1515; margin-bottom: 30px;"></div>
+          
+          <h1 style="color: #8c1515; margin-top: 0; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
+            Student Portal Self-Activation
+          </h1>
+          
+          <p style="font-size: 15px; margin-top: 25px;">
+            Hello,
+          </p>
+          
+          <p style="font-size: 15px; color: #334155;">
+            Thank you for registering on the SIT Management System. To complete your institutional intake, your account requires activation.
+          </p>
+          
+          <p style="font-size: 15px; color: #334155;">
+            You can wait for the coordinator to approve and activate your registration manually, or you can activate it immediately by clicking the button below:
+          </p>
+          
+          <div style="margin: 40px 0;">
+            <a href="${activationLink}" style="background-color: #8c1515; color: #ffffff; padding: 14px 28px; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; border-radius: 4px;">
+              Activate My Account
+            </a>
+          </div>
+          
+          <p style="font-size: 13px; color: #64748b;">
+            This activation link is valid for 24 hours. If you did not register for this account, please ignore this email.
+          </p>
+          
+          <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 5px;">
+              SIT Coordination Office
+            </p>
+            <p style="font-size: 12px; color: #94a3b8;">
+              System Generated Notice | Please do not reply directly to this email.
+            </p>
+          </div>
+          
+          <p style="font-size: 11px; color: #cbd5e1; text-align: center; margin-top: 40px;">
+            &copy; ${new Date().getFullYear()} SIT MANAGEMENT SYSTEM. ALL RIGHTS RESERVED.
+          </p>
+        </div>
+      `,
+    });
+
+    console.log("Activation email sent successfully:", info.messageId);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error("Nodemailer activation email error:", error);
+    return { success: false, error };
+  }
+}

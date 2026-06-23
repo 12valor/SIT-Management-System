@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
 import { z } from "zod";
 import { isCourseCode } from "@/lib/courses";
+import crypto from "crypto";
+import { sendActivationEmail } from "@/lib/email";
 
 const studentSchema = z.object({
   name: z.string().min(2, "Name is too short"),
@@ -62,6 +64,26 @@ export async function registerStudent(formData: FormData) {
         isApproved: false, // Explicitly false for new registrations
       },
     });
+
+    if (validatedData.email.includes("@")) {
+      try {
+        const token = crypto.randomUUID();
+        await prisma.verificationToken.create({
+          data: {
+            identifier: validatedData.email,
+            token,
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+          },
+        });
+
+        const baseUrl = process.env.NEXTAUTH_URL || process.env.AUTH_URL || "http://localhost:3000";
+        const activationLink = `${baseUrl}/activate?token=${token}`;
+
+        await sendActivationEmail(validatedData.email, activationLink);
+      } catch (emailError) {
+        console.error("Failed to generate token or send activation email:", emailError);
+      }
+    }
 
     return { success: true };
   } catch (error) {
