@@ -24,7 +24,7 @@ import {
   ExternalLink,
   Tag
 } from "lucide-react";
-import Link from "next/link";
+
 import Image from "next/image";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
