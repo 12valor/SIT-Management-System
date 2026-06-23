@@ -44,8 +44,8 @@ export default async function EmployerProfilePage() {
             <input name="industry" defaultValue={company.industry} required className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary" />
           </label>
           <label className="space-y-2 text-sm font-semibold">
-            Location
-            <input name="location" defaultValue={company.location || ""} className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary" />
+            Location (One per line)
+            <textarea name="location" defaultValue={company.location || ""} rows={3} className="w-full rounded-lg border border-border bg-background px-3 py-3 text-sm outline-none focus:border-primary resize-none" />
           </label>
           <label className="space-y-2 text-sm font-semibold">
             Available Slots

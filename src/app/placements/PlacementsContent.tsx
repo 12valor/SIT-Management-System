@@ -268,7 +268,7 @@ function PlacementCard({
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:space-y-4 lg:gap-0">
                  {[
                    { icon: Building2, label: "Industry", value: post.company.industry },
-                   { icon: MapPin, label: "Headquarters", value: post.company.location },
+                   { icon: MapPin, label: "Headquarters", value: post.company.location?.split('\n').filter(Boolean).join(', ') },
                    { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                  ].map((info, idx) => (
                    <div key={idx} className="flex gap-2.5 items-center">
