@@ -11,8 +11,12 @@ interface SystemSetting {
   updatedAt: Date;
 }
 
-function isAllowedDataImage(value: any) {
-  if (!value || (typeof value === "object" && "size" in value && value.size === 0)) return true;
+function isAllowedDataImage(value: unknown) {
+  if (!value) return true;
+  if (typeof value === "object" && value !== null && "size" in value) {
+    const obj = value as { size?: unknown };
+    if (obj.size === 0) return true;
+  }
   if (typeof value !== "string") return false;
   return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_700_000;
 }

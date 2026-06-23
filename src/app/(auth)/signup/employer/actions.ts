@@ -5,8 +5,12 @@ import { Prisma, UserRole } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 
-function isAllowedDataImage(value: any) {
-  if (!value || (typeof value === "object" && "size" in value && value.size === 0)) return true;
+function isAllowedDataImage(value: unknown) {
+  if (!value) return true;
+  if (typeof value === "object" && value !== null && "size" in value) {
+    const obj = value as { size?: unknown };
+    if (obj.size === 0) return true;
+  }
   if (typeof value !== "string") return false;
   // 1.2MB in bytes is ~1,258,291. Base64 encoding adds ~33% overhead,
   // making the string length around ~1,677,750 characters.
