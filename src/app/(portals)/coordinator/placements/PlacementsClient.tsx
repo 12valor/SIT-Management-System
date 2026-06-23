@@ -32,33 +32,35 @@ export default function PlacementsClient({ initialPlacements }: PlacementsClient
   return (
     <div className="flex-1 space-y-12">
       {/* 1. Header Section */}
-      <div className="pb-6 border-b border-border/50 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="pb-8 border-b border-border/40 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-foreground uppercase tracking-tight">SIT Placements</h2>
-          <p className="text-sm text-foreground/80 mt-1">Verified student affiliations and active industry partnerships</p>
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground">SIT Placements</h2>
+          <p className="text-base text-foreground/60 mt-2 font-medium">Verified student affiliations and active industry partnerships</p>
         </div>
-        <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50 uppercase tracking-wider">
-          {placements.length} Confirmed Placements
+        <div className="text-xs font-medium text-foreground/60 bg-muted/40 px-3 py-1.5 rounded-lg border border-border/40">
+          <span className="font-bold text-foreground">{placements.length}</span> Confirmed Placements
         </div>
       </div>
 
       {/* 2. Main Content Section */}
       <div className="space-y-6 pb-24">
-        <div className="flex items-center justify-between border-b border-border pb-4">
-          <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Placement Manifest</h3>
-          <div className="p-1 bg-primary/10 rounded-lg text-primary"><MapPinned className="h-4 w-4" /></div>
+        <div className="flex items-center justify-between border-b border-border/40 pb-5">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-xl text-primary"><MapPinned className="h-5 w-5" /></div>
+            <h3 className="text-base font-semibold tracking-tight text-foreground">Placement Manifest</h3>
+          </div>
         </div>
 
-        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+        <div className="bg-card border border-border/40 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-muted/50 border-b border-border">
-                  <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left">Internal Intern</th>
-                  <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left">Industrial Role</th>
-                  <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left hidden md:table-cell">Host Company</th>
-                  <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-left hidden lg:table-cell">Site Location</th>
-                  <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-foreground/50 text-right">Modality</th>
+                <tr className="bg-muted/30 border-b border-border/40">
+                  <th className="px-6 py-4 text-[11px] font-medium uppercase tracking-wider text-foreground/50 text-left">Internal Intern</th>
+                  <th className="px-6 py-4 text-[11px] font-medium uppercase tracking-wider text-foreground/50 text-left">Industrial Role</th>
+                  <th className="px-6 py-4 text-[11px] font-medium uppercase tracking-wider text-foreground/50 text-left hidden md:table-cell">Host Company</th>
+                  <th className="px-6 py-4 text-[11px] font-medium uppercase tracking-wider text-foreground/50 text-left hidden lg:table-cell">Site Location</th>
+                  <th className="px-6 py-4 text-[11px] font-medium uppercase tracking-wider text-foreground/50 text-right">Modality</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/40">
@@ -69,13 +71,13 @@ export default function PlacementsClient({ initialPlacements }: PlacementsClient
                     <tr key={p.id} className="hover:bg-muted/30 transition-colors group">
                       <td className="px-6 py-4">
                         <p className="font-semibold text-foreground tracking-tight">{p.student.name ?? "—"}</p>
-                        <p className="text-[10px] text-foreground/50 font-medium mt-0.5">{p.student.email}</p>
+                        <p className="text-xs text-foreground/50 font-medium mt-0.5">{p.student.email}</p>
                       </td>
-                      <td className="px-6 py-4"><span className="text-xs font-medium text-foreground/80">{p.posting.title}</span></td>
-                      <td className="px-6 py-4 hidden md:table-cell"><div className="flex items-center gap-1.5 text-xs text-foreground/70 font-medium"><Building2 className="h-3.5 w-3.5 opacity-50" />{p.posting.company?.name ?? "—"}</div></td>
-                      <td className="px-6 py-4 hidden lg:table-cell"><div className="flex items-center gap-1.5 text-xs text-foreground/50"><MapPin className="h-3.5 w-3.5 opacity-50" /> {p.posting.location}</div></td>
+                      <td className="px-6 py-4"><span className="text-sm font-medium text-foreground/80">{p.posting.title}</span></td>
+                      <td className="px-6 py-4 hidden md:table-cell"><div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><Building2 className="h-4 w-4 text-foreground/40" />{p.posting.company?.name ?? "—"}</div></td>
+                      <td className="px-6 py-4 hidden lg:table-cell"><div className="flex items-center gap-2 text-sm text-foreground/60"><MapPin className="h-4 w-4 text-foreground/40" /> {p.posting.location}</div></td>
                       <td className="px-6 py-4 text-right">
-                        <span className={cn("inline-flex items-center px-2 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border shadow-sm", p.posting.type === 'ON_SITE' ? "bg-muted text-foreground/60 border-border/50" : "bg-primary/5 text-primary border-primary/10")}>
+                        <span className={cn("inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest shadow-sm ring-1 ring-inset", p.posting.type === 'ON_SITE' ? "bg-muted/50 text-foreground/70 ring-border/50" : "bg-primary/5 text-primary ring-primary/20")}>
                           {TYPE_LABEL[p.posting.type]}
                         </span>
                       </td>
@@ -85,8 +87,8 @@ export default function PlacementsClient({ initialPlacements }: PlacementsClient
               </tbody>
             </table>
           </div>
-          <div className="px-6 py-3 border-t border-border/40 bg-muted/20 flex items-center justify-between">
-            <p className="text-[9px] font-medium text-foreground/40 uppercase tracking-widest">Records Synchronized: {placements.length}</p>
+          <div className="px-6 py-4 border-t border-border/40 bg-muted/10 flex items-center justify-between">
+            <p className="text-[10px] font-medium text-foreground/50 uppercase tracking-widest">Records Synchronized: <span className="font-bold text-foreground">{placements.length}</span></p>
           </div>
         </div>
       </div>
