@@ -39,7 +39,7 @@ interface DashboardHeaderProps {
   pathname: string;
   navItems: NavItem[];
   setIsMobileMenuOpen: (open: boolean) => void;
-  roleTitle: string;
+  roleTitle?: string;
 }
 
 export function DashboardHeader({ 
@@ -74,13 +74,13 @@ export function DashboardHeader({
           <p className="text-sm font-semibold text-foreground">
             {session?.user?.name || "Unauthorized"}
           </p>
-          <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
-            {roleTitle}
-          </p>
+          {roleTitle && (
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
+              {roleTitle}
+            </p>
+          )}
         </div>
       </div>
     </header>
   );
 }
-
-

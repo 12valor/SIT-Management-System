@@ -208,7 +208,7 @@ export default function EvaluationsClient({ initialEvaluations, initialPending }
           },
           { 
             label: "Average Grade", 
-            value: `${avgGrade > 0 ? avgGrade.toFixed(2) : "0.00"} / 5.0`, 
+            value: `${avgGrade > 0 ? avgGrade.toFixed(2) : "0.00"}`, 
             desc: "Industrial skill rating average",
             icon: TrendingUp,
             iconWrapperClass: "bg-amber-500/10 text-amber-600 border border-amber-500/20 shadow-inner shadow-amber-500/10",
