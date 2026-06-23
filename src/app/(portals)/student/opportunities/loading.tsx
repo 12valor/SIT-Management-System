@@ -4,7 +4,7 @@ import { Suspense } from "react";
 export default function OpportunitiesLoading() {
   return (
     <Suspense>
-      <StudentOpportunitiesShell initialData={null} hasCV={true} />
+      <StudentOpportunitiesShell initialData={null} isEligible={false} missingDocs={[]} />
     </Suspense>
   );
 }
