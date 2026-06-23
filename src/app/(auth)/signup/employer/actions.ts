@@ -7,7 +7,9 @@ import { revalidatePath } from "next/cache";
 
 function isAllowedDataImage(value: string | null) {
   if (!value) return true;
-  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_200_000;
+  // 1.2MB in bytes is ~1,258,291. Base64 encoding adds ~33% overhead,
+  // making the string length around ~1,677,750 characters.
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_700_000;
 }
 
 export async function getCompanies() {
