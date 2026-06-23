@@ -79,7 +79,10 @@ export async function registerStudent(formData: FormData) {
         const baseUrl = process.env.NEXTAUTH_URL || process.env.AUTH_URL || "http://localhost:3000";
         const activationLink = `${baseUrl}/activate?token=${token}`;
 
-        await sendActivationEmail(validatedData.email, activationLink);
+        const result = await sendActivationEmail(validatedData.email, activationLink);
+        if (!result.success) {
+          throw result.error || new Error("Failed to send activation email");
+        }
       } catch (emailError) {
         console.error("Failed to generate token or send activation email:", emailError);
       }
