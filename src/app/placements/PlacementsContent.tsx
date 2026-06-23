@@ -91,11 +91,11 @@ function PlacementCard({
     >
       <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-white/5">
         {/* Left Column: Core Job Details */}
-        <div className="flex-1 p-6 md:p-10 space-y-5">
+        <div className="flex-1 p-5 md:p-10 space-y-5">
           {/* Header Section */}
-          <div className="flex gap-6 items-start">
+          <div className="flex gap-4 sm:gap-6 items-start">
             <div className="flex-shrink-0">
-              <div className="w-24 h-24 rounded-2xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
                 {post.company.logoUrl ? (
                   <div className="relative w-full h-full p-2">
                     <Image 
@@ -107,7 +107,7 @@ function PlacementCard({
                     />
                   </div>
                 ) : (
-                  <Building2 className="w-10 h-10 text-slate-400" strokeWidth={1.5} />
+                  <Building2 className="w-6 h-6 sm:w-10 sm:h-10 text-slate-400" strokeWidth={1.5} />
                 )}
               </div>
             </div>
@@ -115,21 +115,21 @@ function PlacementCard({
             <div className="flex-1 min-w-0 pt-1">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-3xl font-bold text-slate-950 dark:text-white leading-tight tracking-tight mb-2">
+                  <h3 className="text-xl sm:text-3xl font-bold text-slate-950 dark:text-white leading-tight tracking-tight mb-2">
                     {post.title}
                   </h3>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-lg font-bold text-slate-900 dark:text-slate-100">{post.company.name}</span>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">{post.company.name}</span>
                     <BadgeCheck className="h-4 w-4 text-white fill-[#7A0012]" />
                   </div>
-                  <div className="flex items-center gap-4 text-sm font-normal text-slate-600 dark:text-slate-400">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                      <MapPin className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                       {post.location}
                     </div>
-                    <span className="text-slate-300 dark:text-slate-700">•</span>
+                    <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
                     <div className="flex items-center gap-1.5">
-                      <Building2 className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                      <Building2 className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                       {post.type.replace('_', '-')}
                     </div>
                   </div>
@@ -139,27 +139,27 @@ function PlacementCard({
           </div>
 
           {/* Description */}
-          <p className="text-slate-700 dark:text-slate-300 text-[15px] leading-relaxed font-normal max-w-3xl">
+          <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-[15px] leading-relaxed font-normal max-w-3xl">
             {post.description}
           </p>
 
           <div className="h-px bg-slate-100 dark:bg-white/5 w-full" />
 
           {/* Responsibilities & Qualifications */}
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-10">
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <ClipboardCheck className="h-6 w-6 text-[#7A0012]" strokeWidth={1.5} />
+                <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-5 w-5 sm:h-6 sm:w-6 text-[#7A0012]" strokeWidth={1.5} />
                 </div>
-                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
+                <h4 className="text-base sm:text-lg font-bold text-slate-950 dark:text-white">Responsibilities</h4>
               </div>
-              <div className="pl-12">
+              <div className="pl-6 sm:pl-12">
                 <ul className="space-y-2.5">
                   {post.responsibilities.map((res, i) => (
                     <li key={i} className="flex items-start gap-3 group">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
-                      <span className="text-[15px] font-light text-slate-700 dark:text-slate-300 leading-relaxed">{res}</span>
+                      <span className="text-sm sm:text-[15px] font-light text-slate-700 dark:text-slate-300 leading-relaxed">{res}</span>
                     </li>
                   ))}
                 </ul>
@@ -168,17 +168,17 @@ function PlacementCard({
 
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <User className="h-6 w-6 text-[#7A0012]" strokeWidth={1.5} />
+                <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
+                  <User className="h-5 w-5 sm:h-6 sm:w-6 text-[#7A0012]" strokeWidth={1.5} />
                 </div>
-                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
+                <h4 className="text-base sm:text-lg font-bold text-slate-950 dark:text-white">Qualifications</h4>
               </div>
-              <div className="pl-12">
+              <div className="pl-6 sm:pl-12">
                 <ul className="space-y-2.5">
                   {post.requirements.map((req, i) => (
                     <li key={i} className="flex items-start gap-3 group">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#7A0012] mt-2 shrink-0 opacity-80" />
-                      <span className="text-[15px] font-light text-slate-700 dark:text-slate-300 leading-relaxed">{req}</span>
+                      <span className="text-sm sm:text-[15px] font-light text-slate-700 dark:text-slate-300 leading-relaxed">{req}</span>
                     </li>
                   ))}
                 </ul>
@@ -190,17 +190,17 @@ function PlacementCard({
           <div className="py-4 border-t border-slate-100 dark:border-white/5">
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                  <Tag className="h-6 w-6 text-[#7A0012]" strokeWidth={1.5} />
+                <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
+                  <Tag className="h-5 w-5 sm:h-6 sm:w-6 text-[#7A0012]" strokeWidth={1.5} />
                 </div>
-                <h4 className="text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
+                <h4 className="text-base sm:text-lg font-bold text-slate-950 dark:text-white">Skills</h4>
               </div>
-              <div className="pl-12">
+              <div className="pl-6 sm:pl-12">
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag, idx) => (
                     <span 
                       key={idx}
-                      className="px-3 py-1 bg-slate-50 dark:bg-white/5 text-[15px] font-light text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-white/10 rounded-full hover:border-[#7A0012]/30 transition-colors"
+                      className="px-2.5 py-0.5 sm:px-3 sm:py-1 bg-slate-50 dark:bg-white/5 text-xs sm:text-[15px] font-light text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-white/10 rounded-full hover:border-[#7A0012]/30 transition-colors"
                     >
                       {tag}
                     </span>
@@ -212,12 +212,12 @@ function PlacementCard({
         </div>
 
         {/* Right Column: Institutional Sidebar */}
-        <div className="w-full lg:w-80 p-6 bg-slate-50/20 dark:bg-white/[0.01] flex flex-col border-l border-slate-100 dark:divide-white/5">
+        <div className="w-full lg:w-80 p-5 sm:p-6 bg-slate-50/20 dark:bg-white/[0.01] flex flex-col dark:divide-white/5">
           <div className="space-y-4 flex-1">
             {/* Status Section */}
-            <div className="flex gap-3 items-center">
-               <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                 <Send className="h-6 w-6 text-[#7A0012]" />
+            <div className="flex gap-2.5 items-center">
+               <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
+                 <Send className="h-4.5 w-4.5 text-[#7A0012]" />
                </div>
                <div>
                  <h4 className="text-sm font-bold text-foreground leading-tight">Actively hiring</h4>
@@ -228,23 +228,25 @@ function PlacementCard({
             <div className="h-px bg-border w-full" />
 
             {/* Quick Facts */}
-            <div className="space-y-3">
-              {[
-                { icon: Clock, label: `${post.requiredHours}H requirement`, sub: "Estimated commitment" },
-                { icon: Building2, label: "Work setup", sub: post.type.replace('_', '-') },
-                { icon: MapPin, label: "Location", sub: post.location },
-                { icon: Calendar, label: "Posted", sub: format(new Date(post.postedAt), 'MMMM dd') },
-              ].map((fact, idx) => (
-                <div key={idx} className="flex gap-3 items-center">
-                  <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                    <fact.icon className="h-6 w-6 text-slate-700 dark:text-slate-300" strokeWidth={1.5} />
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 lg:space-y-3 lg:gap-0">
+                {[
+                  { icon: Clock, label: `${post.requiredHours}H requirement`, sub: "Estimated commitment" },
+                  { icon: Building2, label: "Work setup", sub: post.type.replace('_', '-') },
+                  { icon: MapPin, label: "Location", sub: post.location },
+                  { icon: Calendar, label: "Posted", sub: format(new Date(post.postedAt), 'MMMM dd') },
+                ].map((fact, idx) => (
+                  <div key={idx} className="flex gap-2.5 items-center">
+                    <div className="w-8 h-8 rounded-lg bg-slate-100/50 dark:bg-white/5 flex items-center justify-center shrink-0">
+                      <fact.icon className="h-4.5 w-4.5 text-slate-700 dark:text-slate-300" strokeWidth={1.5} />
+                    </div>
+                    <div className="min-w-0">
+                      <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-tight mb-0.5 truncate">{fact.label}</h5>
+                      <p className="text-[11px] font-light text-slate-600 dark:text-slate-400 leading-tight truncate">{fact.sub}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h5 className="text-[13px] font-bold text-slate-950 dark:text-white leading-none mb-0.5">{fact.label}</h5>
-                    <p className="text-[11px] font-light text-slate-600 dark:text-slate-400 leading-none">{fact.sub}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
               
               {post.posterUrl && (
                 <button 
@@ -263,15 +265,15 @@ function PlacementCard({
             <div className="space-y-4">
               <h4 className="text-[11px] font-bold text-slate-950 uppercase tracking-[0.2em]">Company profile</h4>
               
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:space-y-4 lg:gap-0">
                  {[
                    { icon: Building2, label: "Industry", value: post.company.industry },
                    { icon: MapPin, label: "Headquarters", value: post.company.location },
                    { icon: Globe, label: "Registry Web", value: post.company.websiteUrl ? post.company.websiteUrl.replace(/^https?:\/\//, '') : "visit-site.com", isLink: true, url: post.company.websiteUrl },
                  ].map((info, idx) => (
-                   <div key={idx} className="flex gap-3 items-center">
-                     <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                       <info.icon className="h-6 w-6 text-slate-800" strokeWidth={1.5} />
+                   <div key={idx} className="flex gap-2.5 items-center">
+                     <div className="w-8 h-8 rounded-lg bg-slate-100/50 dark:bg-white/5 flex items-center justify-center shrink-0">
+                       <info.icon className="h-4.5 w-4.5 text-slate-700 dark:text-slate-300" strokeWidth={1.5} />
                      </div>
                      <div className="min-w-0 flex-1">
                        <p className="text-[10px] font-bold text-slate-950 dark:text-slate-200 uppercase tracking-widest leading-none mb-1.5">{info.label}</p>
@@ -292,13 +294,13 @@ function PlacementCard({
         </div>
       </div>
 
-        <div className="bg-slate-50/30 dark:bg-white/[0.01] border-t border-slate-200/60 dark:border-white/10 p-6 flex flex-wrap items-center justify-between gap-6">
-        <div className="flex flex-wrap items-center gap-6">
+      <div className="bg-slate-50/30 dark:bg-white/[0.01] border-t border-slate-200/60 dark:border-white/10 p-5 sm:p-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6">
+        <div className="flex flex-wrap items-center justify-between sm:justify-start gap-4">
           <div className="flex items-center gap-3">
             <button 
               onClick={() => onToggleSave(post.id)}
               className={cn(
-                "h-12 w-12 rounded-xl border flex items-center justify-center transition-all active:scale-90",
+                "h-12 w-12 rounded-xl border flex items-center justify-center transition-all active:scale-90 shrink-0",
                 isSaved 
                   ? "bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-[#7A0012]" 
                   : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-400 hover:border-slate-300"
@@ -307,8 +309,8 @@ function PlacementCard({
               <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />
             </button>
 
-            <div className="flex items-center gap-4 ml-4">
-              <span className="text-sm font-bold text-slate-600 dark:text-slate-400">Share:</span>
+            <div className="flex items-center gap-3 ml-2 sm:ml-4">
+              <span className="text-sm font-bold text-slate-600 dark:text-slate-400 hidden sm:inline">Share:</span>
               <div className="flex items-center gap-2">
                 {[
                   { icon: LinkIcon, action: () => navigator.clipboard.writeText(window.location.origin + '/placements?id=' + post.id) },
@@ -331,7 +333,7 @@ function PlacementCard({
           </div>
         </div>
 
-        <div className="flex items-center gap-8">
+        <div className="flex items-center w-full sm:w-auto">
           <Link 
             href={`/login/student?redirect=${encodeURIComponent('/student/opportunities?apply=' + post.id)}`} 
             className="group/btn relative w-full sm:w-64 h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98]"
@@ -385,7 +387,7 @@ function PlacementsList({ initialPostings }: { initialPostings: Placement[] }) {
   });
 
   return (
-    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-48 pb-24 px-6 transition-colors duration-300">
+    <main className="min-h-screen bg-[#fafaf9] dark:bg-background pt-28 sm:pt-48 pb-12 sm:pb-24 px-4 sm:px-6 transition-colors duration-300">
       <motion.div 
         className="container mx-auto max-w-6xl"
         initial="initial"
@@ -393,24 +395,24 @@ function PlacementsList({ initialPostings }: { initialPostings: Placement[] }) {
         variants={staggerContainer}
       >
         {/* Archival Header */}
-        <motion.header className="mb-16 border-b border-slate-200 dark:border-white/10 pb-16" variants={fadeInUp}>
+        <motion.header className="mb-8 sm:mb-16 border-b border-slate-200 dark:border-white/10 pb-8 sm:pb-16" variants={fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
             <span className="h-px w-8 bg-primary/40" />
             <span className="text-primary font-medium tracking-[0.2em] uppercase text-[10px]">
               SIT STRATEGIC OFFICE • DEPLOYMENT REGISTRY
             </span>
           </div>
-          <h1 className="text-5xl font-serif font-medium text-slate-900 dark:text-white mb-8 leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-4 sm:mb-8 leading-tight">
             Approved Industrial Placements
           </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-400 font-serif leading-relaxed max-w-3xl italic">
+          <p className="text-base sm:text-xl text-slate-600 dark:text-slate-400 font-serif leading-relaxed max-w-3xl italic">
             Official registry of active training opportunities. Opportunities listed are verified by the Institutional Partnership Committee. To proceed with an application, authenticate via the Student Portal.
           </p>
         </motion.header>
 
         {/* Controls Overlay Card */}
         <motion.section 
-          className="mb-12 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-sm"
+          className="mb-8 sm:mb-12 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 rounded-2xl p-4 sm:p-6 shadow-sm"
           variants={fadeInUp}
         >
           <div className="flex flex-col space-y-4">
@@ -432,11 +434,11 @@ function PlacementsList({ initialPostings }: { initialPostings: Placement[] }) {
               </div>
 
               {/* Action Group */}
-              <div className="flex items-center gap-3 w-full lg:w-auto">
+              <div className="flex items-center gap-3 w-full lg:w-auto min-w-0">
                 <button 
                   onClick={() => setShowSavedOnly(!showSavedOnly)}
                   className={cn(
-                    "h-[52px] w-[52px] flex items-center justify-center rounded-xl border transition-all active:scale-95",
+                    "h-[52px] w-[52px] shrink-0 flex items-center justify-center rounded-xl border transition-all active:scale-95",
                     showSavedOnly 
                       ? "bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-[#7A0012]" 
                       : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 hover:border-slate-300"
@@ -447,7 +449,7 @@ function PlacementsList({ initialPostings }: { initialPostings: Placement[] }) {
 
                 <div className="h-8 w-px bg-slate-200 dark:bg-white/10 mx-1 hidden lg:block" />
 
-                <div className="flex items-center gap-1.5 bg-slate-50/50 dark:bg-white/5 p-1.5 rounded-xl border border-slate-200 dark:border-white/10">
+                <div className="flex items-center gap-1.5 bg-slate-50/50 dark:bg-white/5 p-1.5 rounded-xl border border-slate-200 dark:border-white/10 overflow-x-auto no-scrollbar scrollbar-none flex-1 lg:flex-initial">
                   {['ALL', 'ON_SITE', 'HYBRID', 'REMOTE'].map((type) => (
                     <button
                       key={type}
