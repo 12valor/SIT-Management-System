@@ -235,10 +235,10 @@ export default function EvaluationsClient({ initialEvaluations, initialPending }
           return (
             <div key={i} className="group relative overflow-hidden bg-card border border-border/40 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 flex items-center justify-between gap-4">
               <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-foreground/5 rounded-full blur-3xl pointer-events-none transition-transform group-hover:scale-150 duration-700" />
-              <div className="space-y-1 relative z-10">
-                <p className="text-[11px] font-medium text-foreground/60 tracking-wider uppercase">{stat.label}</p>
-                <p className="text-4xl font-semibold text-foreground tracking-tighter">{stat.value}</p>
-                <p className="text-xs text-foreground/50 font-medium">{stat.desc}</p>
+              <div className="space-y-1 relative z-10 min-w-0 flex-1">
+                <p className="text-[11px] font-medium text-foreground/60 tracking-wider uppercase truncate">{stat.label}</p>
+                <p className="text-3xl xl:text-4xl font-semibold text-foreground tracking-tighter whitespace-nowrap truncate">{stat.value}</p>
+                <p className="text-xs text-foreground/50 font-medium truncate">{stat.desc}</p>
               </div>
               <div className={cn("p-4 rounded-xl shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110", stat.iconWrapperClass)}>
                 <Icon className={stat.iconClass} strokeWidth={2.5} />
