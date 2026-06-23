@@ -29,10 +29,12 @@ import { SITOpportunity, OpportunityApplication } from "@/app/(portals)/student/
 
 export function StudentOpportunitiesShell({ 
   initialData, 
-  hasCV 
+  isEligible,
+  missingDocs
 }: { 
   initialData: SITOpportunity[] | null, 
-  hasCV: boolean 
+  isEligible: boolean,
+  missingDocs: string[]
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -516,13 +518,14 @@ export function StudentOpportunitiesShell({
                     </div>
                   </div>
 
-                  {!hasCV ? (
+                  {!isEligible ? (
                     <div className="p-4 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 space-y-2">
                       <p className="text-xs font-semibold text-red-600 dark:text-red-400">
-                        Resume (CV) Missing
+                        Mandatory Documents Missing or Unverified
                       </p>
                       <p className="text-[11px] text-muted-foreground leading-normal">
-                        You need to upload your Student Resume / CV before applying. Please go to the documents page to upload it.
+                        You need to upload all mandatory documents and have them verified by your coordinator before applying. 
+                        Missing or unverified documents: <span className="font-semibold">{missingDocs.join(', ')}</span>.
                       </p>
                       <Link 
                         href="/student/documents"
@@ -548,10 +551,10 @@ export function StudentOpportunitiesShell({
                   </button>
                   <button
                     onClick={() => handleApply(applyingTo.id)}
-                    disabled={isSubmitting || !hasCV}
+                    disabled={isSubmitting || !isEligible}
                     className={cn(
                       "px-4 h-9 rounded-lg text-xs font-bold text-white bg-primary hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer",
-                      (isSubmitting || !hasCV) && "opacity-50 cursor-not-allowed pointer-events-none"
+                      (isSubmitting || !isEligible) && "opacity-50 cursor-not-allowed pointer-events-none"
                     )}
                   >
                     {isSubmitting ? (
