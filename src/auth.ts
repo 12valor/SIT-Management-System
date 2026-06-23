@@ -18,7 +18,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
 
         try {
-          const email = String(credentials.email).trim().toLowerCase();
+          let email = String(credentials.email).trim();
+          const tupvIdRegex = /^TUPV-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}$/i;
+          if (tupvIdRegex.test(email)) {
+            email = email.toUpperCase();
+          } else {
+            email = email.toLowerCase();
+          }
           const password = String(credentials.password);
           const adminPassword = process.env.ADMIN_PASSWORD;
           

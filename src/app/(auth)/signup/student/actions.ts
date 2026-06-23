@@ -7,7 +7,16 @@ import { isCourseCode } from "@/lib/courses";
 
 const studentSchema = z.object({
   name: z.string().min(2, "Name is too short"),
-  email: z.string().email("Invalid email address"),
+  email: z.string().refine(
+    (val) => {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.)?tup\.edu\.ph$/i;
+      const tupvIdRegex = /^TUPV-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}$/i;
+      return emailRegex.test(val) || tupvIdRegex.test(val);
+    },
+    {
+      message: "Must be a valid TUPV ID (TUPV-XX-XXXX) or a tup.edu.ph email",
+    }
+  ),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
   course: z.string().refine(isCourseCode, "Course must be one of T01-T09"),
@@ -22,7 +31,13 @@ export async function registerStudent(formData: FormData) {
   try {
     const rawData = Object.fromEntries(formData.entries());
     if (typeof rawData.email === "string") {
-      rawData.email = rawData.email.trim().toLowerCase();
+      const trimmed = rawData.email.trim();
+      const tupvIdRegex = /^TUPV-[A-Za-z0-9]{2}-[A-Za-z0-9]{4}$/i;
+      if (tupvIdRegex.test(trimmed)) {
+        rawData.email = trimmed.toUpperCase();
+      } else {
+        rawData.email = trimmed.toLowerCase();
+      }
     }
     const validatedData = studentSchema.parse(rawData);
 

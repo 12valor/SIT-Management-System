@@ -121,13 +121,13 @@ export default function StudentSignupPage() {
 
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-serif flex items-center h-4">
-                Institutional Email
+                Institutional Email / TUPV ID
               </label>
               <input
                 name="email"
-                type="email"
+                type="text"
                 required
-                placeholder="e.g. 2024-12345-V-0@tupv.edu.ph"
+                placeholder="TUPV-XX-XXXX or name@tup.edu.ph"
                 className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
               />
             </div>

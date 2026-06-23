@@ -73,20 +73,20 @@ export function StudentLoginForm() {
 
         <div className="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 p-8 rounded-2xl">
           <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-               <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
-                  Identifier
-               </label>
-               <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="student@gsfe.tupv.edu.ph"
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
-               />
-            </div>
+             <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
+                   Institutional Email / TUPV ID
+                </label>
+                <input
+                   id="email"
+                   type="text"
+                   required
+                   value={email}
+                   onChange={(e) => setEmail(e.target.value)}
+                   placeholder="TUPV-XX-XXXX or student@gsfe.tupv.edu.ph"
+                   className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-slate-900 dark:text-white"
+                />
+             </div>
             
             <div className="space-y-2">
                <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300 font-serif">
