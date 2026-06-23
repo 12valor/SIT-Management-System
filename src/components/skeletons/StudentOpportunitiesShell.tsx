@@ -4,6 +4,7 @@ import { Skeleton } from "boneyard-js/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { 
   Search, 
   CheckCircle2,
@@ -33,6 +34,8 @@ export function StudentOpportunitiesShell({
   initialData: SITOpportunity[] | null, 
   hasCV: boolean 
 }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [postings, setPostings] = useState<SITOpportunity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<"ALL" | "ON_SITE" | "REMOTE" | "HYBRID">("ALL");
@@ -56,8 +59,7 @@ export function StudentOpportunitiesShell({
   useEffect(() => {
     if (deepLinkHandled.current || postings.length === 0) return;
 
-    const params = new URLSearchParams(window.location.search);
-    const applyId = params.get("apply");
+    const applyId = searchParams.get("apply");
     if (!applyId) return;
 
     deepLinkHandled.current = true;
@@ -70,8 +72,9 @@ export function StudentOpportunitiesShell({
       }
     }
 
-    window.history.replaceState({}, "", "/student/opportunities");
-  }, [postings]);
+    // Clean up URL without triggering a full page reload using the router
+    router.replace("/student/opportunities", { scroll: false });
+  }, [postings, searchParams, router]);
 
   const handleApply = async (postingId: string) => {
     setIsSubmitting(true);

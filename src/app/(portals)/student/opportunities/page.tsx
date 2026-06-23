@@ -4,6 +4,7 @@ import { getStudentPlacementStatus } from "../actions";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
+import { Suspense } from "react";
 
 export default async function StudentOpportunitiesPage() {
   const [session, placement, result] = await Promise.all([
@@ -25,5 +26,9 @@ export default async function StudentOpportunitiesPage() {
 
   const data = result.success && result.data ? result.data : null;
 
-  return <StudentOpportunitiesShell initialData={data} hasCV={hasCV} />;
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-muted-foreground animate-pulse">Loading opportunities...</div>}>
+      <StudentOpportunitiesShell initialData={data} hasCV={hasCV} />
+    </Suspense>
+  );
 }

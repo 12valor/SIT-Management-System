@@ -334,7 +334,7 @@ function PlacementCard({
         </div>
 
         <div className="flex items-center w-full sm:w-auto">
-          <Link 
+          <a 
             href={`/login/student?redirect=${encodeURIComponent('/student/opportunities?apply=' + post.id)}`} 
             className="group/btn relative w-full sm:w-64 h-12 bg-[#7A0012] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-3 overflow-hidden transition-all active:scale-[0.98]"
           >
@@ -343,7 +343,7 @@ function PlacementCard({
               <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
             </span>
             <div className="absolute inset-0 bg-slate-950 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-          </Link>
+          </a>
         </div>
       </div>
     </motion.article>
