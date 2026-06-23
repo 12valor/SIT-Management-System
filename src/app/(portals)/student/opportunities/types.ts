@@ -24,4 +24,5 @@ export interface SITOpportunity {
   companyId: string;
   company: OpportunityCompany;
   applications: OpportunityApplication[];
+  tags: string[];
 }
