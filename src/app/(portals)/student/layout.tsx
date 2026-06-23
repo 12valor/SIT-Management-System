@@ -17,6 +17,7 @@ import {
   Lock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { SignOutOverlay } from "@/components/SignOutOverlay";
@@ -78,7 +79,7 @@ export default function StudentLayout({
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border bg-card transition-all duration-500 ease-in-out lg:translate-x-0 overflow-hidden",
+        "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border/60 bg-zinc-50/95 dark:bg-zinc-950/95 backdrop-blur-md transition-all duration-500 ease-in-out lg:translate-x-0 overflow-hidden",
         isMobileMenuOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
       )}>
         {/* Logo/Branding Section */}
@@ -92,10 +93,10 @@ export default function StudentLayout({
           />
           <div className="flex flex-col justify-center leading-none">
             <span className="font-bold text-base tracking-tight text-foreground font-heading">SIT Platform</span>
-            <span className="text-[10px] font-medium text-primary mt-1">Student Portal</span>
+            <span className="text-[10px] font-semibold text-primary mt-1">Student Portal</span>
           </div>
           <button 
-            className="ml-auto lg:hidden p-2 rounded-lg bg-muted" 
+            className="ml-auto lg:hidden p-2 rounded-lg bg-muted cursor-pointer" 
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <X className="h-4 w-4 text-muted-foreground" />
@@ -104,7 +105,7 @@ export default function StudentLayout({
         
         {/* Navigation Section */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-2">
-          <nav className="space-y-1">
+          <nav className="space-y-1.5">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
@@ -114,13 +115,13 @@ export default function StudentLayout({
                 return (
                   <div
                     key={item.href}
-                    className="flex items-center justify-between px-4 py-2.5 text-sm font-medium text-muted-foreground/40 bg-muted/30 rounded-lg cursor-not-allowed group relative"
+                    className="flex items-center justify-between px-4 py-3 text-sm font-medium text-muted-foreground/35 bg-muted/20 rounded-xl cursor-not-allowed group relative"
                   >
                     <div className="flex items-center gap-3">
                       <Icon className="h-5 w-5 text-muted-foreground/20" />
                       <span>{item.name}</span>
                     </div>
-                    <Lock className="h-3.5 w-3.5 text-muted-foreground/30" />
+                    <Lock className="h-3.5 w-3.5 text-muted-foreground/20" />
                     
                     {/* Tooltip or label */}
                     <div className="absolute left-full ml-2 px-2 py-1 bg-foreground text-background text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
@@ -136,17 +137,24 @@ export default function StudentLayout({
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all rounded-lg group",
+                    "relative flex items-center gap-3 px-4 py-3 text-sm font-medium transition-all rounded-xl group overflow-hidden cursor-pointer",
                     isActive 
-                      ? "bg-primary/10 text-primary" 
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? "bg-muted/60 text-foreground font-semibold" 
+                      : "text-muted-foreground hover:bg-muted/30 hover:text-foreground"
                   )}
                 >
+                  {isActive && (
+                    <motion.div 
+                      layoutId="activeSidebarIndicator"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 rounded-r-full bg-primary"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
                   <Icon className={cn(
-                    "h-5 w-5 transition-colors",
-                    isActive ? "text-primary" : "text-muted-foreground/50 group-hover:text-muted-foreground"
+                    "h-5 w-5 transition-colors duration-200",
+                    isActive ? "text-primary" : "text-muted-foreground/50 group-hover:text-foreground"
                   )} />
-                  <span>{item.name}</span>
+                  <span className="transition-transform duration-200 group-hover:translate-x-0.5">{item.name}</span>
                 </Link>
               );
             })}

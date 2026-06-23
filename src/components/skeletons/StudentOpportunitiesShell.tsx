@@ -126,12 +126,6 @@ export function StudentOpportunitiesShell({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="h-24 bg-muted/30 border border-border/50 rounded-2xl animate-pulse" />
-              ))}
-            </div>
-
             <div className="h-14 bg-muted/20 border border-border/50 rounded-2xl animate-pulse" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -152,41 +146,6 @@ export function StudentOpportunitiesShell({
               <p className="text-sm text-muted-foreground font-medium">
                 Explore and apply for placements with our partner companies. Filter by sector or location to find the right fit for your SIT.
               </p>
-            </div>
-          </div>
-
-          {/* Stats Banner */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="bg-card border border-border/80 rounded-2xl p-6 flex items-center gap-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-              <div className="p-4 bg-primary/10 text-primary rounded-xl shrink-0">
-                <Briefcase className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Available Placements</p>
-                <h3 className="text-3xl font-extrabold text-foreground mt-1">{postings.length}</h3>
-              </div>
-            </div>
-
-            <div className="bg-card border border-border/80 rounded-2xl p-6 flex items-center gap-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-              <div className="p-4 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl shrink-0">
-                <CheckCircle2 className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Your Applications</p>
-                <h3 className="text-3xl font-extrabold text-foreground mt-1">
-                  {postings.filter(p => p.applications.some(app => app.status !== "WITHDRAWN")).length}
-                </h3>
-              </div>
-            </div>
-
-            <div className="bg-card border border-border/80 rounded-2xl p-6 flex items-center gap-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-              <div className="p-4 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl shrink-0">
-                <Activity className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Required SIT Hours</p>
-                <h3 className="text-3xl font-extrabold text-foreground mt-1">300 Hours</h3>
-              </div>
             </div>
           </div>
 
@@ -215,7 +174,7 @@ export function StudentOpportunitiesShell({
                     className={cn(
                       "px-4 py-2 text-xs font-bold rounded-xl transition-all border cursor-pointer",
                       typeFilter === type
-                        ? "bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/10"
+                        ? "bg-foreground text-background border-foreground shadow-sm"
                         : "bg-card text-muted-foreground border-border hover:bg-muted hover:text-foreground"
                     )}
                   >
@@ -326,7 +285,7 @@ export function StudentOpportunitiesShell({
                         "w-full h-11 flex items-center justify-center gap-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer",
                         applied 
                         ? "bg-muted text-muted-foreground/60 cursor-not-allowed border border-border/50" 
-                        : "bg-primary text-primary-foreground hover:bg-primary/95 shadow-md shadow-primary/5 hover:shadow-lg hover:shadow-primary/10 active:scale-[0.98]"
+                        : "bg-foreground text-background hover:bg-foreground/90 shadow-sm active:scale-[0.98]"
                       )}
                     >
                       {applied ? (
