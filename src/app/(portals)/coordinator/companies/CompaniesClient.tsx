@@ -144,6 +144,9 @@ export default function CompaniesClient({ initialCompanies }: CompaniesClientPro
       setIsAdding(false);
       setEditingId(null);
       setFormData({ name: "", email: "", industry: "", location: "", description: "", slots: 0, logoUrl: "", bannerUrl: "" });
+    } catch (error: unknown) {
+      console.error(error);
+      alert(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsSubmitting(false);
       setIsVerifyingPersistence(false);

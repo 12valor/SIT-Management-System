@@ -92,6 +92,10 @@ export async function updateCompany(id: string, data: {
       }
     }
 
+    if (error instanceof Error && error.name === 'PrismaClientValidationError') {
+      throw new Error("Database schema mismatch. Please restart your development server (npm run dev) to apply changes.");
+    }
+
     const message = error instanceof Error ? error.message : "An unexpected error occurred";
     throw new Error(message);
   }
