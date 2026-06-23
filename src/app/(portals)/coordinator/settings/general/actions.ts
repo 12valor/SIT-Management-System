@@ -11,8 +11,10 @@ interface SystemSetting {
   updatedAt: Date;
 }
 
-function isAllowedDataImage(value: string) {
-  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_200_000;
+function isAllowedDataImage(value: any) {
+  if (!value || (typeof value === "object" && "size" in value && value.size === 0)) return true;
+  if (typeof value !== "string") return false;
+  return /^data:image\/(png|jpe?g|webp);base64,/i.test(value) && value.length <= 1_700_000;
 }
 
 export async function updateHeroSlides(formData: FormData) {
