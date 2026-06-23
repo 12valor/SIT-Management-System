@@ -36,8 +36,8 @@ export default function StudentSignupPage() {
 
     if (result.success) {
       setAuthStatus("success");
-      setAuthMessage("Registration submitted. Redirecting to terminal...");
-      setTimeout(() => router.push("/login/student"), 2000);
+      setAuthMessage("Registration submitted. If you registered with an email, check your inbox and Spam folder for the activation link. Redirecting...");
+      setTimeout(() => router.push("/login/student"), 5000);
     } else {
       setAuthStatus("error");
       setAuthMessage(result.error || "System encountered an enrollment conflict.");
@@ -130,6 +130,9 @@ export default function StudentSignupPage() {
                 placeholder="TUPV-XX-XXXX or name@tup.edu.ph"
                 className="w-full h-11 px-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all text-[13px] text-slate-900 dark:text-white"
               />
+              <span className="text-[10px] text-slate-400 dark:text-slate-500 font-serif block mt-1 leading-normal">
+                Note: Verification link will be emailed. Please check your Spam/Junk folder if not found in your inbox.
+              </span>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
