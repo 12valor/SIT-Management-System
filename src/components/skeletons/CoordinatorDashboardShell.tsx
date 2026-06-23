@@ -121,11 +121,11 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
     >
       <div className="flex-1 space-y-12">
         {/* 1. Header Section */}
-        <div className="pb-6 border-b border-border/50">
-          <h2 className="text-xl font-semibold text-foreground">
+        <div className="pb-8 border-b border-border/40">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground">
             Program Control, {userName?.split(" ")[0]}
           </h2>
-          <p className="text-sm text-foreground/80 mt-1">
+          <p className="text-base text-foreground/60 mt-2 font-medium">
             Administrative overview for {new Date().getFullYear()}
           </p>
         </div>
@@ -133,38 +133,40 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         {/* 2. Split Card View */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Students Card */}
-          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-8">
-            <h3 className="text-sm font-semibold text-foreground border-b border-border pb-2">Students</h3>
+          <div className="group relative overflow-hidden bg-card border border-border/40 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 space-y-8">
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none transition-transform group-hover:scale-150 duration-700" />
+            <h3 className="text-sm font-medium text-foreground/80 border-b border-border/40 pb-3 relative z-10">Students</h3>
             
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <p className="text-xs text-foreground/70 mb-1">Enrolled students</p>
-                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.totalStudents ?? 0}</p>
+            <div className="grid grid-cols-3 gap-8 relative z-10">
+              <div className="space-y-1">
+                <p className="text-xs text-foreground/60 font-medium">Enrolled</p>
+                <p className="text-4xl font-semibold text-foreground tracking-tighter">{data?.totalStudents ?? 0}</p>
               </div>
-              <div>
-                <p className="text-xs text-foreground/70 mb-1">Hours complete</p>
-                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.graduationReady ?? 0}</p>
+              <div className="space-y-1">
+                <p className="text-xs text-foreground/60 font-medium">Grad Ready</p>
+                <p className="text-4xl font-semibold text-foreground tracking-tighter">{data?.graduationReady ?? 0}</p>
               </div>
-              <div>
-                <p className="text-xs text-foreground/70 mb-1">Logbook backlog</p>
-                <p className="text-3xl font-semibold text-foreground tracking-tight text-primary">{data?.pendingLogbooks ?? 0}</p>
+              <div className="space-y-1">
+                <p className="text-xs text-foreground/60 font-medium">Pending Logbooks</p>
+                <p className="text-4xl font-semibold text-primary tracking-tighter">{data?.pendingLogbooks ?? 0}</p>
               </div>
             </div>
 
           </div>
 
           {/* Employers Card */}
-          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-8">
-            <h3 className="text-sm font-semibold text-foreground border-b border-border pb-2">Employers</h3>
+          <div className="group relative overflow-hidden bg-card border border-border/40 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 space-y-8">
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-foreground/5 rounded-full blur-3xl pointer-events-none transition-transform group-hover:scale-150 duration-700" />
+            <h3 className="text-sm font-medium text-foreground/80 border-b border-border/40 pb-3 relative z-10">Employers</h3>
             
-            <div className="grid grid-cols-2 gap-8">
-              <div>
-                <p className="text-xs text-foreground/70 mb-1">Industry partners</p>
-                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.totalCompanies ?? 0}</p>
+            <div className="grid grid-cols-2 gap-8 relative z-10">
+              <div className="space-y-1">
+                <p className="text-xs text-foreground/60 font-medium">Industry partners</p>
+                <p className="text-4xl font-semibold text-foreground tracking-tighter">{data?.totalCompanies ?? 0}</p>
               </div>
-              <div>
-                <p className="text-xs text-foreground/70 mb-1">Pending review</p>
-                <p className="text-3xl font-semibold text-foreground tracking-tight">{data?.pendingCompanies.length ?? 0}</p>
+              <div className="space-y-1">
+                <p className="text-xs text-foreground/60 font-medium">Pending review</p>
+                <p className="text-4xl font-semibold text-foreground tracking-tighter">{data?.pendingCompanies.length ?? 0}</p>
               </div>
             </div>
 
@@ -174,30 +176,30 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         {/* 3. Analytics Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Trend Chart */}
-          <div className="lg:col-span-2 bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-border pb-4">
+          <div className="lg:col-span-2 bg-card border border-border/40 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/40 pb-5">
               <div className="space-y-1">
-                <h3 className="text-sm font-semibold text-foreground">Program Momentum</h3>
-                <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">
+                <h3 className="text-sm font-medium text-foreground/80">Program Momentum</h3>
+                <p className="text-[11px] font-medium text-foreground/50 uppercase tracking-wider">
                   {timeframe === 'monthly' ? '6-Month' : timeframe === 'weekly' ? '8-Week' : '14-Day'} Enrollment vs Placement
                 </p>
               </div>
 
               {/* Timeframe Filter */}
-              <div className="flex items-center bg-muted/50 p-1 rounded-lg border border-border/50">
+              <div className="flex items-center bg-muted/40 p-1 rounded-xl border border-border/40">
                 {(['monthly', 'weekly', 'daily'] as const).map((t) => (
                   <button
                     key={t}
                     onClick={() => handleTimeframeChange(t)}
                     disabled={isPending}
                     className={cn(
-                      "px-3 py-1 text-[10px] font-bold rounded-md transition-all duration-200",
+                      "px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300",
                       timeframe === t 
-                        ? "bg-background text-foreground shadow-sm scale-105" 
-                        : "text-foreground/40 hover:text-foreground/70"
+                        ? "bg-background text-foreground shadow-sm ring-1 ring-border/50" 
+                        : "text-foreground/50 hover:text-foreground/80"
                     )}
                   >
-                    {t === 'monthly' ? 'M' : t === 'weekly' ? 'W' : 'D'}
+                    {t === 'monthly' ? 'Mo' : t === 'weekly' ? 'Wk' : 'Dy'}
                   </button>
                 ))}
               </div>
@@ -209,10 +211,12 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           </div>
 
           {/* Industry Distribution */}
-          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <h3 className="text-sm font-semibold text-foreground">Industrial Reach</h3>
-              <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Top Sectors</p>
+          <div className="bg-card border border-border/40 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/40 pb-5">
+              <div className="space-y-1">
+                <h3 className="text-sm font-medium text-foreground/80">Industrial Reach</h3>
+                <p className="text-[11px] font-medium text-foreground/50 uppercase tracking-wider">Top Sectors</p>
+              </div>
             </div>
             <div className="h-[240px] w-full">
               <IndustryDistributionChart data={data?.industryStats} />
@@ -223,29 +227,29 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
         {/* 4. Bottom Grid: History & Partners */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Placement History */}
-          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <h3 className="text-sm font-semibold text-foreground">Placement History</h3>
-              <div className="text-xs text-foreground/80">
-                Placement rate: <span className="font-semibold text-foreground">{placementRate}%</span>
+          <div className="bg-card border border-border/40 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/40 pb-5">
+              <h3 className="text-sm font-medium text-foreground/80">Placement History</h3>
+              <div className="text-xs font-medium text-foreground/60 bg-muted/40 px-3 py-1.5 rounded-lg border border-border/40">
+                Placement rate: <span className="font-bold text-foreground">{placementRate}%</span>
               </div>
             </div>
 
-            <div className="divide-y divide-border">
+            <div className="divide-y divide-border/40">
               {!data?.recentPlacements.length ? (
                 <div className="py-12 text-center">
                   <p className="text-sm text-foreground/50 italic">No recent placement activity recorded.</p>
                 </div>
               ) : (
                 data.recentPlacements.map((p) => (
-                  <div key={p.id} className="py-4 flex items-center justify-between first:pt-0 last:pb-0">
+                  <div key={p.id} className="py-4 flex items-center justify-between first:pt-0 last:pb-0 hover:bg-muted/20 -mx-4 px-4 rounded-xl transition-colors duration-200">
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-foreground">{p.studentName}</p>
-                      <p className="text-xs text-foreground/70">
-                        {p.postingTitle} at <span className="font-medium text-foreground">{p.companyName}</span>
+                      <p className="text-xs text-foreground/60 font-medium">
+                        {p.postingTitle} at <span className="font-semibold text-foreground">{p.companyName}</span>
                       </p>
                     </div>
-                    <div className="text-[10px] font-semibold text-foreground/70 bg-muted px-2 py-0.5 rounded border border-border/50">
+                    <div className="text-[11px] font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-md border border-primary/20">
                       Active
                     </div>
                   </div>
@@ -255,11 +259,11 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
           </div>
 
           {/* Top Hiring Partners */}
-          <div className="bg-card border border-border p-8 rounded-xl shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-border pb-4">
+          <div className="bg-card border border-border/40 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/40 pb-5">
               <div className="space-y-1">
-                <h3 className="text-sm font-semibold text-foreground">Top Hiring Partners</h3>
-                <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">By Placement Volume</p>
+                <h3 className="text-sm font-medium text-foreground/80">Top Hiring Partners</h3>
+                <p className="text-[11px] font-medium text-foreground/50 uppercase tracking-wider">By Placement Volume</p>
               </div>
             </div>
 
@@ -270,24 +274,24 @@ export function CoordinatorDashboardShell({ data, userName }: Props) {
                 </div>
               ) : (
                 data.topHiringCompanies.map((company, idx) => (
-                  <div key={idx} className="flex items-center justify-between group">
+                  <div key={idx} className="flex items-center justify-between group p-2 -mx-2 hover:bg-muted/20 rounded-xl transition-colors duration-200">
                     <div className="flex items-center gap-4">
-                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-xs font-bold text-foreground/60 border border-border group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <div className="w-8 h-8 rounded-xl bg-muted/50 flex items-center justify-center text-xs font-bold text-foreground/60 border border-border/40 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300 shadow-sm">
                         {idx + 1}
                       </div>
-                      <p className="text-sm font-medium text-foreground">{company.name}</p>
+                      <p className="text-sm font-semibold text-foreground">{company.name}</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="h-1.5 w-24 bg-muted rounded-full overflow-hidden">
+                    <div className="flex items-center gap-3">
+                      <div className="h-2 w-24 bg-muted/50 rounded-full overflow-hidden border border-border/40">
                         <div 
-                          className="h-full bg-primary" 
+                          className="h-full bg-primary transition-all duration-1000" 
                           style={{ 
                             width: `${(company.count / data.topHiringCompanies[0].count) * 100}%`,
                             opacity: 1 - (idx * 0.15)
                           }}
                         />
                       </div>
-                      <span className="text-xs font-mono font-bold text-foreground w-4 text-right">{company.count}</span>
+                      <span className="text-sm font-semibold text-foreground w-4 text-right">{company.count}</span>
                     </div>
                   </div>
                 ))
