@@ -9,9 +9,7 @@ import {
   EyeOff, 
   ExternalLink, 
   Loader2, 
-  Maximize2, 
-  Download,
-  AlertCircle
+  Download
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { updateStudentDocumentStatus } from "../actions";
@@ -32,7 +30,6 @@ interface DocumentReviewListProps {
 
 export default function DocumentReviewList({ documents }: DocumentReviewListProps) {
   const [previewId, setPreviewId] = useState<string | null>(null);
-  const [fullscreenId, setFullscreenId] = useState<string | null>(null);
   const [rejectionId, setRejectionId] = useState<string | null>(null);
   const [feedbackText, setFeedbackText] = useState<{ [key: string]: string }>({});
   const [isPending, startTransition] = useTransition();
@@ -85,7 +82,6 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
     <div className="space-y-4">
       {documents.map((doc) => {
         const isPreviewing = previewId === doc.id;
-        const isFullscreen = fullscreenId === doc.id;
         const isRejecting = rejectionId === doc.id;
         const isMediaLoading = loadingMedia[doc.id] !== false;
 
@@ -118,7 +114,6 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
             {/* Rejection Feedback display */}
             {doc.status === "REJECTED" && doc.feedback && (
               <div className="mt-3 flex items-start gap-2 rounded-lg bg-red-500/5 border border-red-500/10 p-3 text-xs text-red-600 dark:text-red-400">
-                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
                 <p className="leading-relaxed">{doc.feedback}</p>
               </div>
             )}
@@ -141,7 +136,6 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
                 </button>
               ) : (
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground border border-border/40 px-3 py-2 rounded-lg bg-muted/20">
-                  <AlertCircle className="h-3.5 w-3.5" />
                   No file uploaded
                 </div>
               )}
@@ -209,18 +203,11 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
                   </span>
                   <div className="flex items-center gap-1.5">
                     <button
-                      onClick={() => setFullscreenId(doc.id)}
-                      className="inline-flex items-center gap-1 p-1 text-[10px] font-semibold text-foreground/70 hover:text-foreground hover:bg-muted rounded transition-all"
-                      title="Fullscreen Preview"
-                    >
-                      <Maximize2 className="h-3.5 w-3.5" />
-                    </button>
-                    <button
                       onClick={() => handleOpenExternal(doc)}
-                      className="inline-flex items-center gap-1 p-1 text-[10px] font-semibold text-foreground/70 hover:text-foreground hover:bg-muted rounded transition-all"
-                      title="Open in new window / Download"
+                      className="inline-flex items-center gap-1 p-1 text-[10px] font-semibold text-foreground/70 hover:text-foreground hover:bg-muted rounded transition-all cursor-pointer"
+                      title="Download"
                     >
-                      {doc.url.startsWith("data:") ? <Download className="h-3.5 w-3.5" /> : <ExternalLink className="h-3.5 w-3.5" />}
+                      <Download className="h-3.5 w-3.5" />
                     </button>
                   </div>
                 </div>
@@ -248,23 +235,16 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
                       <div className="space-y-1">
                         <p className="text-sm font-semibold text-foreground">Openable PDF Document</p>
                         <p className="text-xs text-muted-foreground max-w-sm">
-                          This is an openable file. Kindly download the document to view or view in another panel (pop up panel).
+                          This is an openable file, kindly download the document to view.
                         </p>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => setFullscreenId(doc.id)}
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground hover:opacity-90 shadow-sm transition-all cursor-pointer"
-                        >
-                          <Maximize2 className="h-3.5 w-3.5" />
-                          View in Pop-up
-                        </button>
+                      <div className="flex items-center justify-center">
                         <button
                           onClick={() => handleOpenExternal(doc)}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-bold text-foreground hover:bg-muted transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-bold text-primary-foreground hover:opacity-90 shadow-sm transition-all cursor-pointer"
                         >
                           <Download className="h-3.5 w-3.5" />
-                          Download File
+                          Download to View
                         </button>
                       </div>
                     </div>
@@ -275,63 +255,6 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
           </div>
         );
       })}
-
-      {/* Fullscreen Overlay Modal */}
-      {fullscreenId && (() => {
-        const doc = documents.find(d => d.id === fullscreenId);
-        if (!doc || !doc.url) return null;
-
-        return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 md:p-8 animate-fade-in">
-            <div className="relative w-full max-w-5xl h-[85vh] bg-background border border-border rounded-2xl flex flex-col shadow-2xl overflow-hidden">
-              {/* Modal Header */}
-              <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">{doc.name}</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-0.5">
-                    {doc.type} · {new Date(doc.uploadedAt).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => handleOpenExternal(doc)}
-                    className="inline-flex items-center justify-center rounded-lg border border-border bg-card p-2 text-foreground/70 hover:text-primary hover:border-primary/30 transition-all shadow-sm"
-                    title={doc.url.startsWith("data:") ? "Download" : "Open in new window"}
-                  >
-                    {doc.url.startsWith("data:") ? <Download className="h-4 w-4" /> : <ExternalLink className="h-4 w-4" />}
-                  </button>
-                  <button
-                    onClick={() => setFullscreenId(null)}
-                    className="inline-flex items-center justify-center rounded-lg border border-border bg-card p-2 text-foreground/70 hover:text-red-600 hover:border-red-200 transition-all shadow-sm"
-                    title="Close"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Modal Content */}
-              <div className="flex-1 bg-muted/20 relative flex items-center justify-center p-4 overflow-hidden">
-                {doc.type === "IMAGE" ? (
-                  <div className="w-full h-full flex items-center justify-center overflow-auto">
-                    <img 
-                      src={doc.url} 
-                      alt={doc.name} 
-                      className="max-w-full max-h-full object-contain rounded-lg shadow-md"
-                    />
-                  </div>
-                ) : (
-                  <iframe
-                    src={doc.url}
-                    className="w-full h-full rounded-lg border border-border"
-                    title={doc.name}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      })()}
     </div>
   );
 }
