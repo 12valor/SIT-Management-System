@@ -39,7 +39,14 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
   const [loadingMedia, setLoadingMedia] = useState<{ [key: string]: boolean }>({});
 
   const togglePreview = (id: string) => {
-    setPreviewId(prev => (prev === id ? null : id));
+    setPreviewId(prev => {
+      const isOpening = prev !== id;
+      if (isOpening) {
+        const doc = documents.find(d => d.id === id);
+        setLoadingMedia(prevLoad => ({ ...prevLoad, [id]: doc?.type === "IMAGE" }));
+      }
+      return isOpening ? id : null;
+    });
   };
 
   const handleVerify = (id: string) => {
@@ -234,12 +241,33 @@ export default function DocumentReviewList({ documents }: DocumentReviewListProp
                       onError={() => setLoadingMedia(prev => ({ ...prev, [doc.id]: false }))}
                     />
                   ) : (
-                    <iframe
-                      src={doc.url}
-                      className="w-full h-[500px] rounded-md border-0"
-                      title={doc.name}
-                      onLoad={() => setLoadingMedia(prev => ({ ...prev, [doc.id]: false }))}
-                    />
+                    <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
+                      <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                        <FileText className="h-6 w-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-semibold text-foreground">Openable PDF Document</p>
+                        <p className="text-xs text-muted-foreground max-w-sm">
+                          This is an openable file. Kindly download the document to view or view in another panel (pop up panel).
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setFullscreenId(doc.id)}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground hover:opacity-90 shadow-sm transition-all cursor-pointer"
+                        >
+                          <Maximize2 className="h-3.5 w-3.5" />
+                          View in Pop-up
+                        </button>
+                        <button
+                          onClick={() => handleOpenExternal(doc)}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-bold text-foreground hover:bg-muted transition-all cursor-pointer"
+                        >
+                          <Download className="h-3.5 w-3.5" />
+                          Download File
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
