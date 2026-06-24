@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StudentProfileHeader from "../StudentProfileHeader";
-import { updateStudentDocumentStatus } from "../actions";
+import DocumentReviewList from "./DocumentReviewList";
 
 export default async function StudentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -46,6 +46,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
           id: true,
           name: true,
           type: true,
+          url: true,
           status: true,
           feedback: true,
           uploadedAt: true,
@@ -140,58 +141,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
             {student.documents.length === 0 ? (
               <p className="text-xs text-muted-foreground">No submitted credentials yet.</p>
             ) : (
-              <div className="space-y-4">
-                {student.documents.map((doc) => (
-                  <div key={doc.id} className="space-y-3 rounded-lg border border-border/70 p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{doc.name}</p>
-                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
-                          {doc.type} - {new Date(doc.uploadedAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <span className={cn(
-                        "rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider border",
-                        doc.status === "VERIFIED" && "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-                        doc.status === "REJECTED" && "bg-red-500/10 text-red-600 border-red-500/20",
-                        doc.status === "PENDING" && "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                      )}>
-                        {doc.status}
-                      </span>
-                    </div>
-
-                    {doc.feedback && (
-                      <p className="text-xs text-red-500">{doc.feedback}</p>
-                    )}
-
-                    <div className="flex flex-col gap-2">
-                      <form action={updateStudentDocumentStatus.bind(null, doc.id, "VERIFIED")}>
-                        <button
-                          type="submit"
-                          disabled={doc.status === "VERIFIED"}
-                          className="w-full rounded-md bg-primary px-3 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50"
-                        >
-                          Verify Document
-                        </button>
-                      </form>
-                      <form action={updateStudentDocumentStatus.bind(null, doc.id, "REJECTED")} className="space-y-2">
-                        <input
-                          name="feedback"
-                          placeholder="Feedback for rejection"
-                          className="w-full rounded-md border border-border bg-background px-3 py-2 text-xs outline-none focus:border-primary"
-                        />
-                        <button
-                          type="submit"
-                          disabled={doc.status === "REJECTED"}
-                          className="w-full rounded-md border border-red-200 px-3 py-2 text-xs font-bold text-red-600 disabled:opacity-50"
-                        >
-                          Reject Document
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <DocumentReviewList documents={student.documents} />
             )}
           </div>
         </div>
