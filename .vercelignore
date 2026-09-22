@@ -1,0 +1,106 @@
+# ==============================================================================
+# Vercel Deployment Ignore Configuration (.vercelignore)
+# Project: SIT Management System
+# Framework: Next.js 15 (App Router) + Prisma + Tailwind CSS
+# ==============================================================================
+
+# Dependencies
+# Vercel handles package installation independently in deployment runners
+node_modules/
+
+# Version Control
+.git/
+.github/
+.gitattributes
+
+# Local Environment Variables & Secrets
+# Secrets must be injected via Vercel Project Dashboard Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# Local Build Caches & TypeScript Compilation Artifacts
+.next/
+*.tsbuildinfo
+next-env.d.ts
+
+# Dev Server Logs & Temporary Directory
+# .tmp contains local dev-server log outputs (~6.5MB+)
+.tmp/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+
+# IDE & Editor Configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS System Files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.Spotlight-V100
+.Trashes
+
+# Development & Scratch Testing Scripts
+scratch/
+test.js
+test-update.js
+test-register.ts
+
+# Local Database Files & Seeding Scripts
+# Production runs against remote Neon PostgreSQL via DATABASE_URL
+prisma/seed.ts
+*.db
+*.db-journal
+
+# Platform-Specific Binaries & Unused Generated Artifacts
+# query_engine-windows.dll.node is a ~19MB local Windows binary unneeded on Linux Vercel runners
+src/generated/
+*.node
+*.dll
+
+# Documentation & Specification Files
+docs/
+screenshots/
+design/
+mockups/
+*.md
+diagram-*.html
+
+# Root Debug & Non-Production Visual Artifacts
+resources_debug.png
+
+# Design Source Files & Compressed Archives
+*.psd
+*.ai
+*.fig
+*.sketch
+*.xd
+*.zip
+*.rar
+*.7z
+
+# Temporary & Backup Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+
+# Test Coverage
+coverage/
+.nyc_output/

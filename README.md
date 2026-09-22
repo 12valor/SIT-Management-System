@@ -10,7 +10,7 @@
   [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](./LICENSE.md)
 </div>
 
-> **Notice:** This project is currently in an advanced stage of development. The system is being standardized to an **Institutional Brutalism** aesthetic to ensure maximum authority and archival integrity.
+> **Notice:** This project is currently in an advanced stage of development. The system is being standardized to an **Institutional Brutalism** aesthetic to ensure maximum authority and archival integrity.GUD
 
 ---
 
